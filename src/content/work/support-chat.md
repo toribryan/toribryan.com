@@ -1,6 +1,7 @@
 ---
 title: "Support Chat"
 excerpt: "In-product help for test-takers — right where they get stuck."
+category: "Product Design"
 company: "Proctorio"
 role: "Staff Designer"
 team: "Support, Product, Engineering"

@@ -116,7 +116,10 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
       </div>
 
       {images.length > 1 && (
-        <div className="scrollbar-hide flex-shrink-0 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+        <div
+          className="scrollbar-hide hidden flex-shrink-0 overflow-x-auto px-4 pb-4 md:block"
+          style={{ scrollbarWidth: 'none' }}
+        >
           <div className="flex h-14 gap-1" style={{ width: 'fit-content' }}>
             {images.map((image, i) => (
               <motion.button

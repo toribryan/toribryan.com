@@ -119,7 +119,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   return (
     <div ref={rootRef} className="fixed inset-x-0 bottom-6 z-40 flex justify-center px-4">
       {expanded ? (
-        <div className="w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-[0_20px_60px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
+        <div className="w-full max-w-sm overflow-hidden rounded-2xl bg-surface shadow-[0_20px_60px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
           <div className="flex items-center justify-between px-5 pb-2 pt-4">
             <p className="font-sans text-xs font-medium uppercase tracking-[0.15em] text-ink-tertiary">
               Table of contents

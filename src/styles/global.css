@@ -48,6 +48,25 @@ body {
   font-family: var(--font-sans);
 }
 
+.dark-geist {
+  --color-ink: #f5f4f2;
+  --color-ink-secondary: #b8b6b0;
+  --color-ink-tertiary: #7a7972;
+  --color-surface: #0f0f0f;
+  --color-surface-card: #1f1a15;
+  --color-surface-muted: #1a1a1a;
+  --color-border: rgb(255 255 255 / 0.12);
+
+  /* Case-study and about pages use Geist only — headings/wordmark elsewhere
+     use Nohemi/Fraunces, but those fonts should never render here. */
+  --font-display: var(--font-sans);
+  --font-serif: var(--font-sans);
+
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  min-height: 100%;
+}
+
 .scrollbar-hide {
   scrollbar-width: none;
 }

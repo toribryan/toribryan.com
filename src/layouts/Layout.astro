@@ -9,16 +9,17 @@ interface Props {
   description: string;
   image?: string;
   chromeless?: boolean;
+  dark?: boolean;
 }
 
-const { title, description, image, chromeless = false } = Astro.props;
+const { title, description, image, chromeless = false, dark = false } = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <Head title={title} description={description} image={image} />
   </head>
-  <body class="flex min-h-screen flex-col font-sans text-ink">
+  <body class:list={['flex min-h-screen flex-col font-sans text-ink', dark && 'dark-geist']}>
     {!chromeless && <Nav />}
     <main class="flex flex-1 flex-col">
       <slot />

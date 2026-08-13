@@ -1,7 +1,7 @@
 ---
 title: "Config 2026 Design Challenge"
 excerpt: "A 45-minute design community challenge on Balance — one question, two states, two aesthetic directions."
-category: "Visual Design"
+category: "Creative Retros"
 company: "Design community challenge"
 role: "Solo participant"
 team: "Solo — each designer submitted independently"

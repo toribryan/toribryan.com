@@ -21,6 +21,19 @@ export function isTabbedCategory(category: string): boolean {
   return TABBED_CATEGORIES.has(categorySlug(category));
 }
 
+// Canonical homepage ordering. Categories not listed here render after the
+// ones that are, in first-seen order — so unexpected/future categories still
+// show up instead of being silently dropped.
+const CATEGORY_ORDER = ['Product Design', 'Design Systems', 'Web Design', 'Creative Retros'];
+
+export function sortByCategoryOrder<T>(items: T[], getName: (item: T) => string): T[] {
+  const rank = (name: string) => {
+    const i = CATEGORY_ORDER.findIndex((c) => categorySlug(c) === categorySlug(name));
+    return i === -1 ? CATEGORY_ORDER.length : i;
+  };
+  return [...items].sort((a, b) => rank(getName(a)) - rank(getName(b)));
+}
+
 export function categoryTags(stacks: (string | undefined)[], max = 3): string[] {
   const tags: string[] = [];
   const seen = new Set<string>();

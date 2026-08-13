@@ -5,7 +5,7 @@ import Layout from '../../../layouts/Layout.astro';
 import PageBackground from '../../../components/portfolio/PageBackground.astro';
 import CategoryHeader from '../../../components/portfolio/CategoryHeader.astro';
 import CategoryHeading from '../../../components/portfolio/CategoryHeading';
-import ProjectModule from '../../../components/portfolio/ProjectModule.astro';
+import ProjectList from '../../../components/portfolio/ProjectList';
 import TimelineEntry from '../../../components/portfolio/TimelineEntry.astro';
 import { categorySlug, categoryAccent, isTabbedCategory } from '../../../lib/categories';
 import proctorDashboard from '../../../assets/work-carousel/proctor-dashboard.png';
@@ -40,6 +40,31 @@ const accent = categoryAccent(name);
 const tabbed = isTabbedCategory(name);
 
 const projects = entries.map((entry) => ({ id: entry.id, title: entry.data.title }));
+
+const stageProjects = tabbed
+  ? entries.map((entry) => {
+      const { title, excerpt, problem, task, outcome, company, role, team, timeline, stack } = entry.data;
+      const facts = [
+        { label: 'Company', value: company },
+        { label: 'Role', value: role },
+        { label: 'Team', value: team },
+        { label: 'Timeline', value: timeline },
+        { label: 'Stack', value: stack },
+      ].filter((fact): fact is { label: string; value: string } => !!fact.value);
+
+      return {
+        id: entry.id,
+        title,
+        excerpt,
+        problem,
+        task,
+        outcome,
+        facts,
+        images: defaultImages,
+        slug: entry.id,
+      };
+    })
+  : [];
 ---
 
 <Layout title={`${name} work`} description={`${name} case studies from Tori Bryan.`} chromeless>
@@ -51,51 +76,32 @@ const projects = entries.map((entry) => ({ id: entry.id, title: entry.data.title
       <CategoryHeading name={name} client:load />
     </div>
 
-    <div class="mt-10 flex flex-col gap-8">
-      {
-        entries.map((entry) => {
-          const { title, excerpt, company, role, team, timeline, stack, problem, task, outcome, hero, thumbnail } =
-            entry.data;
-
-          if (!tabbed) {
-            return (
-              <TimelineEntry
-                id={entry.id}
-                title={title}
-                excerpt={excerpt}
-                company={company}
-                timeline={timeline}
-                accent={accent}
-                image={hero ?? thumbnail}
-              />
-            );
+    {
+      tabbed ? (
+        <div class="mt-10">
+          <ProjectList client:load projects={stageProjects} accent={accent} />
+        </div>
+      ) : (
+        <div class="mt-10 flex flex-col gap-8">
+          {
+            entries.map((entry) => {
+              const { title, excerpt, company, timeline, hero, thumbnail } = entry.data;
+              return (
+                <TimelineEntry
+                  id={entry.id}
+                  title={title}
+                  excerpt={excerpt}
+                  company={company}
+                  timeline={timeline}
+                  accent={accent}
+                  image={hero ?? thumbnail}
+                />
+              );
+            })
           }
-
-          const facts = [
-            { label: 'Company', value: company },
-            { label: 'Role', value: role },
-            { label: 'Team', value: team },
-            { label: 'Timeline', value: timeline },
-            { label: 'Stack', value: stack },
-          ].filter((fact): fact is { label: string; value: string } => !!fact.value);
-
-          return (
-            <ProjectModule
-              id={entry.id}
-              title={title}
-              excerpt={excerpt}
-              problem={problem}
-              task={task}
-              outcome={outcome}
-              facts={facts}
-              accent={accent}
-              slug={entry.id}
-              images={defaultImages}
-            />
-          );
-        })
-      }
-    </div>
+        </div>
+      )
+    }
   </div>
 </Layout>
 
