@@ -119,16 +119,16 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   return (
     <div ref={rootRef} className="fixed inset-x-0 bottom-6 z-40 flex justify-center px-4">
       {expanded ? (
-        <div className="w-full max-w-sm overflow-hidden rounded-2xl bg-surface shadow-[0_20px_60px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
+        <div className="w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-black/35 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
           <div className="flex items-center justify-between px-5 pb-2 pt-4">
-            <p className="font-sans text-xs font-medium uppercase tracking-[0.15em] text-ink-tertiary">
+            <p className="font-sans text-xs font-medium uppercase tracking-[0.15em] text-white/50">
               Table of contents
             </p>
             <button
               type="button"
               onClick={() => setExpanded(false)}
               aria-label="Close table of contents"
-              className="flex h-6 w-6 items-center justify-center rounded-full text-ink-tertiary transition-colors hover:bg-surface-muted hover:text-ink"
+              className="flex h-6 w-6 items-center justify-center rounded-full text-white/60 transition-colors hover:bg-white/10 hover:text-white"
             >
               <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5">
                 <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" />
@@ -144,8 +144,8 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
                   style={{ paddingLeft: `${16 + (heading.depth - 2) * 16}px` }}
                   className={`flex items-center gap-2 rounded-lg py-2.5 pr-4 text-sm transition-colors ${
                     i === activeIndex
-                      ? 'bg-surface-muted font-medium text-ink'
-                      : 'text-ink-secondary hover:bg-surface-muted/60 hover:text-ink'
+                      ? 'bg-white/10 font-medium text-white'
+                      : 'text-white/60 hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   <span className="min-w-0 flex-1 truncate">{heading.text}</span>
@@ -159,7 +159,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="flex items-center gap-3 rounded-full bg-ink/90 py-2 pl-4 pr-3 text-white shadow-[0_12px_40px_rgba(0,0,0,0.3)] backdrop-blur transition-colors hover:bg-ink"
+          className="flex items-center gap-3 rounded-full border border-white/10 bg-black/35 py-2 pl-4 pr-3 text-white shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-colors hover:bg-black/50"
         >
           <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
           <span className="max-w-[45vw] truncate text-left font-sans text-sm sm:max-w-[280px]">

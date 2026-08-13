@@ -1,6 +1,6 @@
 ---
 title: "Config 2026 Design Challenge"
-excerpt: "A 45-minute design community challenge on Balance — one question, two states, two aesthetic directions."
+excerpt: "A 45-minute design-community sprint on Balance: one prompt, two states, two aesthetic arguments for what balance looks like."
 category: "Creative Retros"
 company: "Design community challenge"
 role: "Solo participant"

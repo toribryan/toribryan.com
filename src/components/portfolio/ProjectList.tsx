@@ -13,6 +13,7 @@ interface Project {
   excerpt: string;
   problem?: string;
   task?: string;
+  process?: string;
   outcome?: string;
   facts: Fact[];
   images: CarouselImage[];
@@ -70,6 +71,7 @@ export default function ProjectList({ projects, accent }: ProjectListProps) {
               <FolderTabs
                 problem={project.problem}
                 approach={project.task}
+                process={project.process}
                 facts={project.facts}
                 outcome={project.outcome}
                 excerpt={project.excerpt}

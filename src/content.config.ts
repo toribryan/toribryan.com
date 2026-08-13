@@ -15,6 +15,7 @@ const work = defineCollection({
       stack: z.string().optional(),
       problem: z.string().optional(),
       task: z.string().optional(),
+      process: z.string().optional(),
       outcome: z.string().optional(),
       cardSize: z.enum(['Feature', 'Large', 'Wide', 'Tall', 'Small']).default('Wide'),
       thumbnail: image().optional(),

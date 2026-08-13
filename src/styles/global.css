@@ -56,6 +56,8 @@ body {
   --color-surface-card: #1f1a15;
   --color-surface-muted: #1a1a1a;
   --color-border: rgb(255 255 255 / 0.12);
+  /* Matches the magenta accent already used on the category listing pages. */
+  --color-accent: #7f285c;
 
   /* Case-study and about pages use Geist only — headings/wordmark elsewhere
      use Nohemi/Fraunces, but those fonts should never render here. */
