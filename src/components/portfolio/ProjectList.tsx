@@ -58,7 +58,7 @@ export default function ProjectList({ projects, accent }: ProjectListProps) {
             variants={imageVariants}
             className="flex flex-col gap-4 pb-6 md:flex-1 md:self-start md:pb-0"
           >
-            <div className="aspect-[3/2] overflow-hidden md:rounded-[28px]">
+            <div className="aspect-[4/3] overflow-hidden md:rounded-[28px]">
               <ImageCarousel images={project.images} />
             </div>
             <a

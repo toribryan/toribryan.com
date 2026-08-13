@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { title, excerpt, company, role, team, timeline, stack, problem, task, outcome, hero, category } =
+const { title, excerpt, company, role, team, timeline, stack, problem, task, outcome, hero, heroSrc, category } =
   entry.data;
 const { Content, headings } = await render(entry);
 const backHref = category ? `/work/category/${categorySlug(category)}` : '/';
@@ -29,9 +29,10 @@ const facts = [
 ].filter((fact) => fact.value);
 
 const tocHeadings = headings.filter((heading) => heading.depth <= 3);
+const ogImage = heroSrc ?? hero?.src;
 ---
 
-<Layout title={title} description={excerpt} image={hero?.src} dark>
+<Layout title={title} description={excerpt} image={ogImage} dark>
   <div class="mx-auto flex max-w-2xl gap-12 lg:max-w-[59rem]">
   <article class="min-w-0 max-w-2xl flex-1 px-6 pb-32 pt-8">
     <a href={backHref} class="text-sm text-ink-secondary transition-colors hover:text-ink">← Back</a>
@@ -42,14 +43,18 @@ const tocHeadings = headings.filter((heading) => heading.depth <= 3);
     <p class="mt-4 text-lg text-ink-secondary sm:text-xl">{excerpt}</p>
 
     {
-      hero && (
-        <Image
-          src={hero}
-          alt={title}
-          width={960}
-          height={540}
-          class="mt-10 aspect-video w-full rounded-2xl object-cover"
-        />
+      heroSrc ? (
+        <img src={heroSrc} alt={title} class="mt-10 aspect-video w-full rounded-2xl object-cover" />
+      ) : (
+        hero && (
+          <Image
+            src={hero}
+            alt={title}
+            width={960}
+            height={540}
+            class="mt-10 aspect-video w-full rounded-2xl object-cover"
+          />
+        )
       )
     }
 

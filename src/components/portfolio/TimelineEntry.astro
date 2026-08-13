@@ -9,7 +9,7 @@ interface Props {
   company?: string;
   timeline?: string;
   accent: string;
-  image?: ImageMetadata;
+  image?: ImageMetadata | string;
 }
 
 const { id, title, excerpt, company, timeline, accent, image } = Astro.props;
@@ -33,14 +33,22 @@ const meta = [timeline, company].filter(Boolean).join(' | ');
     <p class="mt-1 text-white/70">{excerpt}</p>
   </div>
   {
-    image && (
-      <Image
+    image && typeof image === 'string' ? (
+      <img
         src={image}
         alt={title}
-        width={1000}
-        height={560}
         class="mx-auto mt-2 aspect-[16/9] w-full max-w-3xl shrink-0 rounded-xl object-cover"
       />
+    ) : (
+      image && (
+        <Image
+          src={image}
+          alt={title}
+          width={1000}
+          height={560}
+          class="mx-auto mt-2 aspect-[16/9] w-full max-w-3xl shrink-0 rounded-xl object-cover"
+        />
+      )
     )
   }
 </section>

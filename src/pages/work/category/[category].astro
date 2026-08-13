@@ -43,12 +43,20 @@ const projects = entries.map((entry) => ({ id: entry.id, title: entry.data.title
 
 const stageProjects = tabbed
   ? entries.map((entry) => {
-      const { title, excerpt, problem, task, process, outcome, company, role, team } = entry.data;
+      const { title, excerpt, problem, task, process, outcome, company, role, team, heroSrc, gallery } =
+        entry.data;
       const facts = [
         { label: 'Company', value: company },
         { label: 'Role', value: role },
         { label: 'Team', value: team },
       ].filter((fact): fact is { label: string; value: string } => !!fact.value);
+
+      const images = heroSrc
+        ? [
+            { src: heroSrc, alt: title },
+            ...(gallery ?? []).map((src) => ({ src, alt: title })),
+          ]
+        : defaultImages;
 
       return {
         id: entry.id,
@@ -59,7 +67,7 @@ const stageProjects = tabbed
         process,
         outcome,
         facts,
-        images: defaultImages,
+        images,
         slug: entry.id,
       };
     })
@@ -84,7 +92,7 @@ const stageProjects = tabbed
         <div class="mt-10 flex flex-col gap-8">
           {
             entries.map((entry) => {
-              const { title, excerpt, company, timeline, hero, thumbnail } = entry.data;
+              const { title, excerpt, company, timeline, hero, heroSrc, thumbnail } = entry.data;
               return (
                 <TimelineEntry
                   id={entry.id}
@@ -93,7 +101,7 @@ const stageProjects = tabbed
                   company={company}
                   timeline={timeline}
                   accent={accent}
-                  image={hero ?? thumbnail}
+                  image={heroSrc ?? hero ?? thumbnail}
                 />
               );
             })

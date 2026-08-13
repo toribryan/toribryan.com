@@ -7,7 +7,7 @@ role: "Staff Product Designer — owner and architect"
 team: "DesignOps · AI-native workflow · Design systems"
 problem: "Designers were spending too much time producing handoff documentation, and engineers were spending too much time deciphering it. Specs were inconsistent, went stale the moment a design changed, and left too much room for interpretation between design intent and shipped code."
 outcome: "Spec production dropped from 3 days–2 weeks to under 30 minutes — roughly 80 hours per handoff cycle returned to design work — with 100% adoption across the design team, validated with 4 designers on 3 products plus 3 engineers and a PM."
-hero: "./placeholder.jpg"
+heroSrc: "/case-studies/design-skills-infrastructure-hero.png"
 cardSize: "Large"
 featured: true
 draft: false
@@ -35,7 +35,7 @@ A shared Claude Code skills infrastructure that powers designers through every p
 
 **A documented protocol around the tooling**, so the process is repeatable across the team rather than dependent on any one designer.
 
-![A generated design-to-dev spec, navigating the prototype alongside its release notes](./placeholder.jpg)
+![A production screen built from the shared RDS v2 component library](/case-studies/design-skills-infrastructure-screen.png)
 
 ## Impact
 

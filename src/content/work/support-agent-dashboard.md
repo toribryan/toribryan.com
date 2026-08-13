@@ -11,7 +11,9 @@ problem: "Test-takers who hit friction mid-exam had one option: leave the exam, 
 task: "Design the agent-facing side of an in-exam support chat: route test-taker conversations to a human in real time, arriving with enough session context that the agent isn't starting cold."
 process: "The core decision was to route chat with session context attached — where the test-taker is, what they were doing when they got stuck — rather than a blank conversation an agent has to reconstruct by asking. Chat state was designed to persist through a paused exam, so a test-taker stepping away doesn't cost the agent their place in the thread."
 outcome: "The majority of \"I couldn't finish because ___\" tickets no longer exist — they're resolved in-session, by an agent working from context instead of reconstructing it after the fact."
-hero: "./placeholder.jpg"
+heroSrc: "/case-studies/support-agent-dashboard-context-panel.svg"
+gallery:
+  - "/case-studies/support-agent-dashboard-conversation.svg"
 cardSize: "Tall"
 featured: false
 draft: false
@@ -40,7 +42,7 @@ When a test-taker hit friction mid-exam, the standard path was to leave the exam
 
 A chat that lives inside the exam UI and routes straight to a support agent — arriving with the context of where the test-taker is in their session, so the agent isn't starting from zero. It resolves in real time without pulling the test-taker out of the exam, and the thread persists if the session is paused, so stepping away doesn't cost the agent their place in the conversation.
 
-![The support agent's queue, showing an incoming chat with session context attached](./placeholder.jpg)
+![The support agent's conversation thread, showing session context attached to the chat](/case-studies/support-agent-dashboard-conversation.svg)
 
 ## Usability testing
 

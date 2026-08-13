@@ -11,7 +11,10 @@ problem: "Instructors and third-party proctor providers had no visibility into h
 task: "Design an embedded analytics surface — inside the existing LMS review dashboard, with zero added UI for students — that turns proctor coverage from an assumption into per-session evidence."
 process: "The first fork was a live monitoring console versus a per-session evidence view. Chose the evidence timeline — instructors wanted proof coverage had happened, not another real-time screen to watch during an exam. From there, embedding the surface in the existing review dashboard and committing early to anonymized-but-resolvable identity and keyboard/ARIA accessibility shaped everything downstream."
 outcome: "A swimlane session timeline with glanceable gap, degradation, and device-status markers, plus an anonymized-but-resolvable identity model — fully keyboard accessible and currently in pilot."
-hero: "./placeholder.jpg"
+heroSrc: "/case-studies/proctor-coverage-timeline.svg"
+gallery:
+  - "/case-studies/proctor-coverage-segs-popovers.svg"
+  - "/case-studies/proctor-coverage-popovers.svg"
 cardSize: "Large"
 featured: false
 draft: false
@@ -39,7 +42,7 @@ The surface had to work inside real constraints:
 
 An analytics surface embedded directly in the instructor's review dashboard: a swimlane timeline of every proctor in a session, with glanceable markers for coverage gaps, connection degradation, and device issues. Proctor identity is anonymized by default but resolvable when an escalation requires it, and the whole surface is fully keyboard accessible.
 
-![The swimlane session timeline embedded in the instructor's review dashboard](./placeholder.jpg)
+![The swimlane session timeline embedded in the instructor's review dashboard](/case-studies/proctor-coverage-segs-popovers.svg)
 
 ## Key components
 
@@ -48,7 +51,7 @@ An analytics surface embedded directly in the instructor's review dashboard: a s
 - A scaling control for zooming into a specific window of the session
 - An anonymized identity chip that resolves to a real proctor identity on demand
 
-![Coverage gap and device-status markers, zoomed into a session window](./placeholder.jpg)
+![Coverage gap and device-status markers, zoomed into a session window](/case-studies/proctor-coverage-popovers.svg)
 
 ## Usability testing
 

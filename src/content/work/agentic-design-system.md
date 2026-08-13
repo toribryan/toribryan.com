@@ -8,7 +8,7 @@ stack: "Figma, Figma MCP, Claude Code"
 problem: "Every handoff carries a translation layer — the gap between what a designer meant and what an engineer builds. Structure the design system so a model can read it directly, and the deliverable stops being documentation. It becomes software."
 task: "Lead an overhaul of Proctorio's legacy design system, aligned to a company rebrand, into one structured for both human and machine consumers."
 outcome: "One canonical source — components linked to Figma via Code Connect — that every token, doc, and prototype derives from. No more hardcoded values, no more conflicting sources of truth."
-hero: "./placeholder.jpg"
+heroSrc: "/case-studies/agentic-design-system-cover.svg"
 cardSize: "Large"
 featured: true
 draft: false
@@ -34,7 +34,7 @@ Raw values are the first thing that breaks. Hand an agent `#008b8b` and it will 
 - **Semantics** are intent-named aliases — `color/action/primary`, `color/danger/background`. This is the only layer the agent reads and writes. The name describes the job, not the value, so a rebrand updates one alias and everything downstream follows.
 - **Component tokens** are optional — `button/background/default → color/action/primary`. Skip them until you're doing multi-brand work.
 
-![The three-tier token architecture: primitives → semantics → component tokens](./placeholder.jpg)
+![The three-tier token architecture: primitives → semantics → component tokens](/case-studies/agentic-design-system-tokens.svg)
 
 ## Fix 2: Component metadata
 
@@ -47,7 +47,7 @@ Most component documentation is written in prose, for humans. An agent needs a c
 
 An agent can auto-generate the first draft of this metadata, but it comes back about 80% right and 20% generic. It'll list the obvious anti-patterns and miss the ones that actually bite: "never use a destructive button in onboarding," "loading state shows after 200ms, not immediately."
 
-![JSON component metadata: props, relationships, tokens, and usage for a single component](./placeholder.jpg)
+![Semantic token definitions layered on top of the raw primitives](/case-studies/agentic-design-system-semantic-tokens.svg)
 
 ## Fix 3: One source of truth
 

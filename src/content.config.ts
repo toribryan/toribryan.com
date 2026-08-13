@@ -20,6 +20,17 @@ const work = defineCollection({
       cardSize: z.enum(['Feature', 'Large', 'Wide', 'Tall', 'Small']).default('Wide'),
       thumbnail: image().optional(),
       hero: image().optional(),
+      // Plain public/ URL, used instead of `hero` for assets that shouldn't go
+      // through Astro's Sharp-based optimization (e.g. complex Figma-exported
+      // SVGs with masks/patterns that Sharp/librsvg silently rasterizes blank).
+      // A z.union([image(), z.string()]) on `hero` doesn't work for this: the
+      // image() branch eagerly resolves any string as a project asset import
+      // before Zod can fall through to the string branch, so it 404s instead.
+      heroSrc: z.string().optional(),
+      // Additional public/ image URLs for the category-page module carousel,
+      // shown alongside heroSrc. Same rationale as heroSrc — plain strings,
+      // no Sharp processing.
+      gallery: z.array(z.string()).optional(),
       featured: z.boolean().default(false),
       draft: z.boolean().default(false),
     }),
