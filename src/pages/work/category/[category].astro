@@ -4,7 +4,6 @@ import { getImage } from 'astro:assets';
 import Layout from '../../../layouts/Layout.astro';
 import PageBackground from '../../../components/portfolio/PageBackground.astro';
 import CategoryHeader from '../../../components/portfolio/CategoryHeader.astro';
-import CategoryHeading from '../../../components/portfolio/CategoryHeading';
 import ProjectList from '../../../components/portfolio/ProjectList';
 import TimelineEntry from '../../../components/portfolio/TimelineEntry.astro';
 import { categorySlug, categoryAccent, isTabbedCategory } from '../../../lib/categories';
@@ -38,8 +37,6 @@ export async function getStaticPaths() {
 const { name, entries } = Astro.props;
 const accent = categoryAccent(name);
 const tabbed = isTabbedCategory(name);
-
-const projects = entries.map((entry) => ({ id: entry.id, title: entry.data.title }));
 
 const stageProjects = tabbed
   ? entries.map((entry) => {
@@ -76,16 +73,12 @@ const stageProjects = tabbed
 
 <Layout title={`${name} work`} description={`${name} case studies from Tori Bryan.`} chromeless>
   <PageBackground />
-  <CategoryHeader projects={projects} />
+  <CategoryHeader name={name} />
 
   <div class:list={['mx-auto px-4 pb-24 pt-12 sm:px-6', tabbed ? 'max-w-6xl' : 'max-w-4xl']}>
-    <div data-reveal>
-      <CategoryHeading name={name} client:load />
-    </div>
-
     {
       tabbed ? (
-        <div class="mt-10">
+        <div class="mt-10" transition:animate="none">
           <ProjectList client:load projects={stageProjects} accent={accent} />
         </div>
       ) : (

@@ -1,4 +1,4 @@
-import { motion, type Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import FolderTabs from './FolderTabs';
 import { ImageCarousel, type CarouselImage } from '../ui/image-carousel';
 
@@ -27,21 +27,6 @@ interface ProjectListProps {
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// Each stacked module reveals as it scrolls into view. The image travels
-// further and settles slower than the text, which starts a beat later —
-// that gap in distance and timing is what reads as parallax (two layers
-// drifting at different rates) rather than the whole card rising as one
-// flat block.
-const imageVariants: Variants = {
-  hidden: { opacity: 0, y: 56 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
-};
-
-const textVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE, delay: 0.12 } },
-};
-
 export default function ProjectList({ projects, accent }: ProjectListProps) {
   return (
     <div className="flex flex-col gap-8">
@@ -49,15 +34,13 @@ export default function ProjectList({ projects, accent }: ProjectListProps) {
         <motion.section
           key={project.id}
           id={project.id}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: EASE }}
           viewport={{ once: true, amount: 0.2, margin: '0px 0px -10% 0px' }}
           className="flex flex-col overflow-hidden rounded-[28px] bg-black/35 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl md:flex-row md:items-start md:gap-6 md:overflow-visible md:rounded-none md:bg-transparent md:shadow-none md:backdrop-blur-none"
         >
-          <motion.div
-            variants={imageVariants}
-            className="flex flex-col gap-4 pb-6 md:flex-1 md:self-start md:pb-0"
-          >
+          <div className="flex flex-col gap-4 pb-6 md:flex-1 md:self-start md:pb-0">
             <div className="aspect-[4/3] overflow-hidden md:rounded-[28px]">
               <ImageCarousel images={project.images} />
             </div>
@@ -71,12 +54,9 @@ export default function ProjectList({ projects, accent }: ProjectListProps) {
                 →
               </span>
             </a>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={textVariants}
-            className="flex flex-col border-t border-white/10 md:flex-1 md:overflow-hidden md:rounded-[28px] md:border-t-0 md:bg-black/35 md:shadow-[0_20px_60px_rgba(0,0,0,0.35)] md:backdrop-blur-xl"
-          >
+          <div className="flex flex-col border-t border-white/10 md:flex-1 md:overflow-hidden md:rounded-[28px] md:border-t-0 md:bg-black/35 md:shadow-[0_20px_60px_rgba(0,0,0,0.35)] md:backdrop-blur-xl">
             <div className="border-b border-white/10 px-6 pb-6 pt-8 sm:px-8">
               <h2 className="font-display text-2xl text-white sm:text-[32px]">{project.title}</h2>
               <p className="mt-2 text-white/70">{project.excerpt}</p>
@@ -93,7 +73,7 @@ export default function ProjectList({ projects, accent }: ProjectListProps) {
                 accent={accent}
               />
             </div>
-          </motion.div>
+          </div>
         </motion.section>
       ))}
     </div>

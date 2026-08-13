@@ -1,9 +1,9 @@
 ---
 interface Props {
-  projects: { id: string; title: string }[];
+  name: string;
 }
 
-const { projects } = Astro.props;
+const { name } = Astro.props;
 
 const links = [
   { href: '/', label: 'Work' },
@@ -13,30 +13,14 @@ const links = [
 ---
 
 <header
-  data-category-header
   class="sticky top-4 z-40 mx-4 flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/35 px-4 py-3 text-white shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:mx-6 sm:px-6"
 >
-  <nav class="flex min-w-0 shrink items-center gap-5 overflow-x-auto">
+  <div class="flex min-w-0 shrink items-center gap-5">
     <a href="/" class="shrink-0 text-sm text-white/70 transition-colors hover:text-white">
       ← Back
     </a>
-    {
-      projects.map((project, i) => (
-        <button
-          type="button"
-          data-quick-nav
-          data-quick-nav-target={project.id}
-          aria-current={i === 0 ? 'true' : 'false'}
-          class:list={[
-            'shrink-0 whitespace-nowrap border-b pb-0.5 text-sm transition-colors',
-            i === 0 ? 'border-white text-white' : 'border-transparent text-white/50 hover:text-white',
-          ]}
-        >
-          {project.title}
-        </button>
-      ))
-    }
-  </nav>
+    <span class="shrink-0 whitespace-nowrap text-sm text-white">{name} Work</span>
+  </div>
   <nav class="shrink-0">
     <ul class="flex items-center gap-5 font-sans text-sm text-white/70">
       {
@@ -51,42 +35,3 @@ const links = [
     </ul>
   </nav>
 </header>
-
-<script>
-  const header = document.querySelector<HTMLElement>('[data-category-header]');
-  if (header) {
-    const pills = Array.from(header.querySelectorAll<HTMLButtonElement>('[data-quick-nav]'));
-
-    pills.forEach((pill) => {
-      pill.addEventListener('click', () => {
-        const target = document.getElementById(pill.dataset.quickNavTarget ?? '');
-        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-
-    const sections = pills
-      .map((pill) => document.getElementById(pill.dataset.quickNavTarget ?? ''))
-      .filter((el): el is HTMLElement => !!el);
-
-    const setActive = (id: string) => {
-      pills.forEach((pill) => {
-        const active = pill.dataset.quickNavTarget === id;
-        pill.setAttribute('aria-current', String(active));
-        pill.classList.toggle('border-white', active);
-        pill.classList.toggle('text-white', active);
-        pill.classList.toggle('border-transparent', !active);
-        pill.classList.toggle('text-white/50', !active);
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.find((entry) => entry.isIntersecting);
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-  }
-</script>
