@@ -8,6 +8,7 @@ stack: "Figma, Figma MCP, Claude Code"
 problem: "Every handoff carries a translation layer — the gap between what a designer meant and what an engineer builds. Structure the design system so a model can read it directly, and the deliverable stops being documentation. It becomes software."
 task: "Lead an overhaul of Proctorio's legacy design system, aligned to a company rebrand, into one structured for both human and machine consumers."
 outcome: "One canonical source — components linked to Figma via Code Connect — that every token, doc, and prototype derives from. No more hardcoded values, no more conflicting sources of truth."
+hero: "./placeholder.jpg"
 cardSize: "Large"
 featured: true
 draft: false

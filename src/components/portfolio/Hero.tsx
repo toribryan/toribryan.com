@@ -21,13 +21,13 @@ export default function Hero() {
 
       <div className="pointer-events-none relative z-10 flex max-w-4xl flex-col items-center rounded-[28px] border border-white/10 bg-black/35 px-8 py-10 text-center shadow-[0_40px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:px-14 sm:py-14">
         <TextReveal
-          text="tori bryan — edtech product designer"
+          text="Tori Bryan ദ്ദി •̀ ᴗ •̀ Product Designer"
           className="font-sans text-xs uppercase tracking-[0.3em] text-white/50"
           stagger={0.035}
         />
         <TextReveal
           text="questioning everything, all the time."
-          className="mt-6 font-serif text-[clamp(2.25rem,6.5vw,4.75rem)] leading-[1.05] text-white"
+          className="mt-6 font-serif text-[clamp(2.25rem,6.5vw,4.75rem)] leading-[1.2] text-white"
           delay={0.4}
           stagger={0.07}
         />

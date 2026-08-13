@@ -5,6 +5,10 @@ import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '../../components/portfolio/TableOfContents';
 import { categorySlug } from '../../lib/categories';
 
+// article (max-w-2xl) + gap-12 (3rem) + desktop ToC rail (w-56, 14rem) = 59rem.
+// Keeps the article's centered width identical to before on narrower
+// viewports, where the rail is hidden and contributes nothing to the flex row.
+
 export async function getStaticPaths() {
   const entries = await getCollection('work', ({ data }) => !data.draft);
   return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
@@ -28,10 +32,11 @@ const tocHeadings = headings.filter((heading) => heading.depth <= 3);
 ---
 
 <Layout title={title} description={excerpt} image={hero?.src} dark>
-  <article class="mx-auto max-w-2xl px-6 pb-32 pt-16 sm:pt-20">
+  <div class="mx-auto flex max-w-2xl gap-12 lg:max-w-[59rem]">
+  <article class="min-w-0 max-w-2xl flex-1 px-6 pb-32 pt-8">
     <a href={backHref} class="text-sm text-ink-secondary transition-colors hover:text-ink">← Back</a>
 
-    <h1 class="mt-6 font-display text-5xl font-semibold tracking-tight text-ink sm:text-6xl">
+    <h1 class="mt-6 font-display text-[40px] font-semibold tracking-tight text-ink">
       {title}
     </h1>
     <p class="mt-4 text-lg text-ink-secondary sm:text-xl">{excerpt}</p>
@@ -69,7 +74,7 @@ const tocHeadings = headings.filter((heading) => heading.depth <= 3);
       )
     }
 
-    <div class="prose prose-neutral mt-10 max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-ink prose-headings:scroll-mt-24 prose-p:text-ink-secondary prose-strong:text-ink prose-a:text-accent prose-img:rounded-2xl">
+    <div class="prose prose-neutral mt-10 max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-ink prose-headings:scroll-mt-24 prose-p:text-ink-secondary prose-strong:text-ink prose-a:text-accent prose-code:text-ink prose-code:before:content-none prose-code:after:content-none prose-li:text-ink-secondary prose-li:marker:text-ink-tertiary prose-img:rounded-2xl">
       <Content />
     </div>
 
@@ -96,4 +101,5 @@ const tocHeadings = headings.filter((heading) => heading.depth <= 3);
   </article>
 
   {tocHeadings.length > 0 && <TableOfContents headings={tocHeadings} client:load />}
+  </div>
 </Layout>

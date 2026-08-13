@@ -13,7 +13,6 @@ interface FolderTabsProps {
   outcome?: string;
   excerpt: string;
   accent: string;
-  slug: string;
 }
 
 const TABS = [
@@ -31,7 +30,6 @@ export default function FolderTabs({
   outcome,
   excerpt,
   accent,
-  slug,
 }: FolderTabsProps) {
   const [activeTab, setActiveTab] = useState(0);
 
@@ -65,25 +63,11 @@ export default function FolderTabs({
         ))}
       </div>
 
-      <div className="min-h-[7rem] w-full p-5">
+      <div className="min-h-[7rem] w-full px-5 py-5">
         {activeTab === 0 && <p className="text-white/70">{problem ?? excerpt}</p>}
         {activeTab === 1 && <p className="text-white/70">{approach ?? excerpt}</p>}
         {activeTab === 2 && <p className="text-white/70">{process ?? excerpt}</p>}
-        {activeTab === 3 && (
-          <div className="flex flex-col gap-3">
-            <p className="text-white/70">{outcome ?? excerpt}</p>
-            <a
-              href={`/work/${slug}`}
-              className="group inline-flex items-center gap-1.5 self-start rounded-full px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-85 focus-visible:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              style={{ backgroundColor: accent }}
-            >
-              Read full case study
-              <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
-                →
-              </span>
-            </a>
-          </div>
-        )}
+        {activeTab === 3 && <p className="text-white/70">{outcome ?? excerpt}</p>}
       </div>
     </div>
   );

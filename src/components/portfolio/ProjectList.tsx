@@ -54,8 +54,23 @@ export default function ProjectList({ projects, accent }: ProjectListProps) {
           viewport={{ once: true, amount: 0.2, margin: '0px 0px -10% 0px' }}
           className="flex flex-col overflow-hidden rounded-[28px] bg-black/35 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl md:flex-row md:items-start md:gap-6 md:overflow-visible md:rounded-none md:bg-transparent md:shadow-none md:backdrop-blur-none"
         >
-          <motion.div variants={imageVariants} className="aspect-[3/2] md:flex-1 md:self-start md:overflow-hidden md:rounded-[28px]">
-            <ImageCarousel images={project.images} />
+          <motion.div
+            variants={imageVariants}
+            className="flex flex-col gap-4 pb-6 md:flex-1 md:self-start md:pb-0"
+          >
+            <div className="aspect-[3/2] overflow-hidden md:rounded-[28px]">
+              <ImageCarousel images={project.images} />
+            </div>
+            <a
+              href={`/work/${project.slug}`}
+              className="group mx-6 inline-flex items-center gap-1.5 self-start rounded-full px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-85 focus-visible:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:mx-8 md:mx-0"
+              style={{ backgroundColor: accent }}
+            >
+              Read full case study
+              <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                →
+              </span>
+            </a>
           </motion.div>
 
           <motion.div
@@ -76,7 +91,6 @@ export default function ProjectList({ projects, accent }: ProjectListProps) {
                 outcome={project.outcome}
                 excerpt={project.excerpt}
                 accent={accent}
-                slug={project.slug}
               />
             </div>
           </motion.div>

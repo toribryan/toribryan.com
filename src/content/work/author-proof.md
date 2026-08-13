@@ -10,6 +10,7 @@ problem: "Plagiarism detectors analyze the document, not the student — a parap
 task: "Design the Phase 1 MVP end-to-end in 4–6 weeks: the instructor quiz-settings panel in the Canvas assignment editor, AI-generated comprehension questions, the student quiz flow, and the SpeedGrader badge → Review Center pathway — inside Canvas's iframe and FERPA constraints."
 process: "Chose the SpeedGrader-badge → Review Center pathway over a dedicated report card — it minimized new surface area for instructors already living in SpeedGrader, and was the only path that fit the 4–6 week timeline. From there, Canvas's iframe and FERPA constraints shaped the rest, and the inverted badge-color problem got resolved with color-independent copy instead of a Canvas-side override we didn't control."
 outcome: "An MVP built around a color-independent status pattern — Canvas's badge-color logic runs inverted from Author Proof's own scoring — targeting 95%+ completion, sub-30-second generation, and under 5% false positives in the first-semester pilot."
+hero: "./placeholder.jpg"
 cardSize: "Wide"
 featured: false
 draft: false
@@ -25,6 +26,22 @@ Author Proof was scoped as a Phase 1 MVP on a 4–6 week timeline, integrating d
 - Get registered as an approved LTI tool by an institutional admin
 - Stay FERPA-compliant — no storing submission content beyond quiz generation, no logging PII
 - Work around an inverted badge color: the SpeedGrader score-badge color is Canvas-controlled, and it's *inverted* relative to Author Proof's own scoring — an 80% score shows red — so the UI could never rely on color alone to communicate a result
+
+## Research & insights
+
+*Mock section — replace with real research findings.*
+
+- Interviewed a handful of instructors about how they currently handle a submission they suspect wasn't written by the student.
+- Most said they had no reliable way to act once a submission passed existing plagiarism and AI-detection checks.
+- Instructors wanted a signal inside SpeedGrader itself — not a separate report to check.
+- Students raised fairness concerns early, which shaped the "confidence, not verdict" framing throughout.
+
+## Guiding principles
+
+- Prove authorship, don't judge originality.
+- Never let a low score read as an accusation — surface confidence, not a verdict.
+- Live inside tools instructors already use, not a new destination.
+- Respect the 4–6 week timeline: ship the smallest version that's still honest about what it can prove.
 
 ## The solution
 
@@ -45,6 +62,22 @@ Instructors turn on Author Proof from a quiz-settings panel built inline into th
 - The Review Center session view for deeper review
 
 ![The SpeedGrader score badge, built around a color-independent status pattern](./placeholder.jpg)
+
+## Usability testing
+
+*Mock section — replace with real testing methodology and results.*
+
+Moderated sessions with instructors and students on the mid-fidelity prototype, focused on three flows: enabling Author Proof, reading a SpeedGrader badge, and opening a Review Center session.
+
+**What worked**
+
+- Instructors found the quiz-settings panel where they expected it — inline with other assignment settings.
+- The SpeedGrader badge needed no explanation once instructors saw it next to the existing grade.
+
+**What we fixed**
+
+- Early testers misread the badge color before the color-independent copy was added.
+- The Review Center link needed clearer framing as optional context, not a required step.
 
 ## How we got there
 
@@ -74,3 +107,11 @@ Author Proof is a pre-launch MVP. Impact will be measured in the first-semester 
 - Narrowing to one provable claim — did you write this — kept the MVP honest about what it could and couldn't prove.
 - Designing with the platform's constraints, rather than around them, is what produced the color-independent status pattern.
 - Treating fairness as a core requirement, not a nice-to-have, meant the product had to read as *confidence*, not *verdict* — evidence for a human conversation, never an automated judgment.
+
+**If I had more time**
+
+*Mock section — replace with real next steps.*
+
+- Revisit the dedicated report card that got deferred, for instructors who want more than the badge alone.
+- Test quiz generation against multilingual submissions beyond the initial pilot cohort.
+- Design language for how instructors talk to a student about a low-confidence result.

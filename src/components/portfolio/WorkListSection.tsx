@@ -38,8 +38,7 @@ export default function WorkListSection({ categories }: WorkListSectionProps) {
               Explore my work
             </h2>
             <p className="max-w-[280px] text-right text-sm text-white/70">
-              Five years across EdTech, AI &amp; Security, Bridal, and Assisted Living Care —
-              solving real problems for real users.
+              Five years across education technology, solving real user problems.
             </p>
           </div>
 

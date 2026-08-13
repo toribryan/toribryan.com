@@ -1,0 +1,35 @@
+---
+title: "Portfolio Website"
+excerpt: "A from-scratch Astro rebuild of this site — dark glass modules, category-driven case studies, and a content pipeline built around Claude Code."
+category: "Web Design"
+company: "Personal"
+role: "Designer & Developer"
+timeline: "2026"
+stack: "Astro, React, Tailwind, Claude Code"
+problem: "The previous portfolio was static HTML — updating a single case study meant hand-editing markup, and there was no real system for how a new project should look or read."
+task: "Rebuild the site on Astro with a content-collection-driven architecture: category browsing, tabbed case study modules, and a workflow for updating copy and content directly through Claude Code."
+process: "Built category pages around two module patterns — a tabbed Problem/Approach/Process/Outcome layout for full product design case studies, and a simpler timeline entry for lighter categories. Every visual system (dark glass panels, magenta accent, sticky table of contents) had to hold up across both."
+outcome: "A living site where new case studies, content sections, and design refinements ship in a single working session instead of a rebuild."
+hero: "./placeholder.jpg"
+cardSize: "Wide"
+featured: false
+draft: false
+---
+
+## The problem
+
+The previous portfolio was static HTML — updating a single case study meant editing markup by hand, and there was no real system for how a new project should look or read. Each addition made the whole site harder to keep consistent.
+
+## The solution
+
+A full rebuild on Astro, with case studies as content-collection entries instead of hardcoded pages. Categories, tags, and module layout are all derived from the content itself, so adding a new project is a matter of writing a markdown file, not building a page.
+
+## Key components
+
+- A content-collection schema shared by every case study, driving both the category listing and the full write-up
+- Two module patterns: tabbed Problem/Approach/Process/Outcome for end-to-end product work, and a lighter timeline entry for smaller categories
+- A dark-glass visual system — translucent panels, a magenta accent, sticky table of contents — consistent from the homepage hero through to individual case studies
+
+## What I learned
+
+Building the site this way made the site itself a live example of the process it documents: describing a project accurately, in public, is its own kind of design work.

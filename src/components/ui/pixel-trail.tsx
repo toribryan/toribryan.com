@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import { motion, useAnimationControls } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
 
 import { cn } from '@/lib/utils';
@@ -77,37 +76,48 @@ interface PixelDotProps {
   className?: string;
 }
 
+// Plain CSS transitions instead of Framer Motion's imperative controls API:
+// with React 19, `useAnimationControls().start()` silently no-ops (the
+// underlying VisualElement never subscribes), so pixels never lit up.
+// Direct style + transition sidesteps that entirely and is simpler besides.
+//
+// The hold-before-fade uses setTimeout rather than transition-delay —
+// transition-delay paired with transition-duration: 0 (the default here)
+// is unreliable across browsers and can silently never apply the target
+// value, so the delay is handled in JS and the transition only owns the
+// fade itself.
 const PixelDot: React.FC<PixelDotProps> = React.memo(({ id, size, fadeDuration, delay, className }) => {
-  const controls = useAnimationControls();
-
-  const animatePixel = useCallback(() => {
-    controls.start({
-      opacity: [1, 0],
-      transition: { duration: fadeDuration / 1000, delay: delay / 1000 },
-    });
-  }, [controls, fadeDuration, delay]);
-
   const ref = useCallback(
     (node: HTMLDivElement | null) => {
-      if (node) {
-        (node as unknown as { __animatePixel: () => void }).__animatePixel = animatePixel;
-      }
+      if (!node) return;
+      let timeoutId: ReturnType<typeof setTimeout>;
+      const animatePixel = () => {
+        clearTimeout(timeoutId);
+        node.style.transitionProperty = 'none';
+        node.style.opacity = '1';
+        // Force a reflow so the opacity:1 state is committed before the
+        // fade-out transition below is registered on the next frame.
+        void node.offsetHeight;
+        node.style.transitionProperty = 'opacity';
+        node.style.transitionDuration = `${fadeDuration}ms`;
+        timeoutId = setTimeout(() => {
+          node.style.opacity = '0';
+        }, delay);
+      };
+      (node as unknown as { __animatePixel: () => void }).__animatePixel = animatePixel;
     },
-    [animatePixel]
+    [fadeDuration, delay]
   );
 
   return (
-    <motion.div
+    <div
       id={id}
       ref={ref}
-      className={cn('cursor-pointer-none', className)}
+      className={cn('cursor-pointer-none opacity-0 ease-out', className)}
       style={{
         width: `${size}px`,
         height: `${size}px`,
       }}
-      initial={{ opacity: 0 }}
-      animate={controls}
-      exit={{ opacity: 0 }}
     />
   );
 });

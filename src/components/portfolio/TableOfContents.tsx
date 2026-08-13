@@ -117,7 +117,34 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   const active = headings[activeIndex];
 
   return (
-    <div ref={rootRef} className="fixed inset-x-0 bottom-6 z-40 flex justify-center px-4">
+    <>
+      <nav
+        aria-label="On this page"
+        className="hidden lg:sticky lg:top-24 lg:block lg:h-fit lg:w-56 lg:shrink-0 lg:pt-20"
+      >
+        <p className="font-sans text-xs font-medium uppercase tracking-[0.15em] text-white/40">
+          On this page
+        </p>
+        <ul className="mt-4 border-l border-white/10">
+          {headings.map((heading, i) => (
+            <li key={heading.slug}>
+              <a
+                href={`#${heading.slug}`}
+                style={{ paddingLeft: `${16 + (heading.depth - 2) * 16}px` }}
+                className={`-ml-px block border-l-2 py-1.5 pr-2 text-sm transition-colors ${
+                  i === activeIndex
+                    ? 'border-accent font-medium text-white'
+                    : 'border-transparent text-white/50 hover:text-white/80'
+                }`}
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div ref={rootRef} className="fixed inset-x-0 bottom-6 z-40 flex justify-center px-4 lg:hidden">
       {expanded ? (
         <div className="w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-black/35 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
           <div className="flex items-center justify-between px-5 pb-2 pt-4">
@@ -168,6 +195,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
           <ProgressRing progress={progress} />
         </button>
       )}
-    </div>
+      </div>
+    </>
   );
 }

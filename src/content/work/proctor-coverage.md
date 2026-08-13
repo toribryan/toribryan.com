@@ -11,6 +11,7 @@ problem: "Instructors and third-party proctor providers had no visibility into h
 task: "Design an embedded analytics surface — inside the existing LMS review dashboard, with zero added UI for students — that turns proctor coverage from an assumption into per-session evidence."
 process: "The first fork was a live monitoring console versus a per-session evidence view. Chose the evidence timeline — instructors wanted proof coverage had happened, not another real-time screen to watch during an exam. From there, embedding the surface in the existing review dashboard and committing early to anonymized-but-resolvable identity and keyboard/ARIA accessibility shaped everything downstream."
 outcome: "A swimlane session timeline with glanceable gap, degradation, and device-status markers, plus an anonymized-but-resolvable identity model — fully keyboard accessible and currently in pilot."
+hero: "./placeholder.jpg"
 cardSize: "Large"
 featured: false
 draft: false
@@ -27,6 +28,13 @@ The surface had to work inside real constraints:
 - Keep proctor identity anonymized in analytics by default, but resolvable when an escalation required it
 - Be fully keyboard accessible, with intentional ARIA labeling
 
+## Guiding principles
+
+- Evidence over surveillance — build proof, not a live monitor.
+- Anonymized by default, resolvable on demand.
+- Zero new UI for students, no matter what.
+- Accessible from day one, not retrofitted.
+
 ## The solution
 
 An analytics surface embedded directly in the instructor's review dashboard: a swimlane timeline of every proctor in a session, with glanceable markers for coverage gaps, connection degradation, and device issues. Proctor identity is anonymized by default but resolvable when an escalation requires it, and the whole surface is fully keyboard accessible.
@@ -41,6 +49,22 @@ An analytics surface embedded directly in the instructor's review dashboard: a s
 - An anonymized identity chip that resolves to a real proctor identity on demand
 
 ![Coverage gap and device-status markers, zoomed into a session window](./placeholder.jpg)
+
+## Usability testing
+
+*Mock section — replace with real testing methodology and results.*
+
+Walked instructors and proctor-provider admins through the swimlane timeline prototype, focused on finding a specific gap, resolving an identity, and navigating with keyboard only.
+
+**What worked**
+
+- The swimlane layout matched how participants already mentally modeled a session — who, when, and where the gaps were.
+- Status markers were glanceable without needing a legend.
+
+**What we fixed**
+
+- The scaling control for zooming into a session window wasn't discoverable on first pass.
+- Keyboard-only navigation missed a focus state on the identity-resolve action.
 
 ## How we got there
 
@@ -67,3 +91,11 @@ Proctor Coverage is pre-launch. The intended outcome is per-session proctor enga
 - Anonymized-but-resolvable identity turned out to be the detail that earned trust from both instructors and proctors.
 - The zero-student-UI constraint concentrated all the design value into the instructor-facing surface.
 - Accessibility had to be designed in from the start, not bolted on at the end.
+
+**If I had more time**
+
+*Mock section — replace with real next steps.*
+
+- Pilot the anonymized-but-resolvable identity model with proctor providers directly, not just instructors.
+- Explore a lightweight coverage summary instructors could share with a student who disputes a session.
+- Study whether the swimlane pattern scales to multi-day or multi-session exams.
