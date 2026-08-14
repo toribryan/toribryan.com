@@ -7,15 +7,16 @@ import CategoryHeader from '../../../components/portfolio/CategoryHeader.astro';
 import ProjectList from '../../../components/portfolio/ProjectList';
 import TimelineEntry from '../../../components/portfolio/TimelineEntry.astro';
 import { categorySlug, categoryAccent, isTabbedCategory } from '../../../lib/categories';
-import proctorDashboard from '../../../assets/work-carousel/proctor-dashboard.png';
+import lotusPond from '../../../assets/hero/lotus-pond.png';
 
-const dashboardShot = await getImage({ src: proctorDashboard, width: 1200, format: 'webp' });
-const defaultImages = [
-  { src: dashboardShot.src, alt: 'Product dashboard screenshot' },
-  { alt: 'Additional screenshot placeholder' },
-  { alt: 'Additional screenshot placeholder' },
-  { alt: 'Additional screenshot placeholder' },
-];
+// Product Design module cards fake their glass-panel background with a blurred
+// copy of this same image instead of backdrop-filter — Chrome doesn't render
+// backdrop-filter on those cards (confirmed bug, see project memory).
+const heroBg = await getImage({ src: lotusPond, width: 2400, format: 'webp', quality: 75 });
+
+function placeholderImages(count = 4) {
+  return Array.from({ length: count }, () => ({ alt: 'Additional screenshot placeholder' }));
+}
 
 export async function getStaticPaths() {
   const allWork = await getCollection('work', ({ data }) => !data.draft);
@@ -39,35 +40,74 @@ const accent = categoryAccent(name);
 const tabbed = isTabbedCategory(name);
 
 const stageProjects = tabbed
-  ? entries.map((entry) => {
-      const { title, excerpt, problem, task, process, outcome, company, role, team, heroSrc, gallery } =
-        entry.data;
-      const facts = [
-        { label: 'Company', value: company },
-        { label: 'Role', value: role },
-        { label: 'Team', value: team },
-      ].filter((fact): fact is { label: string; value: string } => !!fact.value);
+  ? entries
+      .map((entry) => {
+        const {
+          title,
+          excerpt,
+          problem,
+          task,
+          process,
+          outcome,
+          company,
+          audience,
+          role,
+          team,
+          type,
+          caseStudy,
+          heroSrc,
+          gallery,
+          placeholderImages: placeholderImageCount,
+          order,
+        } = entry.data;
 
-      const images = heroSrc
-        ? [
-            { src: heroSrc, alt: title },
-            ...(gallery ?? []).map((src) => ({ src, alt: title })),
-          ]
-        : defaultImages;
+        // Modules without a company relationship show who the product is
+        // for instead; entries with neither fall back to team.
+        const identity = audience
+          ? { label: 'Audience', value: audience }
+          : company
+            ? { label: 'Company', value: company }
+            : team
+              ? { label: 'Team', value: team }
+              : undefined;
 
-      return {
-        id: entry.id,
-        title,
-        excerpt,
-        problem,
-        task,
-        process,
-        outcome,
-        facts,
-        images,
-        slug: entry.id,
-      };
-    })
+        const facts = [identity, { label: 'Role', value: role }, { label: 'Type', value: type }].filter(
+          (fact): fact is { label: string; value: string } => !!fact?.value
+        );
+
+        // Modules without a case study yet swap the Outcome tab for Team —
+        // there's no shipped outcome to report on.
+        const tabs = caseStudy
+          ? [
+              { key: 'problem', label: '01 Problem', content: problem ?? excerpt },
+              { key: 'approach', label: '02 Approach', content: task ?? excerpt },
+              { key: 'process', label: '03 Process', content: process ?? excerpt },
+              { key: 'outcome', label: '04 Outcome', content: outcome ?? excerpt },
+            ]
+          : [
+              { key: 'problem', label: '01 Problem', content: problem ?? excerpt },
+              { key: 'approach', label: '02 Approach', content: task ?? excerpt },
+              { key: 'process', label: '03 Process', content: process ?? excerpt },
+              { key: 'team', label: '04 Team', content: team ?? excerpt },
+            ];
+
+        const images = heroSrc
+          ? [{ src: heroSrc, alt: title }, ...(gallery ?? []).map((src) => ({ src, alt: title }))]
+          : placeholderImages(placeholderImageCount);
+
+        return {
+          id: entry.id,
+          title,
+          excerpt,
+          facts,
+          tabs,
+          images,
+          caseStudy,
+          slug: entry.id,
+          order: order ?? Number.MAX_SAFE_INTEGER,
+        };
+      })
+      .sort((a, b) => a.order - b.order)
   : [];
 ---
 
@@ -79,7 +119,7 @@ const stageProjects = tabbed
     {
       tabbed ? (
         <div class="mt-10" transition:animate="none">
-          <ProjectList client:load projects={stageProjects} accent={accent} />
+          <ProjectList client:load projects={stageProjects} accent={accent} backgroundImage={heroBg.src} />
         </div>
       ) : (
         <div class="mt-10 flex flex-col gap-8">

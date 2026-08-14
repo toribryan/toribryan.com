@@ -10,7 +10,7 @@ import { categorySlug } from '../../lib/categories';
 // viewports, where the rail is hidden and contributes nothing to the flex row.
 
 export async function getStaticPaths() {
-  const entries = await getCollection('work', ({ data }) => !data.draft);
+  const entries = await getCollection('work', ({ data }) => !data.draft && data.caseStudy);
   return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 

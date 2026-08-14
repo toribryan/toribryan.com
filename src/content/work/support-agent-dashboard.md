@@ -5,6 +5,8 @@ category: "Product Design"
 company: "Proctorio"
 role: "Staff Designer"
 team: "Support, Product, Engineering"
+type: "Product Redesign"
+order: 3
 timeline: "Q4 2024 – Q1 2025"
 stack: "Figma, internal chat platform"
 problem: "Test-takers who hit friction mid-exam had one option: leave the exam, email support, and wait — with no live channel to a human, and no session context attached by the time an agent picked it up."

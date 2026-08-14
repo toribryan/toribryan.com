@@ -4,6 +4,8 @@ excerpt: "A Canvas-integrated integrity tool that verifies authorship, not origi
 category: "Product Design"
 company: "Proctorio"
 role: "Lead Product Designer, End-to-End Product Design"
+type: "Proof of concept"
+order: 5
 timeline: "4–6 week MVP"
 stack: "Figma, Claude Code, Azure"
 problem: "Plagiarism detectors analyze the document, not the student — a paraphrase, an AI rewrite, or a ghostwriter pass clears every existing check. Instructors had no scalable way to verify authorship inside their Canvas workflow."

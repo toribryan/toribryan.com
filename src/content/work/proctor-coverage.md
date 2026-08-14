@@ -5,6 +5,8 @@ category: "Product Design"
 company: "Proctorio"
 role: "Lead Product Designer, End-to-End Product Design"
 team: "Product, Engineering, Support"
+type: "Product Surface"
+order: 1
 timeline: "Q2 2025 – Q3 2025"
 stack: "Figma, Claude Code, Azure"
 problem: "Instructors and third-party proctor providers had no visibility into how a proctor spent a session, or whether their device and network held up — coverage ran on trust and the honor system, with zero evidence."
@@ -23,13 +25,6 @@ draft: false
 ## Context
 
 Proctorio provides exam proctoring across LMS assessment sessions, using both internal proctors and third-party proctor providers. But neither instructors nor providers had any way to see how a proctor actually spent a session — where their attention landed, or whether their device and network connection held up throughout. Coverage was a vibes-based conversation: instructors trusted that a proctor was watching, proctors ran on the honor system, and there was no evidence that coverage had actually been seamless.
-
-The surface had to work inside real constraints:
-
-- Live inside the instructor's existing LMS review dashboard, not a separate tool
-- Add zero new UI for students — the exam experience itself couldn't change
-- Keep proctor identity anonymized in analytics by default, but resolvable when an escalation required it
-- Be fully keyboard accessible, with intentional ARIA labeling
 
 ## Guiding principles
 
