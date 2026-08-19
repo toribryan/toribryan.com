@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '../../components/portfolio/TableOfContents';
@@ -9,12 +9,13 @@ import { categorySlug } from '../../lib/categories';
 // Keeps the article's centered width identical to before on narrower
 // viewports, where the rail is hidden and contributes nothing to the flex row.
 
-export async function getStaticPaths() {
-  const entries = await getCollection('work', ({ data }) => !data.draft && data.caseStudy);
-  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+const { slug } = Astro.params;
+const entry = slug ? await getEntry('work', slug) : undefined;
+
+if (!entry || entry.data.draft || !entry.data.caseStudy) {
+  return new Response('Not found', { status: 404 });
 }
 
-const { entry } = Astro.props;
 const { title, excerpt, company, role, team, timeline, stack, problem, task, outcome, hero, heroSrc, category } =
   entry.data;
 const { Content, headings } = await render(entry);

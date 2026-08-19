@@ -19,24 +19,23 @@ function placeholderImages(count = 4) {
   return Array.from({ length: count }, () => ({ alt: 'Additional screenshot placeholder' }));
 }
 
-export async function getStaticPaths() {
-  const allWork = await getCollection('work', ({ data }) => !data.draft);
+const allWork = await getCollection('work', ({ data }) => !data.draft);
 
-  const grouped = new Map<string, typeof allWork>();
-  for (const entry of allWork) {
-    const category = entry.data.category ?? 'Other';
-    const existing = grouped.get(category) ?? [];
-    existing.push(entry);
-    grouped.set(category, existing);
-  }
-
-  return Array.from(grouped.entries()).map(([name, entries]) => ({
-    params: { category: categorySlug(name) },
-    props: { name, entries },
-  }));
+const grouped = new Map<string, typeof allWork>();
+for (const entry of allWork) {
+  const category = entry.data.category ?? 'Other';
+  const existing = grouped.get(category) ?? [];
+  existing.push(entry);
+  grouped.set(category, existing);
 }
 
-const { name, entries } = Astro.props;
+const match = Array.from(grouped.entries()).find(([categoryName]) => categorySlug(categoryName) === Astro.params.category);
+
+if (!match) {
+  return new Response('Not found', { status: 404 });
+}
+
+const [name, entries] = match;
 const accent = categoryAccent(name);
 const tabbed = isTabbedCategory(name);
 const browserMockup = isBrowserMockupCategory(name);
