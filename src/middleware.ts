@@ -24,5 +24,5 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
 
-  return context.redirect(`/login?redirect=${encodeURIComponent(pathname + context.url.search)}`);
+  return context.redirect('/login');
 });

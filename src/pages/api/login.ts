@@ -3,10 +3,11 @@ import { SITE_AUTH_COOKIE, hashPassword } from '../../lib/auth';
 
 export const prerender = false;
 
+const ERROR_COOKIE = 'site_auth_error';
+
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const formData = await request.formData();
   const password = formData.get('password')?.toString() ?? '';
-  const redirectTo = formData.get('redirect')?.toString() || '/';
 
   const expected = import.meta.env.SITE_PASSWORD as string | undefined;
 
@@ -18,8 +19,15 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
       path: '/',
       maxAge: 60 * 60 * 24 * 30,
     });
-    return redirect(redirectTo);
+    return redirect('/');
   }
 
-  return redirect(`/login?error=1&redirect=${encodeURIComponent(redirectTo)}`);
+  cookies.set(ERROR_COOKIE, '1', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 10,
+  });
+  return redirect('/login');
 };

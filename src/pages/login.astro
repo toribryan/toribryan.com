@@ -3,8 +3,11 @@ import Layout from '../layouts/Layout.astro';
 
 export const prerender = false;
 
-const error = Astro.url.searchParams.get('error');
-const redirectTo = Astro.url.searchParams.get('redirect') ?? '/';
+const ERROR_COOKIE = 'site_auth_error';
+const error = Astro.cookies.get(ERROR_COOKIE)?.value === '1';
+if (error) {
+  Astro.cookies.delete(ERROR_COOKIE, { path: '/' });
+}
 ---
 
 <Layout title="Enter password" description="Password-protected portfolio." chromeless>
@@ -18,7 +21,6 @@ const redirectTo = Astro.url.searchParams.get('redirect') ?? '/';
       </div>
 
       <form method="POST" action="/api/login" class="flex w-full flex-col gap-3">
-        <input type="hidden" name="redirect" value={redirectTo} />
         <input
           type="password"
           name="password"
