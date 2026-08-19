@@ -10,7 +10,7 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  adapter: vercel(),
+  adapter: vercel({ middlewareMode: 'edge' }),
 
   vite: {
     plugins: [tailwindcss()],

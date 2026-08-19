@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = false;
+
+const error = Astro.url.searchParams.get('error');
+const redirectTo = Astro.url.searchParams.get('redirect') ?? '/';
+---
+
+<Layout title="Enter password" description="Password-protected portfolio." chromeless>
+  <div class="flex min-h-screen items-center justify-center bg-black px-6">
+    <div
+      class="flex w-full max-w-sm flex-col items-center gap-6 rounded-[28px] border border-white/10 bg-black/35 px-8 py-10 text-center shadow-[0_40px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+    >
+      <div>
+        <p class="font-serif text-lg text-white">tori bryan</p>
+        <p class="mt-1 font-sans text-[0.65rem] uppercase tracking-[0.52px] text-white/70">Password protected</p>
+      </div>
+
+      <form method="POST" action="/api/login" class="flex w-full flex-col gap-3">
+        <input type="hidden" name="redirect" value={redirectTo} />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+          autofocus
+          class="w-full rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2.5 text-center text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/30"
+        />
+        <button
+          type="submit"
+          class="w-full rounded-lg px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-85"
+          style="background-color: #7f285c;"
+        >
+          Enter
+        </button>
+      </form>
+
+      {error && <p class="text-sm text-red-400">Incorrect password — try again.</p>}
+    </div>
+  </div>
+</Layout>
