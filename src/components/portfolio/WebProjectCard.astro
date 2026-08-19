@@ -1,0 +1,88 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  excerpt: string;
+  role?: string;
+  type?: string;
+  status?: string;
+  liveUrl?: string;
+  panelColor?: string;
+  image?: string;
+  accent: string;
+}
+
+const { id, title, excerpt, role, type, status, liveUrl, panelColor = '#1f1a15', image, accent } = Astro.props;
+
+const facts = [
+  { label: 'Role', value: role },
+  { label: 'Type', value: type },
+  { label: 'Status', value: status },
+].filter((fact): fact is { label: string; value: string } => !!fact.value);
+
+const displayUrl = liveUrl?.replace(/^https?:\/\//, '').replace(/\/$/, '');
+---
+
+<section id={id} data-project-section class="scroll-mt-28 flex flex-col gap-6 rounded-2xl md:flex-row md:items-stretch">
+  <div
+    class="flex flex-1 items-center justify-center rounded-2xl p-8 md:p-11"
+    style={{ backgroundColor: panelColor }}
+  >
+    {
+      image && (
+        <div class="w-full max-w-[602px] overflow-hidden rounded-md border-2 border-white shadow-[0_0_0_5px_rgba(255,255,255,0.25)]">
+          <div class="flex h-7 items-center gap-2 bg-[#202124] px-2.5">
+            <span class="size-1.5 rounded-full bg-[#5f6368]" />
+            <span class="size-1.5 rounded-full bg-[#5f6368]" />
+            <span class="size-1.5 rounded-full bg-[#5f6368]" />
+            {displayUrl && (
+              <div class="ml-2 flex flex-1 items-center rounded-full bg-[#35363a] px-2.5 py-1">
+                <span class="truncate text-[10px] text-white/70">{displayUrl}</span>
+              </div>
+            )}
+          </div>
+          <img src={image} alt={title} class="aspect-[602/358] w-full bg-white object-cover object-top" />
+        </div>
+      )
+    }
+  </div>
+
+  <div class="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/35 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl md:flex-1">
+    <div class="flex flex-col gap-2 p-6">
+      <h2 class="font-display text-[28px] leading-9 text-white">{title}</h2>
+      <p class="text-base leading-6 text-white/70">{excerpt}</p>
+
+      {
+        facts.length > 0 && (
+          <dl class="mt-2 flex flex-wrap gap-x-5 gap-y-2">
+            {facts.map((fact) => (
+              <div>
+                <dt class="text-xs uppercase tracking-wide text-white/40">{fact.label}</dt>
+                <dd class="mt-0.5 text-sm text-white/80">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+    </div>
+
+    {
+      liveUrl && (
+        <div class="mt-auto border-t border-white/10 p-4">
+          <a
+            href={liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex w-full items-center justify-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-85"
+            style={{ backgroundColor: accent }}
+          >
+            Visit site
+            <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">
+              →
+            </span>
+          </a>
+        </div>
+      )
+    }
+  </div>
+</section>

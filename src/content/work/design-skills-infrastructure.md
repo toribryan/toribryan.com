@@ -5,6 +5,7 @@ category: "Design Systems"
 company: "Proctorio"
 role: "Staff Product Designer — owner and architect"
 team: "DesignOps · AI-native workflow · Design systems"
+order: 4
 problem: "Designers were spending too much time producing handoff documentation, and engineers were spending too much time deciphering it. Specs were inconsistent, went stale the moment a design changed, and left too much room for interpretation between design intent and shipped code."
 outcome: "Spec production dropped from 3 days–2 weeks to under 30 minutes — roughly 80 hours per handoff cycle returned to design work — with 100% adoption across the design team, validated with 4 designers on 3 products plus 3 engineers and a PM."
 heroSrc: "/case-studies/design-skills-infrastructure-hero.png"

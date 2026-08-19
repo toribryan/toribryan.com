@@ -13,12 +13,20 @@ export function categoryAccent(_category: string): string {
   return ACCENT;
 }
 
-// Only "Product Design" uses the tabbed module layout in the Figma spec;
-// other categories use the simpler timeline-entry layout.
-const TABBED_CATEGORIES = new Set(['product-design']);
+// "Product Design" and "Design Systems" use the tabbed module layout in the
+// Figma spec; other categories use the simpler timeline-entry layout.
+const TABBED_CATEGORIES = new Set(['product-design', 'design-systems']);
 
 export function isTabbedCategory(category: string): boolean {
   return TABBED_CATEGORIES.has(categorySlug(category));
+}
+
+// "Web Design" uses a browser-mockup card layout (live-site screenshot +
+// Role/Type/Status facts + external "Visit site" link) per the Figma spec.
+const BROWSER_MOCKUP_CATEGORIES = new Set(['web-design']);
+
+export function isBrowserMockupCategory(category: string): boolean {
+  return BROWSER_MOCKUP_CATEGORIES.has(categorySlug(category));
 }
 
 // Canonical homepage ordering. Categories not listed here render after the

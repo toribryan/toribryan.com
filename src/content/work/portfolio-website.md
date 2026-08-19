@@ -1,7 +1,7 @@
 ---
 title: "Portfolio Website"
 excerpt: "A from-scratch Astro rebuild of this site — dark glass modules, category-driven case studies, and a content pipeline built around Claude Code."
-category: "Web Design"
+category: "Creative Retros"
 company: "Personal"
 role: "Designer & Developer"
 timeline: "2026"

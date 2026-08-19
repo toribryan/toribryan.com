@@ -9,9 +9,9 @@ type: "New Product Suite"
 problem: "Placeholder — problem statement coming soon."
 task: "Placeholder — approach coming soon."
 process: "Placeholder — process notes coming soon."
+heroSrc: "/cover-mobileexam.svg"
 caseStudy: false
 order: 4
-placeholderImages: 2
 cardSize: "Wide"
 featured: false
 draft: false

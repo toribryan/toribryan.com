@@ -12,10 +12,7 @@ problem: "Plagiarism detectors analyze the document, not the student — a parap
 task: "Design the Phase 1 MVP end-to-end in 4–6 weeks: the instructor quiz-settings panel in the Canvas assignment editor, AI-generated comprehension questions, the student quiz flow, and the SpeedGrader badge → Review Center pathway — inside Canvas's iframe and FERPA constraints."
 process: "Chose the SpeedGrader-badge → Review Center pathway over a dedicated report card — it minimized new surface area for instructors already living in SpeedGrader, and was the only path that fit the 4–6 week timeline. From there, Canvas's iframe and FERPA constraints shaped the rest, and the inverted badge-color problem got resolved with color-independent copy instead of a Canvas-side override we didn't control."
 outcome: "An MVP built around a color-independent status pattern — Canvas's badge-color logic runs inverted from Author Proof's own scoring — targeting 95%+ completion, sub-30-second generation, and under 5% false positives in the first-semester pilot."
-heroSrc: "/case-studies/author-proof-cover.svg"
-gallery:
-  - "/case-studies/author-proof-question-review.svg"
-  - "/case-studies/author-proof-report-card.svg"
+heroSrc: "/cover-authorproof.svg"
 cardSize: "Wide"
 featured: false
 draft: false

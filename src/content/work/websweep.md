@@ -9,9 +9,9 @@ type: "New Product Suite"
 problem: "Placeholder — problem statement coming soon."
 task: "Placeholder — approach coming soon."
 process: "Placeholder — process notes coming soon."
+heroSrc: "/cover-websweep.svg"
 caseStudy: false
 order: 2
-placeholderImages: 1
 cardSize: "Wide"
 featured: false
 draft: false

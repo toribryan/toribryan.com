@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import FolderTabs from './FolderTabs';
 import { ImageCarousel, type CarouselImage } from '../ui/image-carousel';
 
@@ -30,8 +29,6 @@ interface ProjectListProps {
   backgroundImage: string;
 }
 
-const EASE = [0.16, 1, 0.3, 1] as const;
-
 // Chrome doesn't render backdrop-filter on these cards when it's applied to a
 // content-heavy flex child over the page's fixed background — confirmed by
 // live testing (see the glass-card-pattern project memory for the
@@ -55,13 +52,10 @@ function GlassBackdrop({ backgroundImage, className = '' }: { backgroundImage: s
 export default function ProjectList({ projects, accent, backgroundImage }: ProjectListProps) {
   return (
     <div className="flex flex-col gap-8">
-      {projects.map((project, index) => (
-        <motion.section
+      {projects.map((project) => (
+        <section
           key={project.id}
           id={project.id}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: EASE, delay: index * 0.15 }}
           className="relative flex flex-col overflow-hidden rounded-2xl border border-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.45)] md:flex-row md:items-start md:gap-6 md:overflow-visible md:rounded-none md:border-none md:shadow-none"
         >
           <GlassBackdrop backgroundImage={backgroundImage} className="md:hidden" />
@@ -110,7 +104,7 @@ export default function ProjectList({ projects, accent, backgroundImage }: Proje
               </div>
             )}
           </div>
-        </motion.section>
+        </section>
       ))}
     </div>
   );

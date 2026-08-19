@@ -6,7 +6,8 @@ import PageBackground from '../../../components/portfolio/PageBackground.astro';
 import CategoryHeader from '../../../components/portfolio/CategoryHeader.astro';
 import ProjectList from '../../../components/portfolio/ProjectList';
 import TimelineEntry from '../../../components/portfolio/TimelineEntry.astro';
-import { categorySlug, categoryAccent, isTabbedCategory } from '../../../lib/categories';
+import WebProjectCard from '../../../components/portfolio/WebProjectCard.astro';
+import { categorySlug, categoryAccent, isTabbedCategory, isBrowserMockupCategory } from '../../../lib/categories';
 import lotusPond from '../../../assets/hero/lotus-pond.png';
 
 // Product Design module cards fake their glass-panel background with a blurred
@@ -38,6 +39,7 @@ export async function getStaticPaths() {
 const { name, entries } = Astro.props;
 const accent = categoryAccent(name);
 const tabbed = isTabbedCategory(name);
+const browserMockup = isBrowserMockupCategory(name);
 
 const stageProjects = tabbed
   ? entries
@@ -54,6 +56,7 @@ const stageProjects = tabbed
           role,
           team,
           type,
+          timeline,
           caseStudy,
           heroSrc,
           gallery,
@@ -71,9 +74,12 @@ const stageProjects = tabbed
               ? { label: 'Team', value: team }
               : undefined;
 
-        const facts = [identity, { label: 'Role', value: role }, { label: 'Type', value: type }].filter(
-          (fact): fact is { label: string; value: string } => !!fact?.value
-        );
+        const facts = [
+          identity,
+          { label: 'Role', value: role },
+          { label: 'Type', value: type },
+          { label: 'When', value: timeline },
+        ].filter((fact): fact is { label: string; value: string } => !!fact?.value);
 
         // Modules without a case study yet swap the Outcome tab for Team —
         // there's no shipped outcome to report on.
@@ -115,11 +121,33 @@ const stageProjects = tabbed
   <PageBackground />
   <CategoryHeader name={name} />
 
-  <div class:list={['mx-auto px-4 pb-24 pt-12 sm:px-6', tabbed ? 'max-w-6xl' : 'max-w-4xl']}>
+  <div class:list={['mx-auto px-4 pb-24 pt-12 sm:px-6', tabbed || browserMockup ? 'max-w-6xl' : 'max-w-4xl']}>
     {
       tabbed ? (
         <div class="mt-10" transition:animate="none">
           <ProjectList client:load projects={stageProjects} accent={accent} backgroundImage={heroBg.src} />
+        </div>
+      ) : browserMockup ? (
+        <div class="mt-10 flex flex-col gap-8">
+          {
+            entries.map((entry) => {
+              const { title, excerpt, role, type, status, liveUrl, panelColor, heroSrc } = entry.data;
+              return (
+                <WebProjectCard
+                  id={entry.id}
+                  title={title}
+                  excerpt={excerpt}
+                  role={role}
+                  type={type}
+                  status={status}
+                  liveUrl={liveUrl}
+                  panelColor={panelColor}
+                  image={heroSrc}
+                  accent={accent}
+                />
+              );
+            })
+          }
         </div>
       ) : (
         <div class="mt-10 flex flex-col gap-8">

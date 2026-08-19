@@ -13,10 +13,12 @@ problem: "Instructors and third-party proctor providers had no visibility into h
 task: "Design an embedded analytics surface — inside the existing LMS review dashboard, with zero added UI for students — that turns proctor coverage from an assumption into per-session evidence."
 process: "The first fork was a live monitoring console versus a per-session evidence view. Chose the evidence timeline — instructors wanted proof coverage had happened, not another real-time screen to watch during an exam. From there, embedding the surface in the existing review dashboard and committing early to anonymized-but-resolvable identity and keyboard/ARIA accessibility shaped everything downstream."
 outcome: "A swimlane session timeline with glanceable gap, degradation, and device-status markers, plus an anonymized-but-resolvable identity model — fully keyboard accessible and currently in pilot."
-heroSrc: "/case-studies/proctor-coverage-timeline.svg"
+heroSrc: "/proctorcoverage-01.svg"
 gallery:
-  - "/case-studies/proctor-coverage-segs-popovers.svg"
-  - "/case-studies/proctor-coverage-popovers.svg"
+  - "/proctorcoverage-02.svg"
+  - "/proctorcoverage-03.svg"
+  - "/proctorcoverage-04.svg"
+  - "/proctorcoverage-05.svg"
 cardSize: "Large"
 featured: false
 draft: false

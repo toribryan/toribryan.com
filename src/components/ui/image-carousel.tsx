@@ -125,17 +125,12 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
               <motion.button
                 key={i}
                 type="button"
+                layout
                 onClick={() => setIndex(i)}
                 aria-label={`Show image ${i + 1}`}
-                initial={false}
-                animate={i === index ? 'active' : 'inactive'}
-                variants={{
-                  active: { width: FULL_WIDTH_PX },
-                  inactive: { width: COLLAPSED_WIDTH_PX },
-                }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
                 className="relative h-full shrink-0 overflow-hidden rounded-md"
-                style={{ marginRight: GAP_PX }}
+                style={{ width: i === index ? FULL_WIDTH_PX : COLLAPSED_WIDTH_PX, marginRight: GAP_PX }}
               >
                 <Slide image={image} />
               </motion.button>
