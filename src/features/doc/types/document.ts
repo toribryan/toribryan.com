@@ -15,8 +15,14 @@ export type DocMetadata = {
   /** Shows a "New" dot in list views. */
   new?: boolean
   updated?: boolean
-  /** Pins the doc to the top of its list. */
+  /** Pins the doc to the top of its list, above the date-sorted rest. */
   pinned?: boolean
+  /**
+   * Explicit position, lowest first. Docs that declare one are placed ahead of
+   * everything else, in the order given; the rest fall back to `pinned` and
+   * then newest-first. Use it to hand-pick the openers of a list.
+   */
+  order?: number
   /** Creation date as an ISO date string (YYYY-MM-DD). Used for sorting. */
   createdAt: string
   /** Last updated date as an ISO date string (YYYY-MM-DD). */

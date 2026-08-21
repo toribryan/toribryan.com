@@ -53,18 +53,31 @@ function getMDXData(dir: string) {
   })
 }
 
-export const getAllDocs = cache(() => {
-  return getMDXData(path.join(process.cwd(), "src/features/doc/content")).sort(
-    (a, b) => {
-      if (a.metadata.pinned && !b.metadata.pinned) return -1
-      if (!a.metadata.pinned && b.metadata.pinned) return 1
+/**
+ * Ordering, in precedence: an explicit `order` wins over everything, then
+ * `pinned`, then newest first.
+ */
+function compareDocs(a: Doc, b: Doc) {
+  const aOrder = a.metadata.order
+  const bOrder = b.metadata.order
 
-      return (
-        new Date(b.metadata.createdAt).getTime() -
-        new Date(a.metadata.createdAt).getTime()
-      )
-    }
+  if (aOrder != null && bOrder != null) return aOrder - bOrder
+  if (aOrder != null) return -1
+  if (bOrder != null) return 1
+
+  if (a.metadata.pinned && !b.metadata.pinned) return -1
+  if (!a.metadata.pinned && b.metadata.pinned) return 1
+
+  return (
+    new Date(b.metadata.createdAt).getTime() -
+    new Date(a.metadata.createdAt).getTime()
   )
+}
+
+export const getAllDocs = cache(() => {
+  return getMDXData(
+    path.join(process.cwd(), "src/features/doc/content")
+  ).sort(compareDocs)
 })
 
 export function getDocBySlug(slug: string) {
