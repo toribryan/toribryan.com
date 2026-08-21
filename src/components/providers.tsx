@@ -16,7 +16,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
         disableTransitionOnChange
         enableColorScheme
         storageKey="theme"
-        defaultTheme="system"
+        // Light by default rather than following the OS: a first-time visitor
+        // sees the site the way it's meant to be seen. `enableSystem` stays on,
+        // so anyone who picks System still gets it, and the choice persists.
+        defaultTheme="light"
         attribute="class"
       >
         <ProgressProvider
