@@ -1,0 +1,17 @@
+{
+  "short_name": "Tori Bryan",
+  "name": "Tori Bryan — Staff Product Designer",
+  "description": "Questioning everything, all the time.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ],
+  "id": "/?utm_source=pwa",
+  "start_url": "/?utm_source=pwa",
+  "display": "standalone",
+  "scope": "/"
+}
