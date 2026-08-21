@@ -10,7 +10,7 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { DocCardList } from "@/features/doc/components/doc-card-list"
+import { DocList } from "@/features/doc/components/doc-list"
 import { getLatestPosts } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
 
@@ -65,13 +65,7 @@ export default function Page() {
           <PageHeadingDescription>{description}</PageHeadingDescription>
         </PageHeading>
 
-        <div className="px-2">
-          <DocCardList
-            docs={posts}
-            basePath="/latest"
-            emptyMessage="No posts yet."
-          />
-        </div>
+        <DocList docs={posts} basePath="/latest" emptyMessage="No posts yet." />
 
         <div className="h-4" />
       </div>
