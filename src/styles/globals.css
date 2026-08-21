@@ -50,6 +50,7 @@
   --color-destructive: var(--destructive);
   --color-link: var(--link);
   --color-surface: var(--surface);
+  --color-surface-warm: var(--surface-warm);
   --color-surface-foreground: var(--surface-foreground);
   --color-code: var(--code);
   --color-code-foreground: var(--code-foreground);
@@ -189,7 +190,7 @@
 }
 
 @utility prose-ncdai {
-  @apply prose-headings:font-medium prose-headings:tracking-tight prose-headings:text-pretty md:prose-headings:text-balance prose-h2:text-xl prose-h3:text-lg;
+  @apply prose-headings:font-medium prose-headings:tracking-normal prose-headings:text-pretty md:prose-headings:text-balance prose-h2:text-xl prose-h3:text-lg;
   @apply prose-a:font-normal prose-a:wrap-break-word prose-a:text-foreground prose-a:link-underline;
   @apply prose-code:rounded-md prose-code:border prose-code:bg-muted/50 prose-code:px-1 prose-code:py-px prose-code:text-sm prose-code:font-normal prose-code:before:content-none prose-code:after:content-none retina:prose-code:border-[0.5px];
   @apply prose-strong:font-medium;
@@ -436,6 +437,7 @@
 
   /* zinc-900 */
   --surface: oklch(0.21 0.006 285.885);
+  --surface-warm: oklch(0.21 0.006 285.885);
 
   /* zinc-50 */
   --surface-foreground: oklch(0.985 0 0);
@@ -678,7 +680,9 @@
 
 :root {
   /* surface */
-  --background: #fdfcfb;
+  --background: #f7f6f2;
+  /* surface, warm — case-study metadata blocks */
+  --surface-warm: #f3f1e7;
   /* ink */
   --foreground: #131313;
 

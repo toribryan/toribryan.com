@@ -38,6 +38,7 @@ export async function DocPage({
 
   const brief = [
     ["Problem", m.problem],
+    ["Solution", m.solution],
     ["Task", m.task],
     ["Process", m.process],
     ["Outcome", m.outcome],
@@ -75,7 +76,7 @@ export async function DocPage({
         )}
       </div>
 
-      <h1 className="screen-line-bottom overflow-x-clip px-4 py-6 font-heading text-4xl font-medium tracking-tight text-balance">
+      <h1 className="screen-line-bottom overflow-x-clip px-4 py-6 font-heading text-4xl font-medium tracking-normal text-balance">
         {m.title}
       </h1>
 
@@ -101,7 +102,7 @@ export async function DocPage({
         {facts.length > 0 && (
           <dl
             className={cn(
-              "not-prose my-6 grid grid-cols-1 gap-x-6 gap-y-3 rounded-xl bg-surface p-4 text-sm sm:grid-cols-2",
+              "not-prose my-6 grid grid-cols-1 gap-x-6 gap-y-3 rounded-xl bg-surface-warm p-4 text-sm sm:grid-cols-2",
               "inset-ring-1 inset-ring-border/64"
             )}
           >

@@ -21,6 +21,8 @@ export type User = {
   website: string
   /** Primary/current role shown on profile */
   jobTitle: string
+  /** Broader discipline shown in the Overview, e.g. "Product + Design Engineering". */
+  discipline: string
   /** Work history entries */
   jobs: {
     title: string

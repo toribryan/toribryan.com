@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic"
+import Image from "next/image"
 import Link from "next/link"
 
 import { MAIN_NAV } from "@/config/site"
 import { Separator } from "@/components/base/ui/separator"
-import { BrandMark } from "@/components/brand-mark"
 import { NavDesktop } from "@/components/nav-desktop"
 import { ThemeToggle } from "@/components/theme-toggle"
 
@@ -17,7 +17,17 @@ export function SiteHeader() {
       <div className="screen-line-top screen-line-bottom mx-auto flex h-(--header-height) items-center gap-2 border-r border-line pr-2 group-has-data-[slot=layout-wide]/layout:container after:z-1 after:bg-border sm:gap-4 md:max-w-3xl">
         <BrandContextMenu>
           <Link href="/" aria-label="Home">
-            <BrandMark className="h-8 shrink-0" />
+            {/* A photo rather than the pixel mark: the mark still carries the
+                favicon and app icons, but the header wants a face. */}
+            <Image
+              className="size-8 shrink-0 rounded-md object-cover select-none"
+              src="/images/header/nav-photo.webp"
+              alt=""
+              width={128}
+              height={128}
+              priority
+              unoptimized
+            />
           </Link>
         </BrandContextMenu>
 

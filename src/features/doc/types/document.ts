@@ -49,6 +49,8 @@ export type DocMetadata = {
   task?: string
   /** How you got there — forks taken, constraints that shaped it. */
   process?: string
+  /** What was built in answer to the problem. Sits directly under it. */
+  solution?: string
   /** What shipped, and what it changed. */
   outcome?: string
   /** Additional images shown below the body. */

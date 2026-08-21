@@ -1,44 +1,36 @@
 ---
 title: "Author Proof"
-description: "A Canvas-integrated integrity tool that verifies authorship, not originality — a personalized comprehension quiz generated from each student's own submission."
+description: "An LMS integrated integrity tool that verifies authorship through personalized comprehension quizzes generated from each student's own submission."
 image: "/cover-authorproof.webp"
 order: 1
 createdAt: "2025-01-01"
 updatedAt: "2025-01-01"
 company: "Proctorio"
-role: "Lead Product Designer, End-to-End Product Design"
+role: "End-to-End Product Design"
 type: "Proof of concept"
 period: "2025"
+liveUrl: "https://proctorio.com/solutions/origin"
 skills:
   - "Figma"
   - "Claude Code"
   - "Azure"
-problem: "Plagiarism detectors analyze the document, not the student — a paraphrase, an AI rewrite, or a ghostwriter pass clears every existing check. Instructors had no scalable way to verify authorship inside their Canvas workflow."
-outcome: "An MVP built around a color-independent status pattern, targeting 95%+ completion, sub-30-second generation, and under 5% false positives in the first-semester pilot."
+problem: "Plagiarism detectors analyze the document, not the student. A paraphrase, an AI rewrite, or a ghostwriter pass clears every existing check. Instructors had no scalable way to verify authorship inside their Canvas workflow."
+solution: "An MVP built around an instructor's configuration settings, targeting 95%+ completion, sub-30-second generation, and under 5% false positives in the first-semester pilot."
 ---
 
-Plagiarism and AI-writing detectors share a blind spot: they analyze the
-_document_, not the _student_. Existing tools answer "Is this original?" — none
-answer "Did you write this?"
-
-Author Proof asks the second question. On submission, it generates a
-personalized comprehension quiz from the student's own writing, in the
-submission's own language. The result surfaces as a score badge inside
-SpeedGrader, where instructors already work — with a link out to the full
+AuthorProof asks the question that ultimately better informs the verdict. On
+submission, it generates a personalized comprehension quiz from the student's own
+writing, in the submission's own language. The result surfaces as a score badge
+inside SpeedGrader, where instructors already work, with a link out to the full
 session for anyone who wants to dig deeper.
 
-![The student comprehension quiz flow](/case-studies/author-proof-student-flow.svg)
+![How a submission becomes a comprehension quiz: content is extracted, a Canvas quiz is generated and assigned, the student is notified and completes it, and AuthorProof returns a report card](/case-studies/author-proof-flow.webp)
 
-I led this end-to-end on a 4–6 week timeline: the Canvas-embedded quiz-settings
-panel, the AI-generated questions, the student flow, and the SpeedGrader badge →
-Review Center pathway. The design had to survive Canvas's iframe, FERPA, and one
-awkward constraint — SpeedGrader's badge color is Canvas-controlled and runs
-_inverted_ against our scoring, so an 80% shows red. That got resolved with
-color-independent copy rather than a platform override we didn't control.
+I led this end-to-end on a 4–6 week timeline from concept to production by
+delivering design specs through prototypes built using HTML/CSS/Vanilla JS to the
+engineering team. Surfaces included the LMS-embedded quiz-settings panel, the
+AI-generated questions model, the student flow and notification system, and the
+SpeedGrader results pathway.
 
-Throughout, the product had to read as **confidence, not verdict** — evidence
-for a human conversation, never an automated judgment.
-
-<LinkButton href="https://proctorio.com/solutions/origin">
-  See Author Proof on Proctorio
-</LinkButton>
+Throughout, the product had to read as **confidence, not verdict**. Putting more
+weight in evidence for a human conversation, never an automated judgment.

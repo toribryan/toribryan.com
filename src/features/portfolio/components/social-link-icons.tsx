@@ -1,4 +1,4 @@
-import { LinkedInIcon } from "@/components/icons"
+import { LinkedInIcon, TwentyFirstDevIcon, XIcon } from "@/components/icons"
 import type { SocialName } from "@/features/portfolio/data/social-links"
 
 /**
@@ -8,4 +8,6 @@ import type { SocialName } from "@/features/portfolio/data/social-links"
  */
 export const SOCIAL_ICONS: Record<SocialName, React.JSX.Element> = {
   linkedin: <LinkedInIcon />,
+  x: <XIcon />,
+  twentyFirstDev: <TwentyFirstDevIcon />,
 }

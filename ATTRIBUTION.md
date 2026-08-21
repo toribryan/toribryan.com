@@ -11,6 +11,13 @@ ours and the licence below is the one it shipped with.
 - Live preview: https://chanhdai.com/
 - Packaged: 2026-08-19
 
+## Third-party code added since
+
+- **Paper Shaders** — the "Dithering" fragment shader behind the profile header
+  (`src/components/ui/hero.tsx`) is adapted from
+  https://shaders.paper.design/dithering, via the 21st.dev Shader Builder.
+  Licensed Apache-2.0: https://github.com/paper-design/shaders
+
 ## Before you publish
 
 The author licenses the code and the writing under MIT with one exception: his name and his logo, which are covered by his trademark and brand policy in TRADEMARK.md. Remove his personal information and swap the branding before you publish a site from this.

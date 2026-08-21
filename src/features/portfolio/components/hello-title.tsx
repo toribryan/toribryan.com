@@ -19,12 +19,21 @@ export function HelloTitle() {
 
   return (
     <>
-      <PanelTitle
-        id={`${ID}-greeting`}
-        className="font-handwritten leading-none tracking-normal"
-        suppressHydrationWarning
-      >
-        {greeting}
+      <PanelTitle>
+        {/* The id sits on this inner span, not on the title: the pre-hydration
+            script below replaces its target's textContent, which would wipe any
+            sibling markup inside. Keeping the glyph outside the swapped node
+            lets it share the title's line. */}
+        <span id={`${ID}-greeting`} suppressHydrationWarning>
+          {greeting}
+        </span>
+
+        <span
+          className="ml-2 align-middle font-mono text-base font-normal select-none"
+          aria-hidden
+        >
+          ( ˶ˆ ᗜ ˆ˵ )
+        </span>
       </PanelTitle>
 
       <InlineScript html={getInlineScript(`${ID}-greeting`)} />

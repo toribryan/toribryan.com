@@ -737,3 +737,19 @@ export function getIconForPackageManager(manager: string) {
       return <TerminalSquareIcon />
   }
 }
+
+// Source: 21st.dev, exported from the brand kit. Drawn on a 13x14 grid rather
+// than the 24x24 the icons above share, so its viewBox differs; sizing utilities
+// still apply normally.
+export function TwentyFirstDevIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 13 14" fill="none" aria-hidden {...props}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M11.6458 0C12.3937 0 13 0.652925 13 1.45836V10.3541C13 10.4347 12.9394 10.5 12.8646 10.5H8.80205C8.72731 10.5 8.66672 10.5653 8.66672 10.6459V13.8541C8.66672 13.9347 8.60601 14 8.53127 14H1.3542C0.606288 14 0 13.3471 0 12.5416V10.6652C0 10.5627 0.0501313 10.4678 0.131706 10.4151L4.9972 7.27116C5.1077 7.19976 5.07064 7.0238 4.9523 7.00227L4.92791 7H0.135444C0.060613 7 0 6.93473 0 6.85414V3.64586C0 3.56527 0.060613 3.5 0.135444 3.5H5.28127C5.35601 3.5 5.41672 3.43473 5.41672 3.35414V0.145863C5.41672 0.0652754 5.47731 0 5.55205 0H11.6458ZM5.55205 3.5C5.47731 3.5 5.41672 3.56527 5.41672 3.64586V10.3541C5.41672 10.4347 5.47731 10.5 5.55205 10.5H8.53127C8.60601 10.5 8.66672 10.4347 8.66672 10.3541V3.64586C8.66672 3.56527 8.60601 3.5 8.53127 3.5H5.55205Z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
