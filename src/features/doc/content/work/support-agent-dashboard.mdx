@@ -16,7 +16,7 @@ skills:
 problem: "Test-takers who hit friction mid-exam had one option: leave the exam, email support, and wait — with no live channel to a human, and no session context attached by the time an agent picked it up."
 task: "Design the agent-facing side of an in-exam support chat: route test-taker conversations to a human in real time, arriving with enough session context that the agent isn't starting cold."
 process: "The core decision was to route chat with session context attached — where the test-taker is, what they were doing when they got stuck — rather than a blank conversation an agent has to reconstruct by asking. Chat state was designed to persist through a paused exam, so a test-taker stepping away doesn't cost the agent their place in the thread."
-outcome: "The majority of \"I couldn't finish because ___\" tickets no longer exist — they're resolved in-session, by an agent working from context instead of reconstructing it after the fact."
+outcome: 'The majority of "I couldn''t finish because ___" tickets no longer exist — they''re resolved in-session, by an agent working from context instead of reconstructing it after the fact.'
 ---
 
 ## The problem
@@ -25,7 +25,7 @@ When a test-taker hit friction mid-exam, the standard path was to leave the exam
 
 ## Research & insights
 
-*Mock section — replace with real research findings.*
+_Mock section — replace with real research findings._
 
 - Talked with support agents about what made a mid-exam ticket hard to resolve quickly.
 - The most common complaint: reconstructing what a test-taker had already tried before they could help.
@@ -44,9 +44,26 @@ A chat that lives inside the exam UI and routes straight to a support agent — 
 
 ![The support agent's conversation thread, showing session context attached to the chat](/case-studies/support-agent-dashboard-conversation.svg)
 
+## The prototype
+
+Thirteen screens of the console as an agent works it — triaging the live queue,
+reading a conversation with the session context already attached, and closing a
+case. It's a clickthrough, not a build: vanilla HTML, CSS and JavaScript, so it
+loads instantly and every state is reachable by clicking rather than by seeding
+data.
+
+<Embed
+  src="/prototype/bab/index.html"
+  title="Integrity Console — 13-screen clickthrough"
+  caption="Scaled to fit the column. The console is laid out for 1180px and up, so open it full screen to work it properly."
+/>
+
+The same product exists as a component library, with the token layer written up
+in full: [Integrity Console Design System](/work/bab-design-system).
+
 ## Usability testing
 
-*Mock section — replace with real testing methodology and results.*
+_Mock section — replace with real testing methodology and results._
 
 Shadowed support agents handling live and simulated in-exam chats, focused on how quickly they could orient to a new conversation and resolve it.
 
@@ -61,7 +78,7 @@ Shadowed support agents handling live and simulated in-exam chats, focused on ho
 
 ## Impact
 
-The majority of "I couldn't finish because ___" tickets no longer exist. They're resolved in-session, by an agent working from context instead of reconstructing it after the fact.
+The majority of "I couldn't finish because \_\_\_" tickets no longer exist. They're resolved in-session, by an agent working from context instead of reconstructing it after the fact.
 
 ## What I learned
 
@@ -69,7 +86,7 @@ Routing with context, not just routing to a human, was the detail that mattered 
 
 **If I had more time**
 
-*Mock section — replace with real next steps.*
+_Mock section — replace with real next steps._
 
 - Explore proactive routing — surfacing likely help topics before the test-taker types anything.
 - Study whether agents want a saved-response library for the most common friction points.
