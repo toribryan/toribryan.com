@@ -50,6 +50,7 @@
   --color-destructive: var(--destructive);
   --color-link: var(--link);
   --color-surface: var(--surface);
+  --color-surface-warm: var(--surface-warm);
   --color-surface-foreground: var(--surface-foreground);
   --color-code: var(--code);
   --color-code-foreground: var(--code-foreground);
@@ -436,6 +437,7 @@
 
   /* zinc-900 */
   --surface: oklch(0.21 0.006 285.885);
+  --surface-warm: oklch(0.21 0.006 285.885);
 
   /* zinc-50 */
   --surface-foreground: oklch(0.985 0 0);
@@ -679,6 +681,8 @@
 :root {
   /* surface */
   --background: #f7f6f2;
+  /* surface, warm — case-study metadata blocks */
+  --surface-warm: #f3f1e7;
   /* ink */
   --foreground: #131313;
 

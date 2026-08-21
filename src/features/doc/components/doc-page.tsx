@@ -38,6 +38,7 @@ export async function DocPage({
 
   const brief = [
     ["Problem", m.problem],
+    ["Solution", m.solution],
     ["Task", m.task],
     ["Process", m.process],
     ["Outcome", m.outcome],
@@ -101,7 +102,7 @@ export async function DocPage({
         {facts.length > 0 && (
           <dl
             className={cn(
-              "not-prose my-6 grid grid-cols-1 gap-x-6 gap-y-3 rounded-xl bg-surface p-4 text-sm sm:grid-cols-2",
+              "not-prose my-6 grid grid-cols-1 gap-x-6 gap-y-3 rounded-xl bg-surface-warm p-4 text-sm sm:grid-cols-2",
               "inset-ring-1 inset-ring-border/64"
             )}
           >
