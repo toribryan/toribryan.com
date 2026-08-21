@@ -26,9 +26,30 @@ The site runs at http://localhost:3000.
 | `npm run lint`         | ESLint                     |
 | `npm run format:write` | Prettier                   |
 
-Everything prerenders statically — a full build produces 26 pages and needs no
-runtime environment. `NEXT_PUBLIC_APP_URL` overrides the canonical origin used
-in metadata and JSON-LD; analytics and ad IDs are optional and inert when unset.
+Pages prerender statically; only the login route and its form handler run on
+demand. Copy `.env.example` to `.env.local` for configuration —
+`NEXT_PUBLIC_APP_URL` overrides the canonical origin used in metadata and
+JSON-LD, and analytics IDs are optional and inert when unset.
+
+## Password gate
+
+Set `SITE_PASSWORD` and every route redirects to `/login` until the password is
+entered. Leave it unset and the site is open, which is what keeps local dev and
+preview deploys usable without a secret.
+
+```bash
+# .env.local
+SITE_PASSWORD=your-password-here
+```
+
+A successful login sets an httpOnly cookie holding an expiring HMAC token —
+`<expiry>.<signature>`, signed with the password — so a leaked cookie expires on
+its own and can't be cracked back into the password. Sessions last 30 days.
+**Changing `SITE_PASSWORD` invalidates every existing session**, which is how you
+sign everyone out.
+
+On Vercel, set it in Project Settings → Environment Variables. Gating a preview
+deploy but not production is just a matter of which environments you set it in.
 
 ## What's where
 

@@ -73,10 +73,20 @@ Import alias is `@/*` → `./src/*`.
 - Analytics events are a closed enum in `src/lib/events.ts`; add the name there
   before calling `trackEvent`.
 
+## Password gate
+
+`src/middleware.ts` gates every route behind `SITE_PASSWORD`. When the variable
+is unset the site is open — that's deliberate, so dev and preview builds work
+without a secret. `src/lib/site-auth.ts` holds the token logic; the session
+cookie is an expiring HMAC (`<expiry>.<signature>`), not a hash of the password.
+
+Two things to preserve if you touch it: the `?next=` path is validated against
+open-redirects in `src/app/api/login/route.ts`, and comparisons go through the
+constant-time `safeEqual` rather than `===`.
+
 ## Known gaps
 
 - No `/work` index route — cards link straight to `/work/[slug]`.
-- The password gate from the Astro site was not reimplemented.
 - `src/features/doc/content/components/bab.mdx` is a scaffold: real structure,
   placeholder token values and brand name.
 
