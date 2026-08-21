@@ -1,6 +1,5 @@
-import Image from "next/image"
-
 import { BrandMark } from "@/components/brand-mark"
+import { ShaderBackground } from "@/components/ui/hero"
 import { AvatarLights } from "@/features/portfolio/components/avatar-lights"
 import { USER } from "@/features/portfolio/data/user"
 
@@ -12,26 +11,17 @@ export function ProfileHeader() {
   return (
     <div className="screen-line-bottom grid grid-cols-[auto_1fr] grid-rows-[1fr_auto] overflow-y-clip border-x border-line">
       {/* The template author's interactive isometric logo sat here. It's part
-          of his brand, so this is the lotus-pond painting the previous site
-          was built around, with the mark sitting over it. */}
-      <figure className="relative col-span-2 aspect-[2/1] sm:col-span-1 sm:col-start-2 sm:aspect-auto">
-        <Image
-          src="/images/hero/lotus-pond.png"
-          alt=""
-          fill
-          sizes="(min-width: 640px) 42rem, 100vw"
-          className="object-cover"
-          priority
-        />
-
-        <div className="absolute inset-0 bg-background/20" aria-hidden />
+          of his brand, so this is a generative WebGL field instead, with the
+          mark sitting over it. */}
+      <figure className="relative col-span-2 aspect-[2/1] overflow-hidden bg-zinc-950 sm:col-span-1 sm:col-start-2 sm:aspect-auto">
+        <ShaderBackground className="absolute inset-0" />
 
         <BrandMark
-          className="absolute inset-0 m-auto size-20 text-background drop-shadow-sm sm:size-24"
+          className="absolute inset-0 m-auto size-20 text-white drop-shadow-sm sm:size-24"
           aria-hidden
         />
 
-        <figcaption className="pointer-events-none absolute right-2 bottom-2 text-sm leading-none tracking-wide text-background/70 tabular-nums select-none sm:right-4 sm:bottom-4">
+        <figcaption className="pointer-events-none absolute right-2 bottom-2 text-sm leading-none tracking-wide text-white/70 tabular-nums select-none sm:right-4 sm:bottom-4">
           Fig. 1.
         </figcaption>
       </figure>
