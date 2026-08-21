@@ -10,7 +10,10 @@ export const USER: User = {
   // and the JSON-LD Person node.
   // pronouns: "",
   bio: "Questioning everything, all the time.",
-  flipSentences: ["questioning everything,", "all the time."],
+  flipSentences: [
+    "questioning everything, all the time.",
+    "designing systems + products",
+  ],
   address: "Arizona, United States",
   emailB64: "dG9yaWJyeWFuLmRlc2lnbkBnbWFpbC5jb20=", // toribryan.design@gmail.com
   website: "https://toribryan.design",

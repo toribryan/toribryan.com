@@ -323,8 +323,27 @@ const UNIFORMS = {
 
 const pendingContextReleases = new WeakMap<HTMLCanvasElement, number>()
 
-export function ShaderBackground({ className }: { className?: string }) {
+export function ShaderBackground({
+  className,
+  onTap,
+}: {
+  className?: string
+  /**
+   * Fired when the field is tapped with a touch or pen — the hook for
+   * whatever feedback the page wants alongside the visual ripple. Not called
+   * for mouse input, which already ripples on move.
+   */
+  onTap?: () => void
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  // Held in a ref so the render effect keeps its empty dep list; re-running it
+  // would tear down and rebuild the WebGL context on every parent render.
+  // Assigned in an effect rather than during render — a ref written mid-render
+  // is a tear the compiler can't reason about.
+  const onTapRef = useRef(onTap)
+  useEffect(() => {
+    onTapRef.current = onTap
+  }, [onTap])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -489,6 +508,27 @@ export function ShaderBackground({ className }: { className?: string }) {
       targetPresence = 0
       requestRender()
     }
+    // Touch has no hover, so on a phone the ripple has nothing to follow.
+    // A tap places the pointer at the touch point, blooms presence, and lets
+    // it fade — one ripple per tap rather than a cursor trail.
+    let tapFade = 0
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.pointerType === "mouse") return
+      window.clearTimeout(tapFade)
+      pointerKnown = true
+      pointerClientX = event.clientX
+      pointerClientY = event.clientY
+      bounds = canvas.getBoundingClientRect()
+      // Presence is 0 before the first tap, so updatePointerTarget snaps the
+      // ripple straight to the touch point instead of sliding in from wherever
+      // it last sat.
+      updatePointerTarget()
+      onTapRef.current?.()
+      tapFade = window.setTimeout(() => {
+        targetPresence = 0
+        requestRender()
+      }, 650)
+    }
     const updateLayout = () => {
       bounds = canvas.getBoundingClientRect()
       resizeCanvas()
@@ -498,6 +538,7 @@ export function ShaderBackground({ className }: { className?: string }) {
     window.addEventListener("resize", updateLayout)
     if (UNIFORMS.cursorEnabled) {
       window.addEventListener("pointermove", onPointerMove, { passive: true })
+      canvas.addEventListener("pointerdown", onPointerDown, { passive: true })
       window.addEventListener("pointercancel", onPointerLeave)
       window.addEventListener("scroll", updateLayout, true)
       window.addEventListener("blur", onPointerLeave)
@@ -577,6 +618,8 @@ export function ShaderBackground({ className }: { className?: string }) {
       document.removeEventListener("visibilitychange", onVisibilityChange)
       window.removeEventListener("resize", updateLayout)
       if (UNIFORMS.cursorEnabled) {
+        window.clearTimeout(tapFade)
+        canvas.removeEventListener("pointerdown", onPointerDown)
         window.removeEventListener("pointermove", onPointerMove)
         window.removeEventListener("pointercancel", onPointerLeave)
         window.removeEventListener("scroll", updateLayout, true)

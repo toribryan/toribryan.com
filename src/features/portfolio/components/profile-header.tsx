@@ -1,8 +1,8 @@
 import Image from "next/image"
 
-import { ShaderBackground } from "@/components/ui/hero"
 import { USER } from "@/features/portfolio/data/user"
 
+import { Banner } from "./banner"
 import { FlipSentences } from "./flip-sentences"
 import { VerifiedIcon } from "./verified-icon"
 
@@ -20,7 +20,7 @@ export function ProfileHeader() {
           of his brand, so this is a dithering shader instead — the palette runs
           #1A1423 → #FFF5EB and it ripples under the pointer. */}
       <figure className="relative col-span-2 aspect-[2/1] overflow-hidden bg-[#1A1423] sm:col-span-1 sm:col-start-2 sm:aspect-auto">
-        <ShaderBackground className="absolute inset-0" />
+        <Banner className="absolute inset-0" />
 
         <figcaption className="pointer-events-none absolute right-2 bottom-2 text-sm leading-none tracking-wide text-white/70 tabular-nums select-none sm:right-4 sm:bottom-4">
           Fig. 1.
