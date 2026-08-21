@@ -122,8 +122,8 @@ hairline border. A second shadow is a bug.
 
 ## Components
 
-40 components in four groups, 31 of them with stories, plus 12 page
-compositions that assemble the lot at real scale.
+40 components in four groups, 24 of them with stories of their own, plus 12
+page compositions that assemble the lot at real scale.
 
 | Group        | Count | Contents                                                                                                                                                                                             |
 | ------------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -131,6 +131,82 @@ compositions that assemble the lot at real scale.
 | `inbox/`     | 10    | Conversation list, list item, message thread, composer, chat header, side panel, role avatar, role badge, command palette, close-conversation dialogs                                                |
 | `dashboard/` | 5     | Stat tile, trend chart, source card, compare toggle, report metric layout                                                                                                                            |
 | `chrome/`    | 4     | App shell, icon rail, secondary nav, topbar                                                                                                                                                          |
+
+### ui/
+
+<StoryEmbed
+  id="ui-button--all-variants"
+  title="UI / Button — all variants"
+  width="760"
+  height="80"
+  caption="Primary carries the one red that means ‘primary action’. Destructive is a different token again — the second red, --red-deep, is reserved for the inbox Close and the live-attempt badge and appears in neither of these."
+/>
+
+<StoryEmbed
+  id="ui-badge--all-variants"
+  title="UI / Badge — all variants"
+  width="760"
+  height="72"
+  caption="Where the role pairs show up. The same three hues carry the series on the Overview chart, so a colour means one thing across the product."
+/>
+
+<StoryEmbed
+  id="ui-table--default"
+  title="UI / Table"
+  width="900"
+  height="200"
+  caption="Rows on the card surface, hairline rules rather than a second shadow."
+/>
+
+<StoryEmbed
+  id="ui-segmentedcontrol--default"
+  title="UI / SegmentedControl"
+  width="760"
+  height="80"
+/>
+
+<StoryEmbed
+  id="ui-accordion--default"
+  title="UI / Accordion"
+  width="900"
+  height="160"
+  caption="The pattern the Inbox context panel is built from."
+/>
+
+### dashboard/
+
+<StoryEmbed
+  id="dashboard-stattile--grid"
+  title="Dashboard / StatTile — grid"
+  width="900"
+  height="180"
+  caption="One elevation in practice: the tiles sit on --surface-nested inside the shadowed card, separated by a hairline rather than a shadow of their own."
+/>
+
+<StoryEmbed
+  id="dashboard-trendchart--multi-series"
+  title="Dashboard / TrendChart — multi-series"
+  width="1160"
+  height="260"
+  caption="The lead series is near-black rather than red, which keeps red free to mean ‘above threshold’ wherever it turns up in a chart."
+/>
+
+<StoryEmbed
+  id="dashboard-sourcecard--cards"
+  title="Dashboard / SourceCard"
+  width="900"
+  height="320"
+/>
+
+### chrome/
+
+<StoryEmbed
+  id="chrome-secondarynav--default"
+  title="Chrome / SecondaryNav"
+  width="900"
+  height="370"
+  caption="Selected destinations take the filled icon; actions never fill."
+/>
 
 ### Page compositions
 

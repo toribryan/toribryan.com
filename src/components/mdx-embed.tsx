@@ -25,6 +25,7 @@ export function Embed({
   title,
   width = 1280,
   height = 820,
+  focusOptions,
   caption,
   className,
 }: {
@@ -35,11 +36,23 @@ export function Embed({
   /** Logical viewport the frame is laid out at, before scaling. */
   width?: number
   height?: number
+  /**
+   * Renders a picker above the frame, for embeds that can bring one region of
+   * themselves forward. It sits outside the iframe deliberately: inside, it
+   * would be scaled down with everything else, and a control the reader is
+   * meant to operate shouldn't shrink to 58% on a laptop.
+   *
+   * The embedded page opts in by listening for the message posted below; one
+   * that doesn't simply ignores it.
+   */
+  focusOptions?: { value: string; label: string }[]
   caption?: React.ReactNode
   className?: string
 }) {
   const frameRef = useRef<HTMLDivElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
   const [scale, setScale] = useState(1)
+  const [focus, setFocus] = useState(focusOptions?.[0]?.value)
 
   useEffect(() => {
     const el = frameRef.current
@@ -52,6 +65,20 @@ export function Embed({
     observer.observe(el)
     return () => observer.disconnect()
   }, [width])
+
+  /**
+   * Also wired to the iframe's `load`: these are lazy-loaded, so a selection
+   * made before the frame is ready would otherwise post into nothing.
+   */
+  function postFocus() {
+    if (focus === undefined) return
+    iframeRef.current?.contentWindow?.postMessage(
+      { source: "embed-focus", value: focus },
+      window.location.origin
+    )
+  }
+
+  useEffect(postFocus, [focus])
 
   return (
     <figure className={cn("not-prose my-8", className)}>
@@ -83,16 +110,43 @@ export function Embed({
           </a>
         </div>
 
+        {focusOptions && (
+          <div className="flex flex-wrap items-center gap-1 border-b border-line p-2">
+            {focusOptions.map((option) => {
+              const active = option.value === focus
+
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  aria-pressed={active}
+                  className={cn(
+                    "rounded-full px-3 py-1 font-mono text-xs tracking-wide transition-colors",
+                    active
+                      ? "bg-foreground text-background"
+                      : "text-muted-foreground hover:bg-accent-muted hover:text-foreground"
+                  )}
+                  onClick={() => setFocus(option.value)}
+                >
+                  {option.label}
+                </button>
+              )
+            })}
+          </div>
+        )}
+
         <div
           ref={frameRef}
           className="relative overflow-hidden bg-white"
           style={{ height: height * scale }}
         >
           <iframe
+            ref={iframeRef}
             className="absolute top-0 left-0 origin-top-left border-0"
             src={src}
             title={title}
             loading="lazy"
+            onLoad={postFocus}
             style={{ width, height, transform: `scale(${scale})` }}
           />
         </div>

@@ -566,6 +566,162 @@
       ],
       "import": "import { TrendChart } from \"design-system\";"
     },
+    "inbox-chatheader": {
+      "id": "inbox-chatheader",
+      "name": "ChatHeaderRegion",
+      "path": "./src/components/inbox/ChatHeader.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ChatHeader",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\ChatHeader.tsx",
+        "actualName": "ChatHeader",
+        "exportName": "ChatHeader"
+      },
+      "stories": [
+        {
+          "id": "inbox-chatheader--default",
+          "name": "Default",
+          "snippet": "const Default = () => <ChatHeader />;"
+        }
+      ],
+      "import": "import { ChatHeader, StoryGround } from \"design-system\";"
+    },
+    "inbox-composer": {
+      "id": "inbox-composer",
+      "name": "ComposerRegion",
+      "path": "./src/components/inbox/Composer.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [
+          {
+            "name": "insertText",
+            "docblock": null,
+            "modifiers": [],
+            "params": [
+              {
+                "name": "text",
+                "optional": false,
+                "type": {
+                  "name": "string"
+                }
+              }
+            ],
+            "returns": null
+          }
+        ],
+        "displayName": "Composer",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\Composer.tsx",
+        "actualName": "Composer",
+        "exportName": "Composer"
+      },
+      "stories": [
+        {
+          "id": "inbox-composer--default",
+          "name": "Default",
+          "snippet": "const Default = () => <Composer />;"
+        }
+      ],
+      "import": "import { Composer, StoryGround } from \"design-system\";"
+    },
+    "inbox-conversationlist": {
+      "id": "inbox-conversationlist",
+      "name": "ConversationListRegion",
+      "path": "./src/components/inbox/ConversationList.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ConversationList",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\ConversationList.tsx",
+        "actualName": "ConversationList",
+        "exportName": "ConversationList"
+      },
+      "stories": [
+        {
+          "id": "inbox-conversationlist--default",
+          "name": "Default",
+          "snippet": "const Default = () => <ConversationList />;"
+        }
+      ],
+      "import": "import { ConversationList, StoryGround } from \"design-system\";"
+    },
+    "inbox-regions": {
+      "id": "inbox-regions",
+      "name": "InboxRegions",
+      "path": "./src/components/inbox/InboxRegions.stories.tsx",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component import found",
+        "message": "No component file found for the \"InboxRegions\" component.\n  121 | }\n  122 |\n> 123 | const meta = {\n      | ^\n  124 |   title: \"Inbox/Regions\",\n  125 |   component: InboxRegions,\n  126 |   parameters: { layout: \"fullscreen\" },\n\n./src/components/inbox/InboxRegions.stories.tsx:\nimport { useEffect, useState } from \"react\"\nimport type { Meta, StoryObj } from \"@storybook/react-vite\"\n\nimport { cn } from \"@/lib/utils\"\n\nimport { ChatHeader } from \"./ChatHeader\"\nimport { Composer } from \"./Composer\"\nimport { ConversationList } from \"./ConversationList\"\nimport { MessageThread } from \"./MessageThread\"\nimport { SidePanel } from \"./SidePanel\"\nimport { useInboxStory } from \"./_story-inbox\"\n\nconst REGIONS = [\"list\", \"header\", \"thread\", \"composer\", \"context\"] as const\ntype Region = (typeof REGIONS)[number]\n\nfunction isRegion(value: unknown): value is Region {\n  return REGIONS.includes(value as Region)\n}\n\n/**\n * Dims to 20% rather than hiding, so the region stays in place and the reader\n * keeps the whole page as a frame of reference. `aria-hidden` is deliberately\n * not set: everything here is still real, focusable UI, and hiding four fifths\n * of the page from a screen reader to make a visual point would be a worse\n * trade than the dimming is worth.\n */\nfunction Focus({\n  on,\n  className,\n  children,\n}: {\n  on: boolean\n  className?: string\n  children: React.ReactNode\n}) {\n  return (\n    <div\n      className={cn(\n        \"transition-opacity duration-300 ease-out\",\n        on ? \"opacity-100\" : \"opacity-20\",\n        className\n      )}\n    >\n      {children}\n    </div>\n  )\n}\n\n/**\n * The whole Inbox with one region brought forward at a time.\n *\n * The picker that drives this lives in the *host page*, not here — embedded in\n * a portfolio case study it sits outside the iframe, at full size, rather than\n * being scaled down along with the console. The contract between them is a\n * single same-origin message:\n *\n *     { source: \"embed-focus\", value: \"list\" | \"header\" | ... }\n *\n * Nothing is required to send one. Opened directly in Storybook this is simply\n * the Inbox with the queue brought forward, which is a fine thing to look at on\n * its own.\n *\n * The wrappers carry the flex sizing the regions rely on — the queue and the\n * context panel are `shrink-0`, the thread is the only thing that grows —\n * otherwise focusing a region quietly reflows the page around it.\n */\nfunction InboxRegions() {\n  const inbox = useInboxStory()\n  const [region, setRegion] = useState<Region>(\"list\")\n\n  useEffect(() => {\n    function onMessage(event: MessageEvent) {\n      // Same-origin only. The host page serves this iframe from its own domain;\n      // anything else talking to it has no business steering the view.\n      if (event.origin !== window.location.origin) return\n\n      const data = event.data as { source?: string; value?: unknown } | null\n      if (data?.source !== \"embed-focus\") return\n      if (isRegion(data.value)) setRegion(data.value)\n    }\n\n    window.addEventListener(\"message\", onMessage)\n    return () => window.removeEventListener(\"message\", onMessage)\n  }, [])\n\n  return (\n    <div className=\"flex h-screen flex-col bg-background\">\n      <div className=\"flex flex-1 overflow-hidden\">\n        <Focus on={region === \"list\"} className=\"shrink-0\">\n          <ConversationList {...inbox} />\n        </Focus>\n\n        <div className=\"flex flex-1 gap-2 p-4\">\n          <div className=\"flex flex-1 flex-col overflow-hidden rounded-2xl bg-card shadow-card\">\n            <Focus on={region === \"header\"}>\n              <ChatHeader {...inbox} />\n            </Focus>\n\n            <Focus\n              on={region === \"thread\"}\n              className=\"flex flex-1 flex-col overflow-hidden\"\n            >\n              <MessageThread conversation={inbox.conversation} />\n            </Focus>\n\n            <Focus on={region === \"composer\"}>\n              <Composer\n                activeConvo={inbox.activeConvo}\n                sendMessage={inbox.sendMessage}\n              />\n            </Focus>\n          </div>\n\n          <Focus on={region === \"context\"} className=\"shrink-0\">\n            <SidePanel {...inbox} />\n          </Focus>\n        </div>\n      </div>\n    </div>\n  )\n}\n\nconst meta = {\n  title: \"Inbox/Regions\",\n  component: InboxRegions,\n  parameters: { layout: \"fullscreen\" },\n} satisfies Meta<typeof InboxRegions>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Default: Story = {}\n"
+      },
+      "stories": [
+        {
+          "id": "inbox-regions--default",
+          "name": "Default",
+          "error": {
+            "name": "Error",
+            "message": "Could not generate snippet without component name."
+          }
+        }
+      ],
+      "import": "import { ChatHeader, Composer, ConversationList, MessageThread, SidePanel } from \"design-system\";"
+    },
+    "inbox-messagethread": {
+      "id": "inbox-messagethread",
+      "name": "MessageThreadRegion",
+      "path": "./src/components/inbox/MessageThread.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "MessageThread",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\MessageThread.tsx",
+        "actualName": "MessageThread",
+        "exportName": "MessageThread",
+        "props": {
+          "conversation": {
+            "required": true,
+            "tsType": {
+              "name": "Conversation"
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "inbox-messagethread--default",
+          "name": "Default",
+          "snippet": "const Default = () => <MessageThread />;"
+        }
+      ],
+      "import": "import { MessageThread, StoryCard, StoryGround } from \"design-system\";"
+    },
+    "inbox-sidepanel": {
+      "id": "inbox-sidepanel",
+      "name": "SidePanelRegion",
+      "path": "./src/components/inbox/SidePanel.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "SidePanel",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\SidePanel.tsx",
+        "actualName": "SidePanel",
+        "exportName": "SidePanel"
+      },
+      "stories": [
+        {
+          "id": "inbox-sidepanel--default",
+          "name": "Default",
+          "snippet": "const Default = () => <SidePanel />;"
+        }
+      ],
+      "import": "import { SidePanel, StoryGround } from \"design-system\";"
+    },
     "ui-accordion": {
       "id": "ui-accordion",
       "name": "Accordion",
@@ -1645,6 +1801,6 @@
   },
   "meta": {
     "docgen": "react-docgen",
-    "durationMs": 1055
+    "durationMs": 750
   }
 }
