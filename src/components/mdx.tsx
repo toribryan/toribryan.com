@@ -20,6 +20,7 @@ import { Heading } from "./heading"
 import { mdxCodeBlockComponents } from "./mdx-code-block"
 import { Embed } from "./mdx-embed"
 import { InboxRegions } from "./mdx-inbox-regions"
+import { StoryEmbed } from "./mdx-story-embed"
 import { LinkButton } from "./mdx-link-button"
 
 const components: MDXRemoteProps["components"] = {
@@ -50,6 +51,7 @@ const components: MDXRemoteProps["components"] = {
   Callout,
   Embed,
   InboxRegions,
+  StoryEmbed,
   LinkButton,
 
   Steps: ({ className, ...props }: React.ComponentProps<"div">) => (
