@@ -40,6 +40,13 @@ export function DocCard({
             height={630}
             quality={100}
             loading={imageLoading}
+            /**
+             * Not negotiable while the password gate is on. `/_next/image`
+             * fetches the source URL server-side with no session cookie, so
+             * middleware.ts bounces it to /login and the optimizer reports
+             * "The requested resource isn't a valid image". Covers are sized
+             * to the card at export time instead.
+             */
             unoptimized
           />
         ) : (

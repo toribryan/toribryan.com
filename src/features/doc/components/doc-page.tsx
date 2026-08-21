@@ -89,6 +89,7 @@ export async function DocPage({
             height={630}
             quality={100}
             priority
+            // The optimizer can't reach gated images — see doc-card.tsx.
             unoptimized
           />
         </div>
