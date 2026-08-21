@@ -20,7 +20,7 @@ const INSPIRED_BY = [
 
 // Not derived from `SITE_INFO.url`: that follows `NEXT_PUBLIC_APP_URL` and
 // would read a localhost host in dev.
-const SITE_TITLE = "toribryan.design"
+const SITE_TITLE = "toribryan.com"
 
 const SITE_SUBTITLE = packageJson.description
 

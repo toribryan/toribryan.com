@@ -18,7 +18,7 @@ export const USER: User = {
   ],
   address: "Arizona, United States",
   emailB64: "dG9yaWJyeWFuLmRlc2lnbkBnbWFpbC5jb20=", // toribryan.design@gmail.com
-  website: "https://toribryan.design",
+  website: "https://toribryan.com",
   jobTitle: "Staff Product Designer",
   jobs: [
     {

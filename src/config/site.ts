@@ -5,7 +5,7 @@ import { USER } from "@/features/portfolio/data/user"
 
 export const SITE_INFO = {
   name: USER.displayName,
-  url: process.env.NEXT_PUBLIC_APP_URL || "https://toribryan.design",
+  url: process.env.NEXT_PUBLIC_APP_URL || "https://www.toribryan.com",
   ogImage: USER.ogImage,
   description: USER.bio,
   keywords: USER.keywords,
@@ -36,5 +36,5 @@ export const MOBILE_NAV: NavItem<Route>[] = [
 ]
 
 export const UTM_PARAMS = {
-  utm_source: "toribryan.design",
+  utm_source: "toribryan.com",
 }
