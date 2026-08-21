@@ -13,7 +13,19 @@ export const SOCIAL = {
   linkedin: {
     title: "LinkedIn",
     handle: "victorialbryan",
-    href: "https://www.linkedin.com/in/victorialbryan/",
+    href: "https://linkedin.com/in/victorialbryan/",
+    sameAs: true,
+  },
+  x: {
+    title: "X",
+    handle: "iamtoribryan",
+    href: "https://x.com/iamtoribryan",
+    sameAs: true,
+  },
+  twentyFirstDev: {
+    title: "21st.dev",
+    handle: "iamtoribryan",
+    href: "https://iamtoribryan.21st.dev",
     sameAs: true,
   },
 } satisfies Record<string, SocialProfile>

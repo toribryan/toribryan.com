@@ -12,7 +12,6 @@ import { Hello } from "@/features/portfolio/components/hello"
 import { Overview } from "@/features/portfolio/components/overview"
 import { ProfileHeader } from "@/features/portfolio/components/profile-header"
 import { Projects } from "@/features/portfolio/components/projects"
-import { SocialLinks } from "@/features/portfolio/components/social-links"
 import { TechStack } from "@/features/portfolio/components/tech-stack"
 import { USER } from "@/features/portfolio/data/user"
 
@@ -33,7 +32,6 @@ export default function HomePage() {
           <Separator />
 
           <Overview />
-          <SocialLinks />
           <Separator />
 
           <Hello />

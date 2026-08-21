@@ -10,16 +10,13 @@ export const USER: User = {
   // and the JSON-LD Person node.
   // pronouns: "",
   bio: "Questioning everything, all the time.",
-  flipSentences: [
-    "Questioning everything, all the time.",
-    "Staff Product Designer @ Proctorio.",
-    "Working at the seam of product design and engineering.",
-    "Design systems, and the standards that keep them honest.",
-  ],
+  flipSentences: ["questioning everything,", "all the time."],
   address: "Arizona, United States",
   emailB64: "dG9yaWJyeWFuLmRlc2lnbkBnbWFpbC5jb20=", // toribryan.design@gmail.com
   website: "https://toribryan.design",
-  jobTitle: "Staff Product Designer",
+  jobTitle: "Design Engineer",
+  /** Shown in the Overview; broader than the job title under the name. */
+  discipline: "Product + Design Engineering",
   jobs: [
     {
       title: "Staff Product Designer",
@@ -28,9 +25,9 @@ export const USER: User = {
       experienceId: "proctorio",
     },
   ],
-  about: `- I'm Tori Bryan — a Staff Product Designer at Proctorio, where I own end-to-end product design across three products, our design system and its governance, and the standards for how work moves from concept into production.
-- Five years across education technology, solving real user problems: exam integrity, proctor coverage, support tooling, and the systems that hold them together.
-- Lately I work at the seam of design and engineering — building an agentic design-to-dev pipeline that cut spec production from days to under 30 minutes, with full team adoption.
+  about: `- As a Product Designer, I like to focus on the Design Engineering aspect, making sure that innovative ideas come to life using the right technology.
+- With over 5 years of experience in education technology design, I’m focused on addressing real user challenges and the systems that support them.
+- Recently I built an agentic design-to-dev pipeline that cut spec production from days to under 30 minutes, with full team adoption.
 - Always exploring new tools and ways to create. Currently learning the drums, and studying the history of the golden ratio and its relevance to design today.
 `,
   avatar: "/images/about/photo-1.jpg",

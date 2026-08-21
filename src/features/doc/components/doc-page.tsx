@@ -75,7 +75,7 @@ export async function DocPage({
         )}
       </div>
 
-      <h1 className="screen-line-bottom overflow-x-clip px-4 py-6 font-heading text-4xl font-medium tracking-tight text-balance">
+      <h1 className="screen-line-bottom overflow-x-clip px-4 py-6 font-heading text-4xl font-medium tracking-normal text-balance">
         {m.title}
       </h1>
 
