@@ -1,0 +1,391 @@
+  /* Inbox specific */
+  .inbox-shell{display:flex;flex:1;min-height:0;}
+  /* The conversation list floats on the ground with no column border — the chat
+     window card carries its own edge via shadow and radius. */
+  .convo-list{width:280px;flex:0 0 280px;background:transparent;display:flex;flex-direction:column;
+    padding-top:16px;min-height:0;position:relative;}
+  .convo-header{padding:8px 8px 8px 8px;display:flex;align-items:center;justify-content:space-between;}
+  .convo-header-left{display:flex;align-items:center;gap:8px;}
+  .convo-header h2{font-size:16px;font-weight:600;letter-spacing:-.02em;color:var(--text);}
+  .convo-header-btn{display:flex;align-items:center;justify-content:center;background:none;border:none;
+    color:var(--text);cursor:pointer;padding:4px;border-radius:6px;}
+  .convo-header-btn:hover{background:var(--sel);}
+  .convo-header-btn.round{width:32px;height:32px;border-radius:999px;padding:0;position:relative;z-index:1;}
+  .convo-header-btn .icon{width:16px;height:16px;}
+  /* Search expands leftward from the round button, overlaying the "Chats"
+     title rather than pushing it — the button stays put as the close target. */
+  .convo-search-wrap{position:relative;width:32px;height:32px;flex:0 0 auto;}
+  .convo-search-form{position:absolute;top:0;right:0;height:32px;width:32px;border-radius:999px;
+    background:#fff;border:1px solid var(--border);overflow:hidden;opacity:0;pointer-events:none;
+    transition:width .2s cubic-bezier(.4,0,.2,1),opacity .15s ease;}
+  .convo-search-wrap.open .convo-search-form{width:236px;opacity:1;pointer-events:auto;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);}
+  .convo-search-input{width:100%;height:100%;border:none;background:none;outline:none;font-size:13px;
+    color:var(--text);padding:0 38px 0 14px;font-family:inherit;}
+  .convo-search-input::placeholder{color:var(--muted);}
+  @media (prefers-reduced-motion:reduce){.convo-search-form{transition:none;}}
+  .icon-btn-plain{width:24px;height:24px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+    background:none;border:none;color:var(--text);cursor:default;}
+  .convo-filters{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px;}
+  /* Filter pills are now filled chips rather than hairline outlines. */
+  .filter-tab{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:500;color:var(--text);
+    background:#fff;border:none;display:flex;align-items:center;gap:6px;cursor:pointer;}
+  .filter-tab:hover{background:var(--sel-hover);}
+  .convo-scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column;
+    border-radius:0;overflow-x:hidden;border-top:1px solid var(--border);}
+  /* A thin, muted scrollbar instead of the default OS chrome — present, but
+     soft enough not to compete with the rest of the chrome-free surface. */
+  .convo-scroll,.chat-thread,.side-panel{scrollbar-width:thin;scrollbar-color:var(--border-soft) transparent;}
+  .convo-scroll::-webkit-scrollbar,.chat-thread::-webkit-scrollbar,.side-panel::-webkit-scrollbar{width:6px;}
+  .convo-scroll::-webkit-scrollbar-track,.chat-thread::-webkit-scrollbar-track,.side-panel::-webkit-scrollbar-track{background:transparent;}
+  .convo-scroll::-webkit-scrollbar-thumb,.chat-thread::-webkit-scrollbar-thumb,.side-panel::-webkit-scrollbar-thumb{
+    background:var(--border-soft);border-radius:999px;}
+  .convo-scroll::-webkit-scrollbar-thumb:hover,.chat-thread::-webkit-scrollbar-thumb:hover,.side-panel::-webkit-scrollbar-thumb:hover{
+    background:var(--muted);}
+  .convo-section{padding:16px 10px 12px;}
+  .convo-section.bordered{border-bottom:.5px solid var(--border);}
+  .convo-section-header{display:flex;align-items:center;gap:8px;padding:0 0 8px 8px;font-size:12px;font-weight:600;
+    letter-spacing:.03em;text-transform:uppercase;color:var(--muted);}
+  .live-attempts-label{display:flex;align-items:center;gap:8px;padding:0 7px 8px;font-size:12px;font-weight:600;
+    letter-spacing:.04em;text-transform:uppercase;color:var(--red);}
+  .live-attempts-label .live-dot{width:8px;height:8px;border-radius:999px;background:var(--red);flex:0 0 auto;}
+  .count-pill{background:var(--bg);color:var(--muted2);font-size:12px;padding:2px 6px;border-radius:999px;min-width:20px;
+    text-align:center;}
+  .count-pill.squarish{border-radius:4.5px;color:#646464;}
+  /* Read rows sit a step darker than the ground, not flush with it; unread rows
+     lift *lighter* than the ground, and the selected row is its own warm-grey
+     mass, distinct from --sel used elsewhere (filter pills, received bubbles). */
+  .chat-item{display:flex;gap:12px;padding:8px 16px;cursor:pointer;align-items:center;
+    height:60px;flex:0 0 auto;background:var(--chat-read);border-bottom:1px solid var(--border);
+    transition:background .1s ease;}
+  .chat-item:hover{background:var(--chat-read-hover);}
+  .chat-item:active{filter:brightness(.97);}
+  /* No default browser ring on a div-as-button — a red inset outline instead,
+     kept off the bottom hairline so it doesn't read as a doubled border. */
+  .chat-item:focus-visible{outline:2px solid var(--red);outline-offset:-2px;}
+  .chat-item.unread{background:var(--unread);}
+  .chat-item.unread:hover{background:var(--unread-hover);}
+  .chat-item.unread .chat-item-name{font-weight:600;}
+  .chat-item.unread .chat-item-preview p{color:var(--muted3);font-weight:500;}
+  .chat-item.selected{background:var(--chat-selected);cursor:default;}
+  .chat-item.selected:hover{background:var(--chat-selected);}
+  /* Preview text goes full-strength on hover/selected — same "active" idiom
+     as the role-avatar icon reaching full opacity on .selected. */
+  .chat-item:hover .chat-item-preview p{color:var(--text);}
+  .chat-item.selected .chat-item-preview p{color:var(--text);}
+  .live-badge{background:var(--red-deep);color:#fff;font-size:12px;line-height:18px;padding:0 5px;
+    border-radius:4px;white-space:nowrap;flex:0 0 auto;}
+  .closed-badge{background:var(--border);color:var(--muted);font-size:12px;line-height:18px;padding:0 5px;
+    border-radius:4px;white-space:nowrap;flex:0 0 auto;}
+
+  /* Each row fades/slides in once, right when it's inserted — conversations
+     trickle into the list one at a time on real timers (see startInboxTrickle
+     in app.js), so the real-time gap between rows IS the "arriving" effect;
+     this just softens each individual arrival rather than staggering a batch. */
+  @keyframes chatItemIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .chat-item{opacity:0;animation:chatItemIn .3s ease forwards;}
+  @media (prefers-reduced-motion:reduce){
+    .chat-item,.msg-row,.field-row{animation:none;opacity:1;}
+  }
+  .role-avatar{width:32px;height:32px;border-radius:999px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.1);}
+  .role-avatar .icon{width:16px;height:16px;}
+  /* The glyph sits back at 70% until the row is the one being worked on, so the
+     open conversation is the only avatar at full strength. The disc keeps its
+     colour either way — only the icon changes weight. */
+  .role-avatar .icon{opacity:.7;}
+  .chat-item.selected .role-avatar .icon{opacity:1;}
+  .role-avatar.role-student{background:var(--orange-bg);color:var(--orange-text);}
+  .role-avatar.role-unknown{background:var(--border);color:var(--muted);}
+  .role-avatar.role-admin{background:#aee2f1;color:#0c4a6e;}
+  /* The pinned welcome message is from the product itself, not a role a
+     support agent would ever see — brand red instead of a role colour. */
+  .role-avatar.role-system{background:var(--red);color:#fff;}
+  .chat-item.pinned{background:var(--pink-hi);}
+  .chat-item.pinned:hover{background:var(--pink-hi);filter:brightness(.98);}
+  /* A closed row reads as resolved, not gone — it's muted rather than hidden,
+     since it genuinely reappears under the Closed / Open & Closed filter
+     tabs (see closeActiveConversation in app.js). Visibility itself is
+     driven by .filtered-out, computed fresh from the active filter tab on
+     every render — never a permanent, filter-independent hide. */
+  .chat-item.closed .chat-item-name,.chat-item.closed .chat-item-preview p{color:var(--muted);}
+  .chat-item.filtered-out{display:none;}
+  .chat-item-body{flex:1;min-width:0;}
+  .chat-item-top{display:flex;justify-content:space-between;gap:8px;}
+  .chat-item-name{font-size:14px;font-weight:400;letter-spacing:-.02em;}
+  .chat-item-time{font-size:12px;color:var(--muted);white-space:nowrap;}
+  .chat-item-preview{display:flex;justify-content:space-between;gap:6px;align-items:center;margin-top:4px;}
+  .chat-item-preview p{font-size:12px;line-height:16px;color:var(--muted3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+  .chat-window-wrap{flex:1;min-width:0;background:transparent;padding:16px 16px 16px 8px;display:flex;gap:8px;overflow:hidden;}
+  .chat-window{flex:1;min-width:0;background:#fff;border-radius:16px;box-shadow:var(--card-shadow);
+    display:flex;flex-direction:column;position:relative;overflow:hidden;}
+  .field-row-empty{padding:12px 4px;font-size:13px;color:var(--muted);}
+  .chat-header{border-bottom:.5px solid var(--border-rail);padding:16px;display:flex;align-items:center;justify-content:space-between;}
+  .chat-header-id{display:flex;align-items:center;gap:12px;}
+  .chat-header-id strong{font-size:16px;font-weight:600;letter-spacing:-.02em;}
+  .chat-header-badges{display:flex;align-items:center;gap:6px;}
+  .chat-actions{display:flex;align-items:center;gap:8px;}
+  .icon-btn-square{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    color:var(--text);cursor:default;border:none;background:none;}
+  .icon-btn-square:hover{background:var(--bg);}
+  /* The LMS badge isn't a button — it's just a status indicator, so it
+     shouldn't hint at being clickable like the dots/panel-toggle buttons do. */
+  .chat-header-id .icon-btn-square:hover{background:none;}
+  .chat-thread{flex:1;background:#fff;padding:16px 16px 0;display:flex;flex-direction:column;gap:24px;align-items:center;
+    overflow-y:auto;}
+  .system-msg{padding:4px 8px;border-radius:18px;font-size:12px;color:var(--muted2);}
+  /* Every message row is fresh DOM whenever the thread renders — switching
+     conversations (renderConversation), sending one (appendMineMessage), the
+     initial page load — so this replays correctly in all three cases with no
+     JS re-trigger needed, same mechanism as .chat-item's arrival animation.
+     Short and uniform (no stagger): swapping conversations should feel
+     immediate, just softened, not like a show reel. */
+  @keyframes msgRowIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+  .msg-row{width:100%;display:flex;gap:8px;align-items:flex-start;
+    opacity:0;animation:msgRowIn .16s ease forwards;}
+  .msg-row.mine{justify-content:flex-end;}
+  /* Incoming messages carry the sender's avatar; the agent's own do not. */
+  .msg-avatar{width:32px;height:32px;border-radius:999px;flex:0 0 auto;display:flex;align-items:center;
+    justify-content:center;font-size:14px;font-weight:500;background:var(--orange-text);color:var(--orange-bg);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.1);}
+  .msg-col{display:flex;flex-direction:column;gap:4px;max-width:70%;}
+  .msg-col.mine{align-items:flex-end;}
+  /* Both sides now read as warm neutrals — the agent's own replies are no longer
+     a saturated green block, which stops them dominating the thread. */
+  .bubble{padding:10px 16px;border-radius:0 10px 10px 10px;font-size:14px;line-height:20px;background:var(--sel);color:var(--text);}
+  .bubble.mine{border-radius:10px 10px 0 10px;background:var(--sent-bubble);color:var(--text);}
+  .msg-time{font-size:12px;color:var(--muted2);}
+  .composer-wrap{padding:17px 16px 16px;position:relative;}
+  /* The composer is a recessed well on the card rather than an outlined box —
+     but while it's actively being typed in, it lifts to white with a border,
+     so "composing" reads as a distinct state, not just an idle placeholder.
+     Border is transparent at rest (not none) so it doesn't shift the box
+     when it appears. */
+  .composer{background:var(--bg);border:.5px solid transparent;border-radius:10px;padding:13.5px 7.5px 7.5px 13.5px;
+    display:flex;flex-direction:column;gap:16px;transition:background .12s ease,border-color .12s ease;}
+  .composer:focus-within{background:#fff;border-color:var(--muted3);}
+  .composer-input{font-size:16px;color:var(--text);outline:none;white-space:pre-wrap;word-break:break-word;
+    min-height:24px;max-height:120px;overflow-y:auto;cursor:text;}
+  .composer-input:empty:before{content:attr(data-placeholder);color:var(--muted);}
+  .composer-toolbar{display:flex;justify-content:space-between;align-items:flex-end;}
+  .composer-icons{display:flex;gap:2px;color:var(--muted);}
+  .toolbar-icon-btn{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    background:none;border:none;color:var(--muted);cursor:pointer;padding:0;}
+  .toolbar-icon-btn:hover{background:var(--sel);color:var(--text);}
+  .toolbar-icon-btn .icon{width:20px;height:20px;}
+  .toolbar-icon-btn.mic-recording{color:var(--red);animation:micPulse 1s ease-in-out infinite;}
+  @keyframes micPulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+  /* Send is a neutral dark square now — red is reserved for Close and live state. */
+  .send-btn{width:40px;height:40px;border-radius:6px;background:var(--send-btn);display:flex;align-items:center;
+    justify-content:center;color:#fff;border:none;cursor:pointer;}
+  .send-btn:hover{filter:brightness(1.1);}
+  .send-btn:disabled{background:var(--border);color:var(--muted);cursor:default;filter:none;}
+  .send-btn .icon{width:20px;height:20px;}
+
+  .emoji-menu{position:absolute;left:11px;bottom:150px;width:264px;background:#fff;border:1px solid var(--border);
+    border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.14);z-index:20;overflow:hidden;display:none;padding:10px;}
+  .emoji-menu.open{display:block;}
+  .emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;}
+  .emoji-grid button{font-size:19px;line-height:1;background:none;border:none;border-radius:6px;padding:5px;cursor:pointer;}
+  .emoji-grid button:hover{background:var(--bg);}
+
+  .ai-menu{position:absolute;left:11px;bottom:150px;width:380px;max-width:calc(100% - 22px);background:#fff;
+    border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.14);z-index:20;
+    overflow:hidden;display:none;}
+  .ai-menu.open{display:block;}
+  .ai-menu-header{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;
+    font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .ai-menu-header .icon{width:13px;height:13px;color:var(--red);}
+  .ai-suggestion{display:block;width:100%;text-align:left;padding:11px 14px;border:none;background:none;
+    font-size:13px;line-height:1.4;color:var(--text);cursor:pointer;border-top:.5px solid var(--border-soft);
+    font-family:inherit;}
+  .ai-suggestion:first-of-type{border-top:none;}
+  .ai-suggestion:hover{background:var(--bg);}
+
+  .command-menu{position:absolute;left:11px;bottom:150px;width:460px;max-width:calc(100% - 22px);background:#fff;
+    border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.14);z-index:20;overflow:hidden;
+    display:none;}
+  .command-menu.open{display:block;}
+  .command-trigger{margin:8px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;display:flex;
+    align-items:center;gap:8px;font-size:14px;color:var(--muted);}
+  .command-trigger .bang{color:var(--text);font-weight:600;}
+  .command-list{max-height:340px;overflow-y:auto;padding-bottom:8px;}
+  .command-group-header{padding:10px 12px 8px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;
+    letter-spacing:.03em;}
+  .command-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;
+    border-radius:8px;margin:0 6px;cursor:pointer;}
+  .command-item:hover{background:var(--bg);}
+  /* .active is the keyboard-highlighted row in the ⌘K palette (arrow keys
+     move it, Enter invokes it) — same tone as a selected chip elsewhere in
+     the app, distinct from the lighter :hover tint. */
+  .command-item.active{background:var(--sel);}
+  .command-item-left{display:flex;align-items:center;gap:10px;min-width:0;}
+  .command-item-icon{width:22px;height:22px;border-radius:6px;border:1px solid var(--border);background:var(--bg);
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:var(--muted);}
+  .command-item-text{display:flex;flex-direction:column;}
+  .command-item .name{font-size:14px;color:var(--text);}
+  .command-item .subtext{font-size:12px;color:var(--muted);margin-top:2px;}
+  .command-trigger-key{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 8px;
+    font-size:12px;color:var(--muted);white-space:nowrap;}
+  .command-divider{height:1px;background:var(--border);margin:4px 6px;}
+
+  /* ⌘K command palette — the same command-item/command-list markup as the
+     composer's inline "!" dropdown (.command-menu above), just presented as
+     a full-screen modal+overlay instead of a small anchored panel. Reuses
+     the app's existing .modal/.backdrop system (see #remedy-modal) rather
+     than inventing a second modal language. */
+  #command-backdrop{backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
+  .modal.command-palette{top:14vh;left:50%;transform:translateX(-50%);width:560px;max-width:calc(100% - 32px);
+    max-height:68vh;display:none;flex-direction:column;background:rgba(255,255,255,.94);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+  .modal.command-palette.open{display:flex;}
+  .command-palette-search{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);flex:0 0 auto;}
+  .command-palette-search .icon{width:16px;height:16px;color:var(--muted);flex:0 0 auto;}
+  .command-palette-search input{flex:1;border:none;outline:none;background:none;font-size:15px;color:var(--text);
+    min-width:0;}
+  .command-palette-search input::placeholder{color:var(--muted);}
+  .command-palette .command-list{max-height:none;flex:1;overflow-y:auto;}
+  .command-palette-footer{display:flex;align-items:center;gap:6px;padding:10px 16px;border-top:1px solid var(--border);
+    font-size:12px;color:var(--muted);flex:0 0 auto;}
+  .command-palette-footer-label{margin-right:2px;}
+  .command-palette-divider{color:var(--border-soft);}
+  .command-palette-footer-spacer{flex:1;}
+
+  /* chat header "more" menu — a floating corner popover like the composer
+     flyouts above, anchored to the dots button rather than a column edge. */
+  .chat-more-wrap{position:relative;}
+  .chat-more-menu{position:absolute;top:34px;right:0;width:208px;background:#fff;border:1px solid var(--border);
+    border-radius:8px;box-shadow:0 12px 32px rgba(0,0,0,.14);z-index:20;display:none;overflow:hidden;padding:4px;}
+  .chat-more-menu.open{display:block;}
+  .chat-more-item{display:flex;align-items:center;gap:8px;width:100%;padding:6px 10px;border-radius:6px;font-size:14px;
+    color:var(--text);cursor:pointer;border:none;background:none;text-align:left;font-family:inherit;}
+  .chat-more-item:hover{background:var(--bg);}
+  .chat-more-item .icon{width:15px;height:15px;color:var(--muted);flex:0 0 auto;}
+  .chat-more-divider{height:1px;background:var(--border);margin:4px 6px;}
+
+  /* status filter / sort dropdowns — same flyout shell as .chat-more-menu */
+  .filter-tab-wrap{position:relative;}
+  .filter-menu,.sort-menu{position:absolute;top:32px;width:200px;background:#fff;border:1px solid var(--border);
+    border-radius:8px;box-shadow:0 12px 32px rgba(0,0,0,.14);z-index:20;display:none;overflow:hidden;padding:4px;}
+  .filter-menu{left:0;}
+  .sort-menu{right:0;}
+  .filter-menu.open,.sort-menu.open{display:block;}
+  .menu-check-item{display:flex;align-items:center;gap:8px;width:100%;padding:6px 10px;border-radius:6px;font-size:14px;
+    color:var(--text);cursor:pointer;border:none;background:none;text-align:left;font-family:inherit;}
+  .menu-check-item:hover{background:var(--bg);}
+  .menu-check-item .icon{width:15px;height:15px;color:var(--muted);flex:0 0 auto;}
+  .menu-check-item .check{margin-left:auto;width:14px;height:14px;color:var(--text);visibility:hidden;flex:0 0 auto;}
+  .menu-check-item.active .check{visibility:visible;}
+
+  .side-panel{width:320px;flex:0 0 320px;background:#fff;border:none;border-radius:16px;box-shadow:var(--card-shadow);
+    display:flex;flex-direction:column;overflow-y:auto;
+    transition:margin-right .24s cubic-bezier(.4,0,.2,1),opacity .16s ease;}
+  /* Collapsed: slide out to the right. The negative margin absorbs both the panel
+     width and the 8px flex gap, so the chat window expands to fill the space. */
+  .side-panel.collapsed{margin-right:-328px;opacity:0;pointer-events:none;}
+  /* The Welcome message has no side-panel content at all (see isWelcomeActive
+     in pageInbox/renderConversation) — removed outright, not just faded like
+     a user-collapsed panel, since there's nothing to reopen. */
+  .side-panel.hidden{display:none;}
+  /* Reopen affordance in the chat header: only present once the panel is closed. */
+  .panel-reopen{display:none;opacity:0;transition:opacity .16s ease;}
+  .panel-reopen.show{display:flex;opacity:1;}
+  @media (prefers-reduced-motion:reduce){.side-panel,.panel-reopen{transition:none;}}
+  .side-tabs{display:flex;align-items:center;justify-content:space-between;padding:0 8px;border-bottom:1px solid var(--border);}
+  .side-tabs-left{display:flex;align-items:center;}
+  .side-tab{padding:16px 12px 14px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;
+    border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;font-family:inherit;}
+  .side-tab.active{color:var(--text);border-bottom-color:var(--text);}
+  .side-tabs-actions{display:flex;align-items:center;gap:4px;padding:8px;}
+  .side-tabs-actions .icon-btn-square{width:24px;height:24px;color:var(--muted);}
+  .side-tabs-actions .icon-btn-square .icon{width:14px;height:14px;}
+  .field-row-list{padding:16px;display:flex;flex-direction:column;gap:14px;}
+  /* Same fresh-DOM entrance as .msg-row — replays whenever the side panel's
+     fields are rebuilt for a different conversation. */
+  .field-row{display:flex;flex-direction:column;gap:2px;opacity:0;animation:msgRowIn .16s ease forwards;}
+  .field-row span{font-size:12px;color:var(--muted);}
+  .field-row strong{font-size:14px;font-weight:500;}
+  .accordion-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
+    border-top:1px solid var(--border);cursor:pointer;}
+  .accordion-header:hover{background:var(--bg);}
+  .accordion-header .left{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;}
+  .accordion-header .icon{width:16px;height:16px;color:var(--muted);}
+  .accordion-header .chev{width:16px;height:16px;color:var(--muted);transition:transform .15s ease;}
+  .accordion-header.open .chev{transform:rotate(90deg);}
+  .accordion-body{padding:0 8px;display:none;}
+  .accordion-body.open{display:block;}
+  .accordion-row{padding:10px 8px;}
+  .accordion-row strong{display:block;font-size:12px;font-weight:500;}
+  .accordion-row span{display:block;font-size:12px;color:var(--muted);}
+
+  /* views popover */
+  .views-popover{position:absolute;top:44px;left:0;width:202px;background:#fff;border-right:1px solid var(--border);
+    border-radius:0 16px 16px 0;box-shadow:7px 0 12px rgba(0,0,0,.05);z-index:30;display:none;overflow:hidden;}
+  .views-popover.open{display:block;}
+  .views-popover-header{padding:16px 16px 8px;font-size:16px;font-weight:600;letter-spacing:-.02em;}
+  .views-list{display:flex;flex-direction:column;gap:2px;padding:4px 12px 16px;}
+  .view-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;font-size:14px;cursor:pointer;}
+  .view-item:hover{background:var(--bg);}
+  .view-item.active{background:var(--green-bg3);color:var(--green-text);font-weight:500;}
+  .view-item .icon{width:15px;height:15px;}
+  .view-count{margin-left:auto;background:#fff;border-radius:999px;min-width:20px;padding:2px 6px;font-size:12px;
+    text-align:center;}
+  .view-item.active .view-count{color:var(--green-text);}
+  .view-item:not(.active) .view-count{background:var(--bg);color:var(--readonly);}
+
+  /* modal + backdrop */
+  .backdrop{position:fixed;inset:0;background:rgba(12,10,9,.4);z-index:90;display:none;}
+  .backdrop.open{display:block;}
+  .modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:480px;max-width:92vw;background:#fff;
+    border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.25);z-index:91;display:none;overflow:hidden;}
+  .modal.open{display:block;}
+  .modal-header{padding:20px 24px;}
+  .modal-header .eyebrow{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);}
+  .modal-header h3{font-size:20px;font-weight:600;letter-spacing:-.02em;margin-top:4px;}
+  .modal-body{padding:0 24px 20px;display:flex;flex-direction:column;gap:16px;}
+  .modal-field{display:flex;justify-content:space-between;gap:16px;font-size:14px;}
+  .modal-field .k{color:var(--muted);width:140px;flex:0 0 140px;}
+  .modal-field .v{flex:1;font-weight:500;}
+  .modal-select{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:13px;}
+  .modal-writeback{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--muted);}
+  .modal-approval{display:flex;gap:8px;font-size:13px;color:var(--amber);}
+  .modal-approval .icon{width:16px;height:16px;flex:0 0 auto;margin-top:1px;}
+  .modal-footer{padding:16px 24px;display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--border);}
+  .modal-btn{padding:9px 16px;border-radius:8px;font-size:14px;font-weight:500;border:none;cursor:pointer;}
+  .modal-btn.cancel{background:var(--bg);color:var(--text);}
+  .modal-btn.cancel:hover{background:var(--border);}
+  .modal-btn.confirm{background:var(--red);color:#fff;}
+  .modal-btn.confirm:hover{filter:brightness(1.1);}
+
+  /* Welcome message — the intro now lives as the first (pinned) chat bubble
+     rather than a modal, so the hotkey list needs to read well inside a
+     wider-than-usual bubble instead of a modal card. */
+  .bubble.welcome-bubble{max-width:none;}
+  .msg-col.welcome-col{max-width:420px;}
+  .welcome-hotkeys{display:flex;flex-direction:column;gap:2px;background:var(--surface-nested);border-radius:10px;padding:6px;margin-top:2px;}
+  .welcome-hotkey-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;}
+  .hotkey-keys{display:flex;gap:4px;flex:0 0 auto;}
+  .hotkey-label{font-size:13px;color:var(--text);}
+  kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;
+    background:#fff;border:1px solid var(--border-soft);border-bottom-width:2px;border-radius:6px;
+    font-family:inherit;font-size:12px;font-weight:600;color:var(--muted3);box-shadow:0 1px 0 rgba(0,0,0,.04);}
+
+  .icon{stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;}
+  .icon-fill{stroke:none;fill:currentColor;}
+  /* Card, not a plain dark pill — needed room for an optional description
+     line and a type icon (success/error), see showToast in app.js. */
+  .hint-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(6px);
+    display:flex;align-items:flex-start;gap:10px;background:#fff;color:var(--text);
+    border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.16);
+    padding:12px 16px;min-width:200px;max-width:360px;z-index:99;
+    opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;}
+  .hint-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .hint-toast-icon{width:18px;height:18px;flex:0 0 auto;margin-top:1px;}
+  .hint-toast-icon:empty{display:none;}
+  .hint-toast.success .hint-toast-icon{color:var(--green-text);}
+  .hint-toast.error .hint-toast-icon{color:var(--red-text);}
+  .hint-toast-body{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .hint-toast-message{font-size:13px;font-weight:500;line-height:1.35;}
+  .hint-toast-description{font-size:12px;color:var(--muted);line-height:1.35;}
+  .hint-toast-description:empty{display:none;}

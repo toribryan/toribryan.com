@@ -1,0 +1,79 @@
+  :root{
+    /* Surfaces — the redesign sits floating cards on a warm ground rather than
+       dividing the screen with borders. Depth comes from shadow, not rules. */
+    --bg:#efeceb;          /* app ground: sidenav + gutters sit directly on this */
+    --bg-deep:#eae7e6;     /* the ground behind the ground, outside the body */
+    --sidenav-bg:transparent;
+    --card:#ffffff;
+    --card-shadow:0 0 4px rgba(0,0,0,.15);
+    --sel:#dbd3d1;         /* selected chip / received bubble / filter pills */
+    --sel-hover:#e4dedc;
+    --unread:#fdfcfc;      /* unread chat rows read as *lighter* than the ground */
+    --unread-hover:#f4f0ef;
+    --chat-read:#e6e1e0;   /* default/read chat rows — a step darker than the ground, not flush with it */
+    --chat-read-hover:#dcd6d4;
+    --chat-selected:#d2c8c6; /* selected chat row — its own warm-grey, distinct from --sel elsewhere */
+    --chat-selected-hover:#c7bab7;
+    --border:#e8e4e3;
+    --border-soft:rgba(124,109,103,.4);
+    --border-rail:rgba(124,109,103,.18); /* column hairlines — lighter than --border-soft */
+    --text:#0c0a09;
+    --muted:#7c6d67;
+    --muted2:#575658;
+    --muted3:#403e3f;
+    --readonly:#778ba6;
+    --red:#c70036;         /* primary actions: New content, Edit, New contact */
+    --red-deep:#b20030;    /* inbox Close + live-attempt badge only */
+    --red-dot:#c70036;
+    --surface-nested:#f8f7f6; /* stat tiles + chart wells inside a white card */
+    --pill:#f3f1f1;        /* filter / search pills */
+    --pink-hi:#ffe6ec;     /* highlighted stat tile */
+    /* Series palette — the lead series is near-black, not red, so red stays
+       free to mean "above threshold" wherever it appears in a chart. The role
+       series reuse the same hues as their badges/avatars elsewhere in the app
+       (orange/blue/green) rather than a separate, unbranded chart palette. */
+    --series-all:var(--text);
+    --series-student:var(--orange-text);
+    --series-instructor:var(--blue-text);
+    --series-admin:var(--green);
+    --bar-idle:#b8aca5; /* warm neutral, in step with --muted/--border rather than a cool grey */
+    --bar-alert:var(--red-text);
+    /* Topic-category palette — Conversation Topics report only. Deliberately
+       distinct hues from --series-*, which already carry role meaning
+       (orange=student/blue=instructor/green=admin) on the Overview chart;
+       reusing them here for a different categorical axis would overload
+       that meaning. Validated all-pairs via the dataviz skill's
+       validate_palette.js against --surface-nested (the chart-card
+       background this palette actually renders on) — full pass, with two
+       WARN-tier items (light-pink contrast, violet/blue CVD proximity)
+       covered by the direct-label legend + hover tooltip this report
+       always shows alongside color. */
+    --topic-1:#7c3aed; /* Lockdown browser */
+    --topic-2:#9d174d; /* Camera & room scan */
+    --topic-3:#0d9488; /* Browser extension conflicts */
+    --topic-4:#a16207; /* Screen share / multi-monitor */
+    --topic-5:#3b82f6; /* Exam access */
+    --topic-6:#f472b6; /* Scheduling & accommodations */
+    --sent-bubble:#f0dfdb; /* agent's own messages: warm, not saturated green */
+    --send-btn:#403e3f;
+    --red-text:#e7000b;
+    --red-bg:#fdebeb;
+    --amber:#b45309;
+    --amber-bg:#fff1f2;
+    --amber-badge-bg:#feeeaf;
+    --amber-badge-text:#d97706;
+    --green:#047857;
+    --green-text:#056b3d;
+    --green-bg:#e8faf0;
+    --green-bg2:#d3ebe3;
+    --green-bg3:#bfeacb;
+    --green-bg4:#c9edd4;
+    --purple-bg:#e9d6f9;
+    --pink-bg:#f8dae5;
+    --orange-text:#cd4c15;
+    --orange-badge-text:#b94513;
+    --orange-bg:#fae0d1;
+    --blue-bg:#dbeafe;
+    --blue-text:#1d4ed8;
+    --brand-link:#5252b5;
+  }

@@ -1,0 +1,77 @@
+<meta charset="utf-8" />
+<title>Integrity Console</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/inbox.css" />
+
+
+<div class="viewport-scroll">
+  <div id="app" class="shell"></div>
+</div>
+
+<div id="backdrop" class="backdrop"></div>
+<div id="remedy-modal" class="modal">
+  <div class="modal-header">
+    <div class="eyebrow">Academic Remedy</div>
+    <h3>Grant extra time</h3>
+  </div>
+  <div class="modal-body">
+    <div class="modal-field"><div class="k">Student</div><div class="v" id="modal-student-name">Jordan Lee</div></div>
+    <div class="modal-field"><div class="k">Exam</div><div class="v" id="modal-exam">BIO 201 Midterm &mdash; Ch. 4-7</div></div>
+    <div class="modal-field"><div class="k">Amount</div><div class="v">+15 minutes</div></div>
+    <div>
+      <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Reason</div>
+      <div class="modal-select">Technical failure &mdash; lockdown browser crash</div>
+    </div>
+    <div class="modal-writeback" id="modal-writeback">This will be written to Jordan Lee's incident record and to the Cascade State University gradebook, and will be visible to their instructor.</div>
+    <div class="modal-approval">
+      <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <span id="modal-approval-text">Cascade State University requires administrator approval for extra-time grants. This will be sent, not applied directly.</span>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-btn cancel" onclick="closeModal()">Cancel</button>
+    <button class="modal-btn confirm" onclick="closeModal()">Send for approval</button>
+  </div>
+</div>
+<div id="confirm-backdrop" class="backdrop"></div>
+<div id="close-confirm-modal" class="modal">
+  <div class="modal-header">
+    <div class="eyebrow">Confirm</div>
+    <h3>Close this conversation?</h3>
+  </div>
+  <div class="modal-body">
+    <p style="font-size:14px;color:var(--muted);margin:0;">You can still find it afterward under the Closed filter.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-btn cancel" onclick="cancelCloseConversation()">Cancel</button>
+    <button class="modal-btn confirm" onclick="confirmCloseConversation()">Close conversation</button>
+  </div>
+</div>
+<div id="dont-ask-modal" class="modal">
+  <div class="modal-header">
+    <div class="eyebrow">Got it</div>
+    <h3>Skip this confirmation next time?</h3>
+  </div>
+  <div class="modal-body">
+    <p style="font-size:14px;color:var(--muted);margin:0;">You can close conversations right away, without being asked again.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-btn cancel" onclick="closeDontAskModal()">Keep asking</button>
+    <button class="modal-btn confirm" onclick="dontAskAgain()">Don&rsquo;t ask again</button>
+  </div>
+</div>
+<div id="hint-toast" class="hint-toast">
+  <span id="hint-toast-icon" class="hint-toast-icon"></span>
+  <div class="hint-toast-body">
+    <div id="hint-toast-message" class="hint-toast-message"></div>
+    <div id="hint-toast-description" class="hint-toast-description"></div>
+  </div>
+</div>
+
+<script src="js/icons.js"></script>
+<script src="js/chrome.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/app.js"></script>

@@ -1,0 +1,1650 @@
+{
+  "v": 0,
+  "components": {
+    "chrome-secondarynav": {
+      "id": "chrome-secondarynav",
+      "name": "SecondaryNav",
+      "path": "./src/components/chrome/SecondaryNav.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "SecondaryNav",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\chrome\\SecondaryNav.tsx",
+        "actualName": "SecondaryNav",
+        "exportName": "SecondaryNav",
+        "props": {
+          "title": {
+            "required": true,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          },
+          "entries": {
+            "required": true,
+            "tsType": {
+              "name": "Array",
+              "elements": [
+                {
+                  "name": "union",
+                  "raw": "| { type: \"item\"; key: string; label: string; icon: LucideIcon; count?: number; external?: boolean }\r\n| { type: \"folder\"; id: string; label: string; children: { key: string; label: string }[] }\r\n| { type: \"divider\" }",
+                  "elements": [
+                    {
+                      "name": "signature",
+                      "type": "object",
+                      "raw": "{ type: \"item\"; key: string; label: string; icon: LucideIcon; count?: number; external?: boolean }",
+                      "signature": {
+                        "properties": [
+                          {
+                            "key": "type",
+                            "value": {
+                              "name": "literal",
+                              "value": "\"item\"",
+                              "required": true
+                            }
+                          },
+                          {
+                            "key": "key",
+                            "value": {
+                              "name": "string",
+                              "required": true
+                            }
+                          },
+                          {
+                            "key": "label",
+                            "value": {
+                              "name": "string",
+                              "required": true
+                            }
+                          },
+                          {
+                            "key": "icon",
+                            "value": {
+                              "name": "LucideIcon",
+                              "required": true
+                            }
+                          },
+                          {
+                            "key": "count",
+                            "value": {
+                              "name": "number",
+                              "required": false
+                            }
+                          },
+                          {
+                            "key": "external",
+                            "value": {
+                              "name": "boolean",
+                              "required": false
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "name": "signature",
+                      "type": "object",
+                      "raw": "{ type: \"folder\"; id: string; label: string; children: { key: string; label: string }[] }",
+                      "signature": {
+                        "properties": [
+                          {
+                            "key": "type",
+                            "value": {
+                              "name": "literal",
+                              "value": "\"folder\"",
+                              "required": true
+                            }
+                          },
+                          {
+                            "key": "id",
+                            "value": {
+                              "name": "string",
+                              "required": true
+                            }
+                          },
+                          {
+                            "key": "label",
+                            "value": {
+                              "name": "string",
+                              "required": true
+                            }
+                          },
+                          {
+                            "key": "children",
+                            "value": {
+                              "name": "Array",
+                              "elements": [
+                                {
+                                  "name": "signature",
+                                  "type": "object",
+                                  "raw": "{ key: string; label: string }",
+                                  "signature": {
+                                    "properties": [
+                                      {
+                                        "key": "key",
+                                        "value": {
+                                          "name": "string",
+                                          "required": true
+                                        }
+                                      },
+                                      {
+                                        "key": "label",
+                                        "value": {
+                                          "name": "string",
+                                          "required": true
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "raw": "{ key: string; label: string }[]",
+                              "required": true
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "name": "signature",
+                      "type": "object",
+                      "raw": "{ type: \"divider\" }",
+                      "signature": {
+                        "properties": [
+                          {
+                            "key": "type",
+                            "value": {
+                              "name": "literal",
+                              "value": "\"divider\"",
+                              "required": true
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "raw": "NavEntry[]"
+            },
+            "description": ""
+          },
+          "active": {
+            "required": true,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          },
+          "onSelect": {
+            "required": true,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          },
+          "className": {
+            "required": false,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "chrome-secondarynav--default",
+          "name": "Default",
+          "snippet": "const Default = () => <Demo />;"
+        }
+      ],
+      "import": "import { SecondaryNav } from \"design-system\";"
+    },
+    "dashboard-sourcecard": {
+      "id": "dashboard-sourcecard",
+      "name": "SourceCard",
+      "path": "./src/components/dashboard/SourceCard.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "SourceCard",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\dashboard\\SourceCard.tsx",
+        "actualName": "SourceCard",
+        "exportName": "SourceCard",
+        "props": {
+          "thumbBg": {
+            "required": true,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          },
+          "thumbContent": {
+            "required": true,
+            "tsType": {
+              "name": "ReactNode"
+            },
+            "description": ""
+          },
+          "thumbBorder": {
+            "required": false,
+            "tsType": {
+              "name": "boolean"
+            },
+            "description": ""
+          },
+          "title": {
+            "required": true,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          },
+          "status": {
+            "required": true,
+            "tsType": {
+              "name": "union",
+              "raw": "\"live\" | \"not-live\"",
+              "elements": [
+                {
+                  "name": "literal",
+                  "value": "\"live\""
+                },
+                {
+                  "name": "literal",
+                  "value": "\"not-live\""
+                }
+              ]
+            },
+            "description": ""
+          },
+          "liveLabel": {
+            "required": false,
+            "tsType": {
+              "name": "string"
+            },
+            "description": "",
+            "defaultValue": {
+              "value": "\"Live\"",
+              "computed": false
+            }
+          },
+          "notLiveLabel": {
+            "required": false,
+            "tsType": {
+              "name": "string"
+            },
+            "description": "",
+            "defaultValue": {
+              "value": "\"Not live\"",
+              "computed": false
+            }
+          },
+          "description": {
+            "required": true,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          },
+          "linkText": {
+            "required": false,
+            "tsType": {
+              "name": "string"
+            },
+            "description": "",
+            "defaultValue": {
+              "value": "\"Set up now\"",
+              "computed": false
+            }
+          },
+          "actionLabel": {
+            "required": false,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          },
+          "onAction": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "() => void",
+              "signature": {
+                "arguments": [],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "dashboard-sourcecard--cards",
+          "name": "Cards",
+          "snippet": "const Cards = () => (\r\n  <div className=\"flex flex-wrap gap-4\">\r\n    <SourceCard\r\n      thumbBg=\"#bfeacb\"\r\n      thumbContent={<span className=\"text-[22px] font-bold tracking-wide text-[#2f7549] uppercase\">BAB Help</span>}\r\n      title=\"Help Center\"\r\n      status=\"live\"\r\n      description=\"Students and instructors use your knowledge to find accurate answers themselves.\"\r\n    />\r\n    <SourceCard\r\n      thumbBg=\"#bfe6ea\"\r\n      thumbContent={<Bot className=\"size-10 text-[#0c4a6e]\" />}\r\n      title=\"AI Assist\"\r\n      status=\"not-live\"\r\n      description=\"AI Assist uses your knowledge to generate accurate answers for students, instructors, and administrators.\"\r\n    />\r\n  </div>\r\n);"
+        },
+        {
+          "id": "dashboard-sourcecard--list",
+          "name": "List",
+          "snippet": "const List = () => (\r\n  <SourceList>\r\n    <SourceListRow mark=\"EH\" title=\"Company Help Center\" meta=\"1 article\" actionLabel=\"Add article\" />\r\n    <SourceListRow mark=\"Z\" markBg=\"#03363d\" title=\"Zendesk\" meta=\"Not set up\" actionLabel=\"Sync or Import\" connected={false} />\r\n  </SourceList>\r\n);"
+        }
+      ],
+      "import": "import { Bot } from \"lucide-react\";\nimport { SourceCard, SourceList, SourceListRow } from \"design-system\";"
+    },
+    "dashboard-stattile": {
+      "id": "dashboard-stattile",
+      "name": "StatTile",
+      "path": "./src/components/dashboard/StatTile.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "StatTile",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\dashboard\\StatTile.tsx",
+        "actualName": "StatTile",
+        "exportName": "StatTile",
+        "props": {
+          "label": {
+            "required": true,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          },
+          "icon": {
+            "required": false,
+            "tsType": {
+              "name": "ReactNode"
+            },
+            "description": ""
+          },
+          "value": {
+            "required": true,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          },
+          "delta": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "object",
+              "raw": "{ text: string; direction: \"up\" | \"down\" | \"warn\" }",
+              "signature": {
+                "properties": [
+                  {
+                    "key": "text",
+                    "value": {
+                      "name": "string",
+                      "required": true
+                    }
+                  },
+                  {
+                    "key": "direction",
+                    "value": {
+                      "name": "union",
+                      "raw": "\"up\" | \"down\" | \"warn\"",
+                      "elements": [
+                        {
+                          "name": "literal",
+                          "value": "\"up\""
+                        },
+                        {
+                          "name": "literal",
+                          "value": "\"down\""
+                        },
+                        {
+                          "name": "literal",
+                          "value": "\"warn\""
+                        }
+                      ],
+                      "required": true
+                    }
+                  }
+                ]
+              }
+            },
+            "description": ""
+          },
+          "caption": {
+            "required": false,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          },
+          "highlight": {
+            "required": false,
+            "tsType": {
+              "name": "boolean"
+            },
+            "description": ""
+          },
+          "className": {
+            "required": false,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "dashboard-stattile--default",
+          "name": "Default",
+          "snippet": "const Default = () => <StatTile\r\n    label=\"Total conversations\"\r\n    value=\"482\"\r\n    delta={{ text: \"+12% vs last period\", direction: \"up\" }} />;"
+        },
+        {
+          "id": "dashboard-stattile--grid",
+          "name": "Grid",
+          "snippet": "const Grid = () => (\r\n  <StatGrid className=\"w-220\">\r\n    <StatTile\r\n      label=\"Total conversations\"\r\n      icon={<MessageCircle className=\"size-3.5\" />}\r\n      value=\"482\"\r\n      delta={{ text: \"+12%\", direction: \"up\" }}\r\n      caption=\"Last 7 days\"\r\n    />\r\n    <StatTile label=\"Escalated\" value=\"14\" delta={{ text: \"+3\", direction: \"down\" }} highlight caption=\"Requires review\" />\r\n    <StatTile label=\"Avg. response time\" value=\"2m 14s\" delta={{ text: \"Above target\", direction: \"warn\" }} />\r\n    <StatTile label=\"CSAT\" value=\"94%\" delta={{ text: \"+2 pts\", direction: \"up\" }} />\r\n  </StatGrid>\r\n);"
+        }
+      ],
+      "import": "import { MessageCircle } from \"lucide-react\";\nimport { StatGrid, StatTile } from \"design-system\";"
+    },
+    "dashboard-trendchart": {
+      "id": "dashboard-trendchart",
+      "name": "TrendChart",
+      "path": "./src/components/dashboard/TrendChart.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "TrendChart",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\dashboard\\TrendChart.tsx",
+        "actualName": "TrendChart",
+        "exportName": "TrendChart",
+        "props": {
+          "categories": {
+            "required": true,
+            "tsType": {
+              "name": "Array",
+              "elements": [
+                {
+                  "name": "string"
+                }
+              ],
+              "raw": "string[]"
+            },
+            "description": ""
+          },
+          "series": {
+            "required": true,
+            "tsType": {
+              "name": "Array",
+              "elements": [
+                {
+                  "name": "TrendSeries"
+                }
+              ],
+              "raw": "TrendSeries[]"
+            },
+            "description": ""
+          },
+          "values": {
+            "required": true,
+            "tsType": {
+              "name": "Record",
+              "elements": [
+                {
+                  "name": "string"
+                },
+                {
+                  "name": "Array",
+                  "elements": [
+                    {
+                      "name": "number"
+                    }
+                  ],
+                  "raw": "number[]"
+                }
+              ],
+              "raw": "Record<string, number[]>"
+            },
+            "description": ""
+          },
+          "showLegend": {
+            "required": false,
+            "tsType": {
+              "name": "boolean"
+            },
+            "description": "",
+            "defaultValue": {
+              "value": "false",
+              "computed": false
+            }
+          },
+          "height": {
+            "required": false,
+            "tsType": {
+              "name": "number"
+            },
+            "description": "",
+            "defaultValue": {
+              "value": "220",
+              "computed": false
+            }
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "dashboard-trendchart--multi-series",
+          "name": "Multi Series",
+          "snippet": "const MultiSeries = () => (\r\n  <div className=\"w-280\">\r\n    <TrendChart\r\n      categories={WEEKS}\r\n      showLegend\r\n      series={[\r\n        { key: \"all\", label: \"All conversations\", color: \"var(--series-all)\", emphasis: true },\r\n        { key: \"student\", label: \"Student\", color: \"var(--series-student)\" },\r\n        { key: \"instructor\", label: \"Instructor\", color: \"var(--series-instructor)\" },\r\n        { key: \"admin\", label: \"Administrator\", color: \"var(--series-admin)\" },\r\n      ]}\r\n      values={{\r\n        all: [9, 10, 11, 10, 12, 13, 14, 15, 17, 19, 21, 24],\r\n        student: [5, 6, 6, 6, 7, 7, 8, 9, 10, 11, 12, 13],\r\n        instructor: [3, 3, 4, 3, 4, 4, 4, 5, 5, 6, 6, 7],\r\n        admin: [1, 1, 1, 2, 1, 2, 2, 2, 2, 3, 3, 3],\r\n      }}\r\n    />\r\n  </div>\r\n);"
+        },
+        {
+          "id": "dashboard-trendchart--single-series",
+          "name": "Single Series",
+          "snippet": "const SingleSeries = () => (\r\n  <div className=\"w-280\">\r\n    <TrendChart\r\n      categories={WEEKS}\r\n      series={[{ key: \"response\", label: \"Median time to first response\", color: \"var(--series-all)\" }]}\r\n      values={{ response: [3.4, 3.2, 3.1, 2.9, 2.8, 2.9, 2.6, 2.5, 2.4, 2.2, 2.3, 2.1] }}\r\n    />\r\n  </div>\r\n);"
+        }
+      ],
+      "import": "import { TrendChart } from \"design-system\";"
+    },
+    "ui-accordion": {
+      "id": "ui-accordion",
+      "name": "Accordion",
+      "path": "./src/components/ui/accordion.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "Accordion",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\accordion.tsx",
+        "actualName": "Accordion",
+        "exportName": "Accordion"
+      },
+      "stories": [
+        {
+          "id": "ui-accordion--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <Accordion defaultValue={[\"account\"]} className=\"w-80\">\r\n    <AccordionItem value=\"account\">\r\n      <AccordionTrigger>Account details</AccordionTrigger>\r\n      <AccordionContent>\r\n        Email, institution, and enrollment status.\r\n      </AccordionContent>\r\n    </AccordionItem>\r\n    <AccordionItem value=\"exam\">\r\n      <AccordionTrigger>Exam context</AccordionTrigger>\r\n      <AccordionContent>\r\n        BIO 201 Midterm — Ch. 4-7, lockdown browser session.\r\n      </AccordionContent>\r\n    </AccordionItem>\r\n  </Accordion>\r\n);"
+        }
+      ],
+      "import": "import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"design-system\";"
+    },
+    "ui-avatar": {
+      "id": "ui-avatar",
+      "name": "Avatar",
+      "path": "./src/components/ui/avatar.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "Avatar",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\avatar.tsx",
+        "actualName": "Avatar",
+        "exportName": "Avatar",
+        "props": {
+          "size": {
+            "required": false,
+            "tsType": {
+              "name": "union",
+              "raw": "\"default\" | \"sm\" | \"lg\"",
+              "elements": [
+                {
+                  "name": "literal",
+                  "value": "\"default\""
+                },
+                {
+                  "name": "literal",
+                  "value": "\"sm\""
+                },
+                {
+                  "name": "literal",
+                  "value": "\"lg\""
+                }
+              ]
+            },
+            "description": "",
+            "defaultValue": {
+              "value": "\"default\"",
+              "computed": false
+            }
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "ui-avatar--with-image",
+          "name": "With Image",
+          "snippet": "const WithImage = () => (\r\n  <Avatar>\r\n    <AvatarImage src=\"https://github.com/shadcn.png\" alt=\"@shadcn\" />\r\n    <AvatarFallback>SC</AvatarFallback>\r\n  </Avatar>\r\n);"
+        },
+        {
+          "id": "ui-avatar--fallback-only",
+          "name": "Fallback Only",
+          "snippet": "const FallbackOnly = () => (\r\n  <Avatar>\r\n    <AvatarFallback>JL</AvatarFallback>\r\n  </Avatar>\r\n);"
+        }
+      ],
+      "import": "import { Avatar, AvatarFallback, AvatarImage } from \"design-system\";"
+    },
+    "ui-badge": {
+      "id": "ui-badge",
+      "name": "Badge",
+      "path": "./src/components/ui/badge.stories.tsx",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component definition found",
+        "message": "File: C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\badge.tsx\nError:\n\".\" is not exported under no conditions from package C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority (see exports field in C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority\\package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\nimport { mergeProps } from \"@base-ui/react/merge-props\"\r\nimport { useRender } from \"@base-ui/react/use-render\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\n\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nconst badgeVariants = cva(\r\n  \"group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3!\",\r\n  {\r\n    variants: {\r\n      variant: {\r\n        default: \"bg-primary text-primary-foreground [a]:hover:bg-primary/80\",\r\n        secondary:\r\n          \"bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80\",\r\n        destructive:\r\n          \"bg-red-bg text-red-text focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:text-destructive dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20\",\r\n        outline:\r\n          \"border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground\",\r\n        ghost:\r\n          \"hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50\",\r\n        link: \"text-primary underline-offset-4 hover:underline\",\r\n        admin: \"bg-admin-background text-admin-foreground\",\r\n        student: \"bg-student-background text-student-foreground\",\r\n        instructor: \"bg-instructor-background text-instructor-foreground\",\r\n        success: \"bg-success-background text-success-foreground\",\r\n      },\r\n    },\r\n    defaultVariants: {\r\n      variant: \"default\",\r\n    },\r\n  }\r\n)\r\n\r\nfunction Badge({\r\n  className,\r\n  variant = \"default\",\r\n  render,\r\n  ...props\r\n}: useRender.ComponentProps<\"span\"> & VariantProps<typeof badgeVariants>) {\r\n  return useRender({\r\n    defaultTagName: \"span\",\r\n    props: mergeProps<\"span\">(\r\n      {\r\n        className: cn(badgeVariants({ variant }), className),\r\n      },\r\n      props\r\n    ),\r\n    render,\r\n    state: {\r\n      slot: \"badge\",\r\n      variant,\r\n    },\r\n  })\r\n}\r\n\r\nexport { Badge, badgeVariants }\r\n"
+      },
+      "stories": [
+        {
+          "id": "ui-badge--all-variants",
+          "name": "All Variants",
+          "snippet": "const AllVariants = () => (\r\n  <div className=\"flex flex-wrap items-center gap-2\">\r\n    <Badge>Default</Badge>\r\n    <Badge variant=\"secondary\">Secondary</Badge>\r\n    <Badge variant=\"outline\">Outline</Badge>\r\n    <Badge variant=\"destructive\">Destructive</Badge>\r\n    <Badge variant=\"admin\">Admin</Badge>\r\n    <Badge variant=\"student\">Student</Badge>\r\n    <Badge variant=\"instructor\">Instructor</Badge>\r\n    <Badge variant=\"success\">Success</Badge>\r\n  </div>\r\n);"
+        }
+      ],
+      "import": "import { Badge } from \"design-system\";"
+    },
+    "ui-button": {
+      "id": "ui-button",
+      "name": "Button",
+      "path": "./src/components/ui/button.stories.tsx",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component definition found",
+        "message": "File: C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\button.tsx\nError:\n\".\" is not exported under no conditions from package C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority (see exports field in C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority\\package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\nimport { Button as ButtonPrimitive } from \"@base-ui/react/button\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\n\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nconst buttonVariants = cva(\r\n  \"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\r\n  {\r\n    variants: {\r\n      variant: {\r\n        default: \"bg-primary text-primary-foreground hover:bg-primary/80\",\r\n        outline:\r\n          \"border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50\",\r\n        secondary:\r\n          \"bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground\",\r\n        ghost:\r\n          \"hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50\",\r\n        destructive:\r\n          \"bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40\",\r\n        link: \"text-primary underline-offset-4 hover:underline\",\r\n      },\r\n      size: {\r\n        default:\r\n          \"h-8 gap-1.5 rounded-full px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2\",\r\n        xs: \"h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3\",\r\n        sm: \"h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5\",\r\n        lg: \"h-9 gap-1.5 rounded-full px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2\",\r\n        icon: \"size-8 rounded-md\",\r\n        \"icon-xs\":\r\n          \"size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3\",\r\n        \"icon-sm\":\r\n          \"size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg\",\r\n        \"icon-lg\": \"size-9 rounded-md\",\r\n      },\r\n    },\r\n    defaultVariants: {\r\n      variant: \"default\",\r\n      size: \"default\",\r\n    },\r\n  }\r\n)\r\n\r\nfunction Button({\r\n  className,\r\n  variant = \"default\",\r\n  size = \"default\",\r\n  ...props\r\n}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {\r\n  return (\r\n    <ButtonPrimitive\r\n      data-slot=\"button\"\r\n      className={cn(buttonVariants({ variant, size, className }))}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nexport { Button, buttonVariants }\r\n"
+      },
+      "stories": [
+        {
+          "id": "ui-button--default",
+          "name": "Default",
+          "snippet": "const Default = () => <Button>Button</Button>;"
+        },
+        {
+          "id": "ui-button--outline",
+          "name": "Outline",
+          "snippet": "const Outline = () => <Button variant=\"outline\">Button</Button>;"
+        },
+        {
+          "id": "ui-button--secondary",
+          "name": "Secondary",
+          "snippet": "const Secondary = () => <Button variant=\"secondary\">Button</Button>;"
+        },
+        {
+          "id": "ui-button--ghost",
+          "name": "Ghost",
+          "snippet": "const Ghost = () => <Button variant=\"ghost\">Button</Button>;"
+        },
+        {
+          "id": "ui-button--destructive",
+          "name": "Destructive",
+          "snippet": "const Destructive = () => <Button variant=\"destructive\">Button</Button>;"
+        },
+        {
+          "id": "ui-button--link",
+          "name": "Link",
+          "snippet": "const Link = () => <Button variant=\"link\">Button</Button>;"
+        },
+        {
+          "id": "ui-button--all-variants",
+          "name": "All Variants",
+          "snippet": "const AllVariants = () => (\r\n  <div className=\"flex flex-wrap items-center gap-3\">\r\n    <Button variant=\"default\">Default</Button>\r\n    <Button variant=\"outline\">Outline</Button>\r\n    <Button variant=\"secondary\">Secondary</Button>\r\n    <Button variant=\"ghost\">Ghost</Button>\r\n    <Button variant=\"destructive\">Destructive</Button>\r\n    <Button variant=\"link\">Link</Button>\r\n  </div>\r\n);"
+        }
+      ],
+      "import": "import { Button } from \"design-system\";"
+    },
+    "ui-card": {
+      "id": "ui-card",
+      "name": "Card",
+      "path": "./src/components/ui/card.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "Card",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\card.tsx",
+        "actualName": "Card",
+        "exportName": "Card",
+        "props": {
+          "size": {
+            "required": false,
+            "tsType": {
+              "name": "union",
+              "raw": "\"default\" | \"sm\"",
+              "elements": [
+                {
+                  "name": "literal",
+                  "value": "\"default\""
+                },
+                {
+                  "name": "literal",
+                  "value": "\"sm\""
+                }
+              ]
+            },
+            "description": "",
+            "defaultValue": {
+              "value": "\"default\"",
+              "computed": false
+            }
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "ui-card--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <Card className=\"w-80\">\r\n    <CardHeader>\r\n      <CardTitle>Escalated conversations</CardTitle>\r\n      <CardDescription>Last 7 days across all institutions</CardDescription>\r\n    </CardHeader>\r\n    <CardContent>\r\n      <p className=\"text-sm text-muted-foreground\">\r\n        14 conversations were escalated, up 3 from the prior period.\r\n      </p>\r\n    </CardContent>\r\n    <CardFooter>\r\n      <Button size=\"sm\">View report</Button>\r\n    </CardFooter>\r\n  </Card>\r\n);"
+        }
+      ],
+      "import": "import {\r\n    Button,\r\n    Card,\r\n    CardContent,\r\n    CardDescription,\r\n    CardFooter,\r\n    CardHeader,\r\n    CardTitle,\r\n} from \"design-system\";"
+    },
+    "ui-command": {
+      "id": "ui-command",
+      "name": "Command",
+      "path": "./src/components/ui/command.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "Command",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\command.tsx",
+        "actualName": "Command",
+        "exportName": "Command"
+      },
+      "stories": [
+        {
+          "id": "ui-command--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <Command className=\"w-100 rounded-lg border\">\r\n    <CommandInput placeholder=\"Type a command...\" />\r\n    <CommandList>\r\n      <CommandEmpty>No results found.</CommandEmpty>\r\n      <CommandGroup heading=\"Actions\">\r\n        <CommandItem>\r\n          Close conversation\r\n          <CommandShortcut>⌘⇧C</CommandShortcut>\r\n        </CommandItem>\r\n        <CommandItem>\r\n          Grant extra time\r\n          <CommandShortcut>⌘E</CommandShortcut>\r\n        </CommandItem>\r\n      </CommandGroup>\r\n      <CommandSeparator />\r\n      <CommandGroup heading=\"Navigate\">\r\n        <CommandItem>Go to Inbox</CommandItem>\r\n        <CommandItem>Go to Reports</CommandItem>\r\n      </CommandGroup>\r\n    </CommandList>\r\n  </Command>\r\n);"
+        }
+      ],
+      "import": "import {\r\n    Command,\r\n    CommandEmpty,\r\n    CommandGroup,\r\n    CommandInput,\r\n    CommandItem,\r\n    CommandList,\r\n    CommandSeparator,\r\n    CommandShortcut,\r\n} from \"design-system\";"
+    },
+    "ui-dialog": {
+      "id": "ui-dialog",
+      "name": "Dialog",
+      "path": "./src/components/ui/dialog.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "Dialog",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\dialog.tsx",
+        "actualName": "Dialog",
+        "exportName": "Dialog"
+      },
+      "stories": [
+        {
+          "id": "ui-dialog--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <Dialog>\r\n    <DialogTrigger render={<Button>Close conversation?</Button>} />\r\n    <DialogContent>\r\n      <DialogHeader>\r\n        <DialogTitle>Close this conversation?</DialogTitle>\r\n        <DialogDescription>\r\n          You can still find it afterward under the Closed filter.\r\n        </DialogDescription>\r\n      </DialogHeader>\r\n      <DialogFooter>\r\n        <DialogClose render={<Button variant=\"outline\">Cancel</Button>} />\r\n        <Button>Close conversation</Button>\r\n      </DialogFooter>\r\n    </DialogContent>\r\n  </Dialog>\r\n);"
+        }
+      ],
+      "import": "import {\r\n    Button,\r\n    Dialog,\r\n    DialogClose,\r\n    DialogContent,\r\n    DialogDescription,\r\n    DialogFooter,\r\n    DialogHeader,\r\n    DialogTitle,\r\n    DialogTrigger,\r\n} from \"design-system\";"
+    },
+    "ui-dropdownmenu": {
+      "id": "ui-dropdownmenu",
+      "name": "DropdownMenu",
+      "path": "./src/components/ui/dropdown-menu.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "DropdownMenu",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\dropdown-menu.tsx",
+        "actualName": "DropdownMenu",
+        "exportName": "DropdownMenu"
+      },
+      "stories": [
+        {
+          "id": "ui-dropdownmenu--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <DropdownMenu>\r\n    <DropdownMenuTrigger render={<Button variant=\"outline\">All statuses</Button>} />\r\n    <DropdownMenuContent>\r\n      <DropdownMenuLabel>Status</DropdownMenuLabel>\r\n      <DropdownMenuSeparator />\r\n      <DropdownMenuItem>Open</DropdownMenuItem>\r\n      <DropdownMenuItem>Closed</DropdownMenuItem>\r\n      <DropdownMenuItem>Escalated</DropdownMenuItem>\r\n    </DropdownMenuContent>\r\n  </DropdownMenu>\r\n);"
+        },
+        {
+          "id": "ui-dropdownmenu--checkbox-items",
+          "name": "Checkbox Items",
+          "snippet": "const CheckboxItems = () => (\r\n  <DropdownMenu>\r\n    <DropdownMenuTrigger render={<Button variant=\"outline\">All categories</Button>} />\r\n    <DropdownMenuContent>\r\n      <DropdownMenuCheckboxItem checked>Human Support</DropdownMenuCheckboxItem>\r\n      <DropdownMenuCheckboxItem>AI & Automation</DropdownMenuCheckboxItem>\r\n      <DropdownMenuCheckboxItem>Proctoring</DropdownMenuCheckboxItem>\r\n    </DropdownMenuContent>\r\n  </DropdownMenu>\r\n);"
+        }
+      ],
+      "import": "import {\r\n    Button,\r\n    DropdownMenu,\r\n    DropdownMenuCheckboxItem,\r\n    DropdownMenuContent,\r\n    DropdownMenuItem,\r\n    DropdownMenuLabel,\r\n    DropdownMenuSeparator,\r\n    DropdownMenuTrigger,\r\n} from \"design-system\";"
+    },
+    "ui-input": {
+      "id": "ui-input",
+      "name": "Input",
+      "path": "./src/components/ui/input.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "Input",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\input.tsx",
+        "actualName": "Input",
+        "exportName": "Input"
+      },
+      "stories": [
+        {
+          "id": "ui-input--default",
+          "name": "Default",
+          "snippet": "const Default = () => <Input placeholder=\"Search conversations...\" />;"
+        },
+        {
+          "id": "ui-input--readonly",
+          "name": "Readonly",
+          "snippet": "const Readonly = () => <Input\r\n    placeholder=\"Search conversations...\"\r\n    readOnly\r\n    value=\"student@cascade.edu\" />;"
+        },
+        {
+          "id": "ui-input--disabled",
+          "name": "Disabled",
+          "snippet": "const Disabled = () => <Input placeholder=\"Search conversations...\" disabled />;"
+        }
+      ],
+      "import": "import { Input } from \"design-system\";"
+    },
+    "ui-segmentedcontrol": {
+      "id": "ui-segmentedcontrol",
+      "name": "SegmentedControl",
+      "path": "./src/components/ui/segmented-control.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "SegmentedControl",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\segmented-control.tsx",
+        "actualName": "SegmentedControl",
+        "exportName": "SegmentedControl",
+        "props": {
+          "options": {
+            "required": true,
+            "tsType": {
+              "name": "Array",
+              "elements": [
+                {
+                  "name": "signature",
+                  "type": "object",
+                  "raw": "{ value: T; label: string }",
+                  "signature": {
+                    "properties": [
+                      {
+                        "key": "value",
+                        "value": {
+                          "name": "T",
+                          "required": true
+                        }
+                      },
+                      {
+                        "key": "label",
+                        "value": {
+                          "name": "string",
+                          "required": true
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "raw": "{ value: T; label: string }[]"
+            },
+            "description": ""
+          },
+          "value": {
+            "required": true,
+            "tsType": {
+              "name": "T"
+            },
+            "description": ""
+          },
+          "onValueChange": {
+            "required": true,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(value: T) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "T"
+                    },
+                    "name": "value"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          },
+          "className": {
+            "required": false,
+            "tsType": {
+              "name": "string"
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "ui-segmentedcontrol--default",
+          "name": "Default",
+          "snippet": "const Default = () => <Demo />;"
+        }
+      ],
+      "import": "import { SegmentedControl } from \"design-system\";"
+    },
+    "ui-skeleton": {
+      "id": "ui-skeleton",
+      "name": "Skeleton",
+      "path": "./src/components/ui/skeleton.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "Skeleton",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\skeleton.tsx",
+        "actualName": "Skeleton",
+        "exportName": "Skeleton"
+      },
+      "stories": [
+        {
+          "id": "ui-skeleton--stat-grid",
+          "name": "Stat Grid",
+          "snippet": "const StatGrid = () => (\r\n  <div className=\"grid w-full max-w-2xl grid-cols-4 gap-3\">\r\n    <Skeleton className=\"h-22 rounded-xl\" />\r\n    <Skeleton className=\"h-22 rounded-xl\" />\r\n    <Skeleton className=\"h-22 rounded-xl\" />\r\n    <Skeleton className=\"h-22 rounded-xl\" />\r\n  </div>\r\n);"
+        },
+        {
+          "id": "ui-skeleton--list-row",
+          "name": "List Row",
+          "snippet": "const ListRow = () => (\r\n  <div className=\"flex w-80 items-center gap-3\">\r\n    <Skeleton className=\"h-8 w-8 rounded-full\" />\r\n    <div className=\"flex flex-1 flex-col gap-2\">\r\n      <Skeleton className=\"h-3 w-2/3\" />\r\n      <Skeleton className=\"h-3 w-1/3\" />\r\n    </div>\r\n  </div>\r\n);"
+        }
+      ],
+      "import": "import { Skeleton } from \"design-system\";"
+    },
+    "ui-sonner": {
+      "id": "ui-sonner",
+      "name": "Toaster",
+      "path": "./src/components/ui/sonner.stories.tsx",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component definition found",
+        "message": "File: C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\sonner.tsx\nError:\n\".\" is not exported under no conditions from package C:\\Users\\torib\\bab\\design-system\\node_modules\\next-themes (see exports field in C:\\Users\\torib\\bab\\design-system\\node_modules\\next-themes\\package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\n\"use client\"\r\n\r\nimport { useTheme } from \"next-themes\"\r\nimport { Toaster as Sonner, type ToasterProps } from \"sonner\"\r\nimport { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from \"lucide-react\"\r\n\r\nconst Toaster = ({ ...props }: ToasterProps) => {\r\n  const { theme = \"system\" } = useTheme()\r\n\r\n  return (\r\n    <Sonner\r\n      theme={theme as ToasterProps[\"theme\"]}\r\n      className=\"toaster group\"\r\n      icons={{\r\n        success: (\r\n          <CircleCheckIcon className=\"size-4\" />\r\n        ),\r\n        info: (\r\n          <InfoIcon className=\"size-4\" />\r\n        ),\r\n        warning: (\r\n          <TriangleAlertIcon className=\"size-4\" />\r\n        ),\r\n        error: (\r\n          <OctagonXIcon className=\"size-4\" />\r\n        ),\r\n        loading: (\r\n          <Loader2Icon className=\"size-4 animate-spin\" />\r\n        ),\r\n      }}\r\n      style={\r\n        {\r\n          \"--normal-bg\": \"var(--popover)\",\r\n          \"--normal-text\": \"var(--popover-foreground)\",\r\n          \"--normal-border\": \"var(--border)\",\r\n          \"--border-radius\": \"var(--radius)\",\r\n        } as React.CSSProperties\r\n      }\r\n      toastOptions={{\r\n        classNames: {\r\n          toast: \"cn-toast\",\r\n        },\r\n      }}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nexport { Toaster }\r\n"
+      },
+      "stories": [
+        {
+          "id": "ui-sonner--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <div>\r\n    <Button onClick={() => toast.success(\"Conversation closed\")}>\r\n      Show toast\r\n    </Button>\r\n    <Toaster />\r\n  </div>\r\n);"
+        }
+      ],
+      "import": "import { Button, Toaster } from \"design-system\";"
+    },
+    "ui-switch": {
+      "id": "ui-switch",
+      "name": "Switch",
+      "path": "./src/components/ui/switch.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "Switch",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\switch.tsx",
+        "actualName": "Switch",
+        "exportName": "Switch",
+        "props": {
+          "size": {
+            "required": false,
+            "tsType": {
+              "name": "union",
+              "raw": "\"sm\" | \"default\"",
+              "elements": [
+                {
+                  "name": "literal",
+                  "value": "\"sm\""
+                },
+                {
+                  "name": "literal",
+                  "value": "\"default\""
+                }
+              ]
+            },
+            "description": "",
+            "defaultValue": {
+              "value": "\"default\"",
+              "computed": false
+            }
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "ui-switch--off",
+          "name": "Off",
+          "snippet": "const Off = () => <Switch />;"
+        },
+        {
+          "id": "ui-switch--on",
+          "name": "On",
+          "snippet": "const On = () => <Switch defaultChecked />;"
+        },
+        {
+          "id": "ui-switch--disabled",
+          "name": "Disabled",
+          "snippet": "const Disabled = () => <Switch disabled />;"
+        }
+      ],
+      "import": "import { Switch } from \"design-system\";"
+    },
+    "ui-table": {
+      "id": "ui-table",
+      "name": "Table",
+      "path": "./src/components/ui/table.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "Table",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\table.tsx",
+        "actualName": "Table",
+        "exportName": "Table"
+      },
+      "stories": [
+        {
+          "id": "ui-table--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <Table>\r\n    <TableHeader>\r\n      <TableRow>\r\n        <TableHead>Student</TableHead>\r\n        <TableHead>Exam</TableHead>\r\n        <TableHead>Status</TableHead>\r\n      </TableRow>\r\n    </TableHeader>\r\n    <TableBody>\r\n      {ROWS.map((row) => (\r\n        <TableRow key={row.student}>\r\n          <TableCell className=\"font-medium\">{row.student}</TableCell>\r\n          <TableCell>{row.exam}</TableCell>\r\n          <TableCell>\r\n            <Badge variant={row.status === \"Escalated\" ? \"destructive\" : \"secondary\"}>\r\n              {row.status}\r\n            </Badge>\r\n          </TableCell>\r\n        </TableRow>\r\n      ))}\r\n    </TableBody>\r\n  </Table>\r\n);"
+        }
+      ],
+      "import": "import { Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"design-system\";"
+    },
+    "ui-tabs": {
+      "id": "ui-tabs",
+      "name": "Tabs",
+      "path": "./src/components/ui/tabs.stories.tsx",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component definition found",
+        "message": "File: C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\tabs.tsx\nError:\n\".\" is not exported under no conditions from package C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority (see exports field in C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority\\package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\n\"use client\"\r\n\r\nimport { Tabs as TabsPrimitive } from \"@base-ui/react/tabs\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\n\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nfunction Tabs({\r\n  className,\r\n  orientation = \"horizontal\",\r\n  ...props\r\n}: TabsPrimitive.Root.Props) {\r\n  return (\r\n    <TabsPrimitive.Root\r\n      data-slot=\"tabs\"\r\n      data-orientation={orientation}\r\n      className={cn(\r\n        \"group/tabs flex gap-2 data-horizontal:flex-col\",\r\n        className\r\n      )}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nconst tabsListVariants = cva(\r\n  \"group/tabs-list inline-flex w-fit items-center justify-center rounded-lg p-[3px] text-muted-foreground group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none\",\r\n  {\r\n    variants: {\r\n      variant: {\r\n        default: \"bg-muted\",\r\n        line: \"gap-1 bg-transparent\",\r\n      },\r\n    },\r\n    defaultVariants: {\r\n      variant: \"default\",\r\n    },\r\n  }\r\n)\r\n\r\nfunction TabsList({\r\n  className,\r\n  variant = \"default\",\r\n  ...props\r\n}: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {\r\n  return (\r\n    <TabsPrimitive.List\r\n      data-slot=\"tabs-list\"\r\n      data-variant={variant}\r\n      className={cn(tabsListVariants({ variant }), className)}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nfunction TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {\r\n  return (\r\n    <TabsPrimitive.Tab\r\n      data-slot=\"tabs-trigger\"\r\n      className={cn(\r\n        \"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground dark:hover:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-sm group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\r\n        \"group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent\",\r\n        \"data-active:bg-background data-active:text-foreground dark:data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground\",\r\n        \"after:absolute after:bg-foreground after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100\",\r\n        className\r\n      )}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nfunction TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {\r\n  return (\r\n    <TabsPrimitive.Panel\r\n      data-slot=\"tabs-content\"\r\n      className={cn(\"flex-1 text-sm outline-none\", className)}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nexport { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }\r\n"
+      },
+      "stories": [
+        {
+          "id": "ui-tabs--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <Tabs defaultValue=\"user\" className=\"w-80\">\r\n    <TabsList>\r\n      <TabsTrigger value=\"user\">User</TabsTrigger>\r\n      <TabsTrigger value=\"history\">History</TabsTrigger>\r\n      <TabsTrigger value=\"resources\">Resources</TabsTrigger>\r\n    </TabsList>\r\n    <TabsContent value=\"user\" className=\"text-sm text-muted-foreground\">\r\n      Jordan Lee — BIO 201, Cascade State University\r\n    </TabsContent>\r\n    <TabsContent value=\"history\" className=\"text-sm text-muted-foreground\">\r\n      3 prior conversations\r\n    </TabsContent>\r\n    <TabsContent value=\"resources\" className=\"text-sm text-muted-foreground\">\r\n      No linked resources\r\n    </TabsContent>\r\n  </Tabs>\r\n);"
+        }
+      ],
+      "import": "import { Tabs, TabsContent, TabsList, TabsTrigger } from \"design-system\";"
+    },
+    "pages-inbox": {
+      "id": "pages-inbox",
+      "name": "InboxPage",
+      "path": "./src/pages/InboxPage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "InboxPage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\InboxPage.tsx",
+        "actualName": "InboxPage",
+        "exportName": "InboxPage"
+      },
+      "stories": [
+        {
+          "id": "pages-inbox--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"inbox\" onSelect={() => {}}>\r\n    <InboxPage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, InboxPage } from \"design-system\";"
+    },
+    "pages-knowledge-content": {
+      "id": "pages-knowledge-content",
+      "name": "KnowledgeContentPage",
+      "path": "./src/pages/KnowledgeContentPage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "KnowledgeContentPage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\KnowledgeContentPage.tsx",
+        "actualName": "KnowledgeContentPage",
+        "exportName": "KnowledgeContentPage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-knowledge-content--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"knowledge\" onSelect={() => {}}>\r\n    <KnowledgeContentPage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, KnowledgeContentPage } from \"design-system\";"
+    },
+    "pages-knowledge-sources": {
+      "id": "pages-knowledge-sources",
+      "name": "KnowledgeSourcesPage",
+      "path": "./src/pages/KnowledgeSourcesPage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "KnowledgeSourcesPage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\KnowledgeSourcesPage.tsx",
+        "actualName": "KnowledgeSourcesPage",
+        "exportName": "KnowledgeSourcesPage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-knowledge-sources--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"knowledge\" onSelect={() => {}}>\r\n    <KnowledgeSourcesPage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, KnowledgeSourcesPage } from \"design-system\";"
+    },
+    "pages-reports-all": {
+      "id": "pages-reports-all",
+      "name": "ReportsAllPage",
+      "path": "./src/pages/ReportsAllPage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ReportsAllPage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsAllPage.tsx",
+        "actualName": "ReportsAllPage",
+        "exportName": "ReportsAllPage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          },
+          "onOpenReport": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(page: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "page"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-reports-all--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsAllPage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, ReportsAllPage } from \"design-system\";"
+    },
+    "pages-reports-conversations-by-role": {
+      "id": "pages-reports-conversations-by-role",
+      "name": "ReportsConversationsByRolePage",
+      "path": "./src/pages/ReportsConversationsByRolePage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ReportsConversationsByRolePage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsConversationsByRolePage.tsx",
+        "actualName": "ReportsConversationsByRolePage",
+        "exportName": "ReportsConversationsByRolePage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-reports-conversations-by-role--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsConversationsByRolePage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, ReportsConversationsByRolePage } from \"design-system\";"
+    },
+    "pages-reports-exam-completion": {
+      "id": "pages-reports-exam-completion",
+      "name": "ReportsExamCompletionPage",
+      "path": "./src/pages/ReportsExamCompletionPage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ReportsExamCompletionPage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsExamCompletionPage.tsx",
+        "actualName": "ReportsExamCompletionPage",
+        "exportName": "ReportsExamCompletionPage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-reports-exam-completion--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsExamCompletionPage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, ReportsExamCompletionPage } from \"design-system\";"
+    },
+    "pages-reports-lockdown-browser": {
+      "id": "pages-reports-lockdown-browser",
+      "name": "ReportsLockdownBrowserPage",
+      "path": "./src/pages/ReportsLockdownBrowserPage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ReportsLockdownBrowserPage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsLockdownBrowserPage.tsx",
+        "actualName": "ReportsLockdownBrowserPage",
+        "exportName": "ReportsLockdownBrowserPage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-reports-lockdown-browser--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsLockdownBrowserPage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, ReportsLockdownBrowserPage } from \"design-system\";"
+    },
+    "pages-reports-overview": {
+      "id": "pages-reports-overview",
+      "name": "ReportsOverviewPage",
+      "path": "./src/pages/ReportsOverviewPage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ReportsOverviewPage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsOverviewPage.tsx",
+        "actualName": "ReportsOverviewPage",
+        "exportName": "ReportsOverviewPage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-reports-overview--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsOverviewPage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, ReportsOverviewPage } from \"design-system\";"
+    },
+    "pages-reports-response-time": {
+      "id": "pages-reports-response-time",
+      "name": "ReportsResponseTimePage",
+      "path": "./src/pages/ReportsResponseTimePage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ReportsResponseTimePage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsResponseTimePage.tsx",
+        "actualName": "ReportsResponseTimePage",
+        "exportName": "ReportsResponseTimePage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-reports-response-time--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsResponseTimePage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, ReportsResponseTimePage } from \"design-system\";"
+    },
+    "pages-reports-room-scan": {
+      "id": "pages-reports-room-scan",
+      "name": "ReportsRoomScanPage",
+      "path": "./src/pages/ReportsRoomScanPage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ReportsRoomScanPage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsRoomScanPage.tsx",
+        "actualName": "ReportsRoomScanPage",
+        "exportName": "ReportsRoomScanPage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-reports-room-scan--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsRoomScanPage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, ReportsRoomScanPage } from \"design-system\";"
+    },
+    "pages-reports-screen-share": {
+      "id": "pages-reports-screen-share",
+      "name": "ReportsScreenSharePage",
+      "path": "./src/pages/ReportsScreenSharePage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "ReportsScreenSharePage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsScreenSharePage.tsx",
+        "actualName": "ReportsScreenSharePage",
+        "exportName": "ReportsScreenSharePage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-reports-screen-share--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsScreenSharePage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, ReportsScreenSharePage } from \"design-system\";"
+    },
+    "pages-settings-integrations": {
+      "id": "pages-settings-integrations",
+      "name": "SettingsIntegrationsPage",
+      "path": "./src/pages/SettingsIntegrationsPage.stories.tsx",
+      "jsDocTags": {},
+      "reactDocgen": {
+        "description": "",
+        "methods": [],
+        "displayName": "SettingsIntegrationsPage",
+        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\SettingsIntegrationsPage.tsx",
+        "actualName": "SettingsIntegrationsPage",
+        "exportName": "SettingsIntegrationsPage",
+        "props": {
+          "onSelectNav": {
+            "required": false,
+            "tsType": {
+              "name": "signature",
+              "type": "function",
+              "raw": "(key: string) => void",
+              "signature": {
+                "arguments": [
+                  {
+                    "type": {
+                      "name": "string"
+                    },
+                    "name": "key"
+                  }
+                ],
+                "return": {
+                  "name": "void"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "stories": [
+        {
+          "id": "pages-settings-integrations--default",
+          "name": "Default",
+          "snippet": "const Default = () => (\r\n  <AppShell active=\"settings\" onSelect={() => {}}>\r\n    <SettingsIntegrationsPage />\r\n  </AppShell>\r\n);"
+        }
+      ],
+      "import": "import { AppShell, SettingsIntegrationsPage } from \"design-system\";"
+    }
+  },
+  "meta": {
+    "docgen": "react-docgen",
+    "durationMs": 1055
+  }
+}

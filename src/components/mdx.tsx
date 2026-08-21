@@ -18,6 +18,7 @@ import { Code } from "@/components/base/ui/typography"
 import { Callout } from "./callout"
 import { Heading } from "./heading"
 import { mdxCodeBlockComponents } from "./mdx-code-block"
+import { Embed } from "./mdx-embed"
 import { LinkButton } from "./mdx-link-button"
 
 const components: MDXRemoteProps["components"] = {
@@ -46,6 +47,7 @@ const components: MDXRemoteProps["components"] = {
   ),
 
   Callout,
+  Embed,
   LinkButton,
 
   Steps: ({ className, ...props }: React.ComponentProps<"div">) => (

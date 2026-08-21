@@ -1,0 +1,132 @@
+  *,*::before,*::after{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg-deep);color:var(--text);height:100%;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    font-size:14px;
+    line-height:1.4;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,p{margin:0;}
+  button{font-family:inherit;}
+  /* One fixed viewport; every page's own .scroll-body / .convo-scroll /
+     .chat-thread handles its own internal overflow. Without a hard height
+     here, .shell grows past 100vh whenever content is tall (e.g. a full
+     inbox list) and the whole document scrolls instead. */
+  .viewport-scroll{height:100vh;overflow-x:auto;overflow-y:hidden;}
+  .shell{display:flex;min-width:1180px;height:100vh;background:var(--bg);}
+
+  /* ---------- primary sidenav ---------- */
+  /* The rail is no longer its own surface — it sits directly on the app ground
+     with no border, so the selected chip is the only figure in the column. */
+  .sidenav{width:60px;flex:0 0 60px;background:var(--sidenav-bg);
+    display:flex;flex-direction:column;justify-content:space-between;padding:12px;position:sticky;top:0;height:100vh;}
+  /* Hairline separating the rail from whatever it sits beside. Inset 16px top and
+     bottom so it reads as a rule between two columns, not a full-bleed border. */
+  .sidenav::after{content:'';position:absolute;top:16px;bottom:16px;right:0;width:.5px;
+    background:var(--border-rail);}
+  .sidenav-top{display:flex;flex-direction:column;gap:8px;align-items:center;}
+  .sidenav-mark{width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:700;letter-spacing:-.02em;color:var(--text);}
+  /* Two distinct rules, per the design: the upper one separating the mark from
+     the destinations is a hairline in the warm grey; the lower one above the
+     utility group is a full pixel in the flat border tone. */
+  .sidenav-divider{width:36px;height:.5px;background:var(--border-soft);border:none;margin:0;flex:0 0 auto;}
+  .sidenav-divider.solid{height:1px;background:var(--border);}
+  .nav-icon-btn{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    position:relative;color:var(--text);cursor:pointer;border:none;background:transparent;padding:0;}
+  .nav-icon-btn:hover{background:var(--sel-hover);}
+  .nav-icon-btn.active{background:var(--sel);}
+  .nav-icon-btn .icon{width:20px;height:20px;}
+  /* Selected-state icons are solid silhouettes with their interior detail knocked
+     out in the chip colour, so the glyph reads as one mass rather than a wire. */
+  .nav-icon-btn .icon-solid{fill:currentColor;stroke:none;}
+  .nav-icon-btn .icon-solid .knockout{fill:none;stroke:var(--sel);stroke-width:1.5;
+    stroke-linecap:round;stroke-linejoin:round;}
+  .nav-icon-btn .icon-solid .knockout-fill{fill:var(--sel);stroke:none;}
+  .nav-icon-btn .icon-solid .rule{fill:none;stroke:currentColor;stroke-width:2;
+    stroke-linecap:round;stroke-linejoin:round;}
+  .nav-dot{position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:999px;
+    background:var(--red-dot);}
+  .sidenav-bottom{display:flex;flex-direction:column;gap:8px;align-items:center;}
+  .avatar-dot{position:relative;width:32px;height:32px;border-radius:999px;background:var(--border);
+    border:2px solid #fff;cursor:pointer;}
+  .unread-dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:999px;background:var(--green);border:1px solid #fff;}
+
+  /* ---------- secondary nav ---------- */
+  /* Like the icon rail, the secondary nav now sits on the ground with no surface
+     of its own — selection is carried by the chip, not by a column of white. */
+  .secondary-nav{width:220px;flex:0 0 220px;background:transparent;border-right:none;overflow-y:auto;}
+  .secondary-nav-header{display:flex;align-items:center;justify-content:space-between;padding:20px 16px 16px 20px;}
+  .secondary-nav-header h2{font-size:20px;font-weight:600;letter-spacing:-.02em;}
+  .icon-btn-circle{width:28px;height:28px;border-radius:999px;background:var(--red);display:flex;align-items:center;
+    justify-content:center;color:#fff;border:none;cursor:default;padding:0;}
+  .icon-btn-circle .icon{width:14px;height:14px;}
+  .nav-list{display:flex;flex-direction:column;gap:2px;padding:0 12px;list-style:none;margin:0;}
+  .nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;font-size:14px;
+    color:var(--text);text-decoration:none;justify-content:space-between;cursor:default;background:none;
+    border:none;width:100%;text-align:left;font-family:inherit;}
+  .nav-item .left{display:flex;align-items:center;gap:8px;}
+  .nav-item .icon{width:18px;height:18px;color:var(--muted);flex:0 0 auto;}
+  .nav-item .count{color:var(--muted);font-size:13px;}
+  .nav-item.clickable{cursor:pointer;}
+  .nav-item.clickable:hover{background:var(--sel-hover);}
+  .nav-item.active{background:var(--sel);font-weight:500;}
+  .nav-item.active .icon{color:var(--text);}
+  .nav-child{padding-left:32px;border-radius:6px;font-size:14px;color:var(--text);text-decoration:none;
+    display:flex;align-items:center;justify-content:space-between;padding-top:6px;padding-bottom:6px;padding-right:10px;
+    cursor:default;background:none;border:none;width:100%;text-align:left;font-family:inherit;}
+  .nav-child.clickable{cursor:pointer;}
+  .nav-child.clickable:hover{background:var(--sel-hover);}
+  .nav-child.active{background:var(--sel);font-weight:500;}
+  .nav-child .count{color:var(--muted);font-size:13px;}
+  .nav-empty{padding:0 10px 4px 38px;font-size:13px;color:var(--muted);}
+  .nav-section-gap{height:8px;}
+  .nav-divider{height:1px;background:var(--border);margin:8px 0;}
+  .nav-folder-group{display:flex;flex-direction:column;}
+  .nav-folder{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;font-size:14px;font-weight:500;
+    color:var(--text);justify-content:space-between;cursor:pointer;background:none;border:none;width:100%;
+    text-align:left;font-family:inherit;}
+  .nav-folder:hover{background:var(--sel-hover);}
+  .nav-folder .left{display:flex;align-items:center;gap:8px;}
+  .nav-folder .icon{width:18px;height:18px;color:var(--muted);}
+  .nav-folder>.icon:last-child{transition:transform .15s ease;}
+  .nav-folder.open>.icon:last-child{transform:rotate(90deg);}
+  .nav-sublist{display:none;list-style:none;margin:0;padding:0;}
+  .nav-sublist.open{display:block;}
+  .nav-group-label{padding:9px 10px 9px 10px;font-size:14px;font-weight:600;display:flex;align-items:center;
+    justify-content:space-between;}
+
+  /* ---------- content ---------- */
+  /* The whole content pane is one white card floating on the ground. Its internal
+     bands (topbar, filter row, body) no longer paint their own backgrounds or
+     dividers — the card is the only surface, so the page reads as a single sheet. */
+  .content{flex:1;min-width:0;display:flex;flex-direction:column;background:transparent;
+    padding:16px 16px 16px 8px;min-height:0;}
+  .content.bare{padding:0;position:relative;}
+  /* Inbox chat rows paint opaque backgrounds edge-to-edge, so they sit on top of
+     .sidenav::after in DOM order and clip the rail divider mid-column. Redraw the
+     hairline on this pane with a higher stack order instead. */
+  .content.bare::before{content:'';position:absolute;top:16px;bottom:16px;left:0;width:1px;
+    background:var(--border-rail);z-index:2;pointer-events:none;}
+  .content-card{flex:1;min-width:0;min-height:0;background:#fff;border-radius:16px;
+    box-shadow:var(--card-shadow);display:flex;flex-direction:column;overflow:hidden;}
+  /* Every page navigation — sidenav clicks, skeleton swapping to real content,
+     dashboard-to-dashboard — goes through renderShell/renderSkeleton, which
+     always rebuild this card (or the inbox's .content.bare) as fresh DOM.
+     That "always fresh" property is what lets a plain CSS entrance animation
+     replay correctly on every single navigation with zero JS timing logic —
+     same mechanism as .chat-item's arrival animation. Kept short (140ms) so
+     it reads as a polish pass, not a delay before the page is usable. */
+  @keyframes contentIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+  .content-card{animation:contentIn .14s ease;}
+  .content.bare>*{animation:contentIn .14s ease;}
+  @media (prefers-reduced-motion:reduce){
+    .content-card,.content.bare>*{animation:none;}
+  }
+  .topbar{background:transparent;border-bottom:none;padding:20px 24px 8px;flex:0 0 auto;}
+  .topbar h1{font-size:24px;font-weight:600;letter-spacing:-.04em;margin:0 0 4px;}
+  .topbar p.sub{font-size:13px;color:var(--muted);}
+  .topbar-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+  .topbar-actions{display:flex;gap:8px;align-items:center;flex:0 0 auto;}
+
