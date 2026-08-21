@@ -22,6 +22,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+
+    // Build output synced out of the `bab` repo by scripts/sync-bab.mjs — a
+    // Storybook bundle and a hand-written clickthrough. Neither is authored
+    // here, and this project's rules have nothing useful to say about them.
+    "public/prototype/**",
+    "public/storybook/**",
   ]),
 ])
 
