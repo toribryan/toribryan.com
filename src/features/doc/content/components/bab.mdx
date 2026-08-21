@@ -1,0 +1,100 @@
+---
+title: "Bab"
+brand: "Bab"
+description: "A design system in its foundations stage — tokens drafted, component contracts defined, nothing published yet."
+status: "Foundations"
+componentCount: 0
+createdAt: "2026-07-21"
+updatedAt: "2026-08-20"
+new: true
+---
+
+{/* Placeholder scaffold. The brand's full name, palette, and type stack aren't
+    recorded anywhere in this repo — fill in `brand` in the frontmatter above and
+    replace the token values below with the real ones. Structure matches the
+    Modern and Iron docs so the three read as one system. */}
+
+Bab is at the foundations stage. Tokens are drafted and the component contract
+is defined, but nothing has been published to the library yet.
+
+<Callout title="Scaffold — values are placeholders">
+The structure here is real; the numbers aren't. Swap the token values and brand
+name for the actual ones as they're settled.
+</Callout>
+
+## Foundations
+
+### Color
+
+Three tiers, same as the rest of the practice: primitives never reach a
+component, semantics do the routing, component tokens are the only thing a
+component file may name.
+
+```json title="tokens/color.json"
+{
+  "primitive": {
+    "neutral-50": "#fafafa",
+    "neutral-900": "#171717",
+    "brand-500": "#000000",
+    "brand-600": "#000000"
+  },
+  "semantic": {
+    "ink": "{primitive.neutral-900}",
+    "surface": "{primitive.neutral-50}",
+    "accent": "{primitive.brand-500}",
+    "accent-hover": "{primitive.brand-600}"
+  },
+  "component": {
+    "button-bg": "{semantic.accent}",
+    "button-bg-hover": "{semantic.accent-hover}",
+    "button-fg": "{semantic.surface}"
+  }
+}
+```
+
+### Type scale
+
+| Step | Size | Line height | Use |
+| --- | --- | --- | --- |
+| `display` | — | — | Page titles |
+| `heading-1` | — | — | Section headings |
+| `heading-2` | — | — | Card titles |
+| `body` | — | — | Default |
+| `caption` | — | — | Metadata, helper text |
+
+### Spacing
+
+4px base unit. Steps: 4, 8, 12, 16, 24, 32, 48, 64. No half-steps — if a layout
+needs 14px, the layout is wrong.
+
+## Component contract
+
+Every component published here ships with the same four things. A component
+missing any of them isn't published, it's just drawn.
+
+<Steps>
+
+<Step>**Token map** — every visual property bound to a component token, no raw values.</Step>
+
+<Step>**States** — default, hover, active, focus-visible, disabled, loading where it applies.</Step>
+
+<Step>**Props table** — name, type, default, required. Generated, not hand-written.</Step>
+
+<Step>**Code Connect** — the Figma component linked to its implementation, so the handoff has no translation layer.</Step>
+
+</Steps>
+
+## Components
+
+Nothing published yet.
+
+| Component | Status | Notes |
+| --- | --- | --- |
+| Button | Not started | First to build once tokens land |
+| Text field | Not started | — |
+| Card | Not started | — |
+
+## Changelog
+
+- **2026-08-20** — Component contract defined.
+- **2026-07-21** — Token tiers drafted.

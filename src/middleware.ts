@@ -1,28 +1,56 @@
-import { defineMiddleware } from 'astro:middleware';
-import { SITE_AUTH_COOKIE, hashPassword } from './lib/auth';
+import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 
-const PUBLIC_PATHS = new Set(['/login', '/api/login', '/favicon.svg', '/favicon.ico']);
+import { SITE_AUTH_COOKIE, verifySessionToken } from "@/lib/site-auth"
 
-export const onRequest = defineMiddleware(async (context, next) => {
-  const { pathname } = context.url;
+export async function middleware(request: NextRequest) {
+  const password = process.env.SITE_PASSWORD
 
-  if (PUBLIC_PATHS.has(pathname) || pathname.startsWith('/_astro/') || pathname.startsWith('/_image')) {
-    return next();
-  }
-
-  const password = import.meta.env.SITE_PASSWORD as string | undefined;
-
-  // No password configured — leave the site open rather than lock everyone out.
+  // No password configured — leave the site open rather than lock everyone
+  // out. This is what keeps local dev and preview builds usable without a
+  // secret; set SITE_PASSWORD in the environment to turn the gate on.
   if (!password) {
-    return next();
+    return NextResponse.next()
   }
 
-  const expectedHash = await hashPassword(password);
-  const cookieValue = context.cookies.get(SITE_AUTH_COOKIE)?.value;
+  const token = request.cookies.get(SITE_AUTH_COOKIE)?.value
 
-  if (cookieValue === expectedHash) {
-    return next();
+  if (await verifySessionToken(token, password)) {
+    return NextResponse.next()
   }
 
-  return context.redirect('/login');
-});
+  const loginUrl = new URL("/login", request.url)
+
+  // Send them back where they were headed once they're through the gate.
+  // Path only — a full URL here would be an open-redirect.
+  const intended = request.nextUrl.pathname + request.nextUrl.search
+  if (intended !== "/") {
+    loginUrl.searchParams.set("next", intended)
+  }
+
+  const response = NextResponse.redirect(loginUrl)
+
+  // An expired or tampered cookie is worse than none: clear it so the browser
+  // stops replaying it on every request.
+  if (token) {
+    response.cookies.delete(SITE_AUTH_COOKIE)
+  }
+
+  return response
+}
+
+export const config = {
+  /**
+   * Everything is gated except the login route itself, its form handler, Next's
+   * own build output, and the icon set. Icons have to stay public because the
+   * browser fetches them *for the login page* — gate them and the tab shows a
+   * broken icon to anyone who hasn't signed in yet.
+   *
+   * Content under `public/` is otherwise deliberately included: an unlisted
+   * case-study image is still private. `sitemap.xml` and `robots.txt` stay
+   * gated too, so the URL list isn't readable from outside.
+   */
+  matcher: [
+    "/((?!_next/static|_next/image|login|api/login|favicon|apple-touch-icon|android-chrome|manifest\\.webmanifest).*)",
+  ],
+}

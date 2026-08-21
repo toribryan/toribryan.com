@@ -1,0 +1,47 @@
+---
+title: "Design Skills Infrastructure"
+description: "A shared Claude Code skills infrastructure that generates design-to-dev specs directly from prototypes — cutting spec production to under 30 minutes with full team adoption."
+image: "/case-studies/design-skills-infrastructure-hero.png"
+createdAt: "2026-01-01"
+updatedAt: "2026-01-01"
+company: "Proctorio"
+role: "Staff Product Designer — owner and architect"
+team: "DesignOps · AI-native workflow · Design systems"
+period: "2026"
+problem: "Designers were spending too much time producing handoff documentation, and engineers were spending too much time deciphering it. Specs were inconsistent, went stale the moment a design changed, and left too much room for interpretation between design intent and shipped code."
+outcome: "Spec production dropped from 3 days–2 weeks to under 30 minutes — roughly 80 hours per handoff cycle returned to design work — with 100% adoption across the design team, validated with 4 designers on 3 products plus 3 engineers and a PM."
+pinned: true
+---
+
+Internal design-to-development infrastructure for an enterprise EdTech design and engineering team.
+
+## The problem
+
+Designers were spending too much time producing handoff documentation, and engineers were spending too much time deciphering it. As the design system matured, the gap between "designed" and "built" was where time and fidelity kept getting lost:
+
+- Specs were inconsistent from designer to designer
+- Specs went stale the moment a design changed
+- Specs left too much room for interpretation between design intent and shipped code
+
+## What I built
+
+A shared Claude Code skills infrastructure that powers designers through every phase of the process. It lives in a single repository that each designer clones and symlinks to their machine, so the whole team works from the same commands and standards.
+
+**A command per phase.** `/write-spec`, `/research-synthesis`, `/ux-copy`, and more — each skill is grounded in our brand goals and product context, so its output stays on-brand and consistent by default.
+
+**A handoff skill at the center.** It generates design-to-dev specs directly from prototypes built in Claude Code. I defined its output structure so every spec navigates the prototype, documents how a screen looks by design, and documents how it functions by design — with release notes generated automatically whenever a spec is updated.
+
+**Figma connected to the pipeline.** MCP and Code Connect tie prototypes to real design-system components. From there, an agentic pipeline ingests a PRD, aligns it to our coding standards and design system, and outputs production-ready code.
+
+**A documented protocol around the tooling**, so the process is repeatable across the team rather than dependent on any one designer.
+
+![A production screen built from the shared RDS v2 component library](/case-studies/design-skills-infrastructure-screen.png)
+
+## Impact
+
+- Cut spec production from 3 days–2 weeks to under 30 minutes — up to ~80 hours per handoff cycle returned to design work.
+- Reached 100% adoption across the design team, validated with 4 designers across 3 products plus 3 engineers and 1 PM.
+- Reduced the friction engineers hit when consuming specs, replacing hand-maintained docs with a consistent structure and automated release notes.
+- Kept specs in sync with design by generating them from the source prototype instead of maintaining them separately.
+- Built on the RDS v2 design system I overhauled (37 components, 94% fewer card variants), where a v2 card dropped from two weeks to 1.5 days to build, saving roughly 64 engineering hours per component.
+- Presented the finished process to the organization (Aug 7, 2026) — [talk recording + summary](https://app.heypocket.com/app/share/dIMSmExv).
