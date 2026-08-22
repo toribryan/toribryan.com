@@ -2,7 +2,7 @@
 title: "Support Agent Dashboard"
 description: "A support agent's queue for in-exam chat — arriving with session context, so agents resolve friction before the exam window closes."
 image: "/cover-supportdash.webp"
-order: 4
+order: 2
 createdAt: "2024-10-01"
 updatedAt: "2024-10-01"
 company: "Proctorio"
@@ -19,36 +19,6 @@ process: "The core decision was to route chat with session context attached — 
 outcome: 'The majority of "I couldn''t finish because ___" tickets no longer exist — they''re resolved in-session, by an agent working from context instead of reconstructing it after the fact.'
 ---
 
-## The problem
-
-When a test-taker hit friction mid-exam, the standard path was to leave the exam, email support, and wait. By the time an agent picked up the ticket, the exam window had often already closed — and the agent was starting cold, with no idea what the test-taker had been doing when they got stuck.
-
-## Research & insights
-
-_Mock section — replace with real research findings._
-
-- Talked with support agents about what made a mid-exam ticket hard to resolve quickly.
-- The most common complaint: reconstructing what a test-taker had already tried before they could help.
-- Agents wanted the conversation to start where the test-taker's frustration started, not from a blank slate.
-- Test-takers said the fear of losing exam time was worse than the friction itself.
-
-## Guiding principles
-
-- Never pull the test-taker out of the exam to get help.
-- Give the agent context before they ask for it.
-- A paused session should never cost anyone their place in the conversation.
-
-## The solution
-
-A chat that lives inside the exam UI and routes straight to a support agent — arriving with the context of where the test-taker is in their session, so the agent isn't starting from zero. It resolves in real time without pulling the test-taker out of the exam, and the thread persists if the session is paused, so stepping away doesn't cost the agent their place in the conversation.
-
-The whole console, live out of the design system's Storybook — the same code
-the page composes, not a drawing of it. The picker brings one region forward
-and drops the rest to 20%, so each piece can be read without losing the page
-around it.
-
-<InboxRegions />
-
 ## The prototype
 
 Thirteen screens of the console as an agent works it — triaging the live queue,
@@ -63,35 +33,109 @@ data.
   caption="Scaled to fit the column. The console is laid out for 1180px and up, so open it full screen to work it properly."
 />
 
+## Guiding principles
+
+- Never pull the test-taker out of the exam to get help.
+- Give the agent context before they ask for it.
+- A paused session should never cost anyone their place in the conversation.
+
+## Early wireframes
+
+Three regions, blocked out before any of it had a visual language: the queue an
+agent works down, the thread they read, and the panel carrying the session
+context. The whole argument of the product is in the third one — everything else
+is a chat client.
+
+<Figure
+  src="/case-studies/support-dashboard-wireframe-inbox.webp"
+  full="/case-studies/support-dashboard-wireframe-inbox-full.webp"
+  alt="Low-fidelity wireframe of the agent inbox: a narrow icon rail, a conversation list, the thread, and a context panel"
+  caption="Agent Inbox — the three-column split that survived into the build."
+/>
+
+<Figure
+  src="/case-studies/support-dashboard-wireframe-thread.webp"
+  full="/case-studies/support-dashboard-wireframe-thread-full.webp"
+  alt="Low-fidelity wireframe of the conversation thread, with the composer anchored at the bottom"
+  caption="Conversation Thread."
+/>
+
+<Figure
+  src="/case-studies/support-dashboard-wireframe-context.webp"
+  full="/case-studies/support-dashboard-wireframe-context-full.webp"
+  alt="Low-fidelity wireframe of the session context panel beside the conversation"
+  caption="Context Panel — what the agent reads instead of asking."
+/>
+
+## Sidenav explorations
+
+Six passes at the navigation, from a bare chat list to a labelled rail with
+nested report groups. The question underneath: how much structure an agent can
+carry before the queue stops being the thing they are looking at.
+
+<Figure
+  src="/case-studies/support-dashboard-sidenav-concepts.webp"
+  full="/case-studies/support-dashboard-sidenav-concepts-full.webp"
+  alt="Six side navigation concepts side by side, ranging from a plain chat list to an icon rail with expandable Knowledge and Reports sections"
+  caption="Six variants in one sheet — open it full size, the detail doesn't survive this column."
+/>
+
+## Reports, second pass
+
+A deeper exploration of the stats side once the inbox settled. The lead series
+is near-black rather than red, which keeps red free to mean "above threshold"
+wherever it appears; role colours match the badges they refer to elsewhere in
+the product.
+
+<Figure
+  src="/case-studies/support-dashboard-reports-overview.webp"
+  full="/case-studies/support-dashboard-reports-overview-full.webp"
+  alt="Reports overview with an overall volume growth line chart, new conversations by role, and flagged sessions by week"
+  caption="Overview — volume growth, conversations by role, flagged sessions."
+/>
+
+<Figure
+  src="/case-studies/support-dashboard-reports-all.webp"
+  full="/case-studies/support-dashboard-reports-all-full.webp"
+  alt="The All reports index listing every available report"
+  caption="All reports."
+/>
+
+<Figure
+  src="/case-studies/support-dashboard-reports-flagged.webp"
+  full="/case-studies/support-dashboard-reports-flagged-full.webp"
+  alt="The flagged sessions report"
+  caption="Flagged Sessions."
+/>
+
+<Figure
+  src="/case-studies/support-dashboard-reports-room-scan.webp"
+  full="/case-studies/support-dashboard-reports-room-scan-full.webp"
+  alt="The room scan failures report"
+  caption="Room Scan Failures."
+/>
+
+<Figure
+  src="/case-studies/support-dashboard-reports-ai-assist.webp"
+  full="/case-studies/support-dashboard-reports-ai-assist-full.webp"
+  alt="The AI Assist report"
+  caption="AI Assist."
+/>
+
+## The solution
+
+A chat that lives inside the exam UI and routes straight to a support agent —
+arriving with the context of where the test-taker is in their session, so the
+agent isn't starting from zero. It resolves in real time without pulling the
+test-taker out of the exam, and the thread persists if the session is paused, so
+stepping away doesn't cost the agent their place in the conversation.
+
+The whole console, live out of the design system's Storybook — the same code the
+page composes, not a drawing of it. The picker brings one region forward and
+drops the rest to 20%, so each piece can be read without losing the page around
+it.
+
+<InboxRegions />
+
 The same product exists as a component library, with the token layer written up
 in full: [Integrity Console Design System](/work/bab-design-system).
-
-## Usability testing
-
-_Mock section — replace with real testing methodology and results._
-
-Shadowed support agents handling live and simulated in-exam chats, focused on how quickly they could orient to a new conversation and resolve it.
-
-**What worked**
-
-- Agents resolved tickets faster once session context arrived with the conversation instead of being requested.
-- The persistent thread meant a paused exam didn't reset the conversation.
-
-**What we fixed**
-
-- Agents wanted a lighter-weight way to flag a ticket for follow-up without losing the thread.
-
-## Impact
-
-The majority of "I couldn't finish because \_\_\_" tickets no longer exist. They're resolved in-session, by an agent working from context instead of reconstructing it after the fact.
-
-## What I learned
-
-Routing with context, not just routing to a human, was the detail that mattered — an agent who already knows where someone got stuck resolves the ticket faster than one starting fresh. Keeping the exam session intact rather than pulling the test-taker out of it kept the fix inside the moment of friction instead of after it.
-
-**If I had more time**
-
-_Mock section — replace with real next steps._
-
-- Explore proactive routing — surfacing likely help topics before the test-taker types anything.
-- Study whether agents want a saved-response library for the most common friction points.

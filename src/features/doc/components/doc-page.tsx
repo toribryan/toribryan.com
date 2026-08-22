@@ -32,7 +32,8 @@ export async function DocPage({
     ["Role", m.role],
     ["Team", m.team],
     ["Type", m.type],
-    ["Period", m.period],
+    // `period` stays in frontmatter — the Projects card and the Latest rows
+    // use it as their date, falling back to `createdAt` when it's absent.
     ["Status", m.status],
   ].filter(([, value]) => Boolean(value)) as [string, string][]
 

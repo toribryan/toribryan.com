@@ -157,7 +157,12 @@ export function SiteFooterCad() {
               className="data-vertical:h-4 data-vertical:self-center"
             />
 
-            <a className="link-underline" href="/resume.pdf">
+            <a
+              className="link-underline"
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener"
+            >
               Resume
             </a>
           </div>
