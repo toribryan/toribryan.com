@@ -44,7 +44,7 @@ export function PageHeadingTitle({
     <h1
       data-slot="page-heading-title"
       className={cn(
-        "screen-line-top screen-line-bottom px-4",
+        "screen-line-top screen-line-bottom px-4 pt-1",
         "font-heading text-4xl font-medium tracking-normal text-balance",
         className
       )}

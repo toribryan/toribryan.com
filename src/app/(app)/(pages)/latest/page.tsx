@@ -61,7 +61,7 @@ export default function Page() {
       <div>
         <PageHeading>
           <PageHeadingTagline>Blog</PageHeadingTagline>
-          <PageHeadingTitle>Worth writing down.</PageHeadingTitle>
+          <PageHeadingTitle>Pivot Notes and Creative Retros</PageHeadingTitle>
           <PageHeadingDescription>{description}</PageHeadingDescription>
         </PageHeading>
 

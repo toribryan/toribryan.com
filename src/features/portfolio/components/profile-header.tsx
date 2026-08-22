@@ -45,7 +45,7 @@ export function ProfileHeader() {
 
       <div className="flex flex-col">
         <div className="z-1 mt-auto border-t border-line">
-          <div className="flex items-center gap-2 pl-4">
+          <div className="flex items-center gap-2 pt-1 pl-4">
             <h1 className="-translate-y-px font-heading text-[1.625rem]/8 font-medium tracking-normal">
               {USER.displayName}
             </h1>
