@@ -1,27 +1,42 @@
 ---
 title: "Support Agent Dashboard"
-description: "A support agent's queue for in-exam chat — arriving with session context, so agents resolve friction before the exam window closes."
+description: "A support agent's queue for in-exam chatters that arrive with session context, so agents resolve friction before the exam window closes."
 image: "/cover-supportdash.webp"
 order: 2
 createdAt: "2024-10-01"
 updatedAt: "2024-10-01"
 company: "Proctorio"
-role: "Staff Designer"
-team: "Support, Product, Engineering"
+role: "Product design + front-end build"
+team: "4 Engineers"
 type: "Product Redesign"
 period: "10.2024 – 03.2025"
 skills:
-  - "Figma"
-  - "internal chat platform"
-problem: "Test-takers who hit friction mid-exam had one option: leave the exam, email support, and wait — with no live channel to a human, and no session context attached by the time an agent picked it up."
-task: "Design the agent-facing side of an in-exam support chat: route test-taker conversations to a human in real time, arriving with enough session context that the agent isn't starting cold."
+  - "React"
+  - "TypeScript"
+  - "Tailwind v4"
+  - "shadcn"
+  - "Base UI"
+  - "Storybook"
+problem: "Test-takers who hit friction mid-exam needed an easy, accessible way to ask for help without leaving the exam. Support agents needed clear context into the test-taker's situation and a live communication channel to quickly provide actionable help."
+task: "Route test-taker conversations to a human in real time with session and exam context attached — where the test-taker is, exam settings, and what they were doing when they got stuck. That required deep consideration on the test-taker context panel, product/institution-aware suggestions, agent commands, and customizable performance insights."
 process: "The core decision was to route chat with session context attached — where the test-taker is, what they were doing when they got stuck — rather than a blank conversation an agent has to reconstruct by asking. Chat state was designed to persist through a paused exam, so a test-taker stepping away doesn't cost the agent their place in the thread."
 outcome: 'The majority of "I couldn''t finish because ___" tickets no longer exist — they''re resolved in-session, by an agent working from context instead of reconstructing it after the fact.'
 ---
 
+## Guiding principles
+
+- Never pull the test-taker out of the exam to get help.
+- Give the agent context before they ask for it.
+- Provide transparency for all test-takers, support agents, and institutions.
+
+## What shipped
+
+Shipped surfaces include an Inbox, three Knowledge views, twelve Reports views,
+four Contacts filters, four Settings pages, and a standalone Integrity Review.
+
 ## The prototype
 
-Thirteen screens of the console as an agent works it — triaging the live queue,
+25 screens of the console as an agent works it — triaging the live queue,
 reading a conversation with the session context already attached, and closing a
 case. It's a clickthrough, not a build: vanilla HTML, CSS and JavaScript, so it
 loads instantly and every state is reachable by clicking rather than by seeding
@@ -29,15 +44,9 @@ data.
 
 <Embed
   src="/prototype/bab/index.html"
-  title="Integrity Console — 13-screen clickthrough"
+  title="Integrity Console — 25-screen clickthrough"
   caption="Scaled to fit the column. The console is laid out for 1180px and up, so open it full screen to work it properly."
 />
-
-## Guiding principles
-
-- Never pull the test-taker out of the exam to get help.
-- Give the agent context before they ask for it.
-- A paused session should never cost anyone their place in the conversation.
 
 ## Early wireframes
 
@@ -79,6 +88,27 @@ carry before the queue stops being the thing they are looking at.
   alt="Six side navigation concepts side by side, ranging from a plain chat list to an icon rail with expandable Knowledge and Reports sections"
   caption="Six variants in one sheet — open it full size, the detail doesn't survive this column."
 />
+
+## Inbox Screen
+
+The inbox required different regions, including: the queue, agent header,
+conversation thread, chat composer, and context panel.
+
+<Callout title="Embed pending">
+  This section needs a region-picker embed in the shape of `<InboxRegions />`,
+  tabbing between the inbox's regions — not yet wired up with story IDs and tab
+  labels.
+</Callout>
+
+## Knowledge Screen
+
+This screen was designed to be simple, with the intention of expanding
+functionality in the future.
+
+<Callout title="Embed pending">
+  This section needs a region-picker embed tabbing between the Knowledge
+  screen's regions — not yet wired up with story IDs and tab labels.
+</Callout>
 
 ## Reports, second pass
 
