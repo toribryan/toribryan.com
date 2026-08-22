@@ -1,4 +1,10 @@
-import { ClaudeIcon, CursorIcon, ReactIcon, TsIcon } from "@/components/icons"
+import {
+  ClaudeIcon,
+  CursorIcon,
+  NextJsIcon,
+  ReactIcon,
+  TsIcon,
+} from "@/components/icons"
 
 import type { TechStack } from "../types/tech-stack"
 
@@ -65,6 +71,13 @@ export const TECH_STACK: TechStack[] = [
     title: "React",
     href: "https://react.dev",
     icon: <ReactIcon />,
+    categories: ["Engineering"],
+  },
+  {
+    key: "nextjs",
+    title: "Next.js",
+    href: "https://nextjs.org",
+    icon: <NextJsIcon />,
     categories: ["Engineering"],
   },
   {

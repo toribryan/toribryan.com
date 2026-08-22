@@ -318,7 +318,7 @@ const UNIFORMS = {
   cursorRadius: 0.45,
   oklab: 0.0,
   // Negative: the field drifts against the pointer rather than with it.
-  timeScale: -1.05,
+  timeScale: -1.6,
 }
 
 const pendingContextReleases = new WeakMap<HTMLCanvasElement, number>()
