@@ -58,13 +58,6 @@ export const TECH_STACK: TechStack[] = [
     icon: <CursorIcon />,
     categories: ["Prototyping"],
   },
-  {
-    key: "lovable",
-    title: "Lovable",
-    href: "https://lovable.dev",
-    icon: <BrandMark src="/lovable.svg" alt="" />,
-    categories: ["Prototyping"],
-  },
 
   {
     key: "react",
@@ -87,13 +80,6 @@ export const TECH_STACK: TechStack[] = [
     icon: <TsIcon />,
     categories: ["Engineering"],
   },
-  {
-    key: "azure",
-    title: "Azure",
-    href: "https://azure.microsoft.com",
-    icon: <BrandMark src="/azure.svg" alt="" />,
-    categories: ["Engineering"],
-  },
 
   {
     key: "usertesting",
@@ -107,13 +93,6 @@ export const TECH_STACK: TechStack[] = [
     title: "Loom",
     href: "https://loom.com",
     icon: <BrandMark src="/Loom.svg" alt="" />,
-    categories: ["Research"],
-  },
-  {
-    key: "elevenlabs",
-    title: "ElevenLabs",
-    href: "https://elevenlabs.io",
-    icon: <BrandMark src="/elevenlabsai.svg" alt="" />,
     categories: ["Research"],
   },
 ]

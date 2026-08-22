@@ -85,12 +85,12 @@ export default async function Page({ params }: PageProps<"/latest/[slug]">) {
       <JsonLdScript
         data={jsonLdBreadcrumbList([
           { name: "Home", href: "/" },
-          { name: "Latest", href: "/latest" },
+          { name: "Blog", href: "/latest" },
           { name: doc.metadata.title, href: `/latest/${slug}` },
         ])}
       />
 
-      <DocPage doc={doc} backHref="/latest" backLabel="Latest" />
+      <DocPage doc={doc} backHref="/latest" backLabel="Blog" />
     </>
   )
 }

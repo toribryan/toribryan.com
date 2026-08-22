@@ -22,7 +22,7 @@ export const MAIN_NAV: NavItem<Route>[] = [
     href: "/components",
   },
   {
-    title: "Latest",
+    title: "Blog",
     href: "/latest",
   },
 ]

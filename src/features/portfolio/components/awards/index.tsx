@@ -23,7 +23,7 @@ export function Awards() {
     <Panel id={ID}>
       <PanelHeader>
         <PanelTitle>
-          <a href={`#${ID}`}>Awards</a>
+          <a href={`#${ID}`}>Achievements</a>
           <PanelTitleSup>({AWARDS.length})</PanelTitleSup>
           <PanelTitleCopy id={ID} />
         </PanelTitle>

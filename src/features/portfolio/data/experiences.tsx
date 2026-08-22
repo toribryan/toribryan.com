@@ -1,4 +1,5 @@
 import {
+  CodeIcon,
   DraftingCompassIcon,
   LayoutGridIcon,
   PenToolIcon,
@@ -7,6 +8,24 @@ import {
 import type { Experience } from "@/features/portfolio/types/experiences"
 
 export const EXPERIENCES: Experience[] = [
+  {
+    id: "self-employed",
+    companyName: "Self-Employed",
+    location: "United States",
+    locationType: "Remote",
+    positions: [
+      {
+        id: "self-employed-design-engineer",
+        title: "Design Engineer",
+        employmentPeriod: {
+          start: "08.2026",
+        },
+        employmentType: "Self-employed",
+        icon: <CodeIcon />,
+      },
+    ],
+    isCurrentEmployer: true,
+  },
   {
     id: "proctorio",
     companyName: "Proctorio",
@@ -19,6 +38,7 @@ export const EXPERIENCES: Experience[] = [
         title: "Staff Product Designer",
         employmentPeriod: {
           start: "2024",
+          end: "08.2026",
         },
         employmentType: "Full-time",
         icon: <DraftingCompassIcon />,
@@ -60,7 +80,6 @@ export const EXPERIENCES: Experience[] = [
         ],
       },
     ],
-    isCurrentEmployer: true,
   },
   {
     id: "modern-care-homes",

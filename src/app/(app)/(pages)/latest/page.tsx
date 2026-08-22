@@ -14,7 +14,7 @@ import { DocList } from "@/features/doc/components/doc-list"
 import { getLatestPosts } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
 
-const title = "Latest"
+const title = "Blog"
 const description =
   "Projects, creative retros, and notes from the work — the things worth writing down."
 
@@ -54,13 +54,13 @@ export default function Page() {
       <JsonLdScript
         data={jsonLdBreadcrumbList([
           { name: "Home", href: "/" },
-          { name: "Latest", href: "/latest" },
+          { name: "Blog", href: "/latest" },
         ])}
       />
 
       <div>
         <PageHeading>
-          <PageHeadingTagline>Latest</PageHeadingTagline>
+          <PageHeadingTagline>Blog</PageHeadingTagline>
           <PageHeadingTitle>Worth writing down.</PageHeadingTitle>
           <PageHeadingDescription>{description}</PageHeadingDescription>
         </PageHeading>
