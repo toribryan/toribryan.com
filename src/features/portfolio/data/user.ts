@@ -28,7 +28,7 @@ export const USER: User = {
       experienceId: "proctorio",
     },
   ],
-  about: `- As a Product Designer, I like to focus on the Design Engineering aspect, making sure that innovative ideas come to life using the right technology.
+  about: `- I am Product Designer who specializes in building Design Systems. I like to focus on the Design Engineering aspect, making sure that innovative ideas come to life using the right technology.
 - With over 5 years of experience in education technology design, I’m focused on addressing real user challenges and the systems that support them.
 - Recently I built an agentic design-to-dev pipeline that cut spec production from days to under 30 minutes, with full team adoption.
 - Always exploring new tools and ways to create. Currently learning the drums, and studying the history of the golden ratio and its relevance to design today.

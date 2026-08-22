@@ -23,10 +23,11 @@ export const EXPERIENCES: Experience[] = [
         employmentType: "Full-time",
         icon: <DraftingCompassIcon />,
         description: `- Own end-to-end product design across three products, the design system and its governance, and the standards for how work moves from concept into production.
-- Built a shared Claude Code skills infrastructure that generates design-to-dev specs directly from prototypes — spec production dropped from 3 days–2 weeks to under 30 minutes, with 100% design team adoption.
+- Built a shared Claude Code skills infrastructure that generates design-to-dev specs directly from prototypes — spec production dropped from 3 days–2 weeks to under 30 minutes, returning up to ~80 hours per handoff cycle to design work, with 100% design team adoption.
 - Led the design system overhaul that cut card variants by 94%.
 - Shipped Proctor Coverage, embedded analytics that turn proctor coverage from an assumption into evidence.
-- Redesigned the Support Agent Dashboard so agents arrive at in-exam chats already holding session context.`,
+- Redesigned the Support Agent Dashboard so agents arrive at in-exam chats already holding session context.
+- Lead product design decisions across all products from user data rather than opinion.`,
         skills: [
           "End-to-end Product Design",
           "Design Systems",
@@ -37,7 +38,6 @@ export const EXPERIENCES: Experience[] = [
           "Usability Testing",
           "Azure",
         ],
-        isExpanded: true,
       },
       {
         id: "proctorio-product",
