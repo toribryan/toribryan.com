@@ -12,21 +12,40 @@ skills:
 ---
 
 
-## Framer
+## Framer <BrandLink brand="framer" />
 
-I started my first portfolio redesign as a Framer site and honestly, it's good for what it's built for. It was an easy transition from Webflow and it gave you a great canvas editing view. The CMS is really nice, and I see the value in it as a product. But I couldn't edit code components inside Framer as easily as I wanted to, and that got frustrating fast. Sometimes it would render what I designed on the canvas when I wanted the code component, and then when I finally got it using the code component, I'd be fighting to get it back to the canvas version. I needed more control than the platform wanted to give me.
+I started my first portfolio redesign as a Framer site and honestly, it's good for what it's built for. It was an easy transition from Webflow and it provides you a great canvas editing view. The CMS is really nice, and I see the value in it as a product. But I couldn't edit code components inside Framer as easily as I wanted to, and that got frustrating fast. Sometimes it would render what I designed on the canvas when I wanted the code component, and then when I finally got it using the code component, I'd be fighting to get it back to the canvas version. I needed more control than the platform wanted to give me.
+
+<Video
+  src="/case-studies/framer-portfolio-concept.mov"
+  caption="The first portfolio concept, built entirely in Framer."
+/>
+
+A second concept, for the about-me modal, went the opposite direction: designed in Figma first, then rebuilt in Framer by hand. That order was easier for me, but Framer doesn't have a clean way to bring a Figma design over, which was a bummer.
+
+<Figure
+  src="/case-studies/framer-portfolio-concept-2-flow.webp"
+  alt="Interaction spec for the about-me modal, mapping every click target in the top nav and modal to what it triggers"
+  caption="The interaction spec, mapped out in Figma before any of it existed in Framer."
+/>
+
+<Figure
+  src="/case-studies/framer-portfolio-concept-2-modal.webp"
+  alt="Desktop and mobile layouts of the about-me modal in Figma, showing the avatar, skills, interests, and photo grid"
+  caption="Desktop and mobile, built out by hand in Framer from Figma specs."
+/>
 
 ## Astro and Cloudflare
 
 Astro gave me the flexibility I needed from Framer right away and was great for creating static pages for my site. It felt easy to work with, and it let me lean into more React and actually strengthen my animation and bezier skills instead of working around a tool.
 
-## Next.js
+## Next.js <BrandLink brand="nextjs" />
 
 When I was exploring other Design Engineer portfolios, I noticed a lot of those portfolios were Next.js apps, and naturally I wondered why. My vague understanding after some research: more server side rendering, faster, better for SEO. But honestly, seeing the pattern was enough. When a whole group of people doing the work you want to do all make the same choice, it feels like they know something you don't. So I followed their lead.
 
 No regrets. Next.js has been pretty intuitive for me. Learning it alongside a deeper dive into React has been smooth. I wouldn't say easy, but I haven't hit any real friction understanding how it all fits together. Big fan.
 
-## Storybook
+## Storybook <BrandLink brand="storybook" />
 
 This week I also built out a prototype demo of a support agent dashboard, and I put the entire design system for it in Storybook. It was incredibly easy.
 
@@ -40,36 +59,36 @@ One note on process: I'm using Claude to hold my hand along the way, but I've ma
 
 Previously places I worked at self hosted everything for security reasons, so I never got to experiment with the big name platforms. This week I finally did. Here's every one, pros and cons.
 
-**21st.dev**
+<ToolLabel name="21st.dev" brand="21st-dev" />
 
 Top of the list, my favorite thing right now. I became a member and I'll be posting my own component designs there.
 
 - Pros: The best marketplace for design engineering components I've found. Beautifully crafted work, and a place to publish your own as a member.
 - Cons: Some components are better looking than they are engineered, with way too many effects. That's fine, but it's there.
 
-**shadcn/ui**
+<ToolLabel name="shadcn/ui" brand="shadcn" />
 
-- Pros: Loved it. This is what I built with all week.
-- Cons: None. No notes.
+- Pros: Loved it. It's a really good starting kit that lets you turn your own design system into real code without reinventing every UI primitive. It provides the difficult parts of of UI while leaving a lot of flexibility in the visual design. As someone who has almost entirely designed products from systems I built myself, I liked how these didn't make me feel like it was locking in to someone elses design system.
+- Cons: None yet.
 
-**Subframe**
+<ToolLabel name="Subframe" brand="subframe" />
 
 I've been playing with this one for four or five months, but I used it more recently to explore my new portfolio design language, and I used it alongside shadcn themes when ideating the design system for my dashboard project.
 
 - Pros: A real Figma alternative for design system building. You see your system live as you build it, and there's a Subframe MCP.
 - Cons: No variables, so it can't handle complex token architectures. If you're building one of those, stay in Figma.
 
-**Obsidian**
+<ToolLabel name="Obsidian" brand="obsidian" />
 
-My best friend right now. Daily notes, task outlines, skill building plans all live here.
+My best friend right now. Daily notes, task outlines, skill building plans all live here. Considering building a MOC or "Second Brain" in here
 
 - Pros: Fits how I actually work day to day. Low friction enough that rebuilding my second brain here as an MOC feels easy.
-- Cons: None so far.
+- Cons: Annoying how the title also serves as the file name.
 
-**Notion**
+<ToolLabel name="Notion" brand="notion" />
 
 - Pros: Genuinely good databases and knowledge bases. It's where my career index and project KBs live.
-- Cons: I just don't work in it day to day anymore, so it goes stale.
+- Cons: I just don't work in it day to day at this point in time, so I only keep info in there that wont go stale.
 
 **snd.dev**
 
@@ -78,35 +97,35 @@ A little platform with three UI sound libraries made by UX developers. I downloa
 - Pros: The sounds are semantic, mapped to real states: disabled, notification, tap, swipe, toggle on, toggle off, celebration.
 - Cons: Easy to overdo. I'll only use one or two, because a sound on every element would be sensory overload. That's a restraint problem, not a product problem.
 
-**Lovable**
+<ToolLabel name="Lovable" brand="lovable" />
 
 Marketed as a hub where you can vibe code an app, generate design assets, make interface sounds, generate images. I didn't really like it.
 
 - Pros: Genuinely good for mood boarding. I fed it inspiration photos in a few styles for a floral painting background, and it blended them into generated ideas based on my board. The interface is also nicely designed.
 - Cons: The rest of the pitch didn't land for me. And take even the praise with a grain of salt, because I only used it for about two days.
 
-**ElevenLabs**
+<ToolLabel name="ElevenLabs" brand="elevenlabs" />
 
 I came here looking for a UI sound library.
 
 - Pros: They have their own library, and a membership lets you modify sounds and mix in your own.
 - Cons: Every marketplace preview plays at about 25 percent volume under a voiceover booming "ElevenLabs." I get that they're protecting their work, and I don't know how else they'd do it. But I came to hear the sounds before buying, and I couldn't hear the sounds. That killed it for me.
 
-**WebStorm**
+<ToolLabel name="WebStorm" brand="webstorm" />
 
 Recommended by my engineer boyfriend, and I liked it.
 
 - Pros: Feels more modern and mature than VS Code. No complaints. I'll probably end up back on it.
 - Cons: Unfamiliar, which mattered during a week where I was already learning so much at once.
 
-**VS Code**
+<ToolLabel name="VS Code" brand="vscode" />
 
 This is where I gravitated back to this week.
 
 - Pros: The classic. Familiar and dependable when everything else in my stack was new.
 - Cons: I wouldn't say it's better than WebStorm, and it doesn't feel as modern.
 
-**GitHub Desktop**
+<ToolLabel name="GitHub Desktop" brand="github-desktop" />
 
-- Pros: Used it a lot this week. Really nice, no drama.
+- Pros: Really nice, no drama.
 - Cons: None.

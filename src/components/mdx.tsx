@@ -17,12 +17,15 @@ import { Code } from "@/components/base/ui/typography"
 
 import { Callout } from "./callout"
 import { Heading } from "./heading"
+import { BrandLink } from "./mdx-brand-link"
 import { mdxCodeBlockComponents } from "./mdx-code-block"
 import { Embed } from "./mdx-embed"
 import { Figure } from "./mdx-figure"
 import { InboxRegions } from "./mdx-inbox-regions"
 import { LinkButton } from "./mdx-link-button"
 import { StoryEmbed } from "./mdx-story-embed"
+import { ToolLabel } from "./mdx-tool-label"
+import { Video } from "./mdx-video"
 
 const components: MDXRemoteProps["components"] = {
   h1: (props: React.ComponentProps<"h1">) => <Heading as="h1" {...props} />,
@@ -49,12 +52,15 @@ const components: MDXRemoteProps["components"] = {
     />
   ),
 
+  BrandLink,
   Callout,
   Embed,
   Figure,
   InboxRegions,
   StoryEmbed,
   LinkButton,
+  ToolLabel,
+  Video,
 
   Steps: ({ className, ...props }: React.ComponentProps<"div">) => (
     <div

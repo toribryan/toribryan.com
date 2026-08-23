@@ -22,6 +22,17 @@ export function Heading<T extends HeadingTypes = "h1">({
     return <Comp className={className} {...props} />
   }
 
+  // `BrandLink` has no "use client", so it fully resolves to a plain <a> on
+  // the server before its element ever reaches this client boundary — by
+  // the time this runs, there's no trace of `BrandLink` left to check for,
+  // only the anchor it rendered. Headings otherwise never contain an <a>.
+  const isBrandLink = (child: React.ReactNode) =>
+    React.isValidElement(child) && child.type === "a"
+
+  const childArray = React.Children.toArray(props.children)
+  const brand = childArray.find(isBrandLink) ?? null
+  const textChildren = childArray.filter((child) => !isBrandLink(child))
+
   return (
     <Comp
       className={cn(
@@ -31,8 +42,10 @@ export function Heading<T extends HeadingTypes = "h1">({
       {...props}
     >
       <a href={`#${props.id}`} className="peer not-prose">
-        {props.children}
+        {textChildren}
       </a>
+
+      {brand}
 
       <CopyButton
         className="size-7 shrink-0 text-muted-foreground opacity-0 group-hover/heading:opacity-100"
