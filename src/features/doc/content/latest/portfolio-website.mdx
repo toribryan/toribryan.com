@@ -3,8 +3,6 @@ title: "Design Engineering a Portfolio"
 description: "I redesigned my portfolio, learned a new stack, and because I had the freedom to experiment with tools I'd only ever heard about, I tried as many as I could. Here's what stuck, what didn't, and why."
 createdAt: "2026-08-23"
 updatedAt: "2026-08-23"
-company: "Personal"
-role: "Designer & Developer"
 period: "2026"
 skills:
   - "Next.js"
@@ -12,6 +10,15 @@ skills:
   - "shadcn/ui"
   - "Claude Code"
 ---
+
+
+## Framer
+
+I started my first portfolio redesign as a Framer site and honestly, it's good for what it's built for. It was an easy transition from Webflow and it gave you a great canvas editing view. The CMS is really nice, and I see the value in it as a product. But I couldn't edit code components inside Framer as easily as I wanted to, and that got frustrating fast. Sometimes it would render what I designed on the canvas when I wanted the code component, and then when I finally got it using the code component, I'd be fighting to get it back to the canvas version. I needed more control than the platform wanted to give me.
+
+## Astro and Cloudflare
+
+Astro gave me the flexibility I needed from Framer right away and was great for creating static pages for my site. It felt easy to work with, and it let me lean into more React and actually strengthen my animation and bezier skills instead of working around a tool.
 
 ## Next.js
 
@@ -27,11 +34,11 @@ Some context: I got very good at design systems under very particular business c
 
 The payoff is huge. Having everything built in Storybook means I can display live, engineered versions of my design work right inside my portfolio case studies. Interactive, with a segmented picker to flip through states and variants. For the dashboard project I built out every region in Storybook and embedded them in the case study. It's a really clean way to show design work compared to static Figma screenshots.
 
-One note on process: I'm using Claude for a lot of the heavy lifting, but I've made it a conscious effort to understand everything it's doing and how the pieces compose. I hand coded a badge component myself, a simple one, on purpose. My rule is that if I could build the thing without Claude, then I don't feel bad having Claude speed it up. So I made myself learn to build components in TypeScript first.
+One note on process: I'm using Claude to hold my hand along the way, but I've made it a conscious effort to understand everything it's doing and how the pieces compose. My rule is that if I had to understand everything first, then have Claude help me do things quickly. So I learned how to build components in TypeScript first.
 
 ## The rapid fire reviews
 
-At Proctorio we self hosted everything for security reasons, so I never got to experiment with the big name platforms. This week I finally did. Here's every one, pros and cons.
+Previously places I worked at self hosted everything for security reasons, so I never got to experiment with the big name platforms. This week I finally did. Here's every one, pros and cons.
 
 **21st.dev**
 
@@ -47,7 +54,7 @@ Top of the list, my favorite thing right now. I became a member and I'll be post
 
 **Subframe**
 
-I've been playing with this one for four or five months, and I used it alongside shadcn themes when ideating the design system for my dashboard project.
+I've been playing with this one for four or five months, but I used it more recently to explore my new portfolio design language, and I used it alongside shadcn themes when ideating the design system for my dashboard project.
 
 - Pros: A real Figma alternative for design system building. You see your system live as you build it, and there's a Subframe MCP.
 - Cons: No variables, so it can't handle complex token architectures. If you're building one of those, stay in Figma.
