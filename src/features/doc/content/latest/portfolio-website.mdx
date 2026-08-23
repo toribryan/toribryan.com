@@ -1,36 +1,105 @@
 ---
-title: "Portfolio Website"
-description: "A from-scratch Astro rebuild of this site — dark glass modules, category-driven case studies, and a content pipeline built around Claude Code."
-createdAt: "2026-01-01"
-updatedAt: "2026-01-01"
+title: "Design Engineering a Portfolio"
+description: "I redesigned my portfolio, learned a new stack, and because I had the freedom to experiment with tools I'd only ever heard about, I tried as many as I could. Here's what stuck, what didn't, and why."
+createdAt: "2026-08-23"
+updatedAt: "2026-08-23"
 company: "Personal"
 role: "Designer & Developer"
 period: "2026"
 skills:
-  - "Astro"
-  - "React"
-  - "Tailwind"
+  - "Next.js"
+  - "Storybook"
+  - "shadcn/ui"
   - "Claude Code"
-problem: "The previous portfolio was static HTML — updating a single case study meant hand-editing markup, and there was no real system for how a new project should look or read."
-task: "Rebuild the site on Astro with a content-collection-driven architecture: category browsing, tabbed case study modules, and a workflow for updating copy and content directly through Claude Code."
-process: "Built category pages around two module patterns — a tabbed Problem/Approach/Process/Outcome layout for full product design case studies, and a simpler timeline entry for lighter categories. Every visual system (dark glass panels, magenta accent, sticky table of contents) had to hold up across both."
-outcome: "A living site where new case studies, content sections, and design refinements ship in a single working session instead of a rebuild."
 ---
 
-## The problem
+## Next.js
 
-The previous portfolio was static HTML — updating a single case study meant editing markup by hand, and there was no real system for how a new project should look or read. Each addition made the whole site harder to keep consistent.
+When I was exploring other Design Engineer portfolios, I noticed a lot of those portfolios were Next.js apps, and naturally I wondered why. My vague understanding after some research: more server side rendering, faster, better for SEO. But honestly, seeing the pattern was enough. When a whole group of people doing the work you want to do all make the same choice, it feels like they know something you don't. So I followed their lead.
 
-## The solution
+No regrets. Next.js has been pretty intuitive for me. Learning it alongside a deeper dive into React has been smooth. I wouldn't say easy, but I haven't hit any real friction understanding how it all fits together. Big fan.
 
-A full rebuild on Astro, with case studies as content-collection entries instead of hardcoded pages. Categories, tags, and module layout are all derived from the content itself, so adding a new project is a matter of writing a markdown file, not building a page.
+## Storybook
 
-## Key components
+This week I also built out a prototype demo of a support agent dashboard, and I put the entire design system for it in Storybook. It was incredibly easy.
 
-- A content-collection schema shared by every case study, driving both the category listing and the full write-up
-- Two module patterns: tabbed Problem/Approach/Process/Outcome for end-to-end product work, and a lighter timeline entry for smaller categories
-- A dark-glass visual system — translucent panels, a magenta accent, sticky table of contents — consistent from the homepage hero through to individual case studies
+Some context: I got very good at design systems under very particular business constraints, where the tech stack was not normal. I contributed to design systems for about three years before doing a full overhaul of a legacy system, and that overhaul taught me a lot. So Storybook felt intuitive immediately. Component file, stories file, done. badge.tsx and badge.stories.tsx.
 
-## What I learned
+The payoff is huge. Having everything built in Storybook means I can display live, engineered versions of my design work right inside my portfolio case studies. Interactive, with a segmented picker to flip through states and variants. For the dashboard project I built out every region in Storybook and embedded them in the case study. It's a really clean way to show design work compared to static Figma screenshots.
 
-Building the site this way made the site itself a live example of the process it documents: describing a project accurately, in public, is its own kind of design work.
+One note on process: I'm using Claude for a lot of the heavy lifting, but I've made it a conscious effort to understand everything it's doing and how the pieces compose. I hand coded a badge component myself, a simple one, on purpose. My rule is that if I could build the thing without Claude, then I don't feel bad having Claude speed it up. So I made myself learn to build components in TypeScript first.
+
+## The rapid fire reviews
+
+At Proctorio we self hosted everything for security reasons, so I never got to experiment with the big name platforms. This week I finally did. Here's every one, pros and cons.
+
+**21st.dev**
+
+Top of the list, my favorite thing right now. I became a member and I'll be posting my own component designs there.
+
+- Pros: The best marketplace for design engineering components I've found. Beautifully crafted work, and a place to publish your own as a member.
+- Cons: Some components are better looking than they are engineered, with way too many effects. That's fine, but it's there.
+
+**shadcn/ui**
+
+- Pros: Loved it. This is what I built with all week.
+- Cons: None. No notes.
+
+**Subframe**
+
+I've been playing with this one for four or five months, and I used it alongside shadcn themes when ideating the design system for my dashboard project.
+
+- Pros: A real Figma alternative for design system building. You see your system live as you build it, and there's a Subframe MCP.
+- Cons: No variables, so it can't handle complex token architectures. If you're building one of those, stay in Figma.
+
+**Obsidian**
+
+My best friend right now. Daily notes, task outlines, skill building plans all live here.
+
+- Pros: Fits how I actually work day to day. Low friction enough that rebuilding my second brain here as an MOC feels easy.
+- Cons: None so far.
+
+**Notion**
+
+- Pros: Genuinely good databases and knowledge bases. It's where my career index and project KBs live.
+- Cons: I just don't work in it day to day anymore, so it goes stale.
+
+**snd.dev**
+
+A little platform with three UI sound libraries made by UX developers. I downloaded Sine, but Industrial and Piano are also awesome.
+
+- Pros: The sounds are semantic, mapped to real states: disabled, notification, tap, swipe, toggle on, toggle off, celebration.
+- Cons: Easy to overdo. I'll only use one or two, because a sound on every element would be sensory overload. That's a restraint problem, not a product problem.
+
+**Lovable**
+
+Marketed as a hub where you can vibe code an app, generate design assets, make interface sounds, generate images. I didn't really like it.
+
+- Pros: Genuinely good for mood boarding. I fed it inspiration photos in a few styles for a floral painting background, and it blended them into generated ideas based on my board. The interface is also nicely designed.
+- Cons: The rest of the pitch didn't land for me. And take even the praise with a grain of salt, because I only used it for about two days.
+
+**ElevenLabs**
+
+I came here looking for a UI sound library.
+
+- Pros: They have their own library, and a membership lets you modify sounds and mix in your own.
+- Cons: Every marketplace preview plays at about 25 percent volume under a voiceover booming "ElevenLabs." I get that they're protecting their work, and I don't know how else they'd do it. But I came to hear the sounds before buying, and I couldn't hear the sounds. That killed it for me.
+
+**WebStorm**
+
+Recommended by my engineer boyfriend, and I liked it.
+
+- Pros: Feels more modern and mature than VS Code. No complaints. I'll probably end up back on it.
+- Cons: Unfamiliar, which mattered during a week where I was already learning so much at once.
+
+**VS Code**
+
+This is where I gravitated back to this week.
+
+- Pros: The classic. Familiar and dependable when everything else in my stack was new.
+- Cons: I wouldn't say it's better than WebStorm, and it doesn't feel as modern.
+
+**GitHub Desktop**
+
+- Pros: Used it a lot this week. Really nice, no drama.
+- Cons: None.

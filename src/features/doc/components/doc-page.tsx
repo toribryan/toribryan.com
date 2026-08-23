@@ -123,7 +123,10 @@ export async function DocPage({
             {m.skills.map((skill) => (
               <li
                 key={skill}
-                className="rounded-md bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground"
+                className={cn(
+                  "rounded-md bg-surface-warm px-2 py-0.5 font-mono text-xs text-muted-foreground",
+                  "inset-ring-1 inset-ring-border/64"
+                )}
               >
                 {skill}
               </li>
