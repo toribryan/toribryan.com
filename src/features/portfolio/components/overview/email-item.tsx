@@ -9,6 +9,8 @@ import { useHotkeys } from "react-hotkeys-hook"
 import { toast } from "sonner"
 
 import { trackEvent } from "@/lib/events"
+import { toggleOnSound } from "@/lib/soundcn/toggle-on"
+import { useSound } from "@/hooks/soundcn/use-sound"
 import { useIsClient } from "@/hooks/use-is-client"
 import { CopyButton } from "@/components/copy-button"
 
@@ -30,6 +32,9 @@ export function EmailItem({ emailB64 }: EmailItemProps) {
   const emailDecoded = decodeEmail(emailB64)
 
   const { success } = useTiks()
+  // The copy button sounds itself; this is for the hotkey, which never goes
+  // near it, so a keyboard copy confirms like a clicked one.
+  const [playCopy] = useSound(toggleOnSound, { volume: 0.3, interrupt: true })
 
   useHotkeys("shift+e", () => {
     copyToClipboardWithEvent(emailDecoded, {
@@ -40,6 +45,7 @@ export function EmailItem({ emailB64 }: EmailItemProps) {
       },
     })
     success()
+    playCopy()
     toast.success("Email copied")
   })
 

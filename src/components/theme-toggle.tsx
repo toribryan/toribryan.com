@@ -1,5 +1,6 @@
 "use client"
 
+import { flushSync } from "react-dom"
 import { useTheme } from "next-themes"
 import { useHotkeys } from "react-hotkeys-hook"
 
@@ -24,12 +25,35 @@ export function ThemeToggle() {
     const next = resolvedTheme === "dark" ? "light" : "dark"
 
     click()
-    setTheme(next === systemTheme ? "system" : next)
-    setMetaColor(
-      resolvedTheme === "dark"
-        ? META_THEME_COLORS.light
-        : META_THEME_COLORS.dark
-    )
+
+    const apply = () => {
+      setTheme(next === systemTheme ? "system" : next)
+      setMetaColor(
+        resolvedTheme === "dark"
+          ? META_THEME_COLORS.light
+          : META_THEME_COLORS.dark
+      )
+    }
+
+    // Safari and Firefox don't have the View Transitions API yet, and
+    // `startViewTransition` throws nothing useful when it's absent: without
+    // this guard the theme simply wouldn't change there.
+    if (!document.startViewTransition) {
+      apply()
+      return
+    }
+
+    // flushSync so the class lands inside the transition. React would
+    // otherwise batch the update past the snapshot and animate nothing.
+    const transition = document.startViewTransition(() => flushSync(apply))
+
+    // A skipped transition rejects, and it rejects on `ready` before
+    // `finished` (the tab was backgrounded mid-swap, another transition
+    // started, the API bailed). The callback has already run by then, so the
+    // theme is applied either way and there is nothing to recover: swallow
+    // both rather than let them surface as unhandled rejections.
+    void transition.ready.catch(() => {})
+    void transition.finished.catch(() => {})
   }
 
   useHotkeys("d", () => switchTheme())

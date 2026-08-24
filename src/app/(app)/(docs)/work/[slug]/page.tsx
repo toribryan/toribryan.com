@@ -5,6 +5,7 @@ import type { CreativeWork, WithContext } from "schema-dts"
 import { JSON_LD_ID } from "@/config/json-ld"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { absoluteUrl } from "@/lib/utils"
+import { DocEnterSound } from "@/features/doc/components/doc-enter-sound"
 import { DocPage } from "@/features/doc/components/doc-page"
 import { getDocBySlug, getWorkDocs } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
@@ -85,6 +86,8 @@ export default async function Page({ params }: PageProps<"/work/[slug]">) {
           { name: doc.metadata.title, href: `/work/${slug}` },
         ])}
       />
+
+      <DocEnterSound slug={slug} />
 
       <DocPage doc={doc} backHref="/#projects" backLabel="Projects" />
     </>

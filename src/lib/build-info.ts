@@ -44,7 +44,11 @@ function resolveEnvironment(): BuildEnvironment {
 
 export function getBuildInfo(): BuildInfo {
   const environment = resolveEnvironment()
-  const commitSha = process.env.VERCEL_GIT_COMMIT_SHA
+  // Vercel's variable on a deploy; HEAD stamped by `next.config.ts` otherwise,
+  // so the field reads the same locally as it does in production instead of
+  // going blank. The link is still withheld locally: HEAD is often unpushed.
+  const commitSha =
+    process.env.VERCEL_GIT_COMMIT_SHA || process.env.LOCAL_GIT_COMMIT_SHA
   const owner = process.env.VERCEL_GIT_REPO_OWNER
   const slug = process.env.VERCEL_GIT_REPO_SLUG
   const repoSlug = owner && slug ? `${owner}/${slug}` : null

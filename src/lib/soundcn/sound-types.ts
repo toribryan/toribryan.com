@@ -1,14 +1,20 @@
 export interface SoundAsset {
   /** Unique identifier for the sound */
   name: string
-  /** Base64-encoded data URI (data:audio/mpeg;base64,...) */
-  dataUri: string
+  /**
+   * Base64-encoded data URI (data:audio/mpeg;base64,...). Inlining suits the
+   * short blips; anything long enough to weigh on the bundle ships as a file
+   * under `public/` and sets `src` instead.
+   */
+  dataUri?: string
+  /** Path to the audio file under `public/`, e.g. `/sounds/foo.wav`. */
+  src?: string
   /** Duration in seconds */
   duration: number
   /** Audio format */
   format: "mp3" | "wav" | "ogg"
   /** License identifier */
-  license: "CC0" | "OGA-BY" | "MIT"
+  license: "CC0" | "OGA-BY" | "MIT" | "Unknown"
   /** Original author/creator */
   author: string
 }

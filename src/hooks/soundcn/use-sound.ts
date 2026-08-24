@@ -3,7 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useReducedMotion } from "motion/react"
 
-import { decodeAudioData, getAudioContext } from "@/lib/soundcn/sound-engine"
+import {
+  decodeAudioData,
+  getAudioContext,
+  soundSource,
+} from "@/lib/soundcn/sound-engine"
 import type {
   SoundAsset,
   UseSoundOptions,
@@ -36,9 +40,11 @@ export function useSound(
   const shouldReduceMotion = useReducedMotion()
   const soundEnabled = _soundEnabled && !shouldReduceMotion
 
+  const sourceUrl = soundSource(sound)
+
   useEffect(() => {
     let cancelled = false
-    decodeAudioData(sound.dataUri).then((buffer) => {
+    decodeAudioData(sourceUrl).then((buffer) => {
       if (!cancelled) {
         bufferRef.current = buffer
         setDuration(buffer.duration)
@@ -47,7 +53,7 @@ export function useSound(
     return () => {
       cancelled = true
     }
-  }, [sound.dataUri])
+  }, [sourceUrl])
 
   const stop = useCallback(() => {
     if (sourceRef.current) {

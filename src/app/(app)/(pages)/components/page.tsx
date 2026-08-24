@@ -1,4 +1,5 @@
 import type { Metadata, Route } from "next"
+import Image from "next/image"
 import type { CollectionPage, WithContext } from "schema-dts"
 
 import { JSON_LD_ID } from "@/config/json-ld"
@@ -20,10 +21,10 @@ import {
   ComponentItemIcon,
   ComponentItemTitle,
 } from "./component-item"
+import { ComponentItemComingSoon } from "./component-item-coming-soon"
 
 const title = "Components"
-const description =
-  "Design system work, one library per brand. Foundations first — components publish as they're built."
+const description = "Design System work I have designed and built"
 
 export const metadata: Metadata = {
   title,
@@ -74,9 +75,33 @@ export default function Page() {
       />
 
       <div>
-        <PageHeading>
+        {/* `-mt-12` cancels the pt-12 the (pages) layout applies, so the banner
+            sits flush under the site header. Scoped here rather than changed in
+            the layout, which /latest shares. */}
+        <figure className="screen-line-bottom relative -mt-12 h-[112px] overflow-hidden bg-[#1A1423]">
+          <Image
+            className="object-cover object-center"
+            src="/images/blog/components-banner.webp"
+            alt="A painted still life of flowers in a stone urn: poppies, roses, tulips and irises against a dark ground, with a pocket watch resting on the ledge."
+            fill
+            sizes="(min-width: 768px) 48rem, 100vw"
+            priority
+            unoptimized
+          />
+
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/50 to-transparent"
+            aria-hidden
+          />
+
+          <figcaption className="pointer-events-none absolute right-2 bottom-2 text-sm leading-none tracking-wide text-white/80 select-none sm:right-4 sm:bottom-4">
+            Abraham Mignon.
+          </figcaption>
+        </figure>
+
+        <PageHeading className="pt-5">
           <PageHeadingTagline>Components</PageHeadingTagline>
-          <PageHeadingTitle>One library per brand.</PageHeadingTitle>
+          <PageHeadingTitle>Design Systems by Brand</PageHeadingTitle>
           <PageHeadingDescription>{description}</PageHeadingDescription>
         </PageHeading>
 
@@ -114,30 +139,43 @@ function ComponentList({ items }: { items: Doc[] }) {
               "md:nth-[3n+1]:screen-line-bottom"
             )}
           >
-            <ComponentItem href={`/components/${c.slug}` as Route}>
-              <ComponentItemIcon>
-                <ComponentMonogram title={c.metadata.title} />
-                {(c.metadata.new || c.metadata.updated) && (
-                  <ComponentItemDot
-                    aria-label={c.metadata.new ? "New" : "Updated"}
-                  />
-                )}
-              </ComponentItemIcon>
-
-              <div className="flex min-w-0 flex-1 flex-col">
-                <ComponentItemTitle as="h3">
-                  {c.metadata.title}
-                </ComponentItemTitle>
-                <p className="line-clamp-1 text-sm text-muted-foreground">
-                  {c.metadata.brand !== c.metadata.title
-                    ? c.metadata.brand
-                    : c.metadata.status}
-                </p>
-              </div>
-            </ComponentItem>
+            {c.metadata.comingSoon ? (
+              <ComponentItemComingSoon title={c.metadata.title}>
+                <ComponentItemBody doc={c} />
+              </ComponentItemComingSoon>
+            ) : (
+              <ComponentItem
+                href={(c.metadata.href ?? `/components/${c.slug}`) as Route}
+              >
+                <ComponentItemBody doc={c} />
+              </ComponentItem>
+            )}
           </li>
         ))}
       </ul>
     </div>
+  )
+}
+
+/** The row's contents, shared by the link and the coming-soon variants. */
+function ComponentItemBody({ doc }: { doc: Doc }) {
+  const m = doc.metadata
+
+  return (
+    <>
+      <ComponentItemIcon>
+        <ComponentMonogram title={m.title} />
+        {(m.new || m.updated) && (
+          <ComponentItemDot aria-label={m.new ? "New" : "Updated"} />
+        )}
+      </ComponentItemIcon>
+
+      <div className="flex min-w-0 flex-1 flex-col">
+        <ComponentItemTitle as="h3">{m.title}</ComponentItemTitle>
+        <p className="line-clamp-1 text-sm text-muted-foreground">
+          {m.brand !== m.title ? m.brand : m.status}
+        </p>
+      </div>
+    </>
   )
 }

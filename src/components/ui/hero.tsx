@@ -306,19 +306,20 @@ const UNIFORMS = {
   vignette: 0.0,
   blur: 0.0,
   grain: 0.04,
-  seed: 1.0,
+  seed: 4328.0,
   rotate: 0.0,
   offsetX: 0.0,
   offsetY: 0.0,
-  drift: 0.31,
+  drift: 0.32,
   cursorEnabled: true,
   // 3 = ripple.
   cursorEffect: 3.0,
-  cursorStrength: 0.2,
-  cursorRadius: 0.45,
-  oklab: 0.0,
-  // Negative: the field drifts against the pointer rather than with it.
-  timeScale: -1.6,
+  cursorStrength: 0.6,
+  // Wider than the builder's 0.32: the ripple reads as a field the cursor
+  // moves through rather than a spot under it.
+  cursorRadius: 1.2,
+  oklab: 1.0,
+  timeScale: 1.43,
 }
 
 const pendingContextReleases = new WeakMap<HTMLCanvasElement, number>()
@@ -326,14 +327,23 @@ const pendingContextReleases = new WeakMap<HTMLCanvasElement, number>()
 export function ShaderBackground({
   className,
   onTap,
+  onSweep,
 }: {
   className?: string
   /**
-   * Fired when the field is tapped with a touch or pen — the hook for
-   * whatever feedback the page wants alongside the visual ripple. Not called
-   * for mouse input, which already ripples on move.
+   * Fired when the field is pressed, with any pointer: the hook for whatever
+   * feedback the page wants alongside the visual ripple. A mouse press only
+   * signals, since the ripple is already following the cursor; touch and pen
+   * also get the tap ripple below.
    */
   onTap?: () => void
+  /**
+   * Fired once when a pointer travels far enough across the field to read as
+   * a gesture rather than a nudge: a cursor crossing it, or a finger swiping
+   * over it. Rearms when the pointer leaves or the swipe ends, so one pass
+   * fires once however long it lingers.
+   */
+  onSweep?: () => void
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   // Held in a ref so the render effect keeps its empty dep list; re-running it
@@ -344,6 +354,10 @@ export function ShaderBackground({
   useEffect(() => {
     onTapRef.current = onTap
   }, [onTap])
+  const onSweepRef = useRef(onSweep)
+  useEffect(() => {
+    onSweepRef.current = onSweep
+  }, [onSweep])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -496,16 +510,61 @@ export function ShaderBackground({
       targetPresence = 1
       requestRender()
     }
+    // How far a pointer has to travel inside the field before it counts as a
+    // sweep. Short enough that crossing the banner trips it, long enough that
+    // settling the cursor on the way to something else doesn't.
+    const SWEEP_DISTANCE = 160
+    let sweepTravel = 0
+    let sweepArmed = true
+    let sweepTracking = false
+    let sweepLastX = 0
+    let sweepLastY = 0
+
+    const resetSweep = () => {
+      sweepTracking = false
+      sweepTravel = 0
+      sweepArmed = true
+    }
+
+    const trackSweep = (clientX: number, clientY: number) => {
+      const inside =
+        clientX >= bounds.left &&
+        clientX <= bounds.right &&
+        clientY >= bounds.top &&
+        clientY <= bounds.bottom
+      if (!inside) {
+        resetSweep()
+        return
+      }
+      if (sweepTracking) {
+        sweepTravel += Math.hypot(clientX - sweepLastX, clientY - sweepLastY)
+      }
+      sweepTracking = true
+      sweepLastX = clientX
+      sweepLastY = clientY
+      if (sweepArmed && sweepTravel >= SWEEP_DISTANCE) {
+        sweepArmed = false
+        sweepTravel = 0
+        onSweepRef.current?.()
+      }
+    }
+
     const onPointerMove = (event: PointerEvent) => {
       pointerKnown = true
       pointerClientX = event.clientX
       pointerClientY = event.clientY
       bounds = canvas.getBoundingClientRect()
       updatePointerTarget()
+      trackSweep(event.clientX, event.clientY)
+    }
+    // Lifting a finger ends its swipe, so the next one can fire again.
+    const onPointerUp = () => {
+      resetSweep()
     }
     const onPointerLeave = () => {
       pointerKnown = false
       targetPresence = 0
+      resetSweep()
       requestRender()
     }
     // Touch has no hover, so on a phone the ripple has nothing to follow.
@@ -513,7 +572,12 @@ export function ShaderBackground({
     // it fade — one ripple per tap rather than a cursor trail.
     let tapFade = 0
     const onPointerDown = (event: PointerEvent) => {
-      if (event.pointerType === "mouse") return
+      // A mouse is already hovering, so its ripple needs nothing placed; the
+      // press is only worth reporting.
+      if (event.pointerType === "mouse") {
+        onTapRef.current?.()
+        return
+      }
       window.clearTimeout(tapFade)
       pointerKnown = true
       pointerClientX = event.clientX
@@ -523,6 +587,8 @@ export function ShaderBackground({
       // ripple straight to the touch point instead of sliding in from wherever
       // it last sat.
       updatePointerTarget()
+      resetSweep()
+      trackSweep(event.clientX, event.clientY)
       onTapRef.current?.()
       tapFade = window.setTimeout(() => {
         targetPresence = 0
@@ -539,6 +605,7 @@ export function ShaderBackground({
     if (UNIFORMS.cursorEnabled) {
       window.addEventListener("pointermove", onPointerMove, { passive: true })
       canvas.addEventListener("pointerdown", onPointerDown, { passive: true })
+      window.addEventListener("pointerup", onPointerUp, { passive: true })
       window.addEventListener("pointercancel", onPointerLeave)
       window.addEventListener("scroll", updateLayout, true)
       window.addEventListener("blur", onPointerLeave)
@@ -621,6 +688,7 @@ export function ShaderBackground({
         window.clearTimeout(tapFade)
         canvas.removeEventListener("pointerdown", onPointerDown)
         window.removeEventListener("pointermove", onPointerMove)
+        window.removeEventListener("pointerup", onPointerUp)
         window.removeEventListener("pointercancel", onPointerLeave)
         window.removeEventListener("scroll", updateLayout, true)
         window.removeEventListener("blur", onPointerLeave)

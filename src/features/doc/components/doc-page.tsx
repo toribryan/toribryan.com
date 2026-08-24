@@ -2,16 +2,42 @@ import type { Route } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ExternalLinkIcon } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon } from "lucide-react"
 
 import { cleanTableOfContents } from "@/lib/toc"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/base/ui/tooltip"
 import { Prose } from "@/components/base/ui/typography"
-import { LinkButton } from "@/components/mdx-link-button"
 import { MDX } from "@/components/mdx"
+import { LinkButton } from "@/components/mdx-link-button"
 import { TOCInline } from "@/components/toc-inline"
+import {
+  COMPONENTS_CATEGORY,
+  findNeighbour,
+  getDocsByCategory,
+  LATEST_CATEGORY,
+  WORK_CATEGORY,
+} from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
+
+/** What the neighbour tooltips call the thing you're moving between. */
+const NEIGHBOUR_NOUN: Record<string, string> = {
+  [LATEST_CATEGORY]: "post",
+  [WORK_CATEGORY]: "project",
+  [COMPONENTS_CATEGORY]: "doc",
+}
+
+/** Route each category's docs live under, for the neighbour links. */
+const CATEGORY_BASE_PATH: Record<string, string> = {
+  [LATEST_CATEGORY]: "/latest",
+  [WORK_CATEGORY]: "/work",
+  [COMPONENTS_CATEGORY]: "/components",
+}
 
 /**
  * Shared shell for every MDX doc route — component libraries, Latest posts and
@@ -29,6 +55,17 @@ export async function DocPage({
   const toc = cleanTableOfContents(await getTableOfContents(doc.content))
   const m = doc.metadata
   const liveLabel = m.liveLabel ?? "Visit site"
+
+  // Walk the doc's own category, in the order its list page shows. Docs that
+  // point their row elsewhere or aren't readable yet are skipped: an arrow
+  // should never land a reader on a redirect or a placeholder.
+  const category = m.category ?? ""
+  const siblings = getDocsByCategory(category).filter(
+    (sibling) => !sibling.metadata.href && !sibling.metadata.comingSoon
+  )
+  const { previous, next } = findNeighbour(siblings, doc.slug)
+  const noun = NEIGHBOUR_NOUN[category] ?? "page"
+  const basePath = CATEGORY_BASE_PATH[category]
 
   const facts = [
     ["Company", m.company],
@@ -64,20 +101,40 @@ export async function DocPage({
           }
         />
 
-        {m.liveUrl && (
-          <Button
-            className="h-7 gap-2"
-            variant="outline"
-            size="sm"
-            nativeButton={false}
-            render={
-              <a href={m.liveUrl} target="_blank" rel="noopener">
-                {liveLabel}
-                <ExternalLinkIcon />
-              </a>
-            }
-          />
-        )}
+        <div className="flex items-center gap-2">
+          {m.liveUrl && (
+            <Button
+              className="h-7 gap-2"
+              variant="outline"
+              size="sm"
+              nativeButton={false}
+              render={
+                <a href={m.liveUrl} target="_blank" rel="noopener">
+                  {liveLabel}
+                  <ExternalLinkIcon />
+                </a>
+              }
+            />
+          )}
+
+          {basePath && previous && (
+            <NeighbourLink
+              doc={previous}
+              basePath={basePath}
+              label={`Previous ${noun}`}
+              icon={<ArrowLeftIcon />}
+            />
+          )}
+
+          {basePath && next && (
+            <NeighbourLink
+              doc={next}
+              basePath={basePath}
+              label={`Next ${noun}`}
+              icon={<ArrowRightIcon />}
+            />
+          )}
+        </div>
       </div>
 
       <h1 className="screen-line-bottom overflow-x-clip px-4 py-6 font-heading text-4xl font-medium tracking-normal text-balance">
@@ -179,5 +236,50 @@ export async function DocPage({
         {m.liveUrl && <LinkButton href={m.liveUrl}>{liveLabel}</LinkButton>}
       </Prose>
     </>
+  )
+}
+
+/**
+ * One step through the category, as an icon button with the destination's
+ * title in the tooltip. Icon-only keeps the header row from wrapping on a
+ * phone; the label rides along for screen readers.
+ */
+function NeighbourLink({
+  doc,
+  basePath,
+  label,
+  icon,
+}: {
+  doc: Doc
+  basePath: string
+  label: string
+  icon: React.ReactNode
+}) {
+  return (
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <Button
+            className="size-7"
+            variant="outline"
+            size="icon-sm"
+            nativeButton={false}
+            render={
+              <Link
+                href={`${basePath}/${doc.slug}` as Route}
+                aria-label={`${label}: ${doc.metadata.title}`}
+              >
+                {icon}
+              </Link>
+            }
+          />
+        }
+      />
+
+      <TooltipContent className="px-3 py-1.5">
+        <p className="font-medium">{label}</p>
+        <p className="text-background/70">{doc.metadata.title}</p>
+      </TooltipContent>
+    </Tooltip>
   )
 }

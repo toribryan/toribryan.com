@@ -11,11 +11,11 @@ import { SOCIAL } from "@/features/portfolio/data/social-links"
 import packageJson from "../../package.json"
 
 const INSPIRED_BY = [
-  "chanhdai.com",
-  "Tailwind CSS",
-  "shadcn/ui",
-  "Vercel",
-  "Geist",
+  { name: "chanhdai.com", href: "https://github.com/ncdai?tab=repositories" },
+  { name: "Tailwind CSS" },
+  { name: "shadcn/ui" },
+  { name: "Vercel" },
+  { name: "Geist" },
 ]
 
 // Not derived from `SITE_INFO.url`: that follows `NEXT_PUBLIC_APP_URL` and
@@ -103,7 +103,7 @@ export function SiteFooterCad() {
                 cells above, rather than dividing the padded width.
               */}
               <ol className="-mx-4 grid grid-cols-2 gap-x-px gap-y-0.5 font-sans md:grid-cols-4">
-                {INSPIRED_BY.map((name, index) => (
+                {INSPIRED_BY.map(({ name, href }, index) => (
                   <li className="flex gap-2 px-4" key={name}>
                     {/* Hidden: the list element already conveys the position. */}
                     <span
@@ -112,7 +112,18 @@ export function SiteFooterCad() {
                     >
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    {name}
+                    {href ? (
+                      <a
+                        className="link-underline"
+                        href={href}
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        {name}
+                      </a>
+                    ) : (
+                      name
+                    )}
                   </li>
                 ))}
               </ol>

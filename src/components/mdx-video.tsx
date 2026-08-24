@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils"
 
 /**
- * A short demo clip, looping and muted by default like an animated
- * screenshot. `controls` stays on so a reader can pause it or turn the sound
- * on if the source has any.
+ * A short demo clip, looping and muted like an animated screenshot. No
+ * `controls`: the chrome only appeared on hover, which put a scrub bar over
+ * the part of the clip a reader had just moved to look at.
  */
 export function Video({
   src,
@@ -24,7 +24,6 @@ export function Video({
         loop
         muted
         playsInline
-        controls
       />
 
       {caption && (

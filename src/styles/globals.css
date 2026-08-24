@@ -529,6 +529,64 @@
   }
 }
 
+/* Theme toggle, polygon effect. Vendored from
+   `@ncdai/theme-toggle-effect-polygon`, which ships as CSS only: the incoming
+   snapshot is revealed behind a diagonal clip-path, and the direction reverses
+   with the theme so light and dark wipe opposite ways. `ThemeToggle` supplies
+   the `startViewTransition` call and skips it where the API is missing. */
+@layer base {
+  ::view-transition-group(root) {
+    animation-duration: 0.7s;
+    animation-timing-function: var(--expo-out);
+  }
+
+  ::view-transition-old(root),
+  .dark::view-transition-old(root) {
+    animation: none;
+    animation-fill-mode: both;
+    z-index: -1;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: reveal-light;
+    animation-fill-mode: both;
+  }
+
+  .dark::view-transition-new(root) {
+    animation-name: reveal-dark;
+    animation-fill-mode: both;
+  }
+
+  @keyframes reveal-dark {
+    from {
+      clip-path: polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%);
+    }
+    to {
+      clip-path: polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%);
+    }
+  }
+
+  @keyframes reveal-light {
+    from {
+      clip-path: polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%);
+    }
+    to {
+      clip-path: polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%);
+    }
+  }
+
+  /* The wipe is decorative; a reader who asked for less motion gets the swap
+     without it. */
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(root),
+    ::view-transition-old(root),
+    ::view-transition-new(root),
+    .dark::view-transition-new(root) {
+      animation: none;
+    }
+  }
+}
+
 @layer components {
   [data-rehype-pretty-code-figure] {
     @apply relative my-[1.25em] rounded-xl bg-surface p-1 text-surface-foreground inset-ring-1 inset-ring-border/64;

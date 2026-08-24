@@ -1,5 +1,5 @@
-import type { Metadata } from "next"
-import { notFound } from "next/navigation"
+import type { Metadata, Route } from "next"
+import { notFound, redirect } from "next/navigation"
 import type { TechArticle, WithContext } from "schema-dts"
 
 import { JSON_LD_ID } from "@/config/json-ld"
@@ -83,6 +83,13 @@ export default async function Page({
 
   if (!doc) {
     notFound()
+  }
+
+  // A library whose story is told elsewhere has no page of its own. The doc
+  // still exists so the Components list can render a row for it; the route
+  // forwards to wherever that row points.
+  if (doc.metadata.href) {
+    redirect(doc.metadata.href as Route)
   }
 
   return (

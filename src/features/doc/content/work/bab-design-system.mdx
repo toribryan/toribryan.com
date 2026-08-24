@@ -32,11 +32,9 @@ This is the other half: the same product expressed as a library.
 
 ## The system
 
-<Embed
-  src="/storybook/bab/index.html"
-  title="Integrity Console: Storybook"
-  height={860}
-  caption="Storybook, embedded live. Open it full screen for the docs and a11y panels: the controls are cramped at this scale."
+<Video
+  src="/case-studies/the-system.mp4"
+  caption="The library in Storybook, component by component."
 />
 
 Base UI primitives, Tailwind v4, shadcn conventions, typeset in Geist. 40
@@ -128,7 +126,67 @@ the React build.
 }
 ```
 
-The full token reference lives on its own page: [Bab in Components](/components/bab).
+### Role pairs
+
+Student, instructor and admin each own a background/foreground pair. The chart
+series reuse the same hues, so a colour carries one meaning across the whole
+product rather than one meaning per view.
+
+| Role       | Background | Foreground |
+| ---------- | ---------- | ---------- |
+| Student    | `#fae0d1`  | `#b94513`  |
+| Instructor | `#dbeafe`  | `#1d4ed8`  |
+| Admin      | `#feeeaf`  | `#d97706`  |
+
+### Status
+
+| Token           | Value     | Use                                     |
+| --------------- | --------- | --------------------------------------- |
+| `--success`     | `#047857` | Resolved, healthy, within threshold     |
+| `--warning`     | `#b45309` | Approaching a threshold                 |
+| `--destructive` | `#e7000b` | Failed check, above threshold           |
+| `--readonly`    | `#778ba6` | Fields the agent can see but not change |
+
+### Inbox row states
+
+The one place the palette gets fussy, because three states have to be
+distinguishable at a glance down a long list. Unread reads _lighter_ than the
+ground; read reads a step darker; selected gets its own warm grey rather than
+borrowing `--sel`.
+
+| State    | Rest      | Hover     |
+| -------- | --------- | --------- |
+| Unread   | `#fdfcfc` | `#f4f0ef` |
+| Read     | `#e6e1e0` | `#dcd6d4` |
+| Selected | `#d2c8c6` | `#c7bab7` |
+
+### Type
+
+Geist Variable throughout: `--font-heading` is an alias of `--font-sans`, not a
+second family. Headings differentiate by weight and size against Tailwind's
+default scale; there is no bespoke scale to memorise.
+
+### Radius
+
+One base, everything else derived. Changing `--radius` reshapes the product.
+
+```css
+--radius: 0.75rem; /* lg */
+--radius-sm: calc(var(--radius) * 0.6);
+--radius-md: calc(var(--radius) * 0.8);
+--radius-xl: calc(var(--radius) * 1.4);
+--radius-2xl: calc(var(--radius) * 1.8);
+```
+
+### Elevation
+
+```css
+--shadow-card: 0 0 4px rgba(0, 0, 0, 0.15);
+```
+
+That is the entire elevation system. The content card is the only shadowed
+surface on a page; anything nested inside it uses `--surface-nested` with a
+hairline border. A second shadow is a bug.
 
 ## What I'd do next
 

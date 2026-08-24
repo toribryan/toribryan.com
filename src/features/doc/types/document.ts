@@ -15,6 +15,18 @@ export type DocMetadata = {
   /** Shows a "New" dot in list views. */
   new?: boolean
   updated?: boolean
+  /**
+   * Listed but not yet readable. The list renders the row as a disabled button
+   * with a "coming soon" popover instead of a link. The doc route still exists;
+   * this only governs how the list surfaces it.
+   */
+  comingSoon?: boolean
+  /**
+   * Sends the list row somewhere other than the doc's own route. Use it when
+   * another page is the better destination for a reader, e.g. a component
+   * library whose story is told by a case study.
+   */
+  href?: string
   /** Pins the doc to the top of its list, above the date-sorted rest. */
   pinned?: boolean
   /**

@@ -30,9 +30,6 @@ export const EXPERIENCES: Experience[] = [
         },
         employmentType: "Self-employed",
         icon: <CodeIcon />,
-        description: `- Ship production front-end to the SLV Technologies codebase: design systems and platform product design for Modern Care Homes and Iron Diamond Media.
-- Working daily in Next.js, React, Tailwind CSS, shadcn/ui, Base UI, Astro, and Storybook.
-- Designed and built [this portfolio site](/latest/portfolio-website).`,
         skills: [
           "Design Systems",
           "Design Engineering",
@@ -41,7 +38,6 @@ export const EXPERIENCES: Experience[] = [
           "Tailwind CSS",
           "Storybook",
           "Claude Code",
-          "Git",
         ],
       },
       {
@@ -62,6 +58,7 @@ export const EXPERIENCES: Experience[] = [
           "Product Design",
           "Web Design",
           "Information Architecture",
+          "Wireframing",
           "Brand Design",
           "UX Writing",
           "Figma",

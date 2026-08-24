@@ -87,8 +87,13 @@ constant-time `safeEqual` rather than `===`.
 ## Known gaps
 
 - No `/work` index route — cards link straight to `/work/[slug]`.
-- `src/features/doc/content/components/bab.mdx` is a scaffold: real structure,
-  placeholder token values and brand name.
+- A component doc can set `href` in frontmatter to say "my story is told
+  elsewhere". The Components list row links there, and `/components/[slug]`
+  redirects rather than rendering a page. `bab.mdx` uses this: its reference
+  lives in `content/work/bab-design-system.mdx`, and the file remains only so
+  the list has a row to render.
+- `comingSoon: true` renders a list row as a disabled button with a popover
+  instead of a link. `iron.mdx` and `modern.mdx` use it.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
