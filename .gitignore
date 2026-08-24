@@ -31,3 +31,10 @@ pnpm-debug.log*
 
 # Obsidian personal editor state
 .obsidian/
+.env*
+
+# This project installs with npm; package-lock.json is the lockfile Vercel
+# should use. A stray pnpm lockfile makes Vercel install with
+# `pnpm --frozen-lockfile` and fail the build when it drifts from package.json.
+pnpm-lock.yaml
+pnpm-workspace.yaml

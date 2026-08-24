@@ -1,5 +1,7 @@
 import dynamic from "next/dynamic"
 
+import { MOBILE_NAV } from "@/config/site"
+import { NavMobileBar } from "@/components/nav-mobile-bar"
 import { SiteFooterCad } from "@/components/site-footer-cad"
 import { SiteHeader } from "@/components/site-header"
 
@@ -24,6 +26,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="bg-background pb-[env(safe-area-inset-bottom,0)]" />
       </div>
       <ScrollToTop />
+      <NavMobileBar items={MOBILE_NAV} />
     </div>
   )
 }

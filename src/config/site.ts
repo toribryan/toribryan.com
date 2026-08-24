@@ -32,6 +32,13 @@ export const MOBILE_NAV: NavItem<Route>[] = [
     title: "Home",
     href: "/",
   },
+  {
+    title: "Projects",
+    // A section of the home page rather than a route of its own: there is no
+    // /work index, so the cards are only reachable from here. Cast because
+    // typed routes describe pathnames, not fragments.
+    href: "/#projects" as Route,
+  },
   ...MAIN_NAV,
 ]
 
