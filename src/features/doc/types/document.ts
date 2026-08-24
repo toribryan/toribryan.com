@@ -39,6 +39,8 @@ export type DocMetadata = {
   skills?: string[]
   /** Public URL for shipped work. */
   liveUrl?: string
+  /** Label for the `liveUrl` buttons. Defaults to "Visit site". */
+  liveLabel?: string
   /** Team or collaborators the work ran with. */
   team?: string
   /** Engagement type, e.g. "Proof of concept". */

@@ -16,9 +16,9 @@ skills:
   - "Base UI"
   - "Storybook"
 problem: "Test-takers who hit friction mid-exam needed an easy, accessible way to ask for help without leaving the exam. Support agents needed clear context into the test-taker's situation and a live communication channel to quickly provide actionable help."
-task: "Route test-taker conversations to a human in real time with session and exam context attached — where the test-taker is, exam settings, and what they were doing when they got stuck. That required deep consideration on the test-taker context panel, product/institution-aware suggestions, agent commands, and customizable performance insights."
-process: "The core decision was to route chat with session context attached — where the test-taker is, what they were doing when they got stuck — rather than a blank conversation an agent has to reconstruct by asking. Chat state was designed to persist through a paused exam, so a test-taker stepping away doesn't cost the agent their place in the thread."
-outcome: 'The majority of "I couldn''t finish because ___" tickets no longer exist — they''re resolved in-session, by an agent working from context instead of reconstructing it after the fact.'
+task: "Route test-taker conversations to a human in real time with session and exam context attached: where the test-taker is, exam settings, and what they were doing when they got stuck. That required deep consideration on the test-taker context panel, product/institution-aware suggestions, agent commands, and customizable performance insights."
+process: "The core decision was to route chat with session context attached (where the test-taker is, what they were doing when they got stuck) rather than a blank conversation an agent has to reconstruct by asking. Chat state was designed to persist through a paused exam, so a test-taker stepping away doesn't cost the agent their place in the thread."
+outcome: 'The majority of "I couldn''t finish because ___" tickets no longer exist: they''re resolved in-session, by an agent working from context instead of reconstructing it after the fact.'
 ---
 
 ## Guiding principles
@@ -34,7 +34,7 @@ four Contacts filters, four Settings pages, and a standalone Integrity Review.
 
 ## The prototype
 
-25 screens of the console as an agent works it — triaging the live queue,
+25 screens of the console as an agent works it: triaging the live queue,
 reading a conversation with the session context already attached, and closing a
 case. It's a clickthrough, not a build: vanilla HTML, CSS and JavaScript, so it
 loads instantly and every state is reachable by clicking rather than by seeding
@@ -42,7 +42,7 @@ data.
 
 <Embed
   src="/prototype/bab/index.html"
-  title="Integrity Console — 25-screen clickthrough"
+  title="Integrity Console: 25-screen clickthrough"
   caption="Scaled to fit the column. The console is laid out for 1180px and up, so open it full screen to work it properly."
 />
 
@@ -50,14 +50,14 @@ data.
 
 Three regions, blocked out before any of it had a visual language: the queue an
 agent works down, the thread they read, and the panel carrying the session
-context. The whole argument of the product is in the third one — everything else
+context. The whole argument of the product is in the third one: everything else
 is a chat client.
 
 <Figure
   src="/case-studies/support-dashboard-wireframe-inbox.webp"
   full="/case-studies/support-dashboard-wireframe-inbox-full.webp"
   alt="Low-fidelity wireframe of the agent inbox: a narrow icon rail, a conversation list, the thread, and a context panel"
-  caption="Agent Inbox — the three-column split that survived into the build."
+  caption="Agent Inbox: the three-column split that survived into the build."
 />
 
 <Figure
@@ -71,7 +71,7 @@ is a chat client.
   src="/case-studies/support-dashboard-wireframe-context.webp"
   full="/case-studies/support-dashboard-wireframe-context-full.webp"
   alt="Low-fidelity wireframe of the session context panel beside the conversation"
-  caption="Context Panel — what the agent reads instead of asking."
+  caption="Context Panel: what the agent reads instead of asking."
 />
 
 ## Sidenav explorations
@@ -84,7 +84,7 @@ carry before the queue stops being the thing they are looking at.
   src="/case-studies/support-dashboard-sidenav-concepts.webp"
   full="/case-studies/support-dashboard-sidenav-concepts-full.webp"
   alt="Six side navigation concepts side by side, ranging from a plain chat list to an icon rail with expandable Knowledge and Reports sections"
-  caption="Six variants in one sheet — open it full size, the detail doesn't survive this column."
+  caption="Six variants in one sheet: open it full size, the detail doesn't survive this column."
 />
 
 ## Inbox Screen
@@ -94,7 +94,7 @@ conversation thread, chat composer, and context panel.
 
 <Callout title="Embed pending">
   This section needs a region-picker embed in the shape of `<InboxRegions />`,
-  tabbing between the inbox's regions — not yet wired up with story IDs and tab
+  tabbing between the inbox's regions, not yet wired up with story IDs and tab
   labels.
 </Callout>
 
@@ -105,7 +105,7 @@ functionality in the future.
 
 <Callout title="Embed pending">
   This section needs a region-picker embed tabbing between the Knowledge
-  screen's regions — not yet wired up with story IDs and tab labels.
+  screen's regions, not yet wired up with story IDs and tab labels.
 </Callout>
 
 ## Reports, second pass
@@ -119,7 +119,7 @@ the product.
   src="/case-studies/support-dashboard-reports-overview.webp"
   full="/case-studies/support-dashboard-reports-overview-full.webp"
   alt="Reports overview with an overall volume growth line chart, new conversations by role, and flagged sessions by week"
-  caption="Overview — volume growth, conversations by role, flagged sessions."
+  caption="Overview: volume growth, conversations by role, flagged sessions."
 />
 
 <Figure
@@ -152,13 +152,13 @@ the product.
 
 ## The solution
 
-A chat that lives inside the exam UI and routes straight to a support agent —
+A chat that lives inside the exam UI and routes straight to a support agent,
 arriving with the context of where the test-taker is in their session, so the
 agent isn't starting from zero. It resolves in real time without pulling the
 test-taker out of the exam, and the thread persists if the session is paused, so
 stepping away doesn't cost the agent their place in the conversation.
 
-The whole console, live out of the design system's Storybook — the same code the
+The whole console, live out of the design system's Storybook: the same code the
 page composes, not a drawing of it. The picker brings one region forward and
 drops the rest to 20%, so each piece can be read without losing the page around
 it.
@@ -167,3 +167,5 @@ it.
 
 The same product exists as a component library, with the token layer written up
 in full: [Integrity Console Design System](/work/bab-design-system).
+
+<LinkButton href="/storybook/bab/index.html">Open Storybook</LinkButton>

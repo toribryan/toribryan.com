@@ -25,6 +25,7 @@ export function Embed({
   title,
   width = 1280,
   height = 820,
+  autoHeight = false,
   focusOptions,
   caption,
   className,
@@ -36,6 +37,16 @@ export function Embed({
   /** Logical viewport the frame is laid out at, before scaling. */
   width?: number
   height?: number
+  /**
+   * Measures the iframe's real content height and uses that instead of
+   * `height`, so the frame shrink-wraps the story instead of guessing a
+   * fixed size that either clips it (an internal scrollbar) or leaves empty
+   * ground below it. Only safe for same-origin embeds — the Storybook build
+   * under `/storybook/bab/`, served from this same app, is: `contentDocument`
+   * is reachable, unlike a true cross-origin iframe. `height` still applies
+   * as the size shown before the first measurement lands.
+   */
+  autoHeight?: boolean
   /**
    * Renders a picker above the frame, for embeds that can bring one region of
    * themselves forward. It sits outside the iframe deliberately: inside, it
@@ -53,6 +64,9 @@ export function Embed({
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [scale, setScale] = useState(1)
   const [focus, setFocus] = useState(focusOptions?.[0]?.value)
+  const [measuredHeight, setMeasuredHeight] = useState<number | null>(null)
+
+  const effectiveHeight = autoHeight && measuredHeight ? measuredHeight : height
 
   useEffect(() => {
     const el = frameRef.current
@@ -79,6 +93,45 @@ export function Embed({
   }
 
   useEffect(postFocus, [focus])
+
+  /**
+   * Re-measures on load and keeps watching: fonts and images finishing after
+   * `load` can still grow the content, and a stale height would bring the
+   * scrollbar right back.
+   */
+  useEffect(() => {
+    if (!autoHeight) return
+
+    const iframe = iframeRef.current
+    if (!iframe) return
+
+    let resizeObserver: ResizeObserver | undefined
+
+    const measure = () => {
+      const doc = iframe.contentDocument
+      if (!doc?.body) return
+      const next = Math.ceil(doc.documentElement.scrollHeight)
+      if (next > 0) setMeasuredHeight(next)
+    }
+
+    const attach = () => {
+      const doc = iframe.contentDocument
+      if (!doc?.body) return
+      measure()
+      resizeObserver = new ResizeObserver(measure)
+      resizeObserver.observe(doc.body)
+    }
+
+    if (iframe.contentDocument?.readyState === "complete") {
+      attach()
+    }
+
+    iframe.addEventListener("load", attach)
+    return () => {
+      iframe.removeEventListener("load", attach)
+      resizeObserver?.disconnect()
+    }
+  }, [autoHeight, src])
 
   return (
     <figure className={cn("not-prose my-8", className)}>
@@ -138,7 +191,7 @@ export function Embed({
         <div
           ref={frameRef}
           className="relative overflow-hidden bg-white"
-          style={{ height: height * scale }}
+          style={{ height: effectiveHeight * scale }}
         >
           <iframe
             ref={iframeRef}
@@ -147,7 +200,7 @@ export function Embed({
             title={title}
             loading="lazy"
             onLoad={postFocus}
-            style={{ width, height, transform: `scale(${scale})` }}
+            style={{ width, height: effectiveHeight, transform: `scale(${scale})` }}
           />
         </div>
       </div>

@@ -1,16 +1,196 @@
 ---
 title: "Design System Overhaul"
-description: "Placeholder — case study content coming soon."
+description: "A legacy system with 587 card variants and no semantic tokens, rebuilt: 37 components, a token architecture built from the ground up, and the governance to keep it healthy."
 image: "/cover-dsoverhaul.svg"
-createdAt: "2025-01-01"
-updatedAt: "2025-01-01"
+createdAt: "2025-11-01"
+updatedAt: "2026-08-23"
 company: "Proctorio"
-role: "Staff Designer"
-team: "Placeholder — team details coming soon."
-period: "Q4 2025"
-problem: "Placeholder — problem statement coming soon."
-task: "Placeholder — approach coming soon."
-process: "Placeholder — process notes coming soon."
+role: "Staff Designer, system owner"
+team: "Two engineers building, across three product suites"
+type: "Design System"
+period: "Q4 2025 – Q1 2026"
+skills:
+  - "Design Systems"
+  - "Design Tokens"
+  - "Governance"
+  - "Figma"
+  - "CSS"
+  - "Documentation"
+problem: "A legacy design system carrying years of accumulated habit: no semantic token layer, product logic baked into components, hundreds of variants nobody used, no shared property names between components, and no governance deciding what belonged in the system at all."
+task: "Modernize the system end to end and unify the design language across three product suites, without stopping the product work that depended on it."
+process: "Token architecture first, components second. Slots replaced attribute sprawl, written principles replaced case-by-case judgment, and governance ran as mentorship across the three suites rather than as a review gate."
+outcome: "37 components rebuilt, MVP in 60 days. Card variants down 94% (587 to 32) and button variants down 59% (1,160 to 480). The v2 Card shipped in 1.5 days against 2 weeks for v1."
 ---
 
-Placeholder — full write-up coming soon.
+## What I inherited
+
+The system worked, in the sense that people shipped with it. It had just never
+been told no.
+
+- **No semantic layer.** Tokens named for what they were rather than what they
+  meant, so nothing could be themed and every color decision was a lookup.
+- **Product logic inside components.** Components that knew which product they
+  were in. A component that knows that cannot be reused, only copied.
+- **Variants for hypothetical futures.** Hundreds of combinations nobody had
+  ever placed on a screen, each one a thing to maintain.
+- **No shared property vocab.** The same idea named three ways across three
+  components, so nothing you learned about one transferred to the next.
+- **Color that had never been contrast-checked.** Accessibility was a review step
+  at the end, when it was expensive, instead of a property of the palette.
+- **No governance.** No answer to "does this belong in the system", which is the
+  question that decides whether a design system stays one.
+
+## The variant math
+
+| Component | Before | After | Change |
+| --------- | -----: | ----: | -----: |
+| Button    |  1,160 |   480 |   −59% |
+| Card      |    587 |    32 |   −94% |
+
+587 card variants is not a card. It is every card anyone ever needed, frozen
+into one component, because the system had no way to compose a new one. The
+number is not a measure of thoroughness. It is a measure of how often people
+had to work around the thing that was supposed to help them.
+
+<StoryEmbed
+  id="case-study-design-system-overhaul--variant-math"
+  title="Variant math: every variant as one cell"
+  width="940"
+  height="550"
+  caption="One cell per variant that existed in the legacy library. Coloured cells survived the rebuild."
+/>
+
+Cutting it by 94% did not remove capability. It moved capability from variants
+into composition, which is where it can be recombined.
+
+The mechanism that produced the wall is worth naming, because it is the part
+that repeats on every project of this shape.
+
+<StoryEmbed
+  id="case-study-design-system-overhaul--attribute-sprawl"
+  title="Attribute sprawl: ten booleans, a thousand states"
+  width="940"
+  height="250"
+  caption="Ten booleans on one component. Nobody designed a thousand cards; the API did."
+/>
+
+## The token layer came first
+
+Nothing else was worth doing until the foundation could carry it, so the token
+architecture was rebuilt before a single component was touched.
+
+The new layer is semantic: tokens name their role, not their value. That is what
+makes the system theme aware, and it means a product can take a different visual
+treatment without any component knowing about it. Colors were contrast-checked
+as they were defined, so accessibility became a property of the palette instead
+of a thing to catch in review.
+
+<StoryEmbed
+  id="case-study-design-system-overhaul--token-architecture"
+  title="Token architecture: primitive, semantic, component"
+  width="940"
+  height="255"
+  caption="The legacy system had the top and bottom rows and nothing in between."
+/>
+
+Because the engineering org builds everything custom, this also meant writing
+the CSS framework the tokens live in rather than adopting one. That turned out
+to be the advantage: the framework speaks the same names the Figma library does,
+so the two artefacts describe one system instead of two.
+
+The semantic layer is what makes a theme a data change rather than a code change.
+
+<StoryEmbed
+  id="case-study-design-system-overhaul--theme-aware"
+  title="Theme aware: one composition, two themes"
+  width="940"
+  height="265"
+  caption="Identical markup on both sides. Five semantic values reassigned on a wrapper."
+/>
+
+## Slots instead of attributes
+
+The old components absorbed every new requirement as another attribute. That is
+how you get 587 variants: each new need is a new switch, and switches multiply.
+
+Slotting inverts it. A component defines the structure and holds space for
+whatever belongs there, so a new requirement is a composition rather than a
+modification. Designers get flexibility without a fork, engineers get the same
+flexibility in code, and the component stops growing every time the product
+learns something new.
+
+<StoryEmbed
+  id="case-study-design-system-overhaul--composition"
+  title="Composition: three jobs, one Card"
+  width="940"
+  height="340"
+  caption="Three different jobs, one Card. No new variant, no new flag, no product logic."
+/>
+
+## Principles that outlive the refactor
+
+A refactor fixes the system as it is today. Principles are what stop it from
+sliding back, so I wrote them down and enforced them.
+
+<Steps>
+
+<Step>
+  **No product logic in components.** If a component knows which product it is
+  in, it is not a system component. That knowledge belongs in the composition.
+</Step>
+
+<Step>
+  **Do not build for hypothetical use.** Attributes and variants earn their place
+  by being used, not by being imaginable.
+</Step>
+
+<Step>
+  **Start from the foundation, and let the foundation grow.** Designers begin
+  from the shared system rather than from a blank file. But the system is not
+  closed: when a real pattern shows up repeatedly in a product, it gets
+  acknowledged and absorbed.
+</Step>
+
+</Steps>
+
+## Documentation was a symptom
+
+The old handoff documentation was long, detailed and enormously expensive, in
+both directions: slow for designers to write and slow for engineers to read.
+
+The reason was structural. Engineering was not working in Figma Dev Mode, so
+design compensated by writing everything a component could have communicated on
+its own. The documentation was doing the design system's job.
+
+Fixing the system fixed most of the document. What remained became the starting
+point for the [agentic handoff pipeline](/work/agentic-design-system), which
+took spec production from days to minutes.
+
+## Governance is the deliverable
+
+Owning a design system is not owning a Figma library. It is owning the answer
+to what belongs in it, and that answer has to be given repeatedly, in public,
+to three product suites at once.
+
+In practice that meant governing component and slot usage across design and
+engineering, mentoring designers through the system rather than gatekeeping
+their work, and keeping the Figma library aligned with the codebase so neither
+one drifted into being decorative.
+
+The design language followed from that. Three product suites converged on one
+visual system not because a document declared it, but because they were building
+from the same foundation and the foundation was maintained.
+
+## What it bought
+
+What changed is the foundation: it answers questions instead of raising them.
+That is the argument for doing this work, and it is the one I would lead with
+next time.
+
+## What I'd do next
+
+- Wire Code Connect so the Figma components point at their implementations
+  rather than at a written description of them.
+- Publish the governance principles as part of the library itself, so the rules
+  arrive with the components instead of living in a separate document.
+- Instrument adoption, so "is this being used" is measured rather than observed.

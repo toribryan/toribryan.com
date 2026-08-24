@@ -588,13 +588,13 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">5/37 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">37/37 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">1/53 story errors</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">7/39 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">39/39 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">1/59 story errors</a></div>
   </div>
 </header>
 <main>
   <div class="wrap">
     <div class="note info" style="margin-bottom: 16px;">
-            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>0.8s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
+            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>0.5s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
             <pre><code>typescript: {
   reactDocgen: 'react-docgen-typescript',
 }</code></pre>
@@ -692,6 +692,214 @@
 </article>
 <article
   class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="AgenticDesignSystem">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> AgenticDesignSystem</h2>
+      <div class="badges">
+        <label for="c-1-case-study-agentic-design-system-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-1-case-study-agentic-design-system-info" class="badge info as-toggle">2 infos</label>
+        <label for="c-1-case-study-agentic-design-system-stories" class="badge ok as-toggle">1 story</label>
+        
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/case-study/AgenticDesignSystem.stories.tsx">case-study-agentic-design-system · ./src/case-study/AgenticDesignSystem.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-1-case-study-agentic-design-system-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-1-case-study-agentic-design-system-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-1-case-study-agentic-design-system-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
+   9 |  * embed contract, so renaming one breaks its embed.
+  10 |  */
+&gt; 11 | const meta = {
+     | ^
+  12 |   title: &quot;Case Study/Agentic Design System&quot;,
+  13 |   tags: [&quot;!dev&quot;, &quot;!autodocs&quot;, &quot;!test&quot;],
+  14 |   parameters: {
+
+./src/case-study/AgenticDesignSystem.stories.tsx:
+import type { Meta, StoryObj } from &quot;@storybook/react-vite&quot;
+
+/**
+ * Visual companions to the Agentic Design System case study on toribryan.com.
+ *
+ * Same tag treatment as the Design System Overhaul stories: hidden from the
+ * sidebar so they do not appear inside the Integrity Console&#39;s embedded
+ * Storybook, but still reachable by `iframe.html?id=...`. Story names are the
+ * embed contract, so renaming one breaks its embed.
+ */
+const meta = {
+  title: &quot;Case Study/Agentic Design System&quot;,
+  tags: [&quot;!dev&quot;, &quot;!autodocs&quot;, &quot;!test&quot;],
+  parameters: {
+    layout: &quot;padded&quot;,
+  },
+} satisfies Meta
+
+export default meta
+type Story = StoryObj&lt;typeof meta&gt;
+
+function Panel({
+  label,
+  tone,
+  code,
+  note,
+}: {
+  label: string
+  tone: &quot;bad&quot; | &quot;good&quot;
+  code: string
+  note: string
+}) {
+  return (
+    &lt;section className=&quot;flex flex-col gap-2&quot;&gt;
+      &lt;header className=&quot;flex items-center gap-2&quot;&gt;
+        &lt;span
+          className={`size-2 shrink-0 rounded-[2px] ${
+            tone === &quot;bad&quot; ? &quot;bg-border&quot; : &quot;bg-primary&quot;
+          }`}
+          aria-hidden
+        /&gt;
+        &lt;h3 className=&quot;text-sm font-medium&quot;&gt;{label}&lt;/h3&gt;
+      &lt;/header&gt;
+
+      &lt;pre className=&quot;overflow-x-auto rounded-lg bg-surface-nested p-4 font-mono text-[11px] leading-relaxed&quot;&gt;
+        {code}
+      &lt;/pre&gt;
+
+      &lt;p className=&quot;text-xs leading-relaxed text-muted-foreground&quot;&gt;{note}&lt;/p&gt;
+    &lt;/section&gt;
+  )
+}
+
+/**
+ * The finding, in the smallest honest form: the same design and the same
+ * prompt, with and without the component carrying its own usage contract.
+ */
+export const InferenceVsLookup: Story = {
+  render: () =&gt; (
+    &lt;div className=&quot;flex max-w-[880px] flex-col gap-5&quot;&gt;
+      &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+        Same design. Same prompt.
+      &lt;/p&gt;
+
+      &lt;div className=&quot;grid gap-6 sm:grid-cols-2&quot;&gt;
+        &lt;Panel
+          tone=&quot;bad&quot;
+          label=&quot;Without usage instructions&quot;
+          code={`&lt;div
+  className=&quot;rounded-md px-4 py-3
+    bg-[#008b8b] text-white
+    text-sm font-medium&quot;
+&gt;
+  Save changes
+&lt;/div&gt;`}
+          note=&quot;Rebuilt from scratch. The hex is hardcoded, the radius is invented, and nothing links back to the system. It looks right and is unmaintainable.&quot;
+        /&gt;
+
+        &lt;Panel
+          tone=&quot;good&quot;
+          label=&quot;With Code Connect&quot;
+          code={`&lt;Button variant=&quot;primary&quot; size=&quot;sm&quot;&gt;
+  Save changes
+&lt;/Button&gt;`}
+          note=&quot;Resolved to the component. Variants and tokens arrive with it, so a rebrand reaches this automatically.&quot;
+        /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  ),
+}
+</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">Specify an @import jsdoc tag on your component or your stories meta such as @import import { AgenticDesignSystem } from &#39;my-design-system&#39;;</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Inference Vs Lookup</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The finding, in the smallest honest form: the same design and the same
+prompt, with and without the component carrying its own usage contract.</div>
+              <pre><code>const InferenceVsLookup = () =&gt; (
+  &lt;div className=&quot;flex max-w-[880px] flex-col gap-5&quot;&gt;
+    &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+      Same design. Same prompt.
+    &lt;/p&gt;
+
+    &lt;div className=&quot;grid gap-6 sm:grid-cols-2&quot;&gt;
+      &lt;Panel
+        tone=&quot;bad&quot;
+        label=&quot;Without usage instructions&quot;
+        code={`&lt;div
+className=&quot;rounded-md px-4 py-3
+  bg-[#008b8b] text-white
+  text-sm font-medium&quot;
+&gt;
+Save changes
+&lt;/div&gt;`}
+        note=&quot;Rebuilt from scratch. The hex is hardcoded, the radius is invented, and nothing links back to the system. It looks right and is unmaintainable.&quot;
+      /&gt;
+
+      &lt;Panel
+        tone=&quot;good&quot;
+        label=&quot;With Code Connect&quot;
+        code={`&lt;Button variant=&quot;primary&quot; size=&quot;sm&quot;&gt;
+Save changes
+&lt;/Button&gt;`}
+        note=&quot;Resolved to the component. Variants and tokens arrive with it, so a rebrand reaches this automatically.&quot;
+      /&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+    
+  </div>
+</article>
+<article
+  class="card 
   no-error 
   has-info 
   no-story-error
@@ -702,9 +910,9 @@
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> Avatar</h2>
       <div class="badges">
-        <label for="c-1-ui-avatar-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-1-ui-avatar-info" class="badge info as-toggle">1 info</label>
-        <label for="c-1-ui-avatar-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-2-ui-avatar-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-2-ui-avatar-info" class="badge info as-toggle">1 info</label>
+        <label for="c-2-ui-avatar-stories" class="badge ok as-toggle">2 stories</label>
         
         
       </div>
@@ -717,11 +925,11 @@
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-1-ui-avatar-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-1-ui-avatar-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-2-ui-avatar-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-2-ui-avatar-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-1-ui-avatar-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-2-ui-avatar-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -740,7 +948,7 @@
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\components\ui\avatar.tsx::Avatar</code></pre>
+            <pre><code>Component: src/components/ui/avatar.tsx::Avatar</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>size?: &quot;default&quot; | &quot;sm&quot; | &quot;lg&quot; = &quot;default&quot;</code></pre>
           </div>
@@ -802,9 +1010,9 @@
     <div class="title">
       <h2><span class="status-dot dot-err"></span> Badge</h2>
       <div class="badges">
-        <label for="c-2-ui-badge-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-2-ui-badge-info" class="badge info as-toggle">1 info</label>
-        <label for="c-2-ui-badge-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-3-ui-badge-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-3-ui-badge-info" class="badge info as-toggle">1 info</label>
+        <label for="c-3-ui-badge-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -816,9 +1024,9 @@
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-2-ui-badge-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-2-ui-badge-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-2-ui-badge-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-3-ui-badge-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-3-ui-badge-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-3-ui-badge-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -829,9 +1037,9 @@
           
     <div class="note err">
       <div class="note-title">Prop type error</div>
-      <div class="note-body"><pre><code>File: C:\Users\torib\bab\design-system\src\components\ui\badge.tsx
+      <div class="note-body"><pre><code>File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/badge.tsx
 Error:
-&quot;.&quot; is not exported under no conditions from package C:\Users\torib\bab\design-system\node_modules\class-variance-authority (see exports field in C:\Users\torib\bab\design-system\node_modules\class-variance-authority\package.json)
+&quot;.&quot; is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority/package.json)
 You can debug your component file in this playground: https://react-docgen.dev/playground
 Code:
 import { mergeProps } from &quot;@base-ui/react/merge-props&quot;
@@ -952,9 +1160,9 @@ export { Badge, badgeVariants }
     <div class="title">
       <h2><span class="status-dot dot-err"></span> Button</h2>
       <div class="badges">
-        <label for="c-3-ui-button-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-3-ui-button-info" class="badge info as-toggle">1 info</label>
-        <label for="c-3-ui-button-stories" class="badge ok as-toggle">7 stories</label>
+        <label for="c-4-ui-button-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-4-ui-button-info" class="badge info as-toggle">1 info</label>
+        <label for="c-4-ui-button-stories" class="badge ok as-toggle">7 stories</label>
         
         
       </div>
@@ -966,9 +1174,9 @@ export { Badge, badgeVariants }
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-3-ui-button-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-3-ui-button-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-3-ui-button-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-4-ui-button-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-4-ui-button-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-4-ui-button-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -979,9 +1187,9 @@ export { Badge, badgeVariants }
           
     <div class="note err">
       <div class="note-title">Prop type error</div>
-      <div class="note-body"><pre><code>File: C:\Users\torib\bab\design-system\src\components\ui\button.tsx
+      <div class="note-body"><pre><code>File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/button.tsx
 Error:
-&quot;.&quot; is not exported under no conditions from package C:\Users\torib\bab\design-system\node_modules\class-variance-authority (see exports field in C:\Users\torib\bab\design-system\node_modules\class-variance-authority\package.json)
+&quot;.&quot; is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority/package.json)
 You can debug your component file in this playground: https://react-docgen.dev/playground
 Code:
 import { Button as ButtonPrimitive } from &quot;@base-ui/react/button&quot;
@@ -1156,9 +1364,9 @@ export { Button, buttonVariants }
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> Card</h2>
       <div class="badges">
-        <label for="c-4-ui-card-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-4-ui-card-info" class="badge info as-toggle">1 info</label>
-        <label for="c-4-ui-card-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-5-ui-card-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-5-ui-card-info" class="badge info as-toggle">1 info</label>
+        <label for="c-5-ui-card-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -1171,11 +1379,11 @@ export { Button, buttonVariants }
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-4-ui-card-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-4-ui-card-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-5-ui-card-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-5-ui-card-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-4-ui-card-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-5-ui-card-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -1194,7 +1402,7 @@ export { Button, buttonVariants }
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\components\ui\card.tsx::Card</code></pre>
+            <pre><code>Component: src/components/ui/card.tsx::Card</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>size?: &quot;default&quot; | &quot;sm&quot; = &quot;default&quot;</code></pre>
           </div>
@@ -1262,8 +1470,8 @@ export { Button, buttonVariants }
       <h2><span class="status-dot dot-ok"></span> ChatHeaderRegion</h2>
       <div class="badges">
         
-        <label for="c-5-inbox-chatheader-info" class="badge info as-toggle">1 info</label>
-        <label for="c-5-inbox-chatheader-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-6-inbox-chatheader-info" class="badge info as-toggle">1 info</label>
+        <label for="c-6-inbox-chatheader-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -1276,8 +1484,8 @@ export { Button, buttonVariants }
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-5-inbox-chatheader-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-5-inbox-chatheader-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-6-inbox-chatheader-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-6-inbox-chatheader-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -1333,8 +1541,8 @@ export { Button, buttonVariants }
       <h2><span class="status-dot dot-ok"></span> Command</h2>
       <div class="badges">
         
-        <label for="c-6-ui-command-info" class="badge info as-toggle">1 info</label>
-        <label for="c-6-ui-command-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-7-ui-command-info" class="badge info as-toggle">1 info</label>
+        <label for="c-7-ui-command-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -1347,8 +1555,8 @@ export { Button, buttonVariants }
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-6-ui-command-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-6-ui-command-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-7-ui-command-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-7-ui-command-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -1435,8 +1643,8 @@ export { Button, buttonVariants }
       <h2><span class="status-dot dot-ok"></span> ComposerRegion</h2>
       <div class="badges">
         
-        <label for="c-7-inbox-composer-info" class="badge info as-toggle">1 info</label>
-        <label for="c-7-inbox-composer-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-8-inbox-composer-info" class="badge info as-toggle">1 info</label>
+        <label for="c-8-inbox-composer-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -1449,8 +1657,8 @@ export { Button, buttonVariants }
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-7-inbox-composer-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-7-inbox-composer-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-8-inbox-composer-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-8-inbox-composer-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -1506,8 +1714,8 @@ export { Button, buttonVariants }
       <h2><span class="status-dot dot-ok"></span> ConversationListRegion</h2>
       <div class="badges">
         
-        <label for="c-8-inbox-conversationlist-info" class="badge info as-toggle">1 info</label>
-        <label for="c-8-inbox-conversationlist-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-9-inbox-conversationlist-info" class="badge info as-toggle">1 info</label>
+        <label for="c-9-inbox-conversationlist-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -1520,8 +1728,8 @@ export { Button, buttonVariants }
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-8-inbox-conversationlist-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-8-inbox-conversationlist-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-9-inbox-conversationlist-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-9-inbox-conversationlist-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -1566,6 +1774,716 @@ export { Button, buttonVariants }
 </article>
 <article
   class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="DesignSystemOverhaul">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> DesignSystemOverhaul</h2>
+      <div class="badges">
+        <label for="c-10-case-study-design-system-overhaul-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-10-case-study-design-system-overhaul-info" class="badge info as-toggle">1 info</label>
+        <label for="c-10-case-study-design-system-overhaul-stories" class="badge ok as-toggle">5 stories</label>
+        
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/case-study/DesignSystemOverhaul.stories.tsx">case-study-design-system-overhaul · ./src/case-study/DesignSystemOverhaul.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-10-case-study-design-system-overhaul-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-10-case-study-design-system-overhaul-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-10-case-study-design-system-overhaul-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
+  20 |  * keep story names stable: renaming one changes its id and breaks the embed.
+  21 |  */
+&gt; 22 | const meta = {
+     | ^
+  23 |   title: &quot;Case Study/Design System Overhaul&quot;,
+  24 |   /**
+  25 |    * `!dev` keeps these out of the Storybook sidebar. They are diagrams for a
+
+./src/case-study/DesignSystemOverhaul.stories.tsx:
+import type { Meta, StoryObj } from &quot;@storybook/react-vite&quot;
+
+import { Badge } from &quot;../components/ui/badge&quot;
+import { Button } from &quot;../components/ui/button&quot;
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from &quot;../components/ui/card&quot;
+
+/**
+ * Visual companions to the Design System Overhaul case study on toribryan.com.
+ *
+ * These are not console components. They are diagrams that happen to be built
+ * from the system, so the thing making the argument is the thing being argued
+ * about. Each export is embedded individually via `&lt;StoryEmbed id=&quot;...&quot; /&gt;`, so
+ * keep story names stable: renaming one changes its id and breaks the embed.
+ */
+const meta = {
+  title: &quot;Case Study/Design System Overhaul&quot;,
+  /**
+   * `!dev` keeps these out of the Storybook sidebar. They are diagrams for a
+   * different case study, and the Integrity Console write-up embeds this
+   * Storybook&#39;s full UI, so without this they would show up in its component
+   * library. Direct `iframe.html?id=...` embedding still works.
+   */
+  tags: [&quot;!dev&quot;, &quot;!autodocs&quot;, &quot;!test&quot;],
+  parameters: {
+    layout: &quot;padded&quot;,
+  },
+} satisfies Meta
+
+export default meta
+type Story = StoryObj&lt;typeof meta&gt;
+
+/**
+ * A wall of cells, one per variant, with the survivors called out.
+ *
+ * `pct` is passed in rather than derived: 587 → 32 is a 94.5% cut, and
+ * rounding it here would print 95% against the 94% quoted everywhere else.
+ */
+function VariantWall({
+  total,
+  kept,
+  pct,
+  cell,
+  gap,
+  columns,
+  label,
+}: {
+  total: number
+  kept: number
+  pct: number
+  cell: number
+  gap: number
+  columns: number
+  label: string
+}) {
+  // Pin the header and legend to the wall&#39;s width so the three align.
+  const width = columns * (cell + gap) - gap
+
+  return (
+    &lt;section className=&quot;flex flex-col gap-3&quot; style={{ width }}&gt;
+      &lt;header className=&quot;flex items-baseline justify-between gap-4&quot;&gt;
+        &lt;h3 className=&quot;text-sm font-medium&quot;&gt;{label}&lt;/h3&gt;
+        &lt;p className=&quot;font-mono text-xs text-muted-foreground tabular-nums&quot;&gt;
+          {total.toLocaleString()} → {kept} ({pct}% removed)
+        &lt;/p&gt;
+      &lt;/header&gt;
+
+      &lt;div
+        aria-hidden
+        className=&quot;grid&quot;
+        style={{
+          gap,
+          gridTemplateColumns: `repeat(${columns}, ${cell}px)`,
+        }}
+      &gt;
+        {Array.from({ length: total }, (_, i) =&gt; (
+          &lt;span
+            key={i}
+            className={
+              i &lt; kept
+                ? &quot;rounded-[1px] bg-primary&quot;
+                : &quot;rounded-[1px] bg-muted-foreground/25&quot;
+            }
+            style={{ width: cell, height: cell }}
+          /&gt;
+        ))}
+      &lt;/div&gt;
+
+      &lt;p className=&quot;text-xs text-muted-foreground&quot;&gt;
+        &lt;span className=&quot;inline-block size-2 translate-y-[1px] rounded-[1px] bg-primary&quot; /&gt;{&quot; &quot;}
+        kept
+        &lt;span className=&quot;mx-2 text-muted-foreground/40&quot;&gt;|&lt;/span&gt;
+        &lt;span className=&quot;inline-block size-2 translate-y-[1px] rounded-[1px] bg-muted-foreground/25&quot; /&gt;{&quot; &quot;}
+        removed
+      &lt;/p&gt;
+    &lt;/section&gt;
+  )
+}
+
+/**
+ * The headline number, drawn rather than stated. Every cell is one variant that
+ * existed in the legacy library; the coloured ones are what survived.
+ */
+export const VariantMath: Story = {
+  render: () =&gt; (
+    &lt;div className=&quot;flex flex-col gap-8&quot;&gt;
+      &lt;VariantWall
+        label=&quot;Card&quot;
+        total={587}
+        kept={32}
+        pct={94}
+        cell={14}
+        gap={3}
+        columns={52}
+      /&gt;
+      &lt;VariantWall
+        label=&quot;Button&quot;
+        total={1160}
+        kept={480}
+        pct={59}
+        cell={10}
+        gap={2}
+        columns={73}
+      /&gt;
+    &lt;/div&gt;
+  ),
+}
+
+/**
+ * Why the wall got that big: each new requirement arrived as another switch,
+ * and switches multiply.
+ */
+export const AttributeSprawl: Story = {
+  render: () =&gt; {
+    const flags = [
+      &quot;hasIcon&quot;,
+      &quot;hasBadge&quot;,
+      &quot;hasFooter&quot;,
+      &quot;isCompact&quot;,
+      &quot;isElevated&quot;,
+      &quot;isSelectable&quot;,
+      &quot;showsMeta&quot;,
+      &quot;reportVariant&quot;,
+      &quot;inboxVariant&quot;,
+      &quot;adminVariant&quot;,
+    ]
+
+    return (
+      &lt;div className=&quot;flex max-w-[900px] flex-col gap-6&quot;&gt;
+        &lt;div className=&quot;grid gap-6 sm:grid-cols-2&quot;&gt;
+          &lt;div className=&quot;flex flex-col gap-3&quot;&gt;
+            &lt;h3 className=&quot;text-sm font-medium&quot;&gt;One component, ten switches&lt;/h3&gt;
+            &lt;ul className=&quot;flex flex-col gap-1 font-mono text-xs&quot;&gt;
+              {flags.map((flag) =&gt; (
+                &lt;li key={flag} className=&quot;flex items-baseline gap-1&quot;&gt;
+                  &lt;span className=&quot;text-foreground&quot;&gt;{flag}&lt;/span&gt;
+                  &lt;span className=&quot;text-muted-foreground&quot;&gt;: boolean&lt;/span&gt;
+                &lt;/li&gt;
+              ))}
+            &lt;/ul&gt;
+          &lt;/div&gt;
+
+          &lt;div className=&quot;flex flex-col justify-center gap-3 rounded-lg bg-surface-nested p-5&quot;&gt;
+            &lt;p className=&quot;font-mono text-xs text-muted-foreground&quot;&gt;
+              2&lt;sup&gt;10&lt;/sup&gt; = 1,024 reachable states
+            &lt;/p&gt;
+            &lt;p className=&quot;text-sm leading-relaxed&quot;&gt;
+              Nobody designed a thousand cards. The combinations were a
+              by-product of the API, and every one of them was a thing to
+              maintain, document and scroll past.
+            &lt;/p&gt;
+            &lt;p className=&quot;text-sm leading-relaxed text-muted-foreground&quot;&gt;
+              The last three flags are the real tell: a component that knows
+              which product it is in cannot be reused, only copied.
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    )
+  },
+}
+
+/**
+ * The replacement. One structure, holding space for whatever belongs there, so
+ * a new requirement is a composition rather than a modification.
+ */
+export const Composition: Story = {
+  render: () =&gt; (
+    &lt;div className=&quot;flex max-w-[900px] flex-col gap-5&quot;&gt;
+      &lt;p className=&quot;max-w-[60ch] text-sm leading-relaxed text-muted-foreground&quot;&gt;
+        Three different jobs, one Card. Nothing below required a new variant, a
+        new flag, or a component that knows which product it is rendering in.
+      &lt;/p&gt;
+
+      &lt;div className=&quot;grid gap-4 sm:grid-cols-3&quot;&gt;
+        &lt;Card&gt;
+          &lt;CardHeader&gt;
+            &lt;CardTitle&gt;Escalated&lt;/CardTitle&gt;
+            &lt;CardDescription&gt;Last 7 days&lt;/CardDescription&gt;
+          &lt;/CardHeader&gt;
+          &lt;CardContent&gt;
+            &lt;p className=&quot;font-mono text-3xl tabular-nums&quot;&gt;14&lt;/p&gt;
+          &lt;/CardContent&gt;
+        &lt;/Card&gt;
+
+        &lt;Card&gt;
+          &lt;CardHeader&gt;
+            &lt;CardTitle&gt;Room scan&lt;/CardTitle&gt;
+            &lt;CardDescription&gt;Failures by cause&lt;/CardDescription&gt;
+          &lt;/CardHeader&gt;
+          &lt;CardContent className=&quot;flex flex-wrap gap-1.5&quot;&gt;
+            &lt;Badge&gt;Lighting&lt;/Badge&gt;
+            &lt;Badge variant=&quot;secondary&quot;&gt;Angle&lt;/Badge&gt;
+            &lt;Badge variant=&quot;secondary&quot;&gt;Incomplete&lt;/Badge&gt;
+          &lt;/CardContent&gt;
+        &lt;/Card&gt;
+
+        &lt;Card&gt;
+          &lt;CardHeader&gt;
+            &lt;CardTitle&gt;Integrity review&lt;/CardTitle&gt;
+            &lt;CardDescription&gt;3 sessions flagged&lt;/CardDescription&gt;
+          &lt;/CardHeader&gt;
+          &lt;CardContent&gt;
+            &lt;p className=&quot;text-sm text-muted-foreground&quot;&gt;
+              Awaiting instructor decision.
+            &lt;/p&gt;
+          &lt;/CardContent&gt;
+          &lt;CardFooter&gt;
+            &lt;Button size=&quot;sm&quot;&gt;Open queue&lt;/Button&gt;
+          &lt;/CardFooter&gt;
+        &lt;/Card&gt;
+      &lt;/div&gt;
+
+      &lt;p className=&quot;max-w-[60ch] text-xs text-muted-foreground&quot;&gt;
+        Slots move capability out of variants and into composition, which is the
+        only place it can be recombined.
+      &lt;/p&gt;
+    &lt;/div&gt;
+  ),
+}
+
+/** One row of the token diagram. */
+function TokenRow({
+  tier,
+  note,
+  children,
+}: {
+  tier: string
+  note: string
+  children: React.ReactNode
+}) {
+  return (
+    &lt;div className=&quot;grid items-start gap-3 sm:grid-cols-[168px_1fr]&quot;&gt;
+      &lt;div className=&quot;flex flex-col gap-0.5&quot;&gt;
+        &lt;p className=&quot;font-mono text-xs tracking-wide uppercase&quot;&gt;{tier}&lt;/p&gt;
+        &lt;p className=&quot;text-xs text-muted-foreground&quot;&gt;{note}&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div className=&quot;flex flex-wrap gap-2&quot;&gt;{children}&lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+function Swatch({ name, className }: { name: string; className: string }) {
+  return (
+    &lt;span className=&quot;flex items-center gap-2 rounded-md bg-surface-nested px-2 py-1 font-mono text-[11px]&quot;&gt;
+      &lt;span
+        className={`size-3 shrink-0 rounded-[3px] ring-1 ring-black/10 ${className}`}
+      /&gt;
+      {name}
+    &lt;/span&gt;
+  )
+}
+
+/**
+ * The layer that had to exist before a single component was worth touching.
+ * Values at the bottom, meaning in the middle, usage at the top.
+ */
+export const TokenArchitecture: Story = {
+  render: () =&gt; (
+    &lt;div className=&quot;flex max-w-[900px] flex-col gap-7&quot;&gt;
+      &lt;TokenRow tier=&quot;Primitive&quot; note=&quot;Raw values. Named for what they are.&quot;&gt;
+        &lt;Swatch name=&quot;--red-600&quot; className=&quot;bg-primary&quot; /&gt;
+        &lt;Swatch name=&quot;--neutral-100&quot; className=&quot;bg-surface-nested&quot; /&gt;
+        &lt;Swatch name=&quot;--neutral-900&quot; className=&quot;bg-foreground&quot; /&gt;
+        &lt;Swatch name=&quot;--green-600&quot; className=&quot;bg-success&quot; /&gt;
+      &lt;/TokenRow&gt;
+
+      &lt;TokenRow
+        tier=&quot;Semantic&quot;
+        note=&quot;Roles. This is the layer that makes a theme possible.&quot;
+      &gt;
+        &lt;Swatch name=&quot;--primary&quot; className=&quot;bg-primary&quot; /&gt;
+        &lt;Swatch name=&quot;--surface-nested&quot; className=&quot;bg-surface-nested&quot; /&gt;
+        &lt;Swatch name=&quot;--foreground&quot; className=&quot;bg-foreground&quot; /&gt;
+        &lt;Swatch name=&quot;--success&quot; className=&quot;bg-success&quot; /&gt;
+      &lt;/TokenRow&gt;
+
+      &lt;TokenRow
+        tier=&quot;Component&quot;
+        note=&quot;Consumes roles only. Never reaches past them to a raw value.&quot;
+      &gt;
+        &lt;Swatch name=&quot;--button-bg&quot; className=&quot;bg-primary&quot; /&gt;
+        &lt;Swatch name=&quot;--card-well&quot; className=&quot;bg-surface-nested&quot; /&gt;
+        &lt;Swatch name=&quot;--card-title&quot; className=&quot;bg-foreground&quot; /&gt;
+        &lt;Swatch name=&quot;--badge-ok&quot; className=&quot;bg-success&quot; /&gt;
+      &lt;/TokenRow&gt;
+    &lt;/div&gt;
+  ),
+}
+
+/**
+ * The payoff of the semantic layer: the same composition under two themes,
+ * with no component aware that anything changed.
+ */
+export const ThemeAware: Story = {
+  render: () =&gt; {
+    const panel = (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle&gt;Escalated conversations&lt;/CardTitle&gt;
+          &lt;CardDescription&gt;Last 7 days, all institutions&lt;/CardDescription&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent className=&quot;flex items-end gap-3&quot;&gt;
+          &lt;p className=&quot;font-mono text-3xl tabular-nums&quot;&gt;14&lt;/p&gt;
+          &lt;Badge&gt;+3&lt;/Badge&gt;
+        &lt;/CardContent&gt;
+        &lt;CardFooter&gt;
+          &lt;Button size=&quot;sm&quot;&gt;View report&lt;/Button&gt;
+        &lt;/CardFooter&gt;
+      &lt;/Card&gt;
+    )
+
+    return (
+      &lt;div className=&quot;flex max-w-[900px] flex-col gap-5&quot;&gt;
+        &lt;div className=&quot;grid gap-4 sm:grid-cols-2&quot;&gt;
+          &lt;div className=&quot;flex flex-col gap-2&quot;&gt;
+            &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+              Theme A
+            &lt;/p&gt;
+            &lt;div className=&quot;rounded-xl bg-background p-4 ring-1 ring-border&quot;&gt;
+              {panel}
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div className=&quot;flex flex-col gap-2&quot;&gt;
+            &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+              Theme B
+            &lt;/p&gt;
+            &lt;div
+              className=&quot;rounded-xl bg-background p-4 ring-1 ring-border&quot;
+              style={
+                {
+                  &quot;--primary&quot;: &quot;#1f4bd8&quot;,
+                  &quot;--background&quot;: &quot;#eceff6&quot;,
+                  &quot;--card&quot;: &quot;#ffffff&quot;,
+                  &quot;--surface-nested&quot;: &quot;#f5f7fb&quot;,
+                  &quot;--sel&quot;: &quot;#d3daea&quot;,
+                } as React.CSSProperties
+              }
+            &gt;
+              {panel}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    )
+  },
+}
+</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import {
+    Badge,
+    Button,
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "design-system";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Variant Math</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The headline number, drawn rather than stated. Every cell is one variant that
+existed in the legacy library; the coloured ones are what survived.</div>
+              <pre><code>const VariantMath = () =&gt; (
+  &lt;div className=&quot;flex flex-col gap-8&quot;&gt;
+    &lt;VariantWall
+      label=&quot;Card&quot;
+      total={587}
+      kept={32}
+      pct={94}
+      cell={14}
+      gap={3}
+      columns={52}
+    /&gt;
+    &lt;VariantWall
+      label=&quot;Button&quot;
+      total={1160}
+      kept={480}
+      pct={59}
+      cell={10}
+      gap={2}
+      columns={73}
+    /&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Attribute Sprawl</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Why the wall got that big: each new requirement arrived as another switch,
+and switches multiply.</div>
+              <pre><code>const AttributeSprawl = () =&gt; {
+  const flags = [
+    &quot;hasIcon&quot;,
+    &quot;hasBadge&quot;,
+    &quot;hasFooter&quot;,
+    &quot;isCompact&quot;,
+    &quot;isElevated&quot;,
+    &quot;isSelectable&quot;,
+    &quot;showsMeta&quot;,
+    &quot;reportVariant&quot;,
+    &quot;inboxVariant&quot;,
+    &quot;adminVariant&quot;,
+  ]
+
+  return (
+    &lt;div className=&quot;flex max-w-[900px] flex-col gap-6&quot;&gt;
+      &lt;div className=&quot;grid gap-6 sm:grid-cols-2&quot;&gt;
+        &lt;div className=&quot;flex flex-col gap-3&quot;&gt;
+          &lt;h3 className=&quot;text-sm font-medium&quot;&gt;One component, ten switches&lt;/h3&gt;
+          &lt;ul className=&quot;flex flex-col gap-1 font-mono text-xs&quot;&gt;
+            {flags.map((flag) =&gt; (
+              &lt;li key={flag} className=&quot;flex items-baseline gap-1&quot;&gt;
+                &lt;span className=&quot;text-foreground&quot;&gt;{flag}&lt;/span&gt;
+                &lt;span className=&quot;text-muted-foreground&quot;&gt;: boolean&lt;/span&gt;
+              &lt;/li&gt;
+            ))}
+          &lt;/ul&gt;
+        &lt;/div&gt;
+
+        &lt;div className=&quot;flex flex-col justify-center gap-3 rounded-lg bg-surface-nested p-5&quot;&gt;
+          &lt;p className=&quot;font-mono text-xs text-muted-foreground&quot;&gt;
+            2&lt;sup&gt;10&lt;/sup&gt; = 1,024 reachable states
+          &lt;/p&gt;
+          &lt;p className=&quot;text-sm leading-relaxed&quot;&gt;
+            Nobody designed a thousand cards. The combinations were a
+            by-product of the API, and every one of them was a thing to
+            maintain, document and scroll past.
+          &lt;/p&gt;
+          &lt;p className=&quot;text-sm leading-relaxed text-muted-foreground&quot;&gt;
+            The last three flags are the real tell: a component that knows
+            which product it is in cannot be reused, only copied.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Composition</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The replacement. One structure, holding space for whatever belongs there, so
+a new requirement is a composition rather than a modification.</div>
+              <pre><code>const Composition = () =&gt; (
+  &lt;div className=&quot;flex max-w-[900px] flex-col gap-5&quot;&gt;
+    &lt;p className=&quot;max-w-[60ch] text-sm leading-relaxed text-muted-foreground&quot;&gt;
+      Three different jobs, one Card. Nothing below required a new variant, a
+      new flag, or a component that knows which product it is rendering in.
+    &lt;/p&gt;
+
+    &lt;div className=&quot;grid gap-4 sm:grid-cols-3&quot;&gt;
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle&gt;Escalated&lt;/CardTitle&gt;
+          &lt;CardDescription&gt;Last 7 days&lt;/CardDescription&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;p className=&quot;font-mono text-3xl tabular-nums&quot;&gt;14&lt;/p&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle&gt;Room scan&lt;/CardTitle&gt;
+          &lt;CardDescription&gt;Failures by cause&lt;/CardDescription&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent className=&quot;flex flex-wrap gap-1.5&quot;&gt;
+          &lt;Badge&gt;Lighting&lt;/Badge&gt;
+          &lt;Badge variant=&quot;secondary&quot;&gt;Angle&lt;/Badge&gt;
+          &lt;Badge variant=&quot;secondary&quot;&gt;Incomplete&lt;/Badge&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle&gt;Integrity review&lt;/CardTitle&gt;
+          &lt;CardDescription&gt;3 sessions flagged&lt;/CardDescription&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;p className=&quot;text-sm text-muted-foreground&quot;&gt;
+            Awaiting instructor decision.
+          &lt;/p&gt;
+        &lt;/CardContent&gt;
+        &lt;CardFooter&gt;
+          &lt;Button size=&quot;sm&quot;&gt;Open queue&lt;/Button&gt;
+        &lt;/CardFooter&gt;
+      &lt;/Card&gt;
+    &lt;/div&gt;
+
+    &lt;p className=&quot;max-w-[60ch] text-xs text-muted-foreground&quot;&gt;
+      Slots move capability out of variants and into composition, which is the
+      only place it can be recombined.
+    &lt;/p&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Token Architecture</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The layer that had to exist before a single component was worth touching.
+Values at the bottom, meaning in the middle, usage at the top.</div>
+              <pre><code>const TokenArchitecture = () =&gt; (
+  &lt;div className=&quot;flex max-w-[900px] flex-col gap-7&quot;&gt;
+    &lt;TokenRow tier=&quot;Primitive&quot; note=&quot;Raw values. Named for what they are.&quot;&gt;
+      &lt;Swatch name=&quot;--red-600&quot; className=&quot;bg-primary&quot; /&gt;
+      &lt;Swatch name=&quot;--neutral-100&quot; className=&quot;bg-surface-nested&quot; /&gt;
+      &lt;Swatch name=&quot;--neutral-900&quot; className=&quot;bg-foreground&quot; /&gt;
+      &lt;Swatch name=&quot;--green-600&quot; className=&quot;bg-success&quot; /&gt;
+    &lt;/TokenRow&gt;
+
+    &lt;TokenRow
+      tier=&quot;Semantic&quot;
+      note=&quot;Roles. This is the layer that makes a theme possible.&quot;
+    &gt;
+      &lt;Swatch name=&quot;--primary&quot; className=&quot;bg-primary&quot; /&gt;
+      &lt;Swatch name=&quot;--surface-nested&quot; className=&quot;bg-surface-nested&quot; /&gt;
+      &lt;Swatch name=&quot;--foreground&quot; className=&quot;bg-foreground&quot; /&gt;
+      &lt;Swatch name=&quot;--success&quot; className=&quot;bg-success&quot; /&gt;
+    &lt;/TokenRow&gt;
+
+    &lt;TokenRow
+      tier=&quot;Component&quot;
+      note=&quot;Consumes roles only. Never reaches past them to a raw value.&quot;
+    &gt;
+      &lt;Swatch name=&quot;--button-bg&quot; className=&quot;bg-primary&quot; /&gt;
+      &lt;Swatch name=&quot;--card-well&quot; className=&quot;bg-surface-nested&quot; /&gt;
+      &lt;Swatch name=&quot;--card-title&quot; className=&quot;bg-foreground&quot; /&gt;
+      &lt;Swatch name=&quot;--badge-ok&quot; className=&quot;bg-success&quot; /&gt;
+    &lt;/TokenRow&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Theme Aware</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The payoff of the semantic layer: the same composition under two themes,
+with no component aware that anything changed.</div>
+              <pre><code>const ThemeAware = () =&gt; {
+  const panel = (
+    &lt;Card&gt;
+      &lt;CardHeader&gt;
+        &lt;CardTitle&gt;Escalated conversations&lt;/CardTitle&gt;
+        &lt;CardDescription&gt;Last 7 days, all institutions&lt;/CardDescription&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent className=&quot;flex items-end gap-3&quot;&gt;
+        &lt;p className=&quot;font-mono text-3xl tabular-nums&quot;&gt;14&lt;/p&gt;
+        &lt;Badge&gt;+3&lt;/Badge&gt;
+      &lt;/CardContent&gt;
+      &lt;CardFooter&gt;
+        &lt;Button size=&quot;sm&quot;&gt;View report&lt;/Button&gt;
+      &lt;/CardFooter&gt;
+    &lt;/Card&gt;
+  )
+
+  return (
+    &lt;div className=&quot;flex max-w-[900px] flex-col gap-5&quot;&gt;
+      &lt;div className=&quot;grid gap-4 sm:grid-cols-2&quot;&gt;
+        &lt;div className=&quot;flex flex-col gap-2&quot;&gt;
+          &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+            Theme A
+          &lt;/p&gt;
+          &lt;div className=&quot;rounded-xl bg-background p-4 ring-1 ring-border&quot;&gt;
+            {panel}
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div className=&quot;flex flex-col gap-2&quot;&gt;
+          &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+            Theme B
+          &lt;/p&gt;
+          &lt;div
+            className=&quot;rounded-xl bg-background p-4 ring-1 ring-border&quot;
+            style={
+              {
+                &quot;--primary&quot;: &quot;#1f4bd8&quot;,
+                &quot;--background&quot;: &quot;#eceff6&quot;,
+                &quot;--card&quot;: &quot;#ffffff&quot;,
+                &quot;--surface-nested&quot;: &quot;#f5f7fb&quot;,
+                &quot;--sel&quot;: &quot;#d3daea&quot;,
+              } as React.CSSProperties
+            }
+          &gt;
+            {panel}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+};</code></pre>
+            </div>
+        </div>
+    
+    
+  </div>
+</article>
+<article
+  class="card 
   no-error 
   has-info 
   no-story-error
@@ -1577,8 +2495,8 @@ export { Button, buttonVariants }
       <h2><span class="status-dot dot-ok"></span> Dialog</h2>
       <div class="badges">
         
-        <label for="c-9-ui-dialog-info" class="badge info as-toggle">1 info</label>
-        <label for="c-9-ui-dialog-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-11-ui-dialog-info" class="badge info as-toggle">1 info</label>
+        <label for="c-11-ui-dialog-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -1591,8 +2509,8 @@ export { Button, buttonVariants }
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-9-ui-dialog-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-9-ui-dialog-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-11-ui-dialog-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-11-ui-dialog-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -1674,8 +2592,8 @@ export { Button, buttonVariants }
       <h2><span class="status-dot dot-ok"></span> DropdownMenu</h2>
       <div class="badges">
         
-        <label for="c-10-ui-dropdownmenu-info" class="badge info as-toggle">1 info</label>
-        <label for="c-10-ui-dropdownmenu-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-12-ui-dropdownmenu-info" class="badge info as-toggle">1 info</label>
+        <label for="c-12-ui-dropdownmenu-stories" class="badge ok as-toggle">2 stories</label>
         
         
       </div>
@@ -1688,8 +2606,8 @@ export { Button, buttonVariants }
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-10-ui-dropdownmenu-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-10-ui-dropdownmenu-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-12-ui-dropdownmenu-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-12-ui-dropdownmenu-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -1783,8 +2701,8 @@ export { Button, buttonVariants }
       <h2><span class="status-dot dot-ok"></span> InboxPage</h2>
       <div class="badges">
         
-        <label for="c-11-pages-inbox-info" class="badge info as-toggle">1 info</label>
-        <label for="c-11-pages-inbox-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-13-pages-inbox-info" class="badge info as-toggle">1 info</label>
+        <label for="c-13-pages-inbox-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -1797,8 +2715,8 @@ export { Button, buttonVariants }
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-11-pages-inbox-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-11-pages-inbox-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-13-pages-inbox-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-13-pages-inbox-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -1857,9 +2775,9 @@ export { Button, buttonVariants }
     <div class="title">
       <h2><span class="status-dot dot-err"></span> InboxRegions</h2>
       <div class="badges">
-        <label for="c-12-inbox-regions-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-12-inbox-regions-info" class="badge info as-toggle">1 info</label>
-        <label for="c-12-inbox-regions-stories" class="badge err as-toggle">1/1 story errors</label>
+        <label for="c-14-inbox-regions-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-14-inbox-regions-info" class="badge info as-toggle">1 info</label>
+        <label for="c-14-inbox-regions-stories" class="badge err as-toggle">1/1 story errors</label>
         
         
       </div>
@@ -1871,9 +2789,9 @@ export { Button, buttonVariants }
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-12-inbox-regions-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-12-inbox-regions-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-12-inbox-regions-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-14-inbox-regions-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-14-inbox-regions-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-14-inbox-regions-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -2079,8 +2997,8 @@ export const Default: Story = {}
       <h2><span class="status-dot dot-ok"></span> Input</h2>
       <div class="badges">
         
-        <label for="c-13-ui-input-info" class="badge info as-toggle">1 info</label>
-        <label for="c-13-ui-input-stories" class="badge ok as-toggle">3 stories</label>
+        <label for="c-15-ui-input-info" class="badge info as-toggle">1 info</label>
+        <label for="c-15-ui-input-stories" class="badge ok as-toggle">3 stories</label>
         
         
       </div>
@@ -2093,8 +3011,8 @@ export const Default: Story = {}
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-13-ui-input-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-13-ui-input-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-15-ui-input-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-15-ui-input-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -2170,9 +3088,9 @@ export const Default: Story = {}
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> KnowledgeContentPage</h2>
       <div class="badges">
-        <label for="c-14-pages-knowledge-content-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-14-pages-knowledge-content-info" class="badge info as-toggle">1 info</label>
-        <label for="c-14-pages-knowledge-content-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-16-pages-knowledge-content-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-16-pages-knowledge-content-info" class="badge info as-toggle">1 info</label>
+        <label for="c-16-pages-knowledge-content-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2185,11 +3103,11 @@ export const Default: Story = {}
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-14-pages-knowledge-content-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-14-pages-knowledge-content-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-16-pages-knowledge-content-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-16-pages-knowledge-content-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-14-pages-knowledge-content-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-16-pages-knowledge-content-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2208,7 +3126,7 @@ export const Default: Story = {}
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\KnowledgeContentPage.tsx::KnowledgeContentPage</code></pre>
+            <pre><code>Component: src/pages/KnowledgeContentPage.tsx::KnowledgeContentPage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -2256,9 +3174,9 @@ export const Default: Story = {}
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> KnowledgeSourcesPage</h2>
       <div class="badges">
-        <label for="c-15-pages-knowledge-sources-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-15-pages-knowledge-sources-info" class="badge info as-toggle">1 info</label>
-        <label for="c-15-pages-knowledge-sources-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-17-pages-knowledge-sources-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-17-pages-knowledge-sources-info" class="badge info as-toggle">1 info</label>
+        <label for="c-17-pages-knowledge-sources-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2271,11 +3189,11 @@ export const Default: Story = {}
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-15-pages-knowledge-sources-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-15-pages-knowledge-sources-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-17-pages-knowledge-sources-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-17-pages-knowledge-sources-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-15-pages-knowledge-sources-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-17-pages-knowledge-sources-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2294,7 +3212,7 @@ export const Default: Story = {}
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\KnowledgeSourcesPage.tsx::KnowledgeSourcesPage</code></pre>
+            <pre><code>Component: src/pages/KnowledgeSourcesPage.tsx::KnowledgeSourcesPage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -2342,9 +3260,9 @@ export const Default: Story = {}
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> MessageThreadRegion</h2>
       <div class="badges">
-        <label for="c-16-inbox-messagethread-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-16-inbox-messagethread-info" class="badge info as-toggle">1 info</label>
-        <label for="c-16-inbox-messagethread-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-18-inbox-messagethread-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-18-inbox-messagethread-info" class="badge info as-toggle">1 info</label>
+        <label for="c-18-inbox-messagethread-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2357,11 +3275,11 @@ export const Default: Story = {}
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-16-inbox-messagethread-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-16-inbox-messagethread-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-18-inbox-messagethread-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-18-inbox-messagethread-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-16-inbox-messagethread-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-18-inbox-messagethread-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2380,7 +3298,7 @@ export const Default: Story = {}
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\components\inbox\MessageThread.tsx::MessageThread</code></pre>
+            <pre><code>Component: src/components/inbox/MessageThread.tsx::MessageThread</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>conversation: Conversation</code></pre>
           </div>
@@ -2424,9 +3342,9 @@ export const Default: Story = {}
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> ReportsAllPage</h2>
       <div class="badges">
-        <label for="c-17-pages-reports-all-props" class="badge ok as-toggle">2 prop types</label>
-        <label for="c-17-pages-reports-all-info" class="badge info as-toggle">1 info</label>
-        <label for="c-17-pages-reports-all-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-19-pages-reports-all-props" class="badge ok as-toggle">2 prop types</label>
+        <label for="c-19-pages-reports-all-info" class="badge info as-toggle">1 info</label>
+        <label for="c-19-pages-reports-all-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2439,11 +3357,11 @@ export const Default: Story = {}
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-17-pages-reports-all-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-17-pages-reports-all-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-19-pages-reports-all-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-19-pages-reports-all-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-17-pages-reports-all-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-19-pages-reports-all-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2462,7 +3380,7 @@ export const Default: Story = {}
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">2 prop types</span>
             </div>
-            <pre><code>Component: src\pages\ReportsAllPage.tsx::ReportsAllPage</code></pre>
+            <pre><code>Component: src/pages/ReportsAllPage.tsx::ReportsAllPage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onOpenReport?: (page: string) =&gt; void
 
@@ -2512,9 +3430,9 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> ReportsConversationsByRolePage</h2>
       <div class="badges">
-        <label for="c-18-pages-reports-conversations-by-role-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-18-pages-reports-conversations-by-role-info" class="badge info as-toggle">1 info</label>
-        <label for="c-18-pages-reports-conversations-by-role-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-20-pages-reports-conversations-by-role-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-20-pages-reports-conversations-by-role-info" class="badge info as-toggle">1 info</label>
+        <label for="c-20-pages-reports-conversations-by-role-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2527,11 +3445,11 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-18-pages-reports-conversations-by-role-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-18-pages-reports-conversations-by-role-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-20-pages-reports-conversations-by-role-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-20-pages-reports-conversations-by-role-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-18-pages-reports-conversations-by-role-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-20-pages-reports-conversations-by-role-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2550,7 +3468,7 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\ReportsConversationsByRolePage.tsx::ReportsConversationsByRolePage</code></pre>
+            <pre><code>Component: src/pages/ReportsConversationsByRolePage.tsx::ReportsConversationsByRolePage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -2598,9 +3516,9 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> ReportsExamCompletionPage</h2>
       <div class="badges">
-        <label for="c-19-pages-reports-exam-completion-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-19-pages-reports-exam-completion-info" class="badge info as-toggle">1 info</label>
-        <label for="c-19-pages-reports-exam-completion-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-21-pages-reports-exam-completion-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-21-pages-reports-exam-completion-info" class="badge info as-toggle">1 info</label>
+        <label for="c-21-pages-reports-exam-completion-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2613,11 +3531,11 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-19-pages-reports-exam-completion-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-19-pages-reports-exam-completion-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-21-pages-reports-exam-completion-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-21-pages-reports-exam-completion-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-19-pages-reports-exam-completion-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-21-pages-reports-exam-completion-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2636,7 +3554,7 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\ReportsExamCompletionPage.tsx::ReportsExamCompletionPage</code></pre>
+            <pre><code>Component: src/pages/ReportsExamCompletionPage.tsx::ReportsExamCompletionPage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -2684,9 +3602,9 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> ReportsLockdownBrowserPage</h2>
       <div class="badges">
-        <label for="c-20-pages-reports-lockdown-browser-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-20-pages-reports-lockdown-browser-info" class="badge info as-toggle">1 info</label>
-        <label for="c-20-pages-reports-lockdown-browser-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-22-pages-reports-lockdown-browser-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-22-pages-reports-lockdown-browser-info" class="badge info as-toggle">1 info</label>
+        <label for="c-22-pages-reports-lockdown-browser-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2699,11 +3617,11 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-20-pages-reports-lockdown-browser-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-20-pages-reports-lockdown-browser-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-22-pages-reports-lockdown-browser-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-22-pages-reports-lockdown-browser-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-20-pages-reports-lockdown-browser-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-22-pages-reports-lockdown-browser-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2722,7 +3640,7 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\ReportsLockdownBrowserPage.tsx::ReportsLockdownBrowserPage</code></pre>
+            <pre><code>Component: src/pages/ReportsLockdownBrowserPage.tsx::ReportsLockdownBrowserPage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -2770,9 +3688,9 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> ReportsOverviewPage</h2>
       <div class="badges">
-        <label for="c-21-pages-reports-overview-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-21-pages-reports-overview-info" class="badge info as-toggle">1 info</label>
-        <label for="c-21-pages-reports-overview-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-23-pages-reports-overview-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-23-pages-reports-overview-info" class="badge info as-toggle">1 info</label>
+        <label for="c-23-pages-reports-overview-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2785,11 +3703,11 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-21-pages-reports-overview-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-21-pages-reports-overview-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-23-pages-reports-overview-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-23-pages-reports-overview-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-21-pages-reports-overview-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-23-pages-reports-overview-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2808,7 +3726,7 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\ReportsOverviewPage.tsx::ReportsOverviewPage</code></pre>
+            <pre><code>Component: src/pages/ReportsOverviewPage.tsx::ReportsOverviewPage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -2856,9 +3774,9 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> ReportsResponseTimePage</h2>
       <div class="badges">
-        <label for="c-22-pages-reports-response-time-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-22-pages-reports-response-time-info" class="badge info as-toggle">1 info</label>
-        <label for="c-22-pages-reports-response-time-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-24-pages-reports-response-time-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-24-pages-reports-response-time-info" class="badge info as-toggle">1 info</label>
+        <label for="c-24-pages-reports-response-time-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2871,11 +3789,11 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-22-pages-reports-response-time-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-22-pages-reports-response-time-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-24-pages-reports-response-time-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-24-pages-reports-response-time-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-22-pages-reports-response-time-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-24-pages-reports-response-time-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2894,7 +3812,7 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\ReportsResponseTimePage.tsx::ReportsResponseTimePage</code></pre>
+            <pre><code>Component: src/pages/ReportsResponseTimePage.tsx::ReportsResponseTimePage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -2942,9 +3860,9 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> ReportsRoomScanPage</h2>
       <div class="badges">
-        <label for="c-23-pages-reports-room-scan-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-23-pages-reports-room-scan-info" class="badge info as-toggle">1 info</label>
-        <label for="c-23-pages-reports-room-scan-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-25-pages-reports-room-scan-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-25-pages-reports-room-scan-info" class="badge info as-toggle">1 info</label>
+        <label for="c-25-pages-reports-room-scan-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -2957,11 +3875,11 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-23-pages-reports-room-scan-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-23-pages-reports-room-scan-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-25-pages-reports-room-scan-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-25-pages-reports-room-scan-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-23-pages-reports-room-scan-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-25-pages-reports-room-scan-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -2980,7 +3898,7 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\ReportsRoomScanPage.tsx::ReportsRoomScanPage</code></pre>
+            <pre><code>Component: src/pages/ReportsRoomScanPage.tsx::ReportsRoomScanPage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -3028,9 +3946,9 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> ReportsScreenSharePage</h2>
       <div class="badges">
-        <label for="c-24-pages-reports-screen-share-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-24-pages-reports-screen-share-info" class="badge info as-toggle">1 info</label>
-        <label for="c-24-pages-reports-screen-share-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-26-pages-reports-screen-share-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-26-pages-reports-screen-share-info" class="badge info as-toggle">1 info</label>
+        <label for="c-26-pages-reports-screen-share-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -3043,11 +3961,11 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-24-pages-reports-screen-share-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-24-pages-reports-screen-share-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-26-pages-reports-screen-share-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-26-pages-reports-screen-share-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-24-pages-reports-screen-share-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-26-pages-reports-screen-share-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3066,7 +3984,7 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\ReportsScreenSharePage.tsx::ReportsScreenSharePage</code></pre>
+            <pre><code>Component: src/pages/ReportsScreenSharePage.tsx::ReportsScreenSharePage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -3114,9 +4032,9 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> SecondaryNav</h2>
       <div class="badges">
-        <label for="c-25-chrome-secondarynav-props" class="badge ok as-toggle">5 prop types</label>
-        <label for="c-25-chrome-secondarynav-info" class="badge info as-toggle">1 info</label>
-        <label for="c-25-chrome-secondarynav-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-27-chrome-secondarynav-props" class="badge ok as-toggle">5 prop types</label>
+        <label for="c-27-chrome-secondarynav-info" class="badge info as-toggle">1 info</label>
+        <label for="c-27-chrome-secondarynav-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -3129,11 +4047,11 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-25-chrome-secondarynav-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-25-chrome-secondarynav-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-27-chrome-secondarynav-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-27-chrome-secondarynav-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-25-chrome-secondarynav-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-27-chrome-secondarynav-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3152,7 +4070,7 @@ onSelectNav?: (key: string) =&gt; void</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">5 prop types</span>
             </div>
-            <pre><code>Component: src\components\chrome\SecondaryNav.tsx::SecondaryNav</code></pre>
+            <pre><code>Component: src/components/chrome/SecondaryNav.tsx::SecondaryNav</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>active: string
 
@@ -3204,9 +4122,9 @@ title: string</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> SegmentedControl</h2>
       <div class="badges">
-        <label for="c-26-ui-segmentedcontrol-props" class="badge ok as-toggle">4 prop types</label>
-        <label for="c-26-ui-segmentedcontrol-info" class="badge info as-toggle">1 info</label>
-        <label for="c-26-ui-segmentedcontrol-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-28-ui-segmentedcontrol-props" class="badge ok as-toggle">4 prop types</label>
+        <label for="c-28-ui-segmentedcontrol-info" class="badge info as-toggle">1 info</label>
+        <label for="c-28-ui-segmentedcontrol-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -3219,11 +4137,11 @@ title: string</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-26-ui-segmentedcontrol-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-26-ui-segmentedcontrol-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-28-ui-segmentedcontrol-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-28-ui-segmentedcontrol-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-26-ui-segmentedcontrol-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-28-ui-segmentedcontrol-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3242,7 +4160,7 @@ title: string</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">4 prop types</span>
             </div>
-            <pre><code>Component: src\components\ui\segmented-control.tsx::SegmentedControl</code></pre>
+            <pre><code>Component: src/components/ui/segmented-control.tsx::SegmentedControl</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>className?: string
 
@@ -3292,9 +4210,9 @@ value: T</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> SettingsIntegrationsPage</h2>
       <div class="badges">
-        <label for="c-27-pages-settings-integrations-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-27-pages-settings-integrations-info" class="badge info as-toggle">1 info</label>
-        <label for="c-27-pages-settings-integrations-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-29-pages-settings-integrations-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-29-pages-settings-integrations-info" class="badge info as-toggle">1 info</label>
+        <label for="c-29-pages-settings-integrations-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -3307,11 +4225,11 @@ value: T</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-27-pages-settings-integrations-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-27-pages-settings-integrations-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-29-pages-settings-integrations-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-29-pages-settings-integrations-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-27-pages-settings-integrations-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-29-pages-settings-integrations-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3330,7 +4248,7 @@ value: T</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\pages\SettingsIntegrationsPage.tsx::SettingsIntegrationsPage</code></pre>
+            <pre><code>Component: src/pages/SettingsIntegrationsPage.tsx::SettingsIntegrationsPage</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>onSelectNav?: (key: string) =&gt; void</code></pre>
           </div>
@@ -3379,8 +4297,8 @@ value: T</code></pre>
       <h2><span class="status-dot dot-ok"></span> SidePanelRegion</h2>
       <div class="badges">
         
-        <label for="c-28-inbox-sidepanel-info" class="badge info as-toggle">1 info</label>
-        <label for="c-28-inbox-sidepanel-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-30-inbox-sidepanel-info" class="badge info as-toggle">1 info</label>
+        <label for="c-30-inbox-sidepanel-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -3393,8 +4311,8 @@ value: T</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-28-inbox-sidepanel-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-28-inbox-sidepanel-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-30-inbox-sidepanel-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-30-inbox-sidepanel-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -3450,8 +4368,8 @@ value: T</code></pre>
       <h2><span class="status-dot dot-ok"></span> Skeleton</h2>
       <div class="badges">
         
-        <label for="c-29-ui-skeleton-info" class="badge info as-toggle">1 info</label>
-        <label for="c-29-ui-skeleton-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-31-ui-skeleton-info" class="badge info as-toggle">1 info</label>
+        <label for="c-31-ui-skeleton-stories" class="badge ok as-toggle">2 stories</label>
         
         
       </div>
@@ -3464,8 +4382,8 @@ value: T</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-29-ui-skeleton-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-29-ui-skeleton-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-31-ui-skeleton-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-31-ui-skeleton-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -3544,9 +4462,9 @@ value: T</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> SourceCard</h2>
       <div class="badges">
-        <label for="c-30-dashboard-sourcecard-props" class="badge ok as-toggle">11 prop types</label>
-        <label for="c-30-dashboard-sourcecard-info" class="badge info as-toggle">1 info</label>
-        <label for="c-30-dashboard-sourcecard-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-32-dashboard-sourcecard-props" class="badge ok as-toggle">11 prop types</label>
+        <label for="c-32-dashboard-sourcecard-info" class="badge info as-toggle">1 info</label>
+        <label for="c-32-dashboard-sourcecard-stories" class="badge ok as-toggle">2 stories</label>
         
         
       </div>
@@ -3559,11 +4477,11 @@ value: T</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-30-dashboard-sourcecard-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-30-dashboard-sourcecard-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-32-dashboard-sourcecard-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-32-dashboard-sourcecard-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-30-dashboard-sourcecard-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-32-dashboard-sourcecard-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3582,7 +4500,7 @@ value: T</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">11 prop types</span>
             </div>
-            <pre><code>Component: src\components\dashboard\SourceCard.tsx::SourceCard</code></pre>
+            <pre><code>Component: src/components/dashboard/SourceCard.tsx::SourceCard</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>actionLabel?: string
 
@@ -3678,9 +4596,9 @@ import { SourceCard, SourceList, SourceListRow } from "design-system";</code></p
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> StatTile</h2>
       <div class="badges">
-        <label for="c-31-dashboard-stattile-props" class="badge ok as-toggle">7 prop types</label>
-        <label for="c-31-dashboard-stattile-info" class="badge info as-toggle">1 info</label>
-        <label for="c-31-dashboard-stattile-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-33-dashboard-stattile-props" class="badge ok as-toggle">7 prop types</label>
+        <label for="c-33-dashboard-stattile-info" class="badge info as-toggle">1 info</label>
+        <label for="c-33-dashboard-stattile-stories" class="badge ok as-toggle">2 stories</label>
         
         
       </div>
@@ -3693,11 +4611,11 @@ import { SourceCard, SourceList, SourceListRow } from "design-system";</code></p
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-31-dashboard-stattile-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-31-dashboard-stattile-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-33-dashboard-stattile-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-33-dashboard-stattile-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-31-dashboard-stattile-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-33-dashboard-stattile-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3716,7 +4634,7 @@ import { SourceCard, SourceList, SourceListRow } from "design-system";</code></p
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">7 prop types</span>
             </div>
-            <pre><code>Component: src\components\dashboard\StatTile.tsx::StatTile</code></pre>
+            <pre><code>Component: src/components/dashboard/StatTile.tsx::StatTile</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>caption?: string
 
@@ -3798,9 +4716,9 @@ import { StatGrid, StatTile } from "design-system";</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> Switch</h2>
       <div class="badges">
-        <label for="c-32-ui-switch-props" class="badge ok as-toggle">1 prop type</label>
-        <label for="c-32-ui-switch-info" class="badge info as-toggle">1 info</label>
-        <label for="c-32-ui-switch-stories" class="badge ok as-toggle">3 stories</label>
+        <label for="c-34-ui-switch-props" class="badge ok as-toggle">1 prop type</label>
+        <label for="c-34-ui-switch-info" class="badge info as-toggle">1 info</label>
+        <label for="c-34-ui-switch-stories" class="badge ok as-toggle">3 stories</label>
         
         
       </div>
@@ -3813,11 +4731,11 @@ import { StatGrid, StatTile } from "design-system";</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-32-ui-switch-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-32-ui-switch-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-34-ui-switch-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-34-ui-switch-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-32-ui-switch-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-34-ui-switch-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -3836,7 +4754,7 @@ import { StatGrid, StatTile } from "design-system";</code></pre>
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">1 prop type</span>
             </div>
-            <pre><code>Component: src\components\ui\switch.tsx::Switch</code></pre>
+            <pre><code>Component: src/components/ui/switch.tsx::Switch</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>size?: &quot;sm&quot; | &quot;default&quot; = &quot;default&quot;</code></pre>
           </div>
@@ -3899,8 +4817,8 @@ import { StatGrid, StatTile } from "design-system";</code></pre>
       <h2><span class="status-dot dot-ok"></span> Table</h2>
       <div class="badges">
         
-        <label for="c-33-ui-table-info" class="badge info as-toggle">1 info</label>
-        <label for="c-33-ui-table-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-35-ui-table-info" class="badge info as-toggle">1 info</label>
+        <label for="c-35-ui-table-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -3913,8 +4831,8 @@ import { StatGrid, StatTile } from "design-system";</code></pre>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-33-ui-table-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-33-ui-table-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-35-ui-table-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-35-ui-table-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -3992,9 +4910,9 @@ import { StatGrid, StatTile } from "design-system";</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-err"></span> Tabs</h2>
       <div class="badges">
-        <label for="c-34-ui-tabs-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-34-ui-tabs-info" class="badge info as-toggle">1 info</label>
-        <label for="c-34-ui-tabs-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-36-ui-tabs-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-36-ui-tabs-info" class="badge info as-toggle">1 info</label>
+        <label for="c-36-ui-tabs-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -4006,9 +4924,9 @@ import { StatGrid, StatTile } from "design-system";</code></pre>
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-34-ui-tabs-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-34-ui-tabs-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-34-ui-tabs-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-36-ui-tabs-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-36-ui-tabs-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-36-ui-tabs-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -4019,9 +4937,9 @@ import { StatGrid, StatTile } from "design-system";</code></pre>
           
     <div class="note err">
       <div class="note-title">Prop type error</div>
-      <div class="note-body"><pre><code>File: C:\Users\torib\bab\design-system\src\components\ui\tabs.tsx
+      <div class="note-body"><pre><code>File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/tabs.tsx
 Error:
-&quot;.&quot; is not exported under no conditions from package C:\Users\torib\bab\design-system\node_modules\class-variance-authority (see exports field in C:\Users\torib\bab\design-system\node_modules\class-variance-authority\package.json)
+&quot;.&quot; is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority/package.json)
 You can debug your component file in this playground: https://react-docgen.dev/playground
 Code:
 &quot;use client&quot;
@@ -4174,9 +5092,9 @@ export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }
     <div class="title">
       <h2><span class="status-dot dot-err"></span> Toaster</h2>
       <div class="badges">
-        <label for="c-35-ui-sonner-err" class="badge err as-toggle">prop type error</label>
-        <label for="c-35-ui-sonner-info" class="badge info as-toggle">1 info</label>
-        <label for="c-35-ui-sonner-stories" class="badge ok as-toggle">1 story</label>
+        <label for="c-37-ui-sonner-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-37-ui-sonner-info" class="badge info as-toggle">1 info</label>
+        <label for="c-37-ui-sonner-stories" class="badge ok as-toggle">1 story</label>
         
         
       </div>
@@ -4188,9 +5106,9 @@ export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }
   </div>
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
-  <input id="c-35-ui-sonner-err" class="tg tg-err" type="checkbox" hidden />
-  <input id="c-35-ui-sonner-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-35-ui-sonner-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-37-ui-sonner-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-37-ui-sonner-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-37-ui-sonner-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
   
@@ -4201,9 +5119,9 @@ export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }
           
     <div class="note err">
       <div class="note-title">Prop type error</div>
-      <div class="note-body"><pre><code>File: C:\Users\torib\bab\design-system\src\components\ui\sonner.tsx
+      <div class="note-body"><pre><code>File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/sonner.tsx
 Error:
-&quot;.&quot; is not exported under no conditions from package C:\Users\torib\bab\design-system\node_modules\next-themes (see exports field in C:\Users\torib\bab\design-system\node_modules\next-themes\package.json)
+&quot;.&quot; is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/next-themes (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/next-themes/package.json)
 You can debug your component file in this playground: https://react-docgen.dev/playground
 Code:
 &quot;use client&quot;
@@ -4313,9 +5231,9 @@ export { Toaster }
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> TrendChart</h2>
       <div class="badges">
-        <label for="c-36-dashboard-trendchart-props" class="badge ok as-toggle">5 prop types</label>
-        <label for="c-36-dashboard-trendchart-info" class="badge info as-toggle">1 info</label>
-        <label for="c-36-dashboard-trendchart-stories" class="badge ok as-toggle">2 stories</label>
+        <label for="c-38-dashboard-trendchart-props" class="badge ok as-toggle">5 prop types</label>
+        <label for="c-38-dashboard-trendchart-info" class="badge info as-toggle">1 info</label>
+        <label for="c-38-dashboard-trendchart-stories" class="badge ok as-toggle">2 stories</label>
         
         
       </div>
@@ -4328,11 +5246,11 @@ export { Toaster }
 
   <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
   
-  <input id="c-36-dashboard-trendchart-info" class="tg tg-info" type="checkbox" hidden />
-  <input id="c-36-dashboard-trendchart-stories" class="tg tg-stories" type="checkbox" hidden />
+  <input id="c-38-dashboard-trendchart-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-38-dashboard-trendchart-stories" class="tg tg-stories" type="checkbox" hidden />
   
   
-  <input id="c-36-dashboard-trendchart-props" class="tg tg-props" type="checkbox" hidden />
+  <input id="c-38-dashboard-trendchart-props" class="tg tg-props" type="checkbox" hidden />
 
   <div class="panels">
     
@@ -4351,7 +5269,7 @@ export { Toaster }
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
               <span class="badge ok">5 prop types</span>
             </div>
-            <pre><code>Component: src\components\dashboard\TrendChart.tsx::TrendChart</code></pre>
+            <pre><code>Component: src/components/dashboard/TrendChart.tsx::TrendChart</code></pre>
             <pre><code>Props:</code></pre>
             <pre><code>categories: string[]
 
@@ -4476,9 +5394,9 @@ values: Record&lt;string, number[]&gt;</code></pre>
           
     <div class="note err">
       <div class="note-title">Prop type error</div>
-      <div class="note-body"><pre><code>File: C:\Users\torib\bab\design-system\src\components\ui\badge.tsx
+      <div class="note-body"><pre><code>File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/badge.tsx
 Error:
-&quot;.&quot; is not exported under no conditions from package C:\Users\torib\bab\design-system\node_modules\class-variance-authority (see exports field in C:\Users\torib\bab\design-system\node_modules\class-variance-authority\package.json)
+&quot;.&quot; is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority/package.json)
 You can debug your component file in this playground: https://react-docgen.dev/playground
 Code:
 import { mergeProps } from &quot;@base-ui/react/merge-props&quot;
@@ -4626,9 +5544,9 @@ export { Badge, badgeVariants }
           
     <div class="note err">
       <div class="note-title">Prop type error</div>
-      <div class="note-body"><pre><code>File: C:\Users\torib\bab\design-system\src\components\ui\button.tsx
+      <div class="note-body"><pre><code>File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/button.tsx
 Error:
-&quot;.&quot; is not exported under no conditions from package C:\Users\torib\bab\design-system\node_modules\class-variance-authority (see exports field in C:\Users\torib\bab\design-system\node_modules\class-variance-authority\package.json)
+&quot;.&quot; is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority/package.json)
 You can debug your component file in this playground: https://react-docgen.dev/playground
 Code:
 import { Button as ButtonPrimitive } from &quot;@base-ui/react/button&quot;
@@ -4830,9 +5748,9 @@ export { Button, buttonVariants }
           
     <div class="note err">
       <div class="note-title">Prop type error</div>
-      <div class="note-body"><pre><code>File: C:\Users\torib\bab\design-system\src\components\ui\tabs.tsx
+      <div class="note-body"><pre><code>File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/tabs.tsx
 Error:
-&quot;.&quot; is not exported under no conditions from package C:\Users\torib\bab\design-system\node_modules\class-variance-authority (see exports field in C:\Users\torib\bab\design-system\node_modules\class-variance-authority\package.json)
+&quot;.&quot; is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority/package.json)
 You can debug your component file in this playground: https://react-docgen.dev/playground
 Code:
 &quot;use client&quot;
@@ -5012,9 +5930,9 @@ export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }
           
     <div class="note err">
       <div class="note-title">Prop type error</div>
-      <div class="note-body"><pre><code>File: C:\Users\torib\bab\design-system\src\components\ui\sonner.tsx
+      <div class="note-body"><pre><code>File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/sonner.tsx
 Error:
-&quot;.&quot; is not exported under no conditions from package C:\Users\torib\bab\design-system\node_modules\next-themes (see exports field in C:\Users\torib\bab\design-system\node_modules\next-themes\package.json)
+&quot;.&quot; is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/next-themes (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/next-themes/package.json)
 You can debug your component file in this playground: https://react-docgen.dev/playground
 Code:
 &quot;use client&quot;
@@ -5106,6 +6024,934 @@ export { Toaster }
     &lt;Toaster /&gt;
   &lt;/div&gt;
 );</code></pre>
+            </div>
+        </div>
+    
+    
+  </div>
+</article></div>
+        </section>
+      
+        <section class="group">
+          <input id="no-component-found-toggle" class="group-tg" type="checkbox" hidden />
+          <label for="no-component-found-toggle" class="group-header">
+            <span class="caret">▸</span>
+            <span class="group-title">No component found</span>
+            <span class="group-count">2</span>
+          </label>
+          <div class="group-cards">
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="AgenticDesignSystem">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> AgenticDesignSystem</h2>
+      <div class="badges">
+        <label for="c-error-0-case-study-agentic-design-system-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-0-case-study-agentic-design-system-info" class="badge info as-toggle">2 infos</label>
+        <label for="c-error-0-case-study-agentic-design-system-stories" class="badge ok as-toggle">1 story</label>
+        
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/case-study/AgenticDesignSystem.stories.tsx">case-study-agentic-design-system · ./src/case-study/AgenticDesignSystem.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-error-0-case-study-agentic-design-system-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-0-case-study-agentic-design-system-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-0-case-study-agentic-design-system-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
+   9 |  * embed contract, so renaming one breaks its embed.
+  10 |  */
+&gt; 11 | const meta = {
+     | ^
+  12 |   title: &quot;Case Study/Agentic Design System&quot;,
+  13 |   tags: [&quot;!dev&quot;, &quot;!autodocs&quot;, &quot;!test&quot;],
+  14 |   parameters: {
+
+./src/case-study/AgenticDesignSystem.stories.tsx:
+import type { Meta, StoryObj } from &quot;@storybook/react-vite&quot;
+
+/**
+ * Visual companions to the Agentic Design System case study on toribryan.com.
+ *
+ * Same tag treatment as the Design System Overhaul stories: hidden from the
+ * sidebar so they do not appear inside the Integrity Console&#39;s embedded
+ * Storybook, but still reachable by `iframe.html?id=...`. Story names are the
+ * embed contract, so renaming one breaks its embed.
+ */
+const meta = {
+  title: &quot;Case Study/Agentic Design System&quot;,
+  tags: [&quot;!dev&quot;, &quot;!autodocs&quot;, &quot;!test&quot;],
+  parameters: {
+    layout: &quot;padded&quot;,
+  },
+} satisfies Meta
+
+export default meta
+type Story = StoryObj&lt;typeof meta&gt;
+
+function Panel({
+  label,
+  tone,
+  code,
+  note,
+}: {
+  label: string
+  tone: &quot;bad&quot; | &quot;good&quot;
+  code: string
+  note: string
+}) {
+  return (
+    &lt;section className=&quot;flex flex-col gap-2&quot;&gt;
+      &lt;header className=&quot;flex items-center gap-2&quot;&gt;
+        &lt;span
+          className={`size-2 shrink-0 rounded-[2px] ${
+            tone === &quot;bad&quot; ? &quot;bg-border&quot; : &quot;bg-primary&quot;
+          }`}
+          aria-hidden
+        /&gt;
+        &lt;h3 className=&quot;text-sm font-medium&quot;&gt;{label}&lt;/h3&gt;
+      &lt;/header&gt;
+
+      &lt;pre className=&quot;overflow-x-auto rounded-lg bg-surface-nested p-4 font-mono text-[11px] leading-relaxed&quot;&gt;
+        {code}
+      &lt;/pre&gt;
+
+      &lt;p className=&quot;text-xs leading-relaxed text-muted-foreground&quot;&gt;{note}&lt;/p&gt;
+    &lt;/section&gt;
+  )
+}
+
+/**
+ * The finding, in the smallest honest form: the same design and the same
+ * prompt, with and without the component carrying its own usage contract.
+ */
+export const InferenceVsLookup: Story = {
+  render: () =&gt; (
+    &lt;div className=&quot;flex max-w-[880px] flex-col gap-5&quot;&gt;
+      &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+        Same design. Same prompt.
+      &lt;/p&gt;
+
+      &lt;div className=&quot;grid gap-6 sm:grid-cols-2&quot;&gt;
+        &lt;Panel
+          tone=&quot;bad&quot;
+          label=&quot;Without usage instructions&quot;
+          code={`&lt;div
+  className=&quot;rounded-md px-4 py-3
+    bg-[#008b8b] text-white
+    text-sm font-medium&quot;
+&gt;
+  Save changes
+&lt;/div&gt;`}
+          note=&quot;Rebuilt from scratch. The hex is hardcoded, the radius is invented, and nothing links back to the system. It looks right and is unmaintainable.&quot;
+        /&gt;
+
+        &lt;Panel
+          tone=&quot;good&quot;
+          label=&quot;With Code Connect&quot;
+          code={`&lt;Button variant=&quot;primary&quot; size=&quot;sm&quot;&gt;
+  Save changes
+&lt;/Button&gt;`}
+          note=&quot;Resolved to the component. Variants and tokens arrive with it, so a rebrand reaches this automatically.&quot;
+        /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  ),
+}
+</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">Specify an @import jsdoc tag on your component or your stories meta such as @import import { AgenticDesignSystem } from &#39;my-design-system&#39;;</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Inference Vs Lookup</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The finding, in the smallest honest form: the same design and the same
+prompt, with and without the component carrying its own usage contract.</div>
+              <pre><code>const InferenceVsLookup = () =&gt; (
+  &lt;div className=&quot;flex max-w-[880px] flex-col gap-5&quot;&gt;
+    &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+      Same design. Same prompt.
+    &lt;/p&gt;
+
+    &lt;div className=&quot;grid gap-6 sm:grid-cols-2&quot;&gt;
+      &lt;Panel
+        tone=&quot;bad&quot;
+        label=&quot;Without usage instructions&quot;
+        code={`&lt;div
+className=&quot;rounded-md px-4 py-3
+  bg-[#008b8b] text-white
+  text-sm font-medium&quot;
+&gt;
+Save changes
+&lt;/div&gt;`}
+        note=&quot;Rebuilt from scratch. The hex is hardcoded, the radius is invented, and nothing links back to the system. It looks right and is unmaintainable.&quot;
+      /&gt;
+
+      &lt;Panel
+        tone=&quot;good&quot;
+        label=&quot;With Code Connect&quot;
+        code={`&lt;Button variant=&quot;primary&quot; size=&quot;sm&quot;&gt;
+Save changes
+&lt;/Button&gt;`}
+        note=&quot;Resolved to the component. Variants and tokens arrive with it, so a rebrand reaches this automatically.&quot;
+      /&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+    
+  </div>
+</article>
+<article
+  class="card 
+  has-error 
+  has-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="DesignSystemOverhaul">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> DesignSystemOverhaul</h2>
+      <div class="badges">
+        <label for="c-error-1-case-study-design-system-overhaul-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-1-case-study-design-system-overhaul-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-1-case-study-design-system-overhaul-stories" class="badge ok as-toggle">5 stories</label>
+        
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/case-study/DesignSystemOverhaul.stories.tsx">case-study-design-system-overhaul · ./src/case-study/DesignSystemOverhaul.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-error-1-case-study-design-system-overhaul-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-1-case-study-design-system-overhaul-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-1-case-study-design-system-overhaul-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>We could not detect the component from your story file. Specify meta.component.
+  20 |  * keep story names stable: renaming one changes its id and breaks the embed.
+  21 |  */
+&gt; 22 | const meta = {
+     | ^
+  23 |   title: &quot;Case Study/Design System Overhaul&quot;,
+  24 |   /**
+  25 |    * `!dev` keeps these out of the Storybook sidebar. They are diagrams for a
+
+./src/case-study/DesignSystemOverhaul.stories.tsx:
+import type { Meta, StoryObj } from &quot;@storybook/react-vite&quot;
+
+import { Badge } from &quot;../components/ui/badge&quot;
+import { Button } from &quot;../components/ui/button&quot;
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from &quot;../components/ui/card&quot;
+
+/**
+ * Visual companions to the Design System Overhaul case study on toribryan.com.
+ *
+ * These are not console components. They are diagrams that happen to be built
+ * from the system, so the thing making the argument is the thing being argued
+ * about. Each export is embedded individually via `&lt;StoryEmbed id=&quot;...&quot; /&gt;`, so
+ * keep story names stable: renaming one changes its id and breaks the embed.
+ */
+const meta = {
+  title: &quot;Case Study/Design System Overhaul&quot;,
+  /**
+   * `!dev` keeps these out of the Storybook sidebar. They are diagrams for a
+   * different case study, and the Integrity Console write-up embeds this
+   * Storybook&#39;s full UI, so without this they would show up in its component
+   * library. Direct `iframe.html?id=...` embedding still works.
+   */
+  tags: [&quot;!dev&quot;, &quot;!autodocs&quot;, &quot;!test&quot;],
+  parameters: {
+    layout: &quot;padded&quot;,
+  },
+} satisfies Meta
+
+export default meta
+type Story = StoryObj&lt;typeof meta&gt;
+
+/**
+ * A wall of cells, one per variant, with the survivors called out.
+ *
+ * `pct` is passed in rather than derived: 587 → 32 is a 94.5% cut, and
+ * rounding it here would print 95% against the 94% quoted everywhere else.
+ */
+function VariantWall({
+  total,
+  kept,
+  pct,
+  cell,
+  gap,
+  columns,
+  label,
+}: {
+  total: number
+  kept: number
+  pct: number
+  cell: number
+  gap: number
+  columns: number
+  label: string
+}) {
+  // Pin the header and legend to the wall&#39;s width so the three align.
+  const width = columns * (cell + gap) - gap
+
+  return (
+    &lt;section className=&quot;flex flex-col gap-3&quot; style={{ width }}&gt;
+      &lt;header className=&quot;flex items-baseline justify-between gap-4&quot;&gt;
+        &lt;h3 className=&quot;text-sm font-medium&quot;&gt;{label}&lt;/h3&gt;
+        &lt;p className=&quot;font-mono text-xs text-muted-foreground tabular-nums&quot;&gt;
+          {total.toLocaleString()} → {kept} ({pct}% removed)
+        &lt;/p&gt;
+      &lt;/header&gt;
+
+      &lt;div
+        aria-hidden
+        className=&quot;grid&quot;
+        style={{
+          gap,
+          gridTemplateColumns: `repeat(${columns}, ${cell}px)`,
+        }}
+      &gt;
+        {Array.from({ length: total }, (_, i) =&gt; (
+          &lt;span
+            key={i}
+            className={
+              i &lt; kept
+                ? &quot;rounded-[1px] bg-primary&quot;
+                : &quot;rounded-[1px] bg-muted-foreground/25&quot;
+            }
+            style={{ width: cell, height: cell }}
+          /&gt;
+        ))}
+      &lt;/div&gt;
+
+      &lt;p className=&quot;text-xs text-muted-foreground&quot;&gt;
+        &lt;span className=&quot;inline-block size-2 translate-y-[1px] rounded-[1px] bg-primary&quot; /&gt;{&quot; &quot;}
+        kept
+        &lt;span className=&quot;mx-2 text-muted-foreground/40&quot;&gt;|&lt;/span&gt;
+        &lt;span className=&quot;inline-block size-2 translate-y-[1px] rounded-[1px] bg-muted-foreground/25&quot; /&gt;{&quot; &quot;}
+        removed
+      &lt;/p&gt;
+    &lt;/section&gt;
+  )
+}
+
+/**
+ * The headline number, drawn rather than stated. Every cell is one variant that
+ * existed in the legacy library; the coloured ones are what survived.
+ */
+export const VariantMath: Story = {
+  render: () =&gt; (
+    &lt;div className=&quot;flex flex-col gap-8&quot;&gt;
+      &lt;VariantWall
+        label=&quot;Card&quot;
+        total={587}
+        kept={32}
+        pct={94}
+        cell={14}
+        gap={3}
+        columns={52}
+      /&gt;
+      &lt;VariantWall
+        label=&quot;Button&quot;
+        total={1160}
+        kept={480}
+        pct={59}
+        cell={10}
+        gap={2}
+        columns={73}
+      /&gt;
+    &lt;/div&gt;
+  ),
+}
+
+/**
+ * Why the wall got that big: each new requirement arrived as another switch,
+ * and switches multiply.
+ */
+export const AttributeSprawl: Story = {
+  render: () =&gt; {
+    const flags = [
+      &quot;hasIcon&quot;,
+      &quot;hasBadge&quot;,
+      &quot;hasFooter&quot;,
+      &quot;isCompact&quot;,
+      &quot;isElevated&quot;,
+      &quot;isSelectable&quot;,
+      &quot;showsMeta&quot;,
+      &quot;reportVariant&quot;,
+      &quot;inboxVariant&quot;,
+      &quot;adminVariant&quot;,
+    ]
+
+    return (
+      &lt;div className=&quot;flex max-w-[900px] flex-col gap-6&quot;&gt;
+        &lt;div className=&quot;grid gap-6 sm:grid-cols-2&quot;&gt;
+          &lt;div className=&quot;flex flex-col gap-3&quot;&gt;
+            &lt;h3 className=&quot;text-sm font-medium&quot;&gt;One component, ten switches&lt;/h3&gt;
+            &lt;ul className=&quot;flex flex-col gap-1 font-mono text-xs&quot;&gt;
+              {flags.map((flag) =&gt; (
+                &lt;li key={flag} className=&quot;flex items-baseline gap-1&quot;&gt;
+                  &lt;span className=&quot;text-foreground&quot;&gt;{flag}&lt;/span&gt;
+                  &lt;span className=&quot;text-muted-foreground&quot;&gt;: boolean&lt;/span&gt;
+                &lt;/li&gt;
+              ))}
+            &lt;/ul&gt;
+          &lt;/div&gt;
+
+          &lt;div className=&quot;flex flex-col justify-center gap-3 rounded-lg bg-surface-nested p-5&quot;&gt;
+            &lt;p className=&quot;font-mono text-xs text-muted-foreground&quot;&gt;
+              2&lt;sup&gt;10&lt;/sup&gt; = 1,024 reachable states
+            &lt;/p&gt;
+            &lt;p className=&quot;text-sm leading-relaxed&quot;&gt;
+              Nobody designed a thousand cards. The combinations were a
+              by-product of the API, and every one of them was a thing to
+              maintain, document and scroll past.
+            &lt;/p&gt;
+            &lt;p className=&quot;text-sm leading-relaxed text-muted-foreground&quot;&gt;
+              The last three flags are the real tell: a component that knows
+              which product it is in cannot be reused, only copied.
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    )
+  },
+}
+
+/**
+ * The replacement. One structure, holding space for whatever belongs there, so
+ * a new requirement is a composition rather than a modification.
+ */
+export const Composition: Story = {
+  render: () =&gt; (
+    &lt;div className=&quot;flex max-w-[900px] flex-col gap-5&quot;&gt;
+      &lt;p className=&quot;max-w-[60ch] text-sm leading-relaxed text-muted-foreground&quot;&gt;
+        Three different jobs, one Card. Nothing below required a new variant, a
+        new flag, or a component that knows which product it is rendering in.
+      &lt;/p&gt;
+
+      &lt;div className=&quot;grid gap-4 sm:grid-cols-3&quot;&gt;
+        &lt;Card&gt;
+          &lt;CardHeader&gt;
+            &lt;CardTitle&gt;Escalated&lt;/CardTitle&gt;
+            &lt;CardDescription&gt;Last 7 days&lt;/CardDescription&gt;
+          &lt;/CardHeader&gt;
+          &lt;CardContent&gt;
+            &lt;p className=&quot;font-mono text-3xl tabular-nums&quot;&gt;14&lt;/p&gt;
+          &lt;/CardContent&gt;
+        &lt;/Card&gt;
+
+        &lt;Card&gt;
+          &lt;CardHeader&gt;
+            &lt;CardTitle&gt;Room scan&lt;/CardTitle&gt;
+            &lt;CardDescription&gt;Failures by cause&lt;/CardDescription&gt;
+          &lt;/CardHeader&gt;
+          &lt;CardContent className=&quot;flex flex-wrap gap-1.5&quot;&gt;
+            &lt;Badge&gt;Lighting&lt;/Badge&gt;
+            &lt;Badge variant=&quot;secondary&quot;&gt;Angle&lt;/Badge&gt;
+            &lt;Badge variant=&quot;secondary&quot;&gt;Incomplete&lt;/Badge&gt;
+          &lt;/CardContent&gt;
+        &lt;/Card&gt;
+
+        &lt;Card&gt;
+          &lt;CardHeader&gt;
+            &lt;CardTitle&gt;Integrity review&lt;/CardTitle&gt;
+            &lt;CardDescription&gt;3 sessions flagged&lt;/CardDescription&gt;
+          &lt;/CardHeader&gt;
+          &lt;CardContent&gt;
+            &lt;p className=&quot;text-sm text-muted-foreground&quot;&gt;
+              Awaiting instructor decision.
+            &lt;/p&gt;
+          &lt;/CardContent&gt;
+          &lt;CardFooter&gt;
+            &lt;Button size=&quot;sm&quot;&gt;Open queue&lt;/Button&gt;
+          &lt;/CardFooter&gt;
+        &lt;/Card&gt;
+      &lt;/div&gt;
+
+      &lt;p className=&quot;max-w-[60ch] text-xs text-muted-foreground&quot;&gt;
+        Slots move capability out of variants and into composition, which is the
+        only place it can be recombined.
+      &lt;/p&gt;
+    &lt;/div&gt;
+  ),
+}
+
+/** One row of the token diagram. */
+function TokenRow({
+  tier,
+  note,
+  children,
+}: {
+  tier: string
+  note: string
+  children: React.ReactNode
+}) {
+  return (
+    &lt;div className=&quot;grid items-start gap-3 sm:grid-cols-[168px_1fr]&quot;&gt;
+      &lt;div className=&quot;flex flex-col gap-0.5&quot;&gt;
+        &lt;p className=&quot;font-mono text-xs tracking-wide uppercase&quot;&gt;{tier}&lt;/p&gt;
+        &lt;p className=&quot;text-xs text-muted-foreground&quot;&gt;{note}&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div className=&quot;flex flex-wrap gap-2&quot;&gt;{children}&lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+function Swatch({ name, className }: { name: string; className: string }) {
+  return (
+    &lt;span className=&quot;flex items-center gap-2 rounded-md bg-surface-nested px-2 py-1 font-mono text-[11px]&quot;&gt;
+      &lt;span
+        className={`size-3 shrink-0 rounded-[3px] ring-1 ring-black/10 ${className}`}
+      /&gt;
+      {name}
+    &lt;/span&gt;
+  )
+}
+
+/**
+ * The layer that had to exist before a single component was worth touching.
+ * Values at the bottom, meaning in the middle, usage at the top.
+ */
+export const TokenArchitecture: Story = {
+  render: () =&gt; (
+    &lt;div className=&quot;flex max-w-[900px] flex-col gap-7&quot;&gt;
+      &lt;TokenRow tier=&quot;Primitive&quot; note=&quot;Raw values. Named for what they are.&quot;&gt;
+        &lt;Swatch name=&quot;--red-600&quot; className=&quot;bg-primary&quot; /&gt;
+        &lt;Swatch name=&quot;--neutral-100&quot; className=&quot;bg-surface-nested&quot; /&gt;
+        &lt;Swatch name=&quot;--neutral-900&quot; className=&quot;bg-foreground&quot; /&gt;
+        &lt;Swatch name=&quot;--green-600&quot; className=&quot;bg-success&quot; /&gt;
+      &lt;/TokenRow&gt;
+
+      &lt;TokenRow
+        tier=&quot;Semantic&quot;
+        note=&quot;Roles. This is the layer that makes a theme possible.&quot;
+      &gt;
+        &lt;Swatch name=&quot;--primary&quot; className=&quot;bg-primary&quot; /&gt;
+        &lt;Swatch name=&quot;--surface-nested&quot; className=&quot;bg-surface-nested&quot; /&gt;
+        &lt;Swatch name=&quot;--foreground&quot; className=&quot;bg-foreground&quot; /&gt;
+        &lt;Swatch name=&quot;--success&quot; className=&quot;bg-success&quot; /&gt;
+      &lt;/TokenRow&gt;
+
+      &lt;TokenRow
+        tier=&quot;Component&quot;
+        note=&quot;Consumes roles only. Never reaches past them to a raw value.&quot;
+      &gt;
+        &lt;Swatch name=&quot;--button-bg&quot; className=&quot;bg-primary&quot; /&gt;
+        &lt;Swatch name=&quot;--card-well&quot; className=&quot;bg-surface-nested&quot; /&gt;
+        &lt;Swatch name=&quot;--card-title&quot; className=&quot;bg-foreground&quot; /&gt;
+        &lt;Swatch name=&quot;--badge-ok&quot; className=&quot;bg-success&quot; /&gt;
+      &lt;/TokenRow&gt;
+    &lt;/div&gt;
+  ),
+}
+
+/**
+ * The payoff of the semantic layer: the same composition under two themes,
+ * with no component aware that anything changed.
+ */
+export const ThemeAware: Story = {
+  render: () =&gt; {
+    const panel = (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle&gt;Escalated conversations&lt;/CardTitle&gt;
+          &lt;CardDescription&gt;Last 7 days, all institutions&lt;/CardDescription&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent className=&quot;flex items-end gap-3&quot;&gt;
+          &lt;p className=&quot;font-mono text-3xl tabular-nums&quot;&gt;14&lt;/p&gt;
+          &lt;Badge&gt;+3&lt;/Badge&gt;
+        &lt;/CardContent&gt;
+        &lt;CardFooter&gt;
+          &lt;Button size=&quot;sm&quot;&gt;View report&lt;/Button&gt;
+        &lt;/CardFooter&gt;
+      &lt;/Card&gt;
+    )
+
+    return (
+      &lt;div className=&quot;flex max-w-[900px] flex-col gap-5&quot;&gt;
+        &lt;div className=&quot;grid gap-4 sm:grid-cols-2&quot;&gt;
+          &lt;div className=&quot;flex flex-col gap-2&quot;&gt;
+            &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+              Theme A
+            &lt;/p&gt;
+            &lt;div className=&quot;rounded-xl bg-background p-4 ring-1 ring-border&quot;&gt;
+              {panel}
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div className=&quot;flex flex-col gap-2&quot;&gt;
+            &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+              Theme B
+            &lt;/p&gt;
+            &lt;div
+              className=&quot;rounded-xl bg-background p-4 ring-1 ring-border&quot;
+              style={
+                {
+                  &quot;--primary&quot;: &quot;#1f4bd8&quot;,
+                  &quot;--background&quot;: &quot;#eceff6&quot;,
+                  &quot;--card&quot;: &quot;#ffffff&quot;,
+                  &quot;--surface-nested&quot;: &quot;#f5f7fb&quot;,
+                  &quot;--sel&quot;: &quot;#d3daea&quot;,
+                } as React.CSSProperties
+              }
+            &gt;
+              {panel}
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    )
+  },
+}
+</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import {
+    Badge,
+    Button,
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "design-system";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Variant Math</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The headline number, drawn rather than stated. Every cell is one variant that
+existed in the legacy library; the coloured ones are what survived.</div>
+              <pre><code>const VariantMath = () =&gt; (
+  &lt;div className=&quot;flex flex-col gap-8&quot;&gt;
+    &lt;VariantWall
+      label=&quot;Card&quot;
+      total={587}
+      kept={32}
+      pct={94}
+      cell={14}
+      gap={3}
+      columns={52}
+    /&gt;
+    &lt;VariantWall
+      label=&quot;Button&quot;
+      total={1160}
+      kept={480}
+      pct={59}
+      cell={10}
+      gap={2}
+      columns={73}
+    /&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Attribute Sprawl</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Why the wall got that big: each new requirement arrived as another switch,
+and switches multiply.</div>
+              <pre><code>const AttributeSprawl = () =&gt; {
+  const flags = [
+    &quot;hasIcon&quot;,
+    &quot;hasBadge&quot;,
+    &quot;hasFooter&quot;,
+    &quot;isCompact&quot;,
+    &quot;isElevated&quot;,
+    &quot;isSelectable&quot;,
+    &quot;showsMeta&quot;,
+    &quot;reportVariant&quot;,
+    &quot;inboxVariant&quot;,
+    &quot;adminVariant&quot;,
+  ]
+
+  return (
+    &lt;div className=&quot;flex max-w-[900px] flex-col gap-6&quot;&gt;
+      &lt;div className=&quot;grid gap-6 sm:grid-cols-2&quot;&gt;
+        &lt;div className=&quot;flex flex-col gap-3&quot;&gt;
+          &lt;h3 className=&quot;text-sm font-medium&quot;&gt;One component, ten switches&lt;/h3&gt;
+          &lt;ul className=&quot;flex flex-col gap-1 font-mono text-xs&quot;&gt;
+            {flags.map((flag) =&gt; (
+              &lt;li key={flag} className=&quot;flex items-baseline gap-1&quot;&gt;
+                &lt;span className=&quot;text-foreground&quot;&gt;{flag}&lt;/span&gt;
+                &lt;span className=&quot;text-muted-foreground&quot;&gt;: boolean&lt;/span&gt;
+              &lt;/li&gt;
+            ))}
+          &lt;/ul&gt;
+        &lt;/div&gt;
+
+        &lt;div className=&quot;flex flex-col justify-center gap-3 rounded-lg bg-surface-nested p-5&quot;&gt;
+          &lt;p className=&quot;font-mono text-xs text-muted-foreground&quot;&gt;
+            2&lt;sup&gt;10&lt;/sup&gt; = 1,024 reachable states
+          &lt;/p&gt;
+          &lt;p className=&quot;text-sm leading-relaxed&quot;&gt;
+            Nobody designed a thousand cards. The combinations were a
+            by-product of the API, and every one of them was a thing to
+            maintain, document and scroll past.
+          &lt;/p&gt;
+          &lt;p className=&quot;text-sm leading-relaxed text-muted-foreground&quot;&gt;
+            The last three flags are the real tell: a component that knows
+            which product it is in cannot be reused, only copied.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Composition</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The replacement. One structure, holding space for whatever belongs there, so
+a new requirement is a composition rather than a modification.</div>
+              <pre><code>const Composition = () =&gt; (
+  &lt;div className=&quot;flex max-w-[900px] flex-col gap-5&quot;&gt;
+    &lt;p className=&quot;max-w-[60ch] text-sm leading-relaxed text-muted-foreground&quot;&gt;
+      Three different jobs, one Card. Nothing below required a new variant, a
+      new flag, or a component that knows which product it is rendering in.
+    &lt;/p&gt;
+
+    &lt;div className=&quot;grid gap-4 sm:grid-cols-3&quot;&gt;
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle&gt;Escalated&lt;/CardTitle&gt;
+          &lt;CardDescription&gt;Last 7 days&lt;/CardDescription&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;p className=&quot;font-mono text-3xl tabular-nums&quot;&gt;14&lt;/p&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle&gt;Room scan&lt;/CardTitle&gt;
+          &lt;CardDescription&gt;Failures by cause&lt;/CardDescription&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent className=&quot;flex flex-wrap gap-1.5&quot;&gt;
+          &lt;Badge&gt;Lighting&lt;/Badge&gt;
+          &lt;Badge variant=&quot;secondary&quot;&gt;Angle&lt;/Badge&gt;
+          &lt;Badge variant=&quot;secondary&quot;&gt;Incomplete&lt;/Badge&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle&gt;Integrity review&lt;/CardTitle&gt;
+          &lt;CardDescription&gt;3 sessions flagged&lt;/CardDescription&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;p className=&quot;text-sm text-muted-foreground&quot;&gt;
+            Awaiting instructor decision.
+          &lt;/p&gt;
+        &lt;/CardContent&gt;
+        &lt;CardFooter&gt;
+          &lt;Button size=&quot;sm&quot;&gt;Open queue&lt;/Button&gt;
+        &lt;/CardFooter&gt;
+      &lt;/Card&gt;
+    &lt;/div&gt;
+
+    &lt;p className=&quot;max-w-[60ch] text-xs text-muted-foreground&quot;&gt;
+      Slots move capability out of variants and into composition, which is the
+      only place it can be recombined.
+    &lt;/p&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Token Architecture</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The layer that had to exist before a single component was worth touching.
+Values at the bottom, meaning in the middle, usage at the top.</div>
+              <pre><code>const TokenArchitecture = () =&gt; (
+  &lt;div className=&quot;flex max-w-[900px] flex-col gap-7&quot;&gt;
+    &lt;TokenRow tier=&quot;Primitive&quot; note=&quot;Raw values. Named for what they are.&quot;&gt;
+      &lt;Swatch name=&quot;--red-600&quot; className=&quot;bg-primary&quot; /&gt;
+      &lt;Swatch name=&quot;--neutral-100&quot; className=&quot;bg-surface-nested&quot; /&gt;
+      &lt;Swatch name=&quot;--neutral-900&quot; className=&quot;bg-foreground&quot; /&gt;
+      &lt;Swatch name=&quot;--green-600&quot; className=&quot;bg-success&quot; /&gt;
+    &lt;/TokenRow&gt;
+
+    &lt;TokenRow
+      tier=&quot;Semantic&quot;
+      note=&quot;Roles. This is the layer that makes a theme possible.&quot;
+    &gt;
+      &lt;Swatch name=&quot;--primary&quot; className=&quot;bg-primary&quot; /&gt;
+      &lt;Swatch name=&quot;--surface-nested&quot; className=&quot;bg-surface-nested&quot; /&gt;
+      &lt;Swatch name=&quot;--foreground&quot; className=&quot;bg-foreground&quot; /&gt;
+      &lt;Swatch name=&quot;--success&quot; className=&quot;bg-success&quot; /&gt;
+    &lt;/TokenRow&gt;
+
+    &lt;TokenRow
+      tier=&quot;Component&quot;
+      note=&quot;Consumes roles only. Never reaches past them to a raw value.&quot;
+    &gt;
+      &lt;Swatch name=&quot;--button-bg&quot; className=&quot;bg-primary&quot; /&gt;
+      &lt;Swatch name=&quot;--card-well&quot; className=&quot;bg-surface-nested&quot; /&gt;
+      &lt;Swatch name=&quot;--card-title&quot; className=&quot;bg-foreground&quot; /&gt;
+      &lt;Swatch name=&quot;--badge-ok&quot; className=&quot;bg-success&quot; /&gt;
+    &lt;/TokenRow&gt;
+  &lt;/div&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Theme Aware</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The payoff of the semantic layer: the same composition under two themes,
+with no component aware that anything changed.</div>
+              <pre><code>const ThemeAware = () =&gt; {
+  const panel = (
+    &lt;Card&gt;
+      &lt;CardHeader&gt;
+        &lt;CardTitle&gt;Escalated conversations&lt;/CardTitle&gt;
+        &lt;CardDescription&gt;Last 7 days, all institutions&lt;/CardDescription&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent className=&quot;flex items-end gap-3&quot;&gt;
+        &lt;p className=&quot;font-mono text-3xl tabular-nums&quot;&gt;14&lt;/p&gt;
+        &lt;Badge&gt;+3&lt;/Badge&gt;
+      &lt;/CardContent&gt;
+      &lt;CardFooter&gt;
+        &lt;Button size=&quot;sm&quot;&gt;View report&lt;/Button&gt;
+      &lt;/CardFooter&gt;
+    &lt;/Card&gt;
+  )
+
+  return (
+    &lt;div className=&quot;flex max-w-[900px] flex-col gap-5&quot;&gt;
+      &lt;div className=&quot;grid gap-4 sm:grid-cols-2&quot;&gt;
+        &lt;div className=&quot;flex flex-col gap-2&quot;&gt;
+          &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+            Theme A
+          &lt;/p&gt;
+          &lt;div className=&quot;rounded-xl bg-background p-4 ring-1 ring-border&quot;&gt;
+            {panel}
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div className=&quot;flex flex-col gap-2&quot;&gt;
+          &lt;p className=&quot;font-mono text-xs tracking-wide text-muted-foreground uppercase&quot;&gt;
+            Theme B
+          &lt;/p&gt;
+          &lt;div
+            className=&quot;rounded-xl bg-background p-4 ring-1 ring-border&quot;
+            style={
+              {
+                &quot;--primary&quot;: &quot;#1f4bd8&quot;,
+                &quot;--background&quot;: &quot;#eceff6&quot;,
+                &quot;--card&quot;: &quot;#ffffff&quot;,
+                &quot;--surface-nested&quot;: &quot;#f5f7fb&quot;,
+                &quot;--sel&quot;: &quot;#d3daea&quot;,
+              } as React.CSSProperties
+            }
+          &gt;
+            {panel}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+};</code></pre>
             </div>
         </div>
     

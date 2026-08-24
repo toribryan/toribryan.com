@@ -2,7 +2,7 @@
   "name": "tori-portfolio",
   "version": "0.1.0",
   "private": true,
-  "description": "Tori Bryan — Staff Product Designer portfolio.",
+  "description": "Product Design portfolio.",
   "author": {
     "name": "Tori Bryan",
     "email": "toribryan.design@gmail.com"
@@ -30,6 +30,7 @@
     "date-fns": "^4.1.0",
     "fumadocs-core": "^16.14.5",
     "geist": "^1.7.0",
+    "github-slugger": "^2.0.0",
     "jotai": "^2.18.1",
     "lru-cache": "^11.2.6",
     "lucide-react": "^1.14.0",

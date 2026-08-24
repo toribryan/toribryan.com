@@ -1,6 +1,67 @@
 {
   "v": 0,
   "components": {
+    "case-study-agentic-design-system": {
+      "id": "case-study-agentic-design-system",
+      "name": "AgenticDesignSystem",
+      "path": "./src/case-study/AgenticDesignSystem.stories.tsx",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component found",
+        "message": "We could not detect the component from your story file. Specify meta.component.\n   9 |  * embed contract, so renaming one breaks its embed.\n  10 |  */\n> 11 | const meta = {\n     | ^\n  12 |   title: \"Case Study/Agentic Design System\",\n  13 |   tags: [\"!dev\", \"!autodocs\", \"!test\"],\n  14 |   parameters: {\n\n./src/case-study/AgenticDesignSystem.stories.tsx:\nimport type { Meta, StoryObj } from \"@storybook/react-vite\"\n\n/**\n * Visual companions to the Agentic Design System case study on toribryan.com.\n *\n * Same tag treatment as the Design System Overhaul stories: hidden from the\n * sidebar so they do not appear inside the Integrity Console's embedded\n * Storybook, but still reachable by `iframe.html?id=...`. Story names are the\n * embed contract, so renaming one breaks its embed.\n */\nconst meta = {\n  title: \"Case Study/Agentic Design System\",\n  tags: [\"!dev\", \"!autodocs\", \"!test\"],\n  parameters: {\n    layout: \"padded\",\n  },\n} satisfies Meta\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nfunction Panel({\n  label,\n  tone,\n  code,\n  note,\n}: {\n  label: string\n  tone: \"bad\" | \"good\"\n  code: string\n  note: string\n}) {\n  return (\n    <section className=\"flex flex-col gap-2\">\n      <header className=\"flex items-center gap-2\">\n        <span\n          className={`size-2 shrink-0 rounded-[2px] ${\n            tone === \"bad\" ? \"bg-border\" : \"bg-primary\"\n          }`}\n          aria-hidden\n        />\n        <h3 className=\"text-sm font-medium\">{label}</h3>\n      </header>\n\n      <pre className=\"overflow-x-auto rounded-lg bg-surface-nested p-4 font-mono text-[11px] leading-relaxed\">\n        {code}\n      </pre>\n\n      <p className=\"text-xs leading-relaxed text-muted-foreground\">{note}</p>\n    </section>\n  )\n}\n\n/**\n * The finding, in the smallest honest form: the same design and the same\n * prompt, with and without the component carrying its own usage contract.\n */\nexport const InferenceVsLookup: Story = {\n  render: () => (\n    <div className=\"flex max-w-[880px] flex-col gap-5\">\n      <p className=\"font-mono text-xs tracking-wide text-muted-foreground uppercase\">\n        Same design. Same prompt.\n      </p>\n\n      <div className=\"grid gap-6 sm:grid-cols-2\">\n        <Panel\n          tone=\"bad\"\n          label=\"Without usage instructions\"\n          code={`<div\n  className=\"rounded-md px-4 py-3\n    bg-[#008b8b] text-white\n    text-sm font-medium\"\n>\n  Save changes\n</div>`}\n          note=\"Rebuilt from scratch. The hex is hardcoded, the radius is invented, and nothing links back to the system. It looks right and is unmaintainable.\"\n        />\n\n        <Panel\n          tone=\"good\"\n          label=\"With Code Connect\"\n          code={`<Button variant=\"primary\" size=\"sm\">\n  Save changes\n</Button>`}\n          note=\"Resolved to the component. Variants and tokens arrive with it, so a rebrand reaches this automatically.\"\n        />\n      </div>\n    </div>\n  ),\n}\n"
+      },
+      "stories": [
+        {
+          "id": "case-study-agentic-design-system--inference-vs-lookup",
+          "name": "Inference Vs Lookup",
+          "snippet": "const InferenceVsLookup = () => (\n  <div className=\"flex max-w-[880px] flex-col gap-5\">\n    <p className=\"font-mono text-xs tracking-wide text-muted-foreground uppercase\">\n      Same design. Same prompt.\n    </p>\n\n    <div className=\"grid gap-6 sm:grid-cols-2\">\n      <Panel\n        tone=\"bad\"\n        label=\"Without usage instructions\"\n        code={`<div\nclassName=\"rounded-md px-4 py-3\n  bg-[#008b8b] text-white\n  text-sm font-medium\"\n>\nSave changes\n</div>`}\n        note=\"Rebuilt from scratch. The hex is hardcoded, the radius is invented, and nothing links back to the system. It looks right and is unmaintainable.\"\n      />\n\n      <Panel\n        tone=\"good\"\n        label=\"With Code Connect\"\n        code={`<Button variant=\"primary\" size=\"sm\">\nSave changes\n</Button>`}\n        note=\"Resolved to the component. Variants and tokens arrive with it, so a rebrand reaches this automatically.\"\n      />\n    </div>\n  </div>\n);",
+          "description": "The finding, in the smallest honest form: the same design and the same\nprompt, with and without the component carrying its own usage contract."
+        }
+      ]
+    },
+    "case-study-design-system-overhaul": {
+      "id": "case-study-design-system-overhaul",
+      "name": "DesignSystemOverhaul",
+      "path": "./src/case-study/DesignSystemOverhaul.stories.tsx",
+      "jsDocTags": {},
+      "error": {
+        "name": "No component found",
+        "message": "We could not detect the component from your story file. Specify meta.component.\n  20 |  * keep story names stable: renaming one changes its id and breaks the embed.\n  21 |  */\n> 22 | const meta = {\n     | ^\n  23 |   title: \"Case Study/Design System Overhaul\",\n  24 |   /**\n  25 |    * `!dev` keeps these out of the Storybook sidebar. They are diagrams for a\n\n./src/case-study/DesignSystemOverhaul.stories.tsx:\nimport type { Meta, StoryObj } from \"@storybook/react-vite\"\n\nimport { Badge } from \"../components/ui/badge\"\nimport { Button } from \"../components/ui/button\"\nimport {\n  Card,\n  CardContent,\n  CardDescription,\n  CardFooter,\n  CardHeader,\n  CardTitle,\n} from \"../components/ui/card\"\n\n/**\n * Visual companions to the Design System Overhaul case study on toribryan.com.\n *\n * These are not console components. They are diagrams that happen to be built\n * from the system, so the thing making the argument is the thing being argued\n * about. Each export is embedded individually via `<StoryEmbed id=\"...\" />`, so\n * keep story names stable: renaming one changes its id and breaks the embed.\n */\nconst meta = {\n  title: \"Case Study/Design System Overhaul\",\n  /**\n   * `!dev` keeps these out of the Storybook sidebar. They are diagrams for a\n   * different case study, and the Integrity Console write-up embeds this\n   * Storybook's full UI, so without this they would show up in its component\n   * library. Direct `iframe.html?id=...` embedding still works.\n   */\n  tags: [\"!dev\", \"!autodocs\", \"!test\"],\n  parameters: {\n    layout: \"padded\",\n  },\n} satisfies Meta\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\n/**\n * A wall of cells, one per variant, with the survivors called out.\n *\n * `pct` is passed in rather than derived: 587 → 32 is a 94.5% cut, and\n * rounding it here would print 95% against the 94% quoted everywhere else.\n */\nfunction VariantWall({\n  total,\n  kept,\n  pct,\n  cell,\n  gap,\n  columns,\n  label,\n}: {\n  total: number\n  kept: number\n  pct: number\n  cell: number\n  gap: number\n  columns: number\n  label: string\n}) {\n  // Pin the header and legend to the wall's width so the three align.\n  const width = columns * (cell + gap) - gap\n\n  return (\n    <section className=\"flex flex-col gap-3\" style={{ width }}>\n      <header className=\"flex items-baseline justify-between gap-4\">\n        <h3 className=\"text-sm font-medium\">{label}</h3>\n        <p className=\"font-mono text-xs text-muted-foreground tabular-nums\">\n          {total.toLocaleString()} → {kept} ({pct}% removed)\n        </p>\n      </header>\n\n      <div\n        aria-hidden\n        className=\"grid\"\n        style={{\n          gap,\n          gridTemplateColumns: `repeat(${columns}, ${cell}px)`,\n        }}\n      >\n        {Array.from({ length: total }, (_, i) => (\n          <span\n            key={i}\n            className={\n              i < kept\n                ? \"rounded-[1px] bg-primary\"\n                : \"rounded-[1px] bg-muted-foreground/25\"\n            }\n            style={{ width: cell, height: cell }}\n          />\n        ))}\n      </div>\n\n      <p className=\"text-xs text-muted-foreground\">\n        <span className=\"inline-block size-2 translate-y-[1px] rounded-[1px] bg-primary\" />{\" \"}\n        kept\n        <span className=\"mx-2 text-muted-foreground/40\">|</span>\n        <span className=\"inline-block size-2 translate-y-[1px] rounded-[1px] bg-muted-foreground/25\" />{\" \"}\n        removed\n      </p>\n    </section>\n  )\n}\n\n/**\n * The headline number, drawn rather than stated. Every cell is one variant that\n * existed in the legacy library; the coloured ones are what survived.\n */\nexport const VariantMath: Story = {\n  render: () => (\n    <div className=\"flex flex-col gap-8\">\n      <VariantWall\n        label=\"Card\"\n        total={587}\n        kept={32}\n        pct={94}\n        cell={14}\n        gap={3}\n        columns={52}\n      />\n      <VariantWall\n        label=\"Button\"\n        total={1160}\n        kept={480}\n        pct={59}\n        cell={10}\n        gap={2}\n        columns={73}\n      />\n    </div>\n  ),\n}\n\n/**\n * Why the wall got that big: each new requirement arrived as another switch,\n * and switches multiply.\n */\nexport const AttributeSprawl: Story = {\n  render: () => {\n    const flags = [\n      \"hasIcon\",\n      \"hasBadge\",\n      \"hasFooter\",\n      \"isCompact\",\n      \"isElevated\",\n      \"isSelectable\",\n      \"showsMeta\",\n      \"reportVariant\",\n      \"inboxVariant\",\n      \"adminVariant\",\n    ]\n\n    return (\n      <div className=\"flex max-w-[900px] flex-col gap-6\">\n        <div className=\"grid gap-6 sm:grid-cols-2\">\n          <div className=\"flex flex-col gap-3\">\n            <h3 className=\"text-sm font-medium\">One component, ten switches</h3>\n            <ul className=\"flex flex-col gap-1 font-mono text-xs\">\n              {flags.map((flag) => (\n                <li key={flag} className=\"flex items-baseline gap-1\">\n                  <span className=\"text-foreground\">{flag}</span>\n                  <span className=\"text-muted-foreground\">: boolean</span>\n                </li>\n              ))}\n            </ul>\n          </div>\n\n          <div className=\"flex flex-col justify-center gap-3 rounded-lg bg-surface-nested p-5\">\n            <p className=\"font-mono text-xs text-muted-foreground\">\n              2<sup>10</sup> = 1,024 reachable states\n            </p>\n            <p className=\"text-sm leading-relaxed\">\n              Nobody designed a thousand cards. The combinations were a\n              by-product of the API, and every one of them was a thing to\n              maintain, document and scroll past.\n            </p>\n            <p className=\"text-sm leading-relaxed text-muted-foreground\">\n              The last three flags are the real tell: a component that knows\n              which product it is in cannot be reused, only copied.\n            </p>\n          </div>\n        </div>\n      </div>\n    )\n  },\n}\n\n/**\n * The replacement. One structure, holding space for whatever belongs there, so\n * a new requirement is a composition rather than a modification.\n */\nexport const Composition: Story = {\n  render: () => (\n    <div className=\"flex max-w-[900px] flex-col gap-5\">\n      <p className=\"max-w-[60ch] text-sm leading-relaxed text-muted-foreground\">\n        Three different jobs, one Card. Nothing below required a new variant, a\n        new flag, or a component that knows which product it is rendering in.\n      </p>\n\n      <div className=\"grid gap-4 sm:grid-cols-3\">\n        <Card>\n          <CardHeader>\n            <CardTitle>Escalated</CardTitle>\n            <CardDescription>Last 7 days</CardDescription>\n          </CardHeader>\n          <CardContent>\n            <p className=\"font-mono text-3xl tabular-nums\">14</p>\n          </CardContent>\n        </Card>\n\n        <Card>\n          <CardHeader>\n            <CardTitle>Room scan</CardTitle>\n            <CardDescription>Failures by cause</CardDescription>\n          </CardHeader>\n          <CardContent className=\"flex flex-wrap gap-1.5\">\n            <Badge>Lighting</Badge>\n            <Badge variant=\"secondary\">Angle</Badge>\n            <Badge variant=\"secondary\">Incomplete</Badge>\n          </CardContent>\n        </Card>\n\n        <Card>\n          <CardHeader>\n            <CardTitle>Integrity review</CardTitle>\n            <CardDescription>3 sessions flagged</CardDescription>\n          </CardHeader>\n          <CardContent>\n            <p className=\"text-sm text-muted-foreground\">\n              Awaiting instructor decision.\n            </p>\n          </CardContent>\n          <CardFooter>\n            <Button size=\"sm\">Open queue</Button>\n          </CardFooter>\n        </Card>\n      </div>\n\n      <p className=\"max-w-[60ch] text-xs text-muted-foreground\">\n        Slots move capability out of variants and into composition, which is the\n        only place it can be recombined.\n      </p>\n    </div>\n  ),\n}\n\n/** One row of the token diagram. */\nfunction TokenRow({\n  tier,\n  note,\n  children,\n}: {\n  tier: string\n  note: string\n  children: React.ReactNode\n}) {\n  return (\n    <div className=\"grid items-start gap-3 sm:grid-cols-[168px_1fr]\">\n      <div className=\"flex flex-col gap-0.5\">\n        <p className=\"font-mono text-xs tracking-wide uppercase\">{tier}</p>\n        <p className=\"text-xs text-muted-foreground\">{note}</p>\n      </div>\n      <div className=\"flex flex-wrap gap-2\">{children}</div>\n    </div>\n  )\n}\n\nfunction Swatch({ name, className }: { name: string; className: string }) {\n  return (\n    <span className=\"flex items-center gap-2 rounded-md bg-surface-nested px-2 py-1 font-mono text-[11px]\">\n      <span\n        className={`size-3 shrink-0 rounded-[3px] ring-1 ring-black/10 ${className}`}\n      />\n      {name}\n    </span>\n  )\n}\n\n/**\n * The layer that had to exist before a single component was worth touching.\n * Values at the bottom, meaning in the middle, usage at the top.\n */\nexport const TokenArchitecture: Story = {\n  render: () => (\n    <div className=\"flex max-w-[900px] flex-col gap-7\">\n      <TokenRow tier=\"Primitive\" note=\"Raw values. Named for what they are.\">\n        <Swatch name=\"--red-600\" className=\"bg-primary\" />\n        <Swatch name=\"--neutral-100\" className=\"bg-surface-nested\" />\n        <Swatch name=\"--neutral-900\" className=\"bg-foreground\" />\n        <Swatch name=\"--green-600\" className=\"bg-success\" />\n      </TokenRow>\n\n      <TokenRow\n        tier=\"Semantic\"\n        note=\"Roles. This is the layer that makes a theme possible.\"\n      >\n        <Swatch name=\"--primary\" className=\"bg-primary\" />\n        <Swatch name=\"--surface-nested\" className=\"bg-surface-nested\" />\n        <Swatch name=\"--foreground\" className=\"bg-foreground\" />\n        <Swatch name=\"--success\" className=\"bg-success\" />\n      </TokenRow>\n\n      <TokenRow\n        tier=\"Component\"\n        note=\"Consumes roles only. Never reaches past them to a raw value.\"\n      >\n        <Swatch name=\"--button-bg\" className=\"bg-primary\" />\n        <Swatch name=\"--card-well\" className=\"bg-surface-nested\" />\n        <Swatch name=\"--card-title\" className=\"bg-foreground\" />\n        <Swatch name=\"--badge-ok\" className=\"bg-success\" />\n      </TokenRow>\n    </div>\n  ),\n}\n\n/**\n * The payoff of the semantic layer: the same composition under two themes,\n * with no component aware that anything changed.\n */\nexport const ThemeAware: Story = {\n  render: () => {\n    const panel = (\n      <Card>\n        <CardHeader>\n          <CardTitle>Escalated conversations</CardTitle>\n          <CardDescription>Last 7 days, all institutions</CardDescription>\n        </CardHeader>\n        <CardContent className=\"flex items-end gap-3\">\n          <p className=\"font-mono text-3xl tabular-nums\">14</p>\n          <Badge>+3</Badge>\n        </CardContent>\n        <CardFooter>\n          <Button size=\"sm\">View report</Button>\n        </CardFooter>\n      </Card>\n    )\n\n    return (\n      <div className=\"flex max-w-[900px] flex-col gap-5\">\n        <div className=\"grid gap-4 sm:grid-cols-2\">\n          <div className=\"flex flex-col gap-2\">\n            <p className=\"font-mono text-xs tracking-wide text-muted-foreground uppercase\">\n              Theme A\n            </p>\n            <div className=\"rounded-xl bg-background p-4 ring-1 ring-border\">\n              {panel}\n            </div>\n          </div>\n\n          <div className=\"flex flex-col gap-2\">\n            <p className=\"font-mono text-xs tracking-wide text-muted-foreground uppercase\">\n              Theme B\n            </p>\n            <div\n              className=\"rounded-xl bg-background p-4 ring-1 ring-border\"\n              style={\n                {\n                  \"--primary\": \"#1f4bd8\",\n                  \"--background\": \"#eceff6\",\n                  \"--card\": \"#ffffff\",\n                  \"--surface-nested\": \"#f5f7fb\",\n                  \"--sel\": \"#d3daea\",\n                } as React.CSSProperties\n              }\n            >\n              {panel}\n            </div>\n          </div>\n        </div>\n      </div>\n    )\n  },\n}\n"
+      },
+      "stories": [
+        {
+          "id": "case-study-design-system-overhaul--variant-math",
+          "name": "Variant Math",
+          "snippet": "const VariantMath = () => (\n  <div className=\"flex flex-col gap-8\">\n    <VariantWall\n      label=\"Card\"\n      total={587}\n      kept={32}\n      pct={94}\n      cell={14}\n      gap={3}\n      columns={52}\n    />\n    <VariantWall\n      label=\"Button\"\n      total={1160}\n      kept={480}\n      pct={59}\n      cell={10}\n      gap={2}\n      columns={73}\n    />\n  </div>\n);",
+          "description": "The headline number, drawn rather than stated. Every cell is one variant that\nexisted in the legacy library; the coloured ones are what survived."
+        },
+        {
+          "id": "case-study-design-system-overhaul--attribute-sprawl",
+          "name": "Attribute Sprawl",
+          "snippet": "const AttributeSprawl = () => {\n  const flags = [\n    \"hasIcon\",\n    \"hasBadge\",\n    \"hasFooter\",\n    \"isCompact\",\n    \"isElevated\",\n    \"isSelectable\",\n    \"showsMeta\",\n    \"reportVariant\",\n    \"inboxVariant\",\n    \"adminVariant\",\n  ]\n\n  return (\n    <div className=\"flex max-w-[900px] flex-col gap-6\">\n      <div className=\"grid gap-6 sm:grid-cols-2\">\n        <div className=\"flex flex-col gap-3\">\n          <h3 className=\"text-sm font-medium\">One component, ten switches</h3>\n          <ul className=\"flex flex-col gap-1 font-mono text-xs\">\n            {flags.map((flag) => (\n              <li key={flag} className=\"flex items-baseline gap-1\">\n                <span className=\"text-foreground\">{flag}</span>\n                <span className=\"text-muted-foreground\">: boolean</span>\n              </li>\n            ))}\n          </ul>\n        </div>\n\n        <div className=\"flex flex-col justify-center gap-3 rounded-lg bg-surface-nested p-5\">\n          <p className=\"font-mono text-xs text-muted-foreground\">\n            2<sup>10</sup> = 1,024 reachable states\n          </p>\n          <p className=\"text-sm leading-relaxed\">\n            Nobody designed a thousand cards. The combinations were a\n            by-product of the API, and every one of them was a thing to\n            maintain, document and scroll past.\n          </p>\n          <p className=\"text-sm leading-relaxed text-muted-foreground\">\n            The last three flags are the real tell: a component that knows\n            which product it is in cannot be reused, only copied.\n          </p>\n        </div>\n      </div>\n    </div>\n  )\n};",
+          "description": "Why the wall got that big: each new requirement arrived as another switch,\nand switches multiply."
+        },
+        {
+          "id": "case-study-design-system-overhaul--composition",
+          "name": "Composition",
+          "snippet": "const Composition = () => (\n  <div className=\"flex max-w-[900px] flex-col gap-5\">\n    <p className=\"max-w-[60ch] text-sm leading-relaxed text-muted-foreground\">\n      Three different jobs, one Card. Nothing below required a new variant, a\n      new flag, or a component that knows which product it is rendering in.\n    </p>\n\n    <div className=\"grid gap-4 sm:grid-cols-3\">\n      <Card>\n        <CardHeader>\n          <CardTitle>Escalated</CardTitle>\n          <CardDescription>Last 7 days</CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p className=\"font-mono text-3xl tabular-nums\">14</p>\n        </CardContent>\n      </Card>\n\n      <Card>\n        <CardHeader>\n          <CardTitle>Room scan</CardTitle>\n          <CardDescription>Failures by cause</CardDescription>\n        </CardHeader>\n        <CardContent className=\"flex flex-wrap gap-1.5\">\n          <Badge>Lighting</Badge>\n          <Badge variant=\"secondary\">Angle</Badge>\n          <Badge variant=\"secondary\">Incomplete</Badge>\n        </CardContent>\n      </Card>\n\n      <Card>\n        <CardHeader>\n          <CardTitle>Integrity review</CardTitle>\n          <CardDescription>3 sessions flagged</CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p className=\"text-sm text-muted-foreground\">\n            Awaiting instructor decision.\n          </p>\n        </CardContent>\n        <CardFooter>\n          <Button size=\"sm\">Open queue</Button>\n        </CardFooter>\n      </Card>\n    </div>\n\n    <p className=\"max-w-[60ch] text-xs text-muted-foreground\">\n      Slots move capability out of variants and into composition, which is the\n      only place it can be recombined.\n    </p>\n  </div>\n);",
+          "description": "The replacement. One structure, holding space for whatever belongs there, so\na new requirement is a composition rather than a modification."
+        },
+        {
+          "id": "case-study-design-system-overhaul--token-architecture",
+          "name": "Token Architecture",
+          "snippet": "const TokenArchitecture = () => (\n  <div className=\"flex max-w-[900px] flex-col gap-7\">\n    <TokenRow tier=\"Primitive\" note=\"Raw values. Named for what they are.\">\n      <Swatch name=\"--red-600\" className=\"bg-primary\" />\n      <Swatch name=\"--neutral-100\" className=\"bg-surface-nested\" />\n      <Swatch name=\"--neutral-900\" className=\"bg-foreground\" />\n      <Swatch name=\"--green-600\" className=\"bg-success\" />\n    </TokenRow>\n\n    <TokenRow\n      tier=\"Semantic\"\n      note=\"Roles. This is the layer that makes a theme possible.\"\n    >\n      <Swatch name=\"--primary\" className=\"bg-primary\" />\n      <Swatch name=\"--surface-nested\" className=\"bg-surface-nested\" />\n      <Swatch name=\"--foreground\" className=\"bg-foreground\" />\n      <Swatch name=\"--success\" className=\"bg-success\" />\n    </TokenRow>\n\n    <TokenRow\n      tier=\"Component\"\n      note=\"Consumes roles only. Never reaches past them to a raw value.\"\n    >\n      <Swatch name=\"--button-bg\" className=\"bg-primary\" />\n      <Swatch name=\"--card-well\" className=\"bg-surface-nested\" />\n      <Swatch name=\"--card-title\" className=\"bg-foreground\" />\n      <Swatch name=\"--badge-ok\" className=\"bg-success\" />\n    </TokenRow>\n  </div>\n);",
+          "description": "The layer that had to exist before a single component was worth touching.\nValues at the bottom, meaning in the middle, usage at the top."
+        },
+        {
+          "id": "case-study-design-system-overhaul--theme-aware",
+          "name": "Theme Aware",
+          "snippet": "const ThemeAware = () => {\n  const panel = (\n    <Card>\n      <CardHeader>\n        <CardTitle>Escalated conversations</CardTitle>\n        <CardDescription>Last 7 days, all institutions</CardDescription>\n      </CardHeader>\n      <CardContent className=\"flex items-end gap-3\">\n        <p className=\"font-mono text-3xl tabular-nums\">14</p>\n        <Badge>+3</Badge>\n      </CardContent>\n      <CardFooter>\n        <Button size=\"sm\">View report</Button>\n      </CardFooter>\n    </Card>\n  )\n\n  return (\n    <div className=\"flex max-w-[900px] flex-col gap-5\">\n      <div className=\"grid gap-4 sm:grid-cols-2\">\n        <div className=\"flex flex-col gap-2\">\n          <p className=\"font-mono text-xs tracking-wide text-muted-foreground uppercase\">\n            Theme A\n          </p>\n          <div className=\"rounded-xl bg-background p-4 ring-1 ring-border\">\n            {panel}\n          </div>\n        </div>\n\n        <div className=\"flex flex-col gap-2\">\n          <p className=\"font-mono text-xs tracking-wide text-muted-foreground uppercase\">\n            Theme B\n          </p>\n          <div\n            className=\"rounded-xl bg-background p-4 ring-1 ring-border\"\n            style={\n              {\n                \"--primary\": \"#1f4bd8\",\n                \"--background\": \"#eceff6\",\n                \"--card\": \"#ffffff\",\n                \"--surface-nested\": \"#f5f7fb\",\n                \"--sel\": \"#d3daea\",\n              } as React.CSSProperties\n            }\n          >\n            {panel}\n          </div>\n        </div>\n      </div>\n    </div>\n  )\n};",
+          "description": "The payoff of the semantic layer: the same composition under two themes,\nwith no component aware that anything changed."
+        }
+      ],
+      "import": "import {\n    Badge,\n    Button,\n    Card,\n    CardContent,\n    CardDescription,\n    CardFooter,\n    CardHeader,\n    CardTitle,\n} from \"design-system\";"
+    },
     "chrome-secondarynav": {
       "id": "chrome-secondarynav",
       "name": "SecondaryNav",
@@ -10,7 +71,7 @@
         "description": "",
         "methods": [],
         "displayName": "SecondaryNav",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\chrome\\SecondaryNav.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/chrome/SecondaryNav.tsx",
         "actualName": "SecondaryNav",
         "exportName": "SecondaryNav",
         "props": {
@@ -28,7 +89,7 @@
               "elements": [
                 {
                   "name": "union",
-                  "raw": "| { type: \"item\"; key: string; label: string; icon: LucideIcon; count?: number; external?: boolean }\r\n| { type: \"folder\"; id: string; label: string; children: { key: string; label: string }[] }\r\n| { type: \"divider\" }",
+                  "raw": "| { type: \"item\"; key: string; label: string; icon: LucideIcon; count?: number; external?: boolean }\n| { type: \"folder\"; id: string; label: string; children: { key: string; label: string }[] }\n| { type: \"divider\" }",
                   "elements": [
                     {
                       "name": "signature",
@@ -226,7 +287,7 @@
         "description": "",
         "methods": [],
         "displayName": "SourceCard",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\dashboard\\SourceCard.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/dashboard/SourceCard.tsx",
         "actualName": "SourceCard",
         "exportName": "SourceCard",
         "props": {
@@ -344,12 +405,12 @@
         {
           "id": "dashboard-sourcecard--cards",
           "name": "Cards",
-          "snippet": "const Cards = () => (\r\n  <div className=\"flex flex-wrap gap-4\">\r\n    <SourceCard\r\n      thumbBg=\"#bfeacb\"\r\n      thumbContent={<span className=\"text-[22px] font-bold tracking-wide text-[#2f7549] uppercase\">BAB Help</span>}\r\n      title=\"Help Center\"\r\n      status=\"live\"\r\n      description=\"Students and instructors use your knowledge to find accurate answers themselves.\"\r\n    />\r\n    <SourceCard\r\n      thumbBg=\"#bfe6ea\"\r\n      thumbContent={<Bot className=\"size-10 text-[#0c4a6e]\" />}\r\n      title=\"AI Assist\"\r\n      status=\"not-live\"\r\n      description=\"AI Assist uses your knowledge to generate accurate answers for students, instructors, and administrators.\"\r\n    />\r\n  </div>\r\n);"
+          "snippet": "const Cards = () => (\n  <div className=\"flex flex-wrap gap-4\">\n    <SourceCard\n      thumbBg=\"#bfeacb\"\n      thumbContent={<span className=\"text-[22px] font-bold tracking-wide text-[#2f7549] uppercase\">BAB Help</span>}\n      title=\"Help Center\"\n      status=\"live\"\n      description=\"Students and instructors use your knowledge to find accurate answers themselves.\"\n    />\n    <SourceCard\n      thumbBg=\"#bfe6ea\"\n      thumbContent={<Bot className=\"size-10 text-[#0c4a6e]\" />}\n      title=\"AI Assist\"\n      status=\"not-live\"\n      description=\"AI Assist uses your knowledge to generate accurate answers for students, instructors, and administrators.\"\n    />\n  </div>\n);"
         },
         {
           "id": "dashboard-sourcecard--list",
           "name": "List",
-          "snippet": "const List = () => (\r\n  <SourceList>\r\n    <SourceListRow mark=\"EH\" title=\"Company Help Center\" meta=\"1 article\" actionLabel=\"Add article\" />\r\n    <SourceListRow mark=\"Z\" markBg=\"#03363d\" title=\"Zendesk\" meta=\"Not set up\" actionLabel=\"Sync or Import\" connected={false} />\r\n  </SourceList>\r\n);"
+          "snippet": "const List = () => (\n  <SourceList>\n    <SourceListRow mark=\"EH\" title=\"Company Help Center\" meta=\"1 article\" actionLabel=\"Add article\" />\n    <SourceListRow mark=\"Z\" markBg=\"#03363d\" title=\"Zendesk\" meta=\"Not set up\" actionLabel=\"Sync or Import\" connected={false} />\n  </SourceList>\n);"
         }
       ],
       "import": "import { Bot } from \"lucide-react\";\nimport { SourceCard, SourceList, SourceListRow } from \"design-system\";"
@@ -363,7 +424,7 @@
         "description": "",
         "methods": [],
         "displayName": "StatTile",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\dashboard\\StatTile.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/dashboard/StatTile.tsx",
         "actualName": "StatTile",
         "exportName": "StatTile",
         "props": {
@@ -457,12 +518,12 @@
         {
           "id": "dashboard-stattile--default",
           "name": "Default",
-          "snippet": "const Default = () => <StatTile\r\n    label=\"Total conversations\"\r\n    value=\"482\"\r\n    delta={{ text: \"+12% vs last period\", direction: \"up\" }} />;"
+          "snippet": "const Default = () => <StatTile\n    label=\"Total conversations\"\n    value=\"482\"\n    delta={{ text: \"+12% vs last period\", direction: \"up\" }} />;"
         },
         {
           "id": "dashboard-stattile--grid",
           "name": "Grid",
-          "snippet": "const Grid = () => (\r\n  <StatGrid className=\"w-220\">\r\n    <StatTile\r\n      label=\"Total conversations\"\r\n      icon={<MessageCircle className=\"size-3.5\" />}\r\n      value=\"482\"\r\n      delta={{ text: \"+12%\", direction: \"up\" }}\r\n      caption=\"Last 7 days\"\r\n    />\r\n    <StatTile label=\"Escalated\" value=\"14\" delta={{ text: \"+3\", direction: \"down\" }} highlight caption=\"Requires review\" />\r\n    <StatTile label=\"Avg. response time\" value=\"2m 14s\" delta={{ text: \"Above target\", direction: \"warn\" }} />\r\n    <StatTile label=\"CSAT\" value=\"94%\" delta={{ text: \"+2 pts\", direction: \"up\" }} />\r\n  </StatGrid>\r\n);"
+          "snippet": "const Grid = () => (\n  <StatGrid className=\"w-220\">\n    <StatTile\n      label=\"Total conversations\"\n      icon={<MessageCircle className=\"size-3.5\" />}\n      value=\"482\"\n      delta={{ text: \"+12%\", direction: \"up\" }}\n      caption=\"Last 7 days\"\n    />\n    <StatTile label=\"Escalated\" value=\"14\" delta={{ text: \"+3\", direction: \"down\" }} highlight caption=\"Requires review\" />\n    <StatTile label=\"Avg. response time\" value=\"2m 14s\" delta={{ text: \"Above target\", direction: \"warn\" }} />\n    <StatTile label=\"CSAT\" value=\"94%\" delta={{ text: \"+2 pts\", direction: \"up\" }} />\n  </StatGrid>\n);"
         }
       ],
       "import": "import { MessageCircle } from \"lucide-react\";\nimport { StatGrid, StatTile } from \"design-system\";"
@@ -476,7 +537,7 @@
         "description": "",
         "methods": [],
         "displayName": "TrendChart",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\dashboard\\TrendChart.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/dashboard/TrendChart.tsx",
         "actualName": "TrendChart",
         "exportName": "TrendChart",
         "props": {
@@ -556,12 +617,12 @@
         {
           "id": "dashboard-trendchart--multi-series",
           "name": "Multi Series",
-          "snippet": "const MultiSeries = () => (\r\n  <div className=\"w-280\">\r\n    <TrendChart\r\n      categories={WEEKS}\r\n      showLegend\r\n      series={[\r\n        { key: \"all\", label: \"All conversations\", color: \"var(--series-all)\", emphasis: true },\r\n        { key: \"student\", label: \"Student\", color: \"var(--series-student)\" },\r\n        { key: \"instructor\", label: \"Instructor\", color: \"var(--series-instructor)\" },\r\n        { key: \"admin\", label: \"Administrator\", color: \"var(--series-admin)\" },\r\n      ]}\r\n      values={{\r\n        all: [9, 10, 11, 10, 12, 13, 14, 15, 17, 19, 21, 24],\r\n        student: [5, 6, 6, 6, 7, 7, 8, 9, 10, 11, 12, 13],\r\n        instructor: [3, 3, 4, 3, 4, 4, 4, 5, 5, 6, 6, 7],\r\n        admin: [1, 1, 1, 2, 1, 2, 2, 2, 2, 3, 3, 3],\r\n      }}\r\n    />\r\n  </div>\r\n);"
+          "snippet": "const MultiSeries = () => (\n  <div className=\"w-280\">\n    <TrendChart\n      categories={WEEKS}\n      showLegend\n      series={[\n        { key: \"all\", label: \"All conversations\", color: \"var(--series-all)\", emphasis: true },\n        { key: \"student\", label: \"Student\", color: \"var(--series-student)\" },\n        { key: \"instructor\", label: \"Instructor\", color: \"var(--series-instructor)\" },\n        { key: \"admin\", label: \"Administrator\", color: \"var(--series-admin)\" },\n      ]}\n      values={{\n        all: [9, 10, 11, 10, 12, 13, 14, 15, 17, 19, 21, 24],\n        student: [5, 6, 6, 6, 7, 7, 8, 9, 10, 11, 12, 13],\n        instructor: [3, 3, 4, 3, 4, 4, 4, 5, 5, 6, 6, 7],\n        admin: [1, 1, 1, 2, 1, 2, 2, 2, 2, 3, 3, 3],\n      }}\n    />\n  </div>\n);"
         },
         {
           "id": "dashboard-trendchart--single-series",
           "name": "Single Series",
-          "snippet": "const SingleSeries = () => (\r\n  <div className=\"w-280\">\r\n    <TrendChart\r\n      categories={WEEKS}\r\n      series={[{ key: \"response\", label: \"Median time to first response\", color: \"var(--series-all)\" }]}\r\n      values={{ response: [3.4, 3.2, 3.1, 2.9, 2.8, 2.9, 2.6, 2.5, 2.4, 2.2, 2.3, 2.1] }}\r\n    />\r\n  </div>\r\n);"
+          "snippet": "const SingleSeries = () => (\n  <div className=\"w-280\">\n    <TrendChart\n      categories={WEEKS}\n      series={[{ key: \"response\", label: \"Median time to first response\", color: \"var(--series-all)\" }]}\n      values={{ response: [3.4, 3.2, 3.1, 2.9, 2.8, 2.9, 2.6, 2.5, 2.4, 2.2, 2.3, 2.1] }}\n    />\n  </div>\n);"
         }
       ],
       "import": "import { TrendChart } from \"design-system\";"
@@ -575,7 +636,7 @@
         "description": "",
         "methods": [],
         "displayName": "ChatHeader",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\ChatHeader.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/inbox/ChatHeader.tsx",
         "actualName": "ChatHeader",
         "exportName": "ChatHeader"
       },
@@ -613,7 +674,7 @@
           }
         ],
         "displayName": "Composer",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\Composer.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/inbox/Composer.tsx",
         "actualName": "Composer",
         "exportName": "Composer"
       },
@@ -635,7 +696,7 @@
         "description": "",
         "methods": [],
         "displayName": "ConversationList",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\ConversationList.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/inbox/ConversationList.tsx",
         "actualName": "ConversationList",
         "exportName": "ConversationList"
       },
@@ -678,7 +739,7 @@
         "description": "",
         "methods": [],
         "displayName": "MessageThread",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\MessageThread.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/inbox/MessageThread.tsx",
         "actualName": "MessageThread",
         "exportName": "MessageThread",
         "props": {
@@ -709,7 +770,7 @@
         "description": "",
         "methods": [],
         "displayName": "SidePanel",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\inbox\\SidePanel.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/inbox/SidePanel.tsx",
         "actualName": "SidePanel",
         "exportName": "SidePanel"
       },
@@ -731,7 +792,7 @@
         "description": "",
         "methods": [],
         "displayName": "Accordion",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\accordion.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/accordion.tsx",
         "actualName": "Accordion",
         "exportName": "Accordion"
       },
@@ -739,7 +800,7 @@
         {
           "id": "ui-accordion--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <Accordion defaultValue={[\"account\"]} className=\"w-80\">\r\n    <AccordionItem value=\"account\">\r\n      <AccordionTrigger>Account details</AccordionTrigger>\r\n      <AccordionContent>\r\n        Email, institution, and enrollment status.\r\n      </AccordionContent>\r\n    </AccordionItem>\r\n    <AccordionItem value=\"exam\">\r\n      <AccordionTrigger>Exam context</AccordionTrigger>\r\n      <AccordionContent>\r\n        BIO 201 Midterm — Ch. 4-7, lockdown browser session.\r\n      </AccordionContent>\r\n    </AccordionItem>\r\n  </Accordion>\r\n);"
+          "snippet": "const Default = () => (\n  <Accordion defaultValue={[\"account\"]} className=\"w-80\">\n    <AccordionItem value=\"account\">\n      <AccordionTrigger>Account details</AccordionTrigger>\n      <AccordionContent>\n        Email, institution, and enrollment status.\n      </AccordionContent>\n    </AccordionItem>\n    <AccordionItem value=\"exam\">\n      <AccordionTrigger>Exam context</AccordionTrigger>\n      <AccordionContent>\n        BIO 201 Midterm — Ch. 4-7, lockdown browser session.\n      </AccordionContent>\n    </AccordionItem>\n  </Accordion>\n);"
         }
       ],
       "import": "import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"design-system\";"
@@ -753,7 +814,7 @@
         "description": "",
         "methods": [],
         "displayName": "Avatar",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\avatar.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/avatar.tsx",
         "actualName": "Avatar",
         "exportName": "Avatar",
         "props": {
@@ -789,12 +850,12 @@
         {
           "id": "ui-avatar--with-image",
           "name": "With Image",
-          "snippet": "const WithImage = () => (\r\n  <Avatar>\r\n    <AvatarImage src=\"https://github.com/shadcn.png\" alt=\"@shadcn\" />\r\n    <AvatarFallback>SC</AvatarFallback>\r\n  </Avatar>\r\n);"
+          "snippet": "const WithImage = () => (\n  <Avatar>\n    <AvatarImage src=\"https://github.com/shadcn.png\" alt=\"@shadcn\" />\n    <AvatarFallback>SC</AvatarFallback>\n  </Avatar>\n);"
         },
         {
           "id": "ui-avatar--fallback-only",
           "name": "Fallback Only",
-          "snippet": "const FallbackOnly = () => (\r\n  <Avatar>\r\n    <AvatarFallback>JL</AvatarFallback>\r\n  </Avatar>\r\n);"
+          "snippet": "const FallbackOnly = () => (\n  <Avatar>\n    <AvatarFallback>JL</AvatarFallback>\n  </Avatar>\n);"
         }
       ],
       "import": "import { Avatar, AvatarFallback, AvatarImage } from \"design-system\";"
@@ -806,13 +867,13 @@
       "jsDocTags": {},
       "error": {
         "name": "No component definition found",
-        "message": "File: C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\badge.tsx\nError:\n\".\" is not exported under no conditions from package C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority (see exports field in C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority\\package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\nimport { mergeProps } from \"@base-ui/react/merge-props\"\r\nimport { useRender } from \"@base-ui/react/use-render\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\n\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nconst badgeVariants = cva(\r\n  \"group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3!\",\r\n  {\r\n    variants: {\r\n      variant: {\r\n        default: \"bg-primary text-primary-foreground [a]:hover:bg-primary/80\",\r\n        secondary:\r\n          \"bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80\",\r\n        destructive:\r\n          \"bg-red-bg text-red-text focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:text-destructive dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20\",\r\n        outline:\r\n          \"border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground\",\r\n        ghost:\r\n          \"hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50\",\r\n        link: \"text-primary underline-offset-4 hover:underline\",\r\n        admin: \"bg-admin-background text-admin-foreground\",\r\n        student: \"bg-student-background text-student-foreground\",\r\n        instructor: \"bg-instructor-background text-instructor-foreground\",\r\n        success: \"bg-success-background text-success-foreground\",\r\n      },\r\n    },\r\n    defaultVariants: {\r\n      variant: \"default\",\r\n    },\r\n  }\r\n)\r\n\r\nfunction Badge({\r\n  className,\r\n  variant = \"default\",\r\n  render,\r\n  ...props\r\n}: useRender.ComponentProps<\"span\"> & VariantProps<typeof badgeVariants>) {\r\n  return useRender({\r\n    defaultTagName: \"span\",\r\n    props: mergeProps<\"span\">(\r\n      {\r\n        className: cn(badgeVariants({ variant }), className),\r\n      },\r\n      props\r\n    ),\r\n    render,\r\n    state: {\r\n      slot: \"badge\",\r\n      variant,\r\n    },\r\n  })\r\n}\r\n\r\nexport { Badge, badgeVariants }\r\n"
+        "message": "File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/badge.tsx\nError:\n\".\" is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority/package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\nimport { mergeProps } from \"@base-ui/react/merge-props\"\nimport { useRender } from \"@base-ui/react/use-render\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst badgeVariants = cva(\n  \"group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3!\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-primary text-primary-foreground [a]:hover:bg-primary/80\",\n        secondary:\n          \"bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80\",\n        destructive:\n          \"bg-red-bg text-red-text focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:text-destructive dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20\",\n        outline:\n          \"border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground\",\n        ghost:\n          \"hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50\",\n        link: \"text-primary underline-offset-4 hover:underline\",\n        admin: \"bg-admin-background text-admin-foreground\",\n        student: \"bg-student-background text-student-foreground\",\n        instructor: \"bg-instructor-background text-instructor-foreground\",\n        success: \"bg-success-background text-success-foreground\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n)\n\nfunction Badge({\n  className,\n  variant = \"default\",\n  render,\n  ...props\n}: useRender.ComponentProps<\"span\"> & VariantProps<typeof badgeVariants>) {\n  return useRender({\n    defaultTagName: \"span\",\n    props: mergeProps<\"span\">(\n      {\n        className: cn(badgeVariants({ variant }), className),\n      },\n      props\n    ),\n    render,\n    state: {\n      slot: \"badge\",\n      variant,\n    },\n  })\n}\n\nexport { Badge, badgeVariants }\n"
       },
       "stories": [
         {
           "id": "ui-badge--all-variants",
           "name": "All Variants",
-          "snippet": "const AllVariants = () => (\r\n  <div className=\"flex flex-wrap items-center gap-2\">\r\n    <Badge>Default</Badge>\r\n    <Badge variant=\"secondary\">Secondary</Badge>\r\n    <Badge variant=\"outline\">Outline</Badge>\r\n    <Badge variant=\"destructive\">Destructive</Badge>\r\n    <Badge variant=\"admin\">Admin</Badge>\r\n    <Badge variant=\"student\">Student</Badge>\r\n    <Badge variant=\"instructor\">Instructor</Badge>\r\n    <Badge variant=\"success\">Success</Badge>\r\n  </div>\r\n);"
+          "snippet": "const AllVariants = () => (\n  <div className=\"flex flex-wrap items-center gap-2\">\n    <Badge>Default</Badge>\n    <Badge variant=\"secondary\">Secondary</Badge>\n    <Badge variant=\"outline\">Outline</Badge>\n    <Badge variant=\"destructive\">Destructive</Badge>\n    <Badge variant=\"admin\">Admin</Badge>\n    <Badge variant=\"student\">Student</Badge>\n    <Badge variant=\"instructor\">Instructor</Badge>\n    <Badge variant=\"success\">Success</Badge>\n  </div>\n);"
         }
       ],
       "import": "import { Badge } from \"design-system\";"
@@ -824,7 +885,7 @@
       "jsDocTags": {},
       "error": {
         "name": "No component definition found",
-        "message": "File: C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\button.tsx\nError:\n\".\" is not exported under no conditions from package C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority (see exports field in C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority\\package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\nimport { Button as ButtonPrimitive } from \"@base-ui/react/button\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\n\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nconst buttonVariants = cva(\r\n  \"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\r\n  {\r\n    variants: {\r\n      variant: {\r\n        default: \"bg-primary text-primary-foreground hover:bg-primary/80\",\r\n        outline:\r\n          \"border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50\",\r\n        secondary:\r\n          \"bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground\",\r\n        ghost:\r\n          \"hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50\",\r\n        destructive:\r\n          \"bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40\",\r\n        link: \"text-primary underline-offset-4 hover:underline\",\r\n      },\r\n      size: {\r\n        default:\r\n          \"h-8 gap-1.5 rounded-full px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2\",\r\n        xs: \"h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3\",\r\n        sm: \"h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5\",\r\n        lg: \"h-9 gap-1.5 rounded-full px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2\",\r\n        icon: \"size-8 rounded-md\",\r\n        \"icon-xs\":\r\n          \"size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3\",\r\n        \"icon-sm\":\r\n          \"size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg\",\r\n        \"icon-lg\": \"size-9 rounded-md\",\r\n      },\r\n    },\r\n    defaultVariants: {\r\n      variant: \"default\",\r\n      size: \"default\",\r\n    },\r\n  }\r\n)\r\n\r\nfunction Button({\r\n  className,\r\n  variant = \"default\",\r\n  size = \"default\",\r\n  ...props\r\n}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {\r\n  return (\r\n    <ButtonPrimitive\r\n      data-slot=\"button\"\r\n      className={cn(buttonVariants({ variant, size, className }))}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nexport { Button, buttonVariants }\r\n"
+        "message": "File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/button.tsx\nError:\n\".\" is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority/package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\nimport { Button as ButtonPrimitive } from \"@base-ui/react/button\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst buttonVariants = cva(\n  \"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-primary text-primary-foreground hover:bg-primary/80\",\n        outline:\n          \"border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50\",\n        secondary:\n          \"bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground\",\n        ghost:\n          \"hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50\",\n        destructive:\n          \"bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40\",\n        link: \"text-primary underline-offset-4 hover:underline\",\n      },\n      size: {\n        default:\n          \"h-8 gap-1.5 rounded-full px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2\",\n        xs: \"h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3\",\n        sm: \"h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5\",\n        lg: \"h-9 gap-1.5 rounded-full px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2\",\n        icon: \"size-8 rounded-md\",\n        \"icon-xs\":\n          \"size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3\",\n        \"icon-sm\":\n          \"size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg\",\n        \"icon-lg\": \"size-9 rounded-md\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n)\n\nfunction Button({\n  className,\n  variant = \"default\",\n  size = \"default\",\n  ...props\n}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {\n  return (\n    <ButtonPrimitive\n      data-slot=\"button\"\n      className={cn(buttonVariants({ variant, size, className }))}\n      {...props}\n    />\n  )\n}\n\nexport { Button, buttonVariants }\n"
       },
       "stories": [
         {
@@ -860,7 +921,7 @@
         {
           "id": "ui-button--all-variants",
           "name": "All Variants",
-          "snippet": "const AllVariants = () => (\r\n  <div className=\"flex flex-wrap items-center gap-3\">\r\n    <Button variant=\"default\">Default</Button>\r\n    <Button variant=\"outline\">Outline</Button>\r\n    <Button variant=\"secondary\">Secondary</Button>\r\n    <Button variant=\"ghost\">Ghost</Button>\r\n    <Button variant=\"destructive\">Destructive</Button>\r\n    <Button variant=\"link\">Link</Button>\r\n  </div>\r\n);"
+          "snippet": "const AllVariants = () => (\n  <div className=\"flex flex-wrap items-center gap-3\">\n    <Button variant=\"default\">Default</Button>\n    <Button variant=\"outline\">Outline</Button>\n    <Button variant=\"secondary\">Secondary</Button>\n    <Button variant=\"ghost\">Ghost</Button>\n    <Button variant=\"destructive\">Destructive</Button>\n    <Button variant=\"link\">Link</Button>\n  </div>\n);"
         }
       ],
       "import": "import { Button } from \"design-system\";"
@@ -874,7 +935,7 @@
         "description": "",
         "methods": [],
         "displayName": "Card",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\card.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/card.tsx",
         "actualName": "Card",
         "exportName": "Card",
         "props": {
@@ -906,10 +967,10 @@
         {
           "id": "ui-card--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <Card className=\"w-80\">\r\n    <CardHeader>\r\n      <CardTitle>Escalated conversations</CardTitle>\r\n      <CardDescription>Last 7 days across all institutions</CardDescription>\r\n    </CardHeader>\r\n    <CardContent>\r\n      <p className=\"text-sm text-muted-foreground\">\r\n        14 conversations were escalated, up 3 from the prior period.\r\n      </p>\r\n    </CardContent>\r\n    <CardFooter>\r\n      <Button size=\"sm\">View report</Button>\r\n    </CardFooter>\r\n  </Card>\r\n);"
+          "snippet": "const Default = () => (\n  <Card className=\"w-80\">\n    <CardHeader>\n      <CardTitle>Escalated conversations</CardTitle>\n      <CardDescription>Last 7 days across all institutions</CardDescription>\n    </CardHeader>\n    <CardContent>\n      <p className=\"text-sm text-muted-foreground\">\n        14 conversations were escalated, up 3 from the prior period.\n      </p>\n    </CardContent>\n    <CardFooter>\n      <Button size=\"sm\">View report</Button>\n    </CardFooter>\n  </Card>\n);"
         }
       ],
-      "import": "import {\r\n    Button,\r\n    Card,\r\n    CardContent,\r\n    CardDescription,\r\n    CardFooter,\r\n    CardHeader,\r\n    CardTitle,\r\n} from \"design-system\";"
+      "import": "import {\n    Button,\n    Card,\n    CardContent,\n    CardDescription,\n    CardFooter,\n    CardHeader,\n    CardTitle,\n} from \"design-system\";"
     },
     "ui-command": {
       "id": "ui-command",
@@ -920,7 +981,7 @@
         "description": "",
         "methods": [],
         "displayName": "Command",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\command.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/command.tsx",
         "actualName": "Command",
         "exportName": "Command"
       },
@@ -928,10 +989,10 @@
         {
           "id": "ui-command--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <Command className=\"w-100 rounded-lg border\">\r\n    <CommandInput placeholder=\"Type a command...\" />\r\n    <CommandList>\r\n      <CommandEmpty>No results found.</CommandEmpty>\r\n      <CommandGroup heading=\"Actions\">\r\n        <CommandItem>\r\n          Close conversation\r\n          <CommandShortcut>⌘⇧C</CommandShortcut>\r\n        </CommandItem>\r\n        <CommandItem>\r\n          Grant extra time\r\n          <CommandShortcut>⌘E</CommandShortcut>\r\n        </CommandItem>\r\n      </CommandGroup>\r\n      <CommandSeparator />\r\n      <CommandGroup heading=\"Navigate\">\r\n        <CommandItem>Go to Inbox</CommandItem>\r\n        <CommandItem>Go to Reports</CommandItem>\r\n      </CommandGroup>\r\n    </CommandList>\r\n  </Command>\r\n);"
+          "snippet": "const Default = () => (\n  <Command className=\"w-100 rounded-lg border\">\n    <CommandInput placeholder=\"Type a command...\" />\n    <CommandList>\n      <CommandEmpty>No results found.</CommandEmpty>\n      <CommandGroup heading=\"Actions\">\n        <CommandItem>\n          Close conversation\n          <CommandShortcut>⌘⇧C</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          Grant extra time\n          <CommandShortcut>⌘E</CommandShortcut>\n        </CommandItem>\n      </CommandGroup>\n      <CommandSeparator />\n      <CommandGroup heading=\"Navigate\">\n        <CommandItem>Go to Inbox</CommandItem>\n        <CommandItem>Go to Reports</CommandItem>\n      </CommandGroup>\n    </CommandList>\n  </Command>\n);"
         }
       ],
-      "import": "import {\r\n    Command,\r\n    CommandEmpty,\r\n    CommandGroup,\r\n    CommandInput,\r\n    CommandItem,\r\n    CommandList,\r\n    CommandSeparator,\r\n    CommandShortcut,\r\n} from \"design-system\";"
+      "import": "import {\n    Command,\n    CommandEmpty,\n    CommandGroup,\n    CommandInput,\n    CommandItem,\n    CommandList,\n    CommandSeparator,\n    CommandShortcut,\n} from \"design-system\";"
     },
     "ui-dialog": {
       "id": "ui-dialog",
@@ -942,7 +1003,7 @@
         "description": "",
         "methods": [],
         "displayName": "Dialog",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\dialog.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/dialog.tsx",
         "actualName": "Dialog",
         "exportName": "Dialog"
       },
@@ -950,10 +1011,10 @@
         {
           "id": "ui-dialog--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <Dialog>\r\n    <DialogTrigger render={<Button>Close conversation?</Button>} />\r\n    <DialogContent>\r\n      <DialogHeader>\r\n        <DialogTitle>Close this conversation?</DialogTitle>\r\n        <DialogDescription>\r\n          You can still find it afterward under the Closed filter.\r\n        </DialogDescription>\r\n      </DialogHeader>\r\n      <DialogFooter>\r\n        <DialogClose render={<Button variant=\"outline\">Cancel</Button>} />\r\n        <Button>Close conversation</Button>\r\n      </DialogFooter>\r\n    </DialogContent>\r\n  </Dialog>\r\n);"
+          "snippet": "const Default = () => (\n  <Dialog>\n    <DialogTrigger render={<Button>Close conversation?</Button>} />\n    <DialogContent>\n      <DialogHeader>\n        <DialogTitle>Close this conversation?</DialogTitle>\n        <DialogDescription>\n          You can still find it afterward under the Closed filter.\n        </DialogDescription>\n      </DialogHeader>\n      <DialogFooter>\n        <DialogClose render={<Button variant=\"outline\">Cancel</Button>} />\n        <Button>Close conversation</Button>\n      </DialogFooter>\n    </DialogContent>\n  </Dialog>\n);"
         }
       ],
-      "import": "import {\r\n    Button,\r\n    Dialog,\r\n    DialogClose,\r\n    DialogContent,\r\n    DialogDescription,\r\n    DialogFooter,\r\n    DialogHeader,\r\n    DialogTitle,\r\n    DialogTrigger,\r\n} from \"design-system\";"
+      "import": "import {\n    Button,\n    Dialog,\n    DialogClose,\n    DialogContent,\n    DialogDescription,\n    DialogFooter,\n    DialogHeader,\n    DialogTitle,\n    DialogTrigger,\n} from \"design-system\";"
     },
     "ui-dropdownmenu": {
       "id": "ui-dropdownmenu",
@@ -964,7 +1025,7 @@
         "description": "",
         "methods": [],
         "displayName": "DropdownMenu",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\dropdown-menu.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/dropdown-menu.tsx",
         "actualName": "DropdownMenu",
         "exportName": "DropdownMenu"
       },
@@ -972,15 +1033,15 @@
         {
           "id": "ui-dropdownmenu--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <DropdownMenu>\r\n    <DropdownMenuTrigger render={<Button variant=\"outline\">All statuses</Button>} />\r\n    <DropdownMenuContent>\r\n      <DropdownMenuLabel>Status</DropdownMenuLabel>\r\n      <DropdownMenuSeparator />\r\n      <DropdownMenuItem>Open</DropdownMenuItem>\r\n      <DropdownMenuItem>Closed</DropdownMenuItem>\r\n      <DropdownMenuItem>Escalated</DropdownMenuItem>\r\n    </DropdownMenuContent>\r\n  </DropdownMenu>\r\n);"
+          "snippet": "const Default = () => (\n  <DropdownMenu>\n    <DropdownMenuTrigger render={<Button variant=\"outline\">All statuses</Button>} />\n    <DropdownMenuContent>\n      <DropdownMenuLabel>Status</DropdownMenuLabel>\n      <DropdownMenuSeparator />\n      <DropdownMenuItem>Open</DropdownMenuItem>\n      <DropdownMenuItem>Closed</DropdownMenuItem>\n      <DropdownMenuItem>Escalated</DropdownMenuItem>\n    </DropdownMenuContent>\n  </DropdownMenu>\n);"
         },
         {
           "id": "ui-dropdownmenu--checkbox-items",
           "name": "Checkbox Items",
-          "snippet": "const CheckboxItems = () => (\r\n  <DropdownMenu>\r\n    <DropdownMenuTrigger render={<Button variant=\"outline\">All categories</Button>} />\r\n    <DropdownMenuContent>\r\n      <DropdownMenuCheckboxItem checked>Human Support</DropdownMenuCheckboxItem>\r\n      <DropdownMenuCheckboxItem>AI & Automation</DropdownMenuCheckboxItem>\r\n      <DropdownMenuCheckboxItem>Proctoring</DropdownMenuCheckboxItem>\r\n    </DropdownMenuContent>\r\n  </DropdownMenu>\r\n);"
+          "snippet": "const CheckboxItems = () => (\n  <DropdownMenu>\n    <DropdownMenuTrigger render={<Button variant=\"outline\">All categories</Button>} />\n    <DropdownMenuContent>\n      <DropdownMenuCheckboxItem checked>Human Support</DropdownMenuCheckboxItem>\n      <DropdownMenuCheckboxItem>AI & Automation</DropdownMenuCheckboxItem>\n      <DropdownMenuCheckboxItem>Proctoring</DropdownMenuCheckboxItem>\n    </DropdownMenuContent>\n  </DropdownMenu>\n);"
         }
       ],
-      "import": "import {\r\n    Button,\r\n    DropdownMenu,\r\n    DropdownMenuCheckboxItem,\r\n    DropdownMenuContent,\r\n    DropdownMenuItem,\r\n    DropdownMenuLabel,\r\n    DropdownMenuSeparator,\r\n    DropdownMenuTrigger,\r\n} from \"design-system\";"
+      "import": "import {\n    Button,\n    DropdownMenu,\n    DropdownMenuCheckboxItem,\n    DropdownMenuContent,\n    DropdownMenuItem,\n    DropdownMenuLabel,\n    DropdownMenuSeparator,\n    DropdownMenuTrigger,\n} from \"design-system\";"
     },
     "ui-input": {
       "id": "ui-input",
@@ -991,7 +1052,7 @@
         "description": "",
         "methods": [],
         "displayName": "Input",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\input.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/input.tsx",
         "actualName": "Input",
         "exportName": "Input"
       },
@@ -1004,7 +1065,7 @@
         {
           "id": "ui-input--readonly",
           "name": "Readonly",
-          "snippet": "const Readonly = () => <Input\r\n    placeholder=\"Search conversations...\"\r\n    readOnly\r\n    value=\"student@cascade.edu\" />;"
+          "snippet": "const Readonly = () => <Input\n    placeholder=\"Search conversations...\"\n    readOnly\n    value=\"student@cascade.edu\" />;"
         },
         {
           "id": "ui-input--disabled",
@@ -1023,7 +1084,7 @@
         "description": "",
         "methods": [],
         "displayName": "SegmentedControl",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\segmented-control.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/segmented-control.tsx",
         "actualName": "SegmentedControl",
         "exportName": "SegmentedControl",
         "props": {
@@ -1116,7 +1177,7 @@
         "description": "",
         "methods": [],
         "displayName": "Skeleton",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\skeleton.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/skeleton.tsx",
         "actualName": "Skeleton",
         "exportName": "Skeleton"
       },
@@ -1124,12 +1185,12 @@
         {
           "id": "ui-skeleton--stat-grid",
           "name": "Stat Grid",
-          "snippet": "const StatGrid = () => (\r\n  <div className=\"grid w-full max-w-2xl grid-cols-4 gap-3\">\r\n    <Skeleton className=\"h-22 rounded-xl\" />\r\n    <Skeleton className=\"h-22 rounded-xl\" />\r\n    <Skeleton className=\"h-22 rounded-xl\" />\r\n    <Skeleton className=\"h-22 rounded-xl\" />\r\n  </div>\r\n);"
+          "snippet": "const StatGrid = () => (\n  <div className=\"grid w-full max-w-2xl grid-cols-4 gap-3\">\n    <Skeleton className=\"h-22 rounded-xl\" />\n    <Skeleton className=\"h-22 rounded-xl\" />\n    <Skeleton className=\"h-22 rounded-xl\" />\n    <Skeleton className=\"h-22 rounded-xl\" />\n  </div>\n);"
         },
         {
           "id": "ui-skeleton--list-row",
           "name": "List Row",
-          "snippet": "const ListRow = () => (\r\n  <div className=\"flex w-80 items-center gap-3\">\r\n    <Skeleton className=\"h-8 w-8 rounded-full\" />\r\n    <div className=\"flex flex-1 flex-col gap-2\">\r\n      <Skeleton className=\"h-3 w-2/3\" />\r\n      <Skeleton className=\"h-3 w-1/3\" />\r\n    </div>\r\n  </div>\r\n);"
+          "snippet": "const ListRow = () => (\n  <div className=\"flex w-80 items-center gap-3\">\n    <Skeleton className=\"h-8 w-8 rounded-full\" />\n    <div className=\"flex flex-1 flex-col gap-2\">\n      <Skeleton className=\"h-3 w-2/3\" />\n      <Skeleton className=\"h-3 w-1/3\" />\n    </div>\n  </div>\n);"
         }
       ],
       "import": "import { Skeleton } from \"design-system\";"
@@ -1141,13 +1202,13 @@
       "jsDocTags": {},
       "error": {
         "name": "No component definition found",
-        "message": "File: C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\sonner.tsx\nError:\n\".\" is not exported under no conditions from package C:\\Users\\torib\\bab\\design-system\\node_modules\\next-themes (see exports field in C:\\Users\\torib\\bab\\design-system\\node_modules\\next-themes\\package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\n\"use client\"\r\n\r\nimport { useTheme } from \"next-themes\"\r\nimport { Toaster as Sonner, type ToasterProps } from \"sonner\"\r\nimport { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from \"lucide-react\"\r\n\r\nconst Toaster = ({ ...props }: ToasterProps) => {\r\n  const { theme = \"system\" } = useTheme()\r\n\r\n  return (\r\n    <Sonner\r\n      theme={theme as ToasterProps[\"theme\"]}\r\n      className=\"toaster group\"\r\n      icons={{\r\n        success: (\r\n          <CircleCheckIcon className=\"size-4\" />\r\n        ),\r\n        info: (\r\n          <InfoIcon className=\"size-4\" />\r\n        ),\r\n        warning: (\r\n          <TriangleAlertIcon className=\"size-4\" />\r\n        ),\r\n        error: (\r\n          <OctagonXIcon className=\"size-4\" />\r\n        ),\r\n        loading: (\r\n          <Loader2Icon className=\"size-4 animate-spin\" />\r\n        ),\r\n      }}\r\n      style={\r\n        {\r\n          \"--normal-bg\": \"var(--popover)\",\r\n          \"--normal-text\": \"var(--popover-foreground)\",\r\n          \"--normal-border\": \"var(--border)\",\r\n          \"--border-radius\": \"var(--radius)\",\r\n        } as React.CSSProperties\r\n      }\r\n      toastOptions={{\r\n        classNames: {\r\n          toast: \"cn-toast\",\r\n        },\r\n      }}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nexport { Toaster }\r\n"
+        "message": "File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/sonner.tsx\nError:\n\".\" is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/next-themes (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/next-themes/package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\n\"use client\"\n\nimport { useTheme } from \"next-themes\"\nimport { Toaster as Sonner, type ToasterProps } from \"sonner\"\nimport { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from \"lucide-react\"\n\nconst Toaster = ({ ...props }: ToasterProps) => {\n  const { theme = \"system\" } = useTheme()\n\n  return (\n    <Sonner\n      theme={theme as ToasterProps[\"theme\"]}\n      className=\"toaster group\"\n      icons={{\n        success: (\n          <CircleCheckIcon className=\"size-4\" />\n        ),\n        info: (\n          <InfoIcon className=\"size-4\" />\n        ),\n        warning: (\n          <TriangleAlertIcon className=\"size-4\" />\n        ),\n        error: (\n          <OctagonXIcon className=\"size-4\" />\n        ),\n        loading: (\n          <Loader2Icon className=\"size-4 animate-spin\" />\n        ),\n      }}\n      style={\n        {\n          \"--normal-bg\": \"var(--popover)\",\n          \"--normal-text\": \"var(--popover-foreground)\",\n          \"--normal-border\": \"var(--border)\",\n          \"--border-radius\": \"var(--radius)\",\n        } as React.CSSProperties\n      }\n      toastOptions={{\n        classNames: {\n          toast: \"cn-toast\",\n        },\n      }}\n      {...props}\n    />\n  )\n}\n\nexport { Toaster }\n"
       },
       "stories": [
         {
           "id": "ui-sonner--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <div>\r\n    <Button onClick={() => toast.success(\"Conversation closed\")}>\r\n      Show toast\r\n    </Button>\r\n    <Toaster />\r\n  </div>\r\n);"
+          "snippet": "const Default = () => (\n  <div>\n    <Button onClick={() => toast.success(\"Conversation closed\")}>\n      Show toast\n    </Button>\n    <Toaster />\n  </div>\n);"
         }
       ],
       "import": "import { Button, Toaster } from \"design-system\";"
@@ -1161,7 +1222,7 @@
         "description": "",
         "methods": [],
         "displayName": "Switch",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\switch.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/switch.tsx",
         "actualName": "Switch",
         "exportName": "Switch",
         "props": {
@@ -1217,7 +1278,7 @@
         "description": "",
         "methods": [],
         "displayName": "Table",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\table.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/table.tsx",
         "actualName": "Table",
         "exportName": "Table"
       },
@@ -1225,7 +1286,7 @@
         {
           "id": "ui-table--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <Table>\r\n    <TableHeader>\r\n      <TableRow>\r\n        <TableHead>Student</TableHead>\r\n        <TableHead>Exam</TableHead>\r\n        <TableHead>Status</TableHead>\r\n      </TableRow>\r\n    </TableHeader>\r\n    <TableBody>\r\n      {ROWS.map((row) => (\r\n        <TableRow key={row.student}>\r\n          <TableCell className=\"font-medium\">{row.student}</TableCell>\r\n          <TableCell>{row.exam}</TableCell>\r\n          <TableCell>\r\n            <Badge variant={row.status === \"Escalated\" ? \"destructive\" : \"secondary\"}>\r\n              {row.status}\r\n            </Badge>\r\n          </TableCell>\r\n        </TableRow>\r\n      ))}\r\n    </TableBody>\r\n  </Table>\r\n);"
+          "snippet": "const Default = () => (\n  <Table>\n    <TableHeader>\n      <TableRow>\n        <TableHead>Student</TableHead>\n        <TableHead>Exam</TableHead>\n        <TableHead>Status</TableHead>\n      </TableRow>\n    </TableHeader>\n    <TableBody>\n      {ROWS.map((row) => (\n        <TableRow key={row.student}>\n          <TableCell className=\"font-medium\">{row.student}</TableCell>\n          <TableCell>{row.exam}</TableCell>\n          <TableCell>\n            <Badge variant={row.status === \"Escalated\" ? \"destructive\" : \"secondary\"}>\n              {row.status}\n            </Badge>\n          </TableCell>\n        </TableRow>\n      ))}\n    </TableBody>\n  </Table>\n);"
         }
       ],
       "import": "import { Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"design-system\";"
@@ -1237,13 +1298,13 @@
       "jsDocTags": {},
       "error": {
         "name": "No component definition found",
-        "message": "File: C:\\Users\\torib\\bab\\design-system\\src\\components\\ui\\tabs.tsx\nError:\n\".\" is not exported under no conditions from package C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority (see exports field in C:\\Users\\torib\\bab\\design-system\\node_modules\\class-variance-authority\\package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\n\"use client\"\r\n\r\nimport { Tabs as TabsPrimitive } from \"@base-ui/react/tabs\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\n\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nfunction Tabs({\r\n  className,\r\n  orientation = \"horizontal\",\r\n  ...props\r\n}: TabsPrimitive.Root.Props) {\r\n  return (\r\n    <TabsPrimitive.Root\r\n      data-slot=\"tabs\"\r\n      data-orientation={orientation}\r\n      className={cn(\r\n        \"group/tabs flex gap-2 data-horizontal:flex-col\",\r\n        className\r\n      )}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nconst tabsListVariants = cva(\r\n  \"group/tabs-list inline-flex w-fit items-center justify-center rounded-lg p-[3px] text-muted-foreground group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none\",\r\n  {\r\n    variants: {\r\n      variant: {\r\n        default: \"bg-muted\",\r\n        line: \"gap-1 bg-transparent\",\r\n      },\r\n    },\r\n    defaultVariants: {\r\n      variant: \"default\",\r\n    },\r\n  }\r\n)\r\n\r\nfunction TabsList({\r\n  className,\r\n  variant = \"default\",\r\n  ...props\r\n}: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {\r\n  return (\r\n    <TabsPrimitive.List\r\n      data-slot=\"tabs-list\"\r\n      data-variant={variant}\r\n      className={cn(tabsListVariants({ variant }), className)}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nfunction TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {\r\n  return (\r\n    <TabsPrimitive.Tab\r\n      data-slot=\"tabs-trigger\"\r\n      className={cn(\r\n        \"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground dark:hover:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-sm group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\r\n        \"group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent\",\r\n        \"data-active:bg-background data-active:text-foreground dark:data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground\",\r\n        \"after:absolute after:bg-foreground after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100\",\r\n        className\r\n      )}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nfunction TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {\r\n  return (\r\n    <TabsPrimitive.Panel\r\n      data-slot=\"tabs-content\"\r\n      className={cn(\"flex-1 text-sm outline-none\", className)}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\nexport { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }\r\n"
+        "message": "File: /Users/toribryan/Documents/GitHub/bab/design-system/src/components/ui/tabs.tsx\nError:\n\".\" is not exported under no conditions from package /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority (see exports field in /Users/toribryan/Documents/GitHub/bab/design-system/node_modules/class-variance-authority/package.json)\nYou can debug your component file in this playground: https://react-docgen.dev/playground\nCode:\n\"use client\"\n\nimport { Tabs as TabsPrimitive } from \"@base-ui/react/tabs\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nfunction Tabs({\n  className,\n  orientation = \"horizontal\",\n  ...props\n}: TabsPrimitive.Root.Props) {\n  return (\n    <TabsPrimitive.Root\n      data-slot=\"tabs\"\n      data-orientation={orientation}\n      className={cn(\n        \"group/tabs flex gap-2 data-horizontal:flex-col\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nconst tabsListVariants = cva(\n  \"group/tabs-list inline-flex w-fit items-center justify-center rounded-lg p-[3px] text-muted-foreground group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-muted\",\n        line: \"gap-1 bg-transparent\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n)\n\nfunction TabsList({\n  className,\n  variant = \"default\",\n  ...props\n}: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {\n  return (\n    <TabsPrimitive.List\n      data-slot=\"tabs-list\"\n      data-variant={variant}\n      className={cn(tabsListVariants({ variant }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {\n  return (\n    <TabsPrimitive.Tab\n      data-slot=\"tabs-trigger\"\n      className={cn(\n        \"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:text-muted-foreground dark:hover:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-sm group-data-[variant=line]/tabs-list:data-active:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        \"group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent dark:group-data-[variant=line]/tabs-list:data-active:border-transparent dark:group-data-[variant=line]/tabs-list:data-active:bg-transparent\",\n        \"data-active:bg-background data-active:text-foreground dark:data-active:border-input dark:data-active:bg-input/30 dark:data-active:text-foreground\",\n        \"after:absolute after:bg-foreground after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-5px] group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-active:after:opacity-100\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {\n  return (\n    <TabsPrimitive.Panel\n      data-slot=\"tabs-content\"\n      className={cn(\"flex-1 text-sm outline-none\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }\n"
       },
       "stories": [
         {
           "id": "ui-tabs--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <Tabs defaultValue=\"user\" className=\"w-80\">\r\n    <TabsList>\r\n      <TabsTrigger value=\"user\">User</TabsTrigger>\r\n      <TabsTrigger value=\"history\">History</TabsTrigger>\r\n      <TabsTrigger value=\"resources\">Resources</TabsTrigger>\r\n    </TabsList>\r\n    <TabsContent value=\"user\" className=\"text-sm text-muted-foreground\">\r\n      Jordan Lee — BIO 201, Cascade State University\r\n    </TabsContent>\r\n    <TabsContent value=\"history\" className=\"text-sm text-muted-foreground\">\r\n      3 prior conversations\r\n    </TabsContent>\r\n    <TabsContent value=\"resources\" className=\"text-sm text-muted-foreground\">\r\n      No linked resources\r\n    </TabsContent>\r\n  </Tabs>\r\n);"
+          "snippet": "const Default = () => (\n  <Tabs defaultValue=\"user\" className=\"w-80\">\n    <TabsList>\n      <TabsTrigger value=\"user\">User</TabsTrigger>\n      <TabsTrigger value=\"history\">History</TabsTrigger>\n      <TabsTrigger value=\"resources\">Resources</TabsTrigger>\n    </TabsList>\n    <TabsContent value=\"user\" className=\"text-sm text-muted-foreground\">\n      Jordan Lee — BIO 201, Cascade State University\n    </TabsContent>\n    <TabsContent value=\"history\" className=\"text-sm text-muted-foreground\">\n      3 prior conversations\n    </TabsContent>\n    <TabsContent value=\"resources\" className=\"text-sm text-muted-foreground\">\n      No linked resources\n    </TabsContent>\n  </Tabs>\n);"
         }
       ],
       "import": "import { Tabs, TabsContent, TabsList, TabsTrigger } from \"design-system\";"
@@ -1257,7 +1318,7 @@
         "description": "",
         "methods": [],
         "displayName": "InboxPage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\InboxPage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/InboxPage.tsx",
         "actualName": "InboxPage",
         "exportName": "InboxPage"
       },
@@ -1265,7 +1326,7 @@
         {
           "id": "pages-inbox--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"inbox\" onSelect={() => {}}>\r\n    <InboxPage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"inbox\" onSelect={() => {}}>\n    <InboxPage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, InboxPage } from \"design-system\";"
@@ -1279,7 +1340,7 @@
         "description": "",
         "methods": [],
         "displayName": "KnowledgeContentPage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\KnowledgeContentPage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/KnowledgeContentPage.tsx",
         "actualName": "KnowledgeContentPage",
         "exportName": "KnowledgeContentPage",
         "props": {
@@ -1311,7 +1372,7 @@
         {
           "id": "pages-knowledge-content--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"knowledge\" onSelect={() => {}}>\r\n    <KnowledgeContentPage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"knowledge\" onSelect={() => {}}>\n    <KnowledgeContentPage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, KnowledgeContentPage } from \"design-system\";"
@@ -1325,7 +1386,7 @@
         "description": "",
         "methods": [],
         "displayName": "KnowledgeSourcesPage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\KnowledgeSourcesPage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/KnowledgeSourcesPage.tsx",
         "actualName": "KnowledgeSourcesPage",
         "exportName": "KnowledgeSourcesPage",
         "props": {
@@ -1357,7 +1418,7 @@
         {
           "id": "pages-knowledge-sources--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"knowledge\" onSelect={() => {}}>\r\n    <KnowledgeSourcesPage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"knowledge\" onSelect={() => {}}>\n    <KnowledgeSourcesPage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, KnowledgeSourcesPage } from \"design-system\";"
@@ -1371,7 +1432,7 @@
         "description": "",
         "methods": [],
         "displayName": "ReportsAllPage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsAllPage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/ReportsAllPage.tsx",
         "actualName": "ReportsAllPage",
         "exportName": "ReportsAllPage",
         "props": {
@@ -1425,7 +1486,7 @@
         {
           "id": "pages-reports-all--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsAllPage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"reports\" onSelect={() => {}}>\n    <ReportsAllPage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, ReportsAllPage } from \"design-system\";"
@@ -1439,7 +1500,7 @@
         "description": "",
         "methods": [],
         "displayName": "ReportsConversationsByRolePage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsConversationsByRolePage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/ReportsConversationsByRolePage.tsx",
         "actualName": "ReportsConversationsByRolePage",
         "exportName": "ReportsConversationsByRolePage",
         "props": {
@@ -1471,7 +1532,7 @@
         {
           "id": "pages-reports-conversations-by-role--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsConversationsByRolePage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"reports\" onSelect={() => {}}>\n    <ReportsConversationsByRolePage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, ReportsConversationsByRolePage } from \"design-system\";"
@@ -1485,7 +1546,7 @@
         "description": "",
         "methods": [],
         "displayName": "ReportsExamCompletionPage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsExamCompletionPage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/ReportsExamCompletionPage.tsx",
         "actualName": "ReportsExamCompletionPage",
         "exportName": "ReportsExamCompletionPage",
         "props": {
@@ -1517,7 +1578,7 @@
         {
           "id": "pages-reports-exam-completion--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsExamCompletionPage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"reports\" onSelect={() => {}}>\n    <ReportsExamCompletionPage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, ReportsExamCompletionPage } from \"design-system\";"
@@ -1531,7 +1592,7 @@
         "description": "",
         "methods": [],
         "displayName": "ReportsLockdownBrowserPage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsLockdownBrowserPage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/ReportsLockdownBrowserPage.tsx",
         "actualName": "ReportsLockdownBrowserPage",
         "exportName": "ReportsLockdownBrowserPage",
         "props": {
@@ -1563,7 +1624,7 @@
         {
           "id": "pages-reports-lockdown-browser--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsLockdownBrowserPage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"reports\" onSelect={() => {}}>\n    <ReportsLockdownBrowserPage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, ReportsLockdownBrowserPage } from \"design-system\";"
@@ -1577,7 +1638,7 @@
         "description": "",
         "methods": [],
         "displayName": "ReportsOverviewPage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsOverviewPage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/ReportsOverviewPage.tsx",
         "actualName": "ReportsOverviewPage",
         "exportName": "ReportsOverviewPage",
         "props": {
@@ -1609,7 +1670,7 @@
         {
           "id": "pages-reports-overview--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsOverviewPage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"reports\" onSelect={() => {}}>\n    <ReportsOverviewPage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, ReportsOverviewPage } from \"design-system\";"
@@ -1623,7 +1684,7 @@
         "description": "",
         "methods": [],
         "displayName": "ReportsResponseTimePage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsResponseTimePage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/ReportsResponseTimePage.tsx",
         "actualName": "ReportsResponseTimePage",
         "exportName": "ReportsResponseTimePage",
         "props": {
@@ -1655,7 +1716,7 @@
         {
           "id": "pages-reports-response-time--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsResponseTimePage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"reports\" onSelect={() => {}}>\n    <ReportsResponseTimePage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, ReportsResponseTimePage } from \"design-system\";"
@@ -1669,7 +1730,7 @@
         "description": "",
         "methods": [],
         "displayName": "ReportsRoomScanPage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsRoomScanPage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/ReportsRoomScanPage.tsx",
         "actualName": "ReportsRoomScanPage",
         "exportName": "ReportsRoomScanPage",
         "props": {
@@ -1701,7 +1762,7 @@
         {
           "id": "pages-reports-room-scan--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsRoomScanPage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"reports\" onSelect={() => {}}>\n    <ReportsRoomScanPage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, ReportsRoomScanPage } from \"design-system\";"
@@ -1715,7 +1776,7 @@
         "description": "",
         "methods": [],
         "displayName": "ReportsScreenSharePage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\ReportsScreenSharePage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/ReportsScreenSharePage.tsx",
         "actualName": "ReportsScreenSharePage",
         "exportName": "ReportsScreenSharePage",
         "props": {
@@ -1747,7 +1808,7 @@
         {
           "id": "pages-reports-screen-share--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"reports\" onSelect={() => {}}>\r\n    <ReportsScreenSharePage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"reports\" onSelect={() => {}}>\n    <ReportsScreenSharePage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, ReportsScreenSharePage } from \"design-system\";"
@@ -1761,7 +1822,7 @@
         "description": "",
         "methods": [],
         "displayName": "SettingsIntegrationsPage",
-        "definedInFile": "C:\\Users\\torib\\bab\\design-system\\src\\pages\\SettingsIntegrationsPage.tsx",
+        "definedInFile": "/Users/toribryan/Documents/GitHub/bab/design-system/src/pages/SettingsIntegrationsPage.tsx",
         "actualName": "SettingsIntegrationsPage",
         "exportName": "SettingsIntegrationsPage",
         "props": {
@@ -1793,7 +1854,7 @@
         {
           "id": "pages-settings-integrations--default",
           "name": "Default",
-          "snippet": "const Default = () => (\r\n  <AppShell active=\"settings\" onSelect={() => {}}>\r\n    <SettingsIntegrationsPage />\r\n  </AppShell>\r\n);"
+          "snippet": "const Default = () => (\n  <AppShell active=\"settings\" onSelect={() => {}}>\n    <SettingsIntegrationsPage />\n  </AppShell>\n);"
         }
       ],
       "import": "import { AppShell, SettingsIntegrationsPage } from \"design-system\";"
@@ -1801,6 +1862,6 @@
   },
   "meta": {
     "docgen": "react-docgen",
-    "durationMs": 750
+    "durationMs": 540
   }
 }

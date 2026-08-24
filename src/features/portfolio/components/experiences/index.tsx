@@ -1,3 +1,4 @@
+import { differenceInYears, parse } from "date-fns"
 import { ChevronDownIcon } from "lucide-react"
 
 import { Button } from "@/components/base/ui/button"
@@ -10,9 +11,13 @@ import {
   Panel,
   PanelHeader,
   PanelTitle,
+  PanelTitleSup,
 } from "@/features/portfolio/components/panel"
 import { PanelTitleCopy } from "@/features/portfolio/components/panel-title-copy"
-import { EXPERIENCES } from "@/features/portfolio/data/experiences"
+import {
+  DESIGN_CAREER_START,
+  EXPERIENCES,
+} from "@/features/portfolio/data/experiences"
 import type { Experience } from "@/features/portfolio/types/experiences"
 
 import { ExperienceItem } from "./experience-item"
@@ -21,11 +26,17 @@ const ID = "experience"
 const MAX = 3
 
 export function Experiences() {
+  const yearsDesigning = differenceInYears(
+    new Date(),
+    parse(DESIGN_CAREER_START, "MM.yyyy", new Date())
+  )
+
   return (
     <Panel id={ID}>
       <PanelHeader>
         <PanelTitle>
           <a href={`#${ID}`}>Experience</a>
+          <PanelTitleSup>({yearsDesigning} yrs)</PanelTitleSup>
           <PanelTitleCopy id={ID} />
         </PanelTitle>
       </PanelHeader>

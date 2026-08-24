@@ -9,14 +9,15 @@ import { Embed } from "./mdx-embed"
  * `mdx-inbox-regions.tsx`). Parsing them here is the price of authoring these
  * from MDX at all.
  *
- * Both want to be close to the story's real content box:
+ * `height` only sizes the frame before the real measurement lands — `Embed`'s
+ * `autoHeight` reads the story's actual content height off the iframe (the
+ * Storybook build is same-origin, so this works despite iframes usually being
+ * unmeasurable from outside) and shrink-wraps to it, so no story ever scrolls
+ * or floats in leftover space regardless of what `height` says.
  *
- * - `height` is content height plus Storybook's ~32px of body padding. Too much
- *   and the component floats in a field of empty ground; the frame doesn't
- *   shrink-wrap, because an iframe can't be measured from outside.
- * - `width` sets the scale, since the frame is laid out at `width` and scaled
- *   down to the doc column. Narrower means closer to 1:1 — worth it for small
- *   controls, which are otherwise rendered at three-quarter size for no reason.
+ * `width` sets the scale, since the frame is laid out at `width` and scaled
+ * down to the doc column. Narrower means closer to 1:1 — worth it for small
+ * controls, which are otherwise rendered at three-quarter size for no reason.
  */
 export function StoryEmbed({
   id,
@@ -39,6 +40,7 @@ export function StoryEmbed({
       title={title}
       width={Number(width) || 1000}
       height={Number(height) || 320}
+      autoHeight
       caption={caption}
     />
   )

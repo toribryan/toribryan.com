@@ -9,7 +9,7 @@ updatedAt: "2026-08-21"
 new: true
 ---
 
-Bab is the component library behind the Integrity Console — a proctoring
+Bab is the component library behind the Integrity Console, a proctoring
 dashboard for live chat triage, student context and case review. It started as a
 13-screen clickthrough in vanilla HTML; this is that prototype's decisions
 turned into something an engineer can build from.
@@ -22,7 +22,7 @@ Everything below is the reference.
 ## Foundations
 
 Base UI primitives, Tailwind v4, shadcn conventions, Geist Variable. The
-dependency list is deliberately dull — the decisions live in the tokens.
+dependency list is deliberately dull: the decisions live in the tokens.
 
 ### Color
 
@@ -33,11 +33,11 @@ token, never a hex.
 
 ```css title="src/index.css"
 :root {
-  /* Brand — one red for primary actions */
+  /* Brand: one red for primary actions */
   --primary: #c70036;
   --primary-foreground: #ffffff;
 
-  /* Surfaces — cards float on a warm ground; depth is shadow, not rules */
+  /* Surfaces: cards float on a warm ground; depth is shadow, not rules */
   --background: #efeceb;
   --bg-deep: #eae7e6;
   --card: #ffffff;
@@ -94,7 +94,7 @@ borrowing `--sel`.
 
 ### Type
 
-Geist Variable throughout — `--font-heading` is an alias of `--font-sans`, not a
+Geist Variable throughout: `--font-heading` is an alias of `--font-sans`, not a
 second family. Headings differentiate by weight and size against Tailwind's
 default scale; there is no bespoke scale to memorise.
 
@@ -136,15 +136,15 @@ page compositions that assemble the lot at real scale.
 
 <StoryEmbed
   id="ui-button--all-variants"
-  title="UI / Button — all variants"
+  title="UI / Button: all variants"
   width="760"
   height="80"
-  caption="Primary carries the one red that means ‘primary action’. Destructive is a different token again — the second red, --red-deep, is reserved for the inbox Close and the live-attempt badge and appears in neither of these."
+  caption="Primary carries the one red that means ‘primary action’. Destructive is a different token again: the second red, --red-deep, is reserved for the inbox Close and the live-attempt badge and appears in neither of these."
 />
 
 <StoryEmbed
   id="ui-badge--all-variants"
-  title="UI / Badge — all variants"
+  title="UI / Badge: all variants"
   width="760"
   height="72"
   caption="Where the role pairs show up. The same three hues carry the series on the Overview chart, so a colour means one thing across the product."
@@ -177,7 +177,7 @@ page compositions that assemble the lot at real scale.
 
 <StoryEmbed
   id="dashboard-stattile--grid"
-  title="Dashboard / StatTile — grid"
+  title="Dashboard / StatTile: grid"
   width="900"
   height="180"
   caption="One elevation in practice: the tiles sit on --surface-nested inside the shadowed card, separated by a hairline rather than a shadow of their own."
@@ -185,7 +185,7 @@ page compositions that assemble the lot at real scale.
 
 <StoryEmbed
   id="dashboard-trendchart--multi-series"
-  title="Dashboard / TrendChart — multi-series"
+  title="Dashboard / TrendChart: multi-series"
   width="1160"
   height="260"
   caption="The lead series is near-black rather than red, which keeps red free to mean ‘above threshold’ wherever it turns up in a chart."
@@ -216,6 +216,6 @@ Browser · Response Time · Room Scan · Screen Share
 
 ## Changelog
 
-- **2026-08-21** — 40 components and 12 page compositions published to Storybook.
-- **2026-08-20** — Component contract defined.
-- **2026-07-21** — Token tiers drafted.
+- **2026-08-21**: 40 components and 12 page compositions published to Storybook.
+- **2026-08-20**: Component contract defined.
+- **2026-07-21**: Token tiers drafted.

@@ -1,6 +1,6 @@
 ---
 title: "Integrity Console Design System"
-description: "The support dashboard rebuilt as a component library — 40 components, 31 stories, and a token layer the clickthrough and the React build both speak."
+description: "The support dashboard rebuilt as a component library: 40 components, 31 stories, and a token layer the clickthrough and the React build both speak."
 image: "/cover-icds.webp"
 order: 2
 createdAt: "2026-07-21"
@@ -15,7 +15,7 @@ skills:
   - "Tailwind"
   - "Base UI"
   - "Design tokens"
-problem: "A clickthrough prototype proves an interaction and then stops being useful. The Integrity Console existed as 25 hand-built screens of vanilla HTML — convincing to click through, impossible to hand to an engineer as anything but a picture."
+problem: "A clickthrough prototype proves an interaction and then stops being useful. The Integrity Console existed as 25 hand-built screens of vanilla HTML: convincing to click through, impossible to hand to an engineer as anything but a picture."
 task: "Turn the prototype's decisions into a component library an engineer could build from: every surface, state and colour named once, and every component demonstrable in isolation."
 outcome: "40 components and 12 full page compositions, browsable in Storybook. The token names carried over from the prototype unchanged, so the two artefacts describe the same product rather than two drawings of it."
 ---
@@ -24,10 +24,9 @@ outcome: "40 components and 12 full page compositions, browsable in Storybook. T
 
 The [Support Agent Dashboard](/work/support-agent-dashboard) shipped as a
 25-screen clickthrough: vanilla HTML, CSS and JavaScript, no framework, no build
-step. That is the right shape for proving an interaction — it loads instantly and
-nothing about it is negotiable with a bundler. It is also the wrong shape for
-handing to engineering, because a prototype has no components in it. It has
-markup that happens to look like components.
+step. Right shape for proving an interaction, wrong shape for handing to
+engineering, since a prototype has no components in it. It has markup that
+happens to look like components.
 
 This is the other half: the same product expressed as a library.
 
@@ -35,15 +34,14 @@ This is the other half: the same product expressed as a library.
 
 <Embed
   src="/storybook/bab/index.html"
-  title="Integrity Console — Storybook"
+  title="Integrity Console: Storybook"
   height={860}
-  caption="Storybook, embedded live. Open it full screen for the docs and a11y panels — the controls are cramped at this scale."
+  caption="Storybook, embedded live. Open it full screen for the docs and a11y panels: the controls are cramped at this scale."
 />
 
-Built on **Base UI** primitives with **Tailwind v4** and shadcn conventions,
-typeset in Geist. Charts are Recharts; the command palette is cmdk; toasts are
-Sonner. Nothing exotic — the interesting decisions are in the token layer, not
-the dependency list.
+Base UI primitives, Tailwind v4, shadcn conventions, typeset in Geist. 40
+components across four groups, plus 12 page compositions that assemble them at
+real scale.
 
 | Group        | Count | What's in it                                                                                                                                                                                    |
 | ------------ | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -52,21 +50,74 @@ the dependency list.
 | `dashboard/` | 5     | Stat tile, trend chart, source card, compare toggle, report metric layout                                                                                                                       |
 | `chrome/`    | 4     | App shell, icon rail, secondary nav, topbar                                                                                                                                                     |
 
-On top of those sit 12 page compositions — Inbox, Knowledge (sources and
-content), Settings, and eight report views — each a story in its own right, so a
-change to a primitive is visible at page scale immediately rather than at
-integration time.
+## Primitives, at the token level
+
+<StoryEmbed
+  id="ui-button--all-variants"
+  title="UI / Button: all variants"
+  width="760"
+  height="80"
+/>
+
+<StoryEmbed
+  id="ui-badge--all-variants"
+  title="UI / Badge: all variants"
+  width="760"
+  height="72"
+/>
+
+Two reds, one meaning each. `--primary` (`#c70036`) carries every primary
+action. `--red-deep` (`#b20030`) is reserved for the inbox Close button and the
+live-attempt badge, and nothing else. A single `--red` would have blurred two
+meanings into one swatch, and they'd have drifted apart in code anyway.
+
+## Inbox
+
+<StoryEmbed
+  id="pages-inbox--default"
+  title="Pages / Inbox"
+  width="1280"
+  height="760"
+  caption="The flagship surface: conversation list, thread, and context panel, built from the same components as everything else in the library."
+/>
+
+One elevation, everywhere. The content card is the only shadowed surface on a
+page; nested blocks get `--surface-nested` and a hairline border, never a
+second shadow.
+
+## Dashboard and reports
+
+<StoryEmbed
+  id="dashboard-stattile--grid"
+  title="Dashboard / StatTile: grid"
+  width="900"
+  height="180"
+/>
+
+<StoryEmbed
+  id="pages-reports-overview--default"
+  title="Pages / Reports Overview"
+  width="1280"
+  height="620"
+/>
+
+Role colour is semantic, not decorative. Student, instructor and admin each own
+a background/foreground pair, and the same three hues carry the chart series:
+an orange line on the Overview chart means the same thing an orange badge means
+in the Inbox.
 
 ## The token layer is the actual deliverable
 
-The prototype already had a disciplined `tokens.css`: surfaces, chat row states,
-a series palette for charts. Rather than redraw those decisions in Tailwind's
-vocabulary, the rebuild promotes them into a `@theme` layer under the same names.
+The prototype already had a disciplined `tokens.css`: surfaces, chat row
+states, a series palette for charts. Rather than redraw those decisions in
+Tailwind's vocabulary, the rebuild promotes them into a `@theme` layer under the
+same names, so a value never means one thing in the clickthrough and another in
+the React build.
 
 ```css title="src/index.css"
 :root {
   --primary: #c70036; /* the one red that means "primary action" */
-  --background: #efeceb; /* app ground — cards float on it, no dividers */
+  --background: #efeceb; /* app ground: cards float on it, no dividers */
   --surface-nested: #f8f7f6; /* tiles and chart wells inside a white card */
   --sel: #dbd3d1; /* selected chip, filter pill, received bubble */
 
@@ -77,34 +128,7 @@ vocabulary, the rebuild promotes them into a `@theme` layer under the same names
 }
 ```
 
-Three things fell out of that which I'd keep on any project of this shape:
-
-<Steps>
-
-<Step>
-  **Two reds, named apart.** `--primary` (`#c70036`) is for primary actions.
-  `--red-deep` (`#b20030`) is the inbox Close button and the live-attempt badge,
-  and nothing else. A single `--red` would have collapsed two meanings into one
-  swatch and they'd have drifted apart in code anyway.
-</Step>
-
-<Step>
-  **Role colour is semantic, not decorative.** Student, instructor and admin
-  each own a background/foreground pair, and the chart series reuse those same
-  hues. An orange line on the Overview chart means the same thing an orange
-  badge does in the Inbox.
-</Step>
-
-<Step>
-  **One elevation.** The content card is the only shadowed surface on a page.
-  Nested blocks get `--surface-nested` and a hairline border, never a second
-  shadow. It's a rule that survives contact with a component library precisely
-  because it's a token, not a habit.
-</Step>
-
-</Steps>
-
-The token reference lives on its own page: [Bab in Components](/components/bab).
+The full token reference lives on its own page: [Bab in Components](/components/bab).
 
 ## What I'd do next
 

@@ -23,6 +23,8 @@ import { Embed } from "./mdx-embed"
 import { Figure } from "./mdx-figure"
 import { InboxRegions } from "./mdx-inbox-regions"
 import { LinkButton } from "./mdx-link-button"
+import { PipelineHero } from "./mdx-pipeline-hero"
+import { SkillCommandsVisual } from "./mdx-skill-commands"
 import { StoryEmbed } from "./mdx-story-embed"
 import { ToolLabel } from "./mdx-tool-label"
 import { Video } from "./mdx-video"
@@ -57,6 +59,8 @@ const components: MDXRemoteProps["components"] = {
   Embed,
   Figure,
   InboxRegions,
+  PipelineHero,
+  SkillCommandsVisual,
   StoryEmbed,
   LinkButton,
   ToolLabel,

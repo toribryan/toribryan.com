@@ -14,10 +14,10 @@ skills:
   - "Figma"
   - "Claude Code"
   - "Azure"
-problem: "Instructors and third-party proctor providers had no visibility into how a proctor spent a session, or whether their device and network held up — coverage ran on trust and the honor system, with zero evidence."
-task: "Design an embedded analytics surface — inside the existing LMS review dashboard, with zero added UI for students — that turns proctor coverage from an assumption into per-session evidence."
-process: "The first fork was a live monitoring console versus a per-session evidence view. Chose the evidence timeline — instructors wanted proof coverage had happened, not another real-time screen to watch during an exam. From there, embedding the surface in the existing review dashboard and committing early to anonymized-but-resolvable identity and keyboard/ARIA accessibility shaped everything downstream."
-outcome: "A swimlane session timeline with glanceable gap, degradation, and device-status markers, plus an anonymized-but-resolvable identity model — fully keyboard accessible and currently in pilot."
+problem: "Instructors and third-party proctor providers had no visibility into how a proctor spent a session, or whether their device and network held up: coverage ran on trust and the honor system, with zero evidence."
+task: "Design an embedded analytics surface, inside the existing LMS review dashboard, with zero added UI for students, that turns proctor coverage from an assumption into per-session evidence."
+process: "The first fork was a live monitoring console versus a per-session evidence view. Chose the evidence timeline: instructors wanted proof coverage had happened, not another real-time screen to watch during an exam. From there, embedding the surface in the existing review dashboard and committing early to anonymized-but-resolvable identity and keyboard/ARIA accessibility shaped everything downstream."
+outcome: "A swimlane session timeline with glanceable gap, degradation, and device-status markers, plus an anonymized-but-resolvable identity model, fully keyboard accessible and currently in pilot."
 gallery:
   - "/proctorcoverage-02.svg"
   - "/proctorcoverage-03.svg"
@@ -27,11 +27,11 @@ gallery:
 
 ## Context
 
-Proctorio provides exam proctoring across LMS assessment sessions, using both internal proctors and third-party proctor providers. But neither instructors nor providers had any way to see how a proctor actually spent a session — where their attention landed, or whether their device and network connection held up throughout. Coverage was a vibes-based conversation: instructors trusted that a proctor was watching, proctors ran on the honor system, and there was no evidence that coverage had actually been seamless.
+Proctorio provides exam proctoring across LMS assessment sessions, using both internal proctors and third-party proctor providers. But neither instructors nor providers had any way to see how a proctor actually spent a session: where their attention landed, or whether their device and network connection held up throughout. Coverage was a vibes-based conversation: instructors trusted that a proctor was watching, proctors ran on the honor system, and there was no evidence that coverage had actually been seamless.
 
 ## Guiding principles
 
-- Evidence over surveillance — build proof, not a live monitor.
+- Evidence over surveillance: build proof, not a live monitor.
 - Anonymized by default, resolvable on demand.
 - Zero new UI for students, no matter what.
 - Accessible from day one, not retrofitted.
@@ -53,13 +53,13 @@ An analytics surface embedded directly in the instructor's review dashboard: a s
 
 ## Usability testing
 
-*Mock section — replace with real testing methodology and results.*
+*Mock section: replace with real testing methodology and results.*
 
 Walked instructors and proctor-provider admins through the swimlane timeline prototype, focused on finding a specific gap, resolving an identity, and navigating with keyboard only.
 
 **What worked**
 
-- The swimlane layout matched how participants already mentally modeled a session — who, when, and where the gaps were.
+- The swimlane layout matched how participants already mentally modeled a session: who, when, and where the gaps were.
 - Status markers were glanceable without needing a legend.
 
 **What we fixed**
@@ -69,7 +69,7 @@ Walked instructors and proctor-provider admins through the swimlane timeline pro
 
 ## How we got there
 
-**Evidence timeline, not a live monitoring console.** Instructors wanted proof that coverage had happened after the fact — not another real-time screen to watch during an exam.
+**Evidence timeline, not a live monitoring console.** Instructors wanted proof that coverage had happened after the fact, not another real-time screen to watch during an exam.
 
 **Embedded in the existing review dashboard, not a standalone tool.** It kept coverage evidence where instructors already look for everything else.
 
@@ -77,7 +77,7 @@ Walked instructors and proctor-provider admins through the swimlane timeline pro
 
 ## What we heard
 
-- Stakeholders consistently wanted evidence over a live feed — proof after the fact, not something to monitor in real time.
+- Stakeholders consistently wanted evidence over a live feed: proof after the fact, not something to monitor in real time.
 - A swimlane timeline matched how they already thought about a session: who was proctoring, when, and where the gaps were.
 - Coverage gaps, connection degradation, and device issues all needed to be glanceable, not something you had to dig for.
 - Anonymized-but-resolvable proctor identity came up repeatedly as essential for trust on both sides.
@@ -88,14 +88,14 @@ Proctor Coverage is pre-launch. The intended outcome is per-session proctor enga
 
 ## What I learned
 
-- Evidence over a live feed reframed the whole problem — instructors didn't want to watch, they wanted proof coverage had happened.
+- Evidence over a live feed reframed the whole problem: instructors didn't want to watch, they wanted proof coverage had happened.
 - Anonymized-but-resolvable identity turned out to be the detail that earned trust from both instructors and proctors.
 - The zero-student-UI constraint concentrated all the design value into the instructor-facing surface.
 - Accessibility had to be designed in from the start, not bolted on at the end.
 
 **If I had more time**
 
-*Mock section — replace with real next steps.*
+*Mock section: replace with real next steps.*
 
 - Pilot the anonymized-but-resolvable identity model with proctor providers directly, not just instructors.
 - Explore a lightweight coverage summary instructors could share with a student who disputes a session.

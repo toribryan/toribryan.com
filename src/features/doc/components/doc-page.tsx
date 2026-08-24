@@ -4,9 +4,11 @@ import Link from "next/link"
 import { getTableOfContents } from "fumadocs-core/content/toc"
 import { ArrowLeftIcon, ExternalLinkIcon } from "lucide-react"
 
+import { cleanTableOfContents } from "@/lib/toc"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
 import { Prose } from "@/components/base/ui/typography"
+import { LinkButton } from "@/components/mdx-link-button"
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import type { Doc } from "@/features/doc/types/document"
@@ -24,8 +26,9 @@ export async function DocPage({
   backHref: string
   backLabel: string
 }) {
-  const toc = await getTableOfContents(doc.content)
+  const toc = cleanTableOfContents(await getTableOfContents(doc.content))
   const m = doc.metadata
+  const liveLabel = m.liveLabel ?? "Visit site"
 
   const facts = [
     ["Company", m.company],
@@ -69,7 +72,7 @@ export async function DocPage({
             nativeButton={false}
             render={
               <a href={m.liveUrl} target="_blank" rel="noopener">
-                Visit site
+                {liveLabel}
                 <ExternalLinkIcon />
               </a>
             }
@@ -170,6 +173,10 @@ export async function DocPage({
             ))}
           </div>
         )}
+
+        {/* Closing CTA for docs that send the reader to shipped work. Pages
+            without a `liveUrl` can place their own <LinkButton> in the body. */}
+        {m.liveUrl && <LinkButton href={m.liveUrl}>{liveLabel}</LinkButton>}
       </Prose>
     </>
   )

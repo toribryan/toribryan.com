@@ -1,61 +1,146 @@
 ---
 title: "Agentic Design System"
-description: "A design system built for machines to read: three-tier tokens, JSON component contracts, and one canonical source of truth."
+description: "Internal R&D on whether a model can use a design system. It cannot, without being told how. That finding is what Code Connect exists to fix."
 image: "/cover-agenticds.svg"
 createdAt: "2026-01-01"
-updatedAt: "2026-01-01"
+updatedAt: "2026-08-23"
 company: "Proctorio"
-role: "Staff Designer"
+role: "Staff Designer, research lead"
+team: "Run with the lead front-end engineer"
 type: "Internal R&D"
 period: "Q1 2026"
 skills:
-  - "Figma"
+  - "Design Systems"
   - "Figma MCP"
+  - "Code Connect"
+  - "Design Tokens"
   - "Claude Code"
-problem: "Every handoff carries a translation layer — the gap between what a designer meant and what an engineer builds. Structure the design system so a model can read it directly, and the deliverable stops being documentation. It becomes software."
-task: "Lead an overhaul of Proctorio's legacy design system, aligned to a company rebrand, into one structured for both human and machine consumers."
-outcome: "One canonical source — components linked to Figma via Code Connect — that every token, doc, and prototype derives from. No more hardcoded values, no more conflicting sources of truth."
+  - "Figma"
+problem: "The design system had been rebuilt for people. Engineering was starting to generate implementations from designs and designers were starting to prototype in code, and both were reaching for the same system without getting it right. Nobody knew why."
+task: "Run the research: test whether a model can take a design and a design system and produce an implementation that actually uses the system, then fix whatever the tests broke."
+process: "Tested the workflow end to end with Figma MCP and controlled prompt pipelines, holding the design and the prompt constant and varying how much structure the system exposed to the model."
+outcome: "A model can read a design but cannot infer a design system from it. Usage instructions have to be attached to the components themselves, which is precisely the job Code Connect does. The system was restructured into three token tiers, JSON component contracts, and one canonical source everything else derives from."
 pinned: true
 ---
 
-## What change is needed
+## Where this starts
 
-An agent doesn't read your design system the way a human does. It needs clear structure, not prose.
+The [design system overhaul](/work/design-system-overhaul) rebuilt the system
+for people. This is the question that came next: what happens when the consumer
+is not a person.
 
-Three failure points do most of the damage:
+Two agentic workflows were emerging at the same time, and the design system sat
+between them. Engineering was beginning to generate implementations from
+designs. Designers were beginning to prototype in code. Both were reaching for
+the same system, neither was getting it right, and the explanations on offer
+were guesses.
 
-- Raw tokens the agent hardcodes
-- Component docs written for humans
-- Conflicting sources of truth
+So I ran it as research, with our lead front-end engineer, rather than arguing
+about it in the abstract.
 
-The fixes: a three-tier token architecture, JSON component metadata, and one canonical source everything else derives from.
+## The experiment
+
+Three things made it a test rather than a demo:
+
+- **Figma MCP** as the connection between the design file and the model, so the
+  model was reading the real design rather than a description of one.
+- **Prompt pipelines** with controlled variation, so a difference in the output
+  could be traced to a difference in the input instead of to the weather.
+- **The design system as the variable.** Same design, same prompt, different
+  amounts of structure exposed to the model.
+
+The question was deliberately narrow. Given a design and a design system, can a
+model produce an implementation that actually uses the system.
+
+## What the first tests told us
+
+No. Not without being told how.
+
+A model reads a design perfectly well. It sees layout, spacing, color,
+hierarchy, and the relationships between elements. What it cannot do is look at
+a rectangle with a label and know that it is your Button, let alone know the
+rules for using your Button correctly.
+
+Handed a design and a system, it would:
+
+- rebuild components from scratch instead of reaching for the ones that already
+  existed
+- hardcode the values it could see rather than the tokens that produced them
+- assemble combinations the system deliberately does not allow
+
+None of that is the model being careless. It is the model being handed a
+picture and asked to infer a contract. The information was not missing from the
+design system. It was missing from what the model could reach.
+
+<StoryEmbed
+  id="case-study-agentic-design-system--inference-vs-lookup"
+  title="Inference vs lookup: the same design, twice"
+  width="900"
+  height="310"
+  caption="Both outputs came from the same design and the same prompt. The variable is whether the component could be looked up."
+/>
+
+That reframed the whole project. The problem was never model capability. It was
+that a design system communicates through convention, apprenticeship and
+review, and none of those survive contact with a machine consumer.
+
+## What Code Connect is actually for
+
+This is the thing I understood only by testing it: Code Connect exists to solve
+exactly this problem. It is not a documentation convenience. It is the link
+that lets a design point at its implementation, so the model stops inferring
+and starts looking it up.
 
 ## Fix 1: Tokens the agent can reason about
 
-Raw values are the first thing that breaks. Hand an agent `#008b8b` and it will cheerfully hardcode that hex in forty places. The moment you rebrand, every one of them is wrong, and no amount of prompting reliably stops it.
+Raw values are the first thing that breaks. Hand a model `#008b8b` and it will
+cheerfully hardcode that hex in forty places. The moment you rebrand, every one
+of them is wrong, and no amount of prompting reliably stops it.
 
-- **Primitives** are raw values — `teal-500: #008b8b`, `space-4: 16px`. The agent should never see these. If it does, it hardcodes them.
-- **Semantics** are intent-named aliases — `color/action/primary`, `color/danger/background`. This is the only layer the agent reads and writes. The name describes the job, not the value, so a rebrand updates one alias and everything downstream follows.
-- **Component tokens** are optional — `button/background/default → color/action/primary`. Skip them until you're doing multi-brand work.
+- **Primitives** are raw values: `teal-500: #008b8b`, `space-4: 16px`. The agent
+  should never see these. If it does, it hardcodes them.
+- **Semantics** are intent-named aliases: `color/action/primary`,
+  `color/danger/background`. This is the only layer the agent reads and writes.
+  The name describes the job, not the value, so a rebrand updates one alias and
+  everything downstream follows.
+- **Component tokens** are optional: `button/background/default →
+  color/action/primary`. Skip them until you are doing multi-brand work.
 
-![The three-tier token architecture: primitives → semantics → component tokens](/case-studies/agentic-design-system-tokens.svg)
+![The three-tier token architecture: primitives, semantics, component tokens](/case-studies/agentic-design-system-tokens.svg)
 
 ## Fix 2: Component metadata
 
-Most component documentation is written in prose, for humans. An agent needs a contract with explicit keys, explicit values, no ambiguity. The emerging consensus — surfaced across talks from Indeed, GitHub, and others at the AI Design Systems Conference 2026 — is JSON metadata per component, covering four things:
+Most component documentation is written in prose, for humans. An agent needs a
+contract with explicit keys, explicit values, no ambiguity. The emerging
+consensus (surfaced across talks from Indeed, GitHub, and others at the AI
+Design Systems Conference 2026) is JSON metadata per component, covering four
+things:
 
-- **Props** — the states and variants that already exist in Figma. Five states in Figma, five states in the metadata. No interpretation.
-- **Relationships** — what the agent must know before placing the component. Is it a form child? A toolbar item? What can it not sit next to? This is the context a human infers and an agent can't.
-- **Tokens** — which semantic tokens the component consumes. Load-bearing in an agentic system, not decorative.
-- **Usage** — what it's for, and the anti-patterns. Not the obvious ones ("don't put two primary buttons side by side"), but the specific ones only your team knows.
+- **Props**: the states and variants that already exist in Figma. Five states in
+  Figma, five states in the metadata. No interpretation.
+- **Relationships**: what the agent must know before placing the component. Is
+  it a form child? A toolbar item? What can it not sit next to? This is the
+  context a human infers and an agent cannot.
+- **Tokens**: which semantic tokens the component consumes. Load-bearing in an
+  agentic system, not decorative.
+- **Usage**: what it is for, and the anti-patterns. Not the obvious ones ("don't
+  put two primary buttons side by side"), but the specific ones only your team
+  knows.
 
-An agent can auto-generate the first draft of this metadata, but it comes back about 80% right and 20% generic. It'll list the obvious anti-patterns and miss the ones that actually bite: "never use a destructive button in onboarding," "loading state shows after 200ms, not immediately."
+An agent can auto-generate the first draft of this metadata, but it comes back
+about 80% right and 20% generic. It will list the obvious anti-patterns and miss
+the ones that actually bite: "never use a destructive button in onboarding,"
+"loading state shows after 200ms, not immediately." The 20% is the part that
+encodes what your team learned the hard way, and it is the part a person has to
+write.
 
 ![Semantic token definitions layered on top of the raw primitives](/case-studies/agentic-design-system-semantic-tokens.svg)
 
 ## Fix 3: One source of truth
 
-The fix is architectural, not editorial. Pick one canonical source — for us, the design system components linked to Figma via Code Connect (or rich component descriptions, which do the same job without enterprise tooling).
+The fix is architectural, not editorial. Pick one canonical source: for us, the
+design system components linked to Figma via Code Connect (or rich component
+descriptions, which do the same job without enterprise tooling).
 
 Everything else derives from it or maps to it:
 
@@ -63,8 +148,24 @@ Everything else derives from it or maps to it:
 - The docs site
 - The token files
 
-None of them are independent truth. They're all projections of the one contract.
+None of them are independent truth. They are all projections of the one
+contract.
 
 ## What it changed
 
-No more hardcoded values creeping into forty places the moment a token changes. No more agent guessing which source to trust — the Figma library, the docs site, and the token files all resolve to one contract instead of competing with each other.
+No more hardcoded values creeping into forty places the moment a token changes.
+No more agent guessing which source to trust: the Figma library, the docs site,
+and the token files all resolve to one contract instead of competing.
+
+The larger change is what it made possible. Once the system could be read by a
+machine, the handoff itself could be rebuilt around that, which became the
+[design skills infrastructure](/latest/design-skills-infrastructure) and took
+spec production from days to under 30 minutes.
+
+## What I'd do next
+
+- Measure it properly. The tests told us what broke and why, but a standing
+  benchmark would tell us whether the system is getting more legible over time
+  or just differently broken.
+- Push the metadata upstream, so a component that ships without its usage
+  contract fails review the way a component without an accessible name would.

@@ -1,9 +1,10 @@
 import {
   ClaudeIcon,
   CursorIcon,
-  NextJsIcon,
+  GitHubIcon,
   ReactIcon,
-  TsIcon,
+  ShadcnIcon,
+  TailwindCssIcon,
 } from "@/components/icons"
 
 import type { TechStack } from "../types/tech-stack"
@@ -67,17 +68,24 @@ export const TECH_STACK: TechStack[] = [
     categories: ["Engineering"],
   },
   {
-    key: "nextjs",
-    title: "Next.js",
-    href: "https://nextjs.org",
-    icon: <NextJsIcon />,
+    key: "tailwindcss",
+    title: "Tailwind CSS",
+    href: "https://tailwindcss.com",
+    icon: <TailwindCssIcon />,
     categories: ["Engineering"],
   },
   {
-    key: "typescript",
-    title: "TypeScript",
-    href: "https://www.typescriptlang.org",
-    icon: <TsIcon />,
+    key: "shadcn-ui",
+    title: "shadcn/ui",
+    href: "https://ui.shadcn.com",
+    icon: <ShadcnIcon />,
+    categories: ["Engineering"],
+  },
+  {
+    key: "storybook",
+    title: "Storybook",
+    href: "https://storybook.js.org",
+    icon: <BrandMark src="/storybook-icon.svg" alt="" />,
     categories: ["Engineering"],
   },
 
@@ -94,5 +102,41 @@ export const TECH_STACK: TechStack[] = [
     href: "https://loom.com",
     icon: <BrandMark src="/Loom.svg" alt="" />,
     categories: ["Research"],
+  },
+
+  {
+    key: "github",
+    title: "GitHub",
+    href: "https://github.com",
+    icon: <GitHubIcon />,
+    categories: ["Workflow"],
+  },
+  {
+    key: "webstorm",
+    title: "WebStorm",
+    href: "https://www.jetbrains.com/webstorm",
+    icon: <BrandMark src="/webstorm.svg" alt="" />,
+    categories: ["Workflow"],
+  },
+  {
+    key: "vscode",
+    title: "VS Code",
+    href: "https://code.visualstudio.com",
+    icon: <BrandMark src="/vscode.svg" alt="" />,
+    categories: ["Workflow"],
+  },
+  {
+    key: "notion",
+    title: "Notion",
+    href: "https://notion.com",
+    icon: <BrandMark src="/notion.svg" alt="" />,
+    categories: ["Workflow"],
+  },
+  {
+    key: "obsidian",
+    title: "Obsidian",
+    href: "https://obsidian.md",
+    icon: <BrandMark src="/obsidian.svg" alt="" />,
+    categories: ["Workflow"],
   },
 ]
