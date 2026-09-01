@@ -43,7 +43,12 @@ export const USER: User = {
     darkOff: "/images/about/photo-1.jpg",
     darkOn: "/images/about/photo-1.jpg",
   },
-  ogImage: "/images/about/photo-1.jpg",
+  /**
+   * The 1200x630 social card, not a photo: it is what renders when the link is
+   * texted or pasted into Slack. It has to stay reachable while the password
+   * gate is on, so it is exempt from the matcher in `src/middleware.ts`.
+   */
+  ogImage: "/og-cover.png",
   keywords: [
     "tori bryan",
     "toribryan",

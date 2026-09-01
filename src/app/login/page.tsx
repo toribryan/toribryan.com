@@ -1,16 +1,51 @@
 import type { Metadata } from "next"
 
+import { SITE_INFO } from "@/config/site"
 import { BrandMark } from "@/components/brand-mark"
+import { USER } from "@/features/portfolio/data/user"
+
+/**
+ * Every gated request redirects here, so this page is what a link preview
+ * actually scrapes: iMessage, Slack and the rest follow the 307 and read these
+ * tags, never the home page's. The tab still says "Password required", but the
+ * card carries the real name and description so a shared link looks like the
+ * site rather than a locked door.
+ *
+ * `robots: noindex` keeps it out of search results. It does not suppress link
+ * previews, which are unfurled by the messaging client rather than a crawler.
+ */
+const socialTitle = `${USER.displayName} – ${USER.jobTitle}`
 
 export const metadata: Metadata = {
   title: "Password required",
   description: "This site is password protected.",
   robots: { index: false, follow: false },
+  openGraph: {
+    title: socialTitle,
+    description: SITE_INFO.description,
+    siteName: SITE_INFO.name,
+    url: "/",
+    type: "profile",
+    locale: "en_US",
+    images: [
+      {
+        url: SITE_INFO.ogImage,
+        width: 1200,
+        height: 630,
+        type: "image/png",
+        alt: socialTitle,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: socialTitle,
+    description: SITE_INFO.description,
+    images: [SITE_INFO.ogImage],
+  },
 }
 
-export default async function LoginPage({
-  searchParams,
-}: PageProps<"/login">) {
+export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   const { error, next } = await searchParams
 
   const hasError = error === "1"

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import type { BlogPosting, WithContext } from "schema-dts"
 
 import { JSON_LD_ID } from "@/config/json-ld"
+import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { absoluteUrl } from "@/lib/utils"
 import { DocPage } from "@/features/doc/components/doc-page"
@@ -44,10 +45,15 @@ export async function generateMetadata({
       type: "article",
       publishedTime: new Date(createdAt).toISOString(),
       modifiedTime: new Date(updatedAt).toISOString(),
-      ...(image && {
-        images: { url: image, width: 1200, height: 630, alt: title },
-      }),
+      siteName: SITE_INFO.name,
+      locale: "en_US",
+      // Metadata from a parent segment is replaced rather than merged, so
+      // without a fallback here a doc with no cover of its own would render a
+      // card with no image at all. Dimensions are left off because the covers
+      // are not all 1200x630 and a wrong hint is worse than none.
+      images: [{ url: image ?? SITE_INFO.ogImage, alt: title }],
     },
+    twitter: { images: [image ?? SITE_INFO.ogImage] },
   }
 }
 
