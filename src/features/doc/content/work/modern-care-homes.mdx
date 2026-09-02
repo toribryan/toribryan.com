@@ -1,22 +1,171 @@
 ---
 title: "Modern Care Homes"
-description: "Placeholder: case study content coming soon."
+description: "An ongoing design engineering partnership behind a senior-living discovery platform for Phoenix-metro families — the brand, the design system, and the front end that ships them."
 image: "/cover-moderncare.webp"
 createdAt: "2026-01-01"
+updatedAt: "2026-09-02"
 order: 1
 new: true
-updatedAt: "2026-01-01"
-role: "Web Designer"
-type: "Website Redesign"
-period: "2026"
+company: "Modern Care Homes"
+role: "Design Engineer — design and front end"
+team: "With Spencer Grzincich, Software Engineer"
+type: "Ongoing design engineering partnership"
+period: "2026 – present"
 liveUrl: "https://www.moderncarehomes.com/"
+liveLabel: "Visit Modern Care Homes"
+skills:
+  - "Product Design"
+  - "Design Systems"
+  - "Front-End Development"
+  - "Accessibility"
+  - "Next.js"
+  - "React"
+  - "TypeScript"
+  - "Tailwind CSS"
+  - "Figma"
+problem: "Choosing a care home is one of the hardest decisions a family makes, and it is usually made under pressure, on a phone, by someone who has never done it before. Most senior-living sites answer that moment with a lead-capture form and a stock photo."
+task: "Own design end to end and build the front end that ships it — brand, information architecture, the design system, and the interfaces people actually touch — as a continuing partnership rather than a one-off redesign."
+process: "Design and code are the same job here. Work starts in Figma when the question is visual and in the codebase when the question is behavioral, and the design system is the contract that keeps the two from drifting. Spencer owns the data layer and infrastructure; I own everything a family sees."
+outcome: "Live and iterating. The public platform ships on the system: an accessibility floor set at 18px base type, 48×48px targets, and AA contrast as a minimum rather than a goal, with new surfaces landing continuously."
 ---
 
-## Screen Designs
+<Callout title="This project is ongoing">
+Modern Care Homes is live work, not a finished case study. This page is
+maintained as the project moves — new surfaces, new system decisions, and
+what each one changed. The changelog at the bottom tracks what's been added.
+</Callout>
+
+## What Modern Care Homes is
+
+Modern Care Homes is a senior-living discovery platform for the Phoenix metro.
+Families search independent-living and assisted-living homes across Phoenix,
+Scottsdale, Peoria, Paradise Valley, Queen Creek and Surprise, compare what
+they find, and reach the right community directly.
+
+The audience is two people at once, and they are not the same person:
+
+- **The resident**, often over 70, on a tablet or a desktop with the browser
+  zoomed, evaluating whether a place looks like somewhere they could live.
+- **The adult child**, on a phone, mid-crisis, comparing six homes in a hospital
+  waiting room and needing to know cost, care level and availability in under a
+  minute.
+
+They arrive with different urgency and different devices, and share exactly one
+trait: no patience for an interface that fights back. That constraint is the
+spine of every decision on this project.
+
+## Goals
+
+<Steps>
+
+<Step>Make the search legible.</Step>
+
+A directory is only useful if a family can tell two listings apart. The work is
+in comparison — care level, setting, and what a home actually offers — not in
+volume of results.
+
+<Step>Set an accessibility floor and design up from it.</Step>
+
+One rule governs the system: **if it fails at 200% zoom, it isn't done.** Base
+type is 18px, not 16px. Minimum touch target is 48×48px, above the WCAG 2.2
+floor of 44px. AA contrast is the minimum and AAA is the target for body copy.
+None of that is a compliance pass at the end — it is the starting geometry.
+
+<Step>Earn trust before asking for anything.</Step>
+
+The category default is to gate information behind a lead form. The platform
+does the opposite: publish what a family needs to decide, and let contact be a
+choice rather than a toll.
+
+<Step>Build a system, not a set of pages.</Step>
+
+Every surface comes out of one component library and one token set, so the
+tenth page costs a fraction of the first and the accessibility floor holds by
+construction instead of by review.
+
+<Step>Keep shipping.</Step>
+
+This is an ongoing partnership. The measure is not a launch date — it's whether
+the platform gets clearer every month.
+
+</Steps>
+
+## What I do
+
+I'm the design engineer on this: design end to end, and the front end that
+ships it.
+
+- **Brand and visual direction.** The identity, the type scale, the color
+  system, and the photography and layout language that make a directory feel
+  like a place rather than a database.
+- **Information architecture.** How homes are structured, compared and
+  filtered, and what a family sees first when they land on one.
+- **The MCH design system.** Tokens, foundations and components, built from the
+  accessibility floor up. Currently in progress — foundations are locked and
+  components land as they're published.
+- **Interface design.** Search, listing and detail surfaces, the contact flow,
+  and the editorial pages that carry the resources and posts.
+- **Front-end implementation.** I build what I design. Components, layout,
+  responsive behavior, motion and accessibility all ship as code from me, not
+  as a spec handed across a wall.
+- **Accessibility ownership.** Contrast, focus order, keyboard paths, zoom
+  behavior and target sizing are checked on the real build, not approximated in
+  a mockup.
+
+## Working with Spencer
+
+Modern Care Homes is built with
+[**Spencer Grzincich**](https://www.linkedin.com/in/grzincich/), Software
+Engineer.
+
+The split is clean and it's the reason the project moves quickly. Spencer owns
+the data layer and the infrastructure underneath the platform — how home data
+is modeled, stored and served, the integrations, and everything that has to
+stay up. I own everything a family sees, and I ship it as code rather than as a
+handoff.
+
+That removes the most expensive step in most design–engineering relationships:
+there is no translation layer between a design and its implementation, because
+the person making the design decision is the person writing the component. What
+we negotiate is the boundary — the shape of the data the interface needs — and
+that conversation is short, specific, and happens once per surface instead of
+once per pixel.
+
+## The stack
+
+The front end is mine; the system underneath it is Spencer's.
+
+| Layer | What we use | Why |
+| --- | --- | --- |
+| Framework | Next.js (App Router) | Server rendering for pages that must be fast on a phone on cellular, and typed routes across a growing directory |
+| UI | React + TypeScript | Types are the cheapest form of documentation on a two-person team |
+| Styling | Tailwind CSS | Design tokens live as CSS variables, so a system change is one edit, not forty |
+| Components | shadcn/ui | Owned source rather than a dependency, so accessibility fixes go in the component instead of around it |
+| Design | Figma | Source of truth for foundations and components; tokens map one-to-one to the CSS variables |
+| Deployment | Vercel | Preview builds per branch, so a design decision can be reviewed on a real device before it merges |
+| Version control | GitHub | Where design and engineering actually meet — the PR is the review |
+| Data + infrastructure | Owned by Spencer | Home data modeling, integrations, and everything that has to stay up |
+
+The through-line is that the design system and the code are the same artifact
+viewed from two directions. A token changes in Figma, it changes in
+`globals.css`, and every surface follows. Nothing is hardcoded that a system
+could name.
+
+## Screen designs
 
 <Video
-    src="/case-studies/home-grid-mch.webp"
-    caption="Test"
+  src="/case-studies/home-grid-mch.mp4"
+  caption="Browsing homes: the comparison grid families land on after a search."
 />
 
+## What's next
 
+- Publishing the MCH component library as the foundations settle.
+- Deepening the comparison surfaces — care level and cost side by side, which
+  is the decision families are actually making.
+- Editorial: the resources and posts that answer the questions asked before a
+  family is ready to tour.
+
+## Changelog
+
+- **2026-09-02**: Case study opened.
