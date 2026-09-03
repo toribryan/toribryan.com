@@ -19,13 +19,16 @@ import { Callout } from "./callout"
 import { Heading } from "./heading"
 import { BrandLink } from "./mdx-brand-link"
 import { mdxCodeBlockComponents } from "./mdx-code-block"
+import { Compare } from "./mdx-compare"
 import { Embed } from "./mdx-embed"
 import { Figure } from "./mdx-figure"
 import { InboxRegions } from "./mdx-inbox-regions"
 import { LinkButton } from "./mdx-link-button"
+import { Pipeline, Stage } from "./mdx-pipeline"
 import { PipelineHero } from "./mdx-pipeline-hero"
 import { SkillCommandsVisual } from "./mdx-skill-commands"
 import { StoryEmbed } from "./mdx-story-embed"
+import { Tech } from "./mdx-tech"
 import { ToolLabel } from "./mdx-tool-label"
 import { Video } from "./mdx-video"
 
@@ -57,12 +60,16 @@ const components: MDXRemoteProps["components"] = {
   BrandLink,
   Callout,
   Embed,
+  Compare,
   Figure,
   InboxRegions,
+  Pipeline,
   PipelineHero,
+  Stage,
   SkillCommandsVisual,
   StoryEmbed,
   LinkButton,
+  Tech,
   ToolLabel,
   Video,
 
