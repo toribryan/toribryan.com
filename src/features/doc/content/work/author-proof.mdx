@@ -18,6 +18,13 @@ problem: "Plagiarism detectors analyze the document, not the student. A paraphra
 solution: "An MVP built around an instructor's configuration settings, targeting 95%+ completion, sub-30-second generation, and under 5% false positives in the first-semester pilot."
 ---
 
+<Pipeline>
+  <Stage label="The question" detail="Did you write this, not is this original" mark="search" />
+  <Stage label="Design" detail="Quiz settings, student flow, results" mark="figma" />
+  <Stage label="Prototype as spec" detail="HTML, CSS and vanilla JS" mark="terminal" />
+  <Stage label="Shipped" detail="A score badge inside SpeedGrader" mark="rocket" />
+</Pipeline>
+
 AuthorProof asks the question that ultimately better informs the verdict. On
 submission, it generates a personalized comprehension quiz from the student's own
 writing, in the submission's own language. The result surfaces as a score badge

@@ -1,6 +1,6 @@
 ---
 title: "Modern Care Homes"
-description: "An ongoing design engineering project for a senior living platform in the Phoenix metro. I do the design and I build the front end. Here's what it is and how it works."
+description: "A senior living marketplace for families looking for care, and the agent platform that runs it. I do the product design, the web design, and the front end that ships them both."
 image: "/cover-moderncare.webp"
 createdAt: "2026-01-01"
 updatedAt: "2026-09-02"
@@ -15,6 +15,7 @@ liveUrl: "https://www.moderncarehomes.com/"
 liveLabel: "Visit Modern Care Homes"
 skills:
   - "Product Design"
+  - "Web Design"
   - "Design Systems"
   - "Front-End Development"
   - "Accessibility"
@@ -23,17 +24,13 @@ skills:
   - "TypeScript"
   - "Tailwind CSS"
   - "Figma"
+  - "Storybook"
+  - "Mobbin"
 problem: "Families looking for a care home are usually doing it fast, under stress, and for the first time. Most senior living sites meet them with a lead form and a stock photo."
-task: "Do the design end to end and build the front end of it. Brand, information architecture, the design system, and every screen a family touches."
-process: "I design it and I ship it, so there's no handoff. Spencer builds the data layer and the infrastructure underneath. The design system is what keeps my Figma file and my code from drifting apart."
+task: "Design and ship the interface and product experience for both sides of a senior living marketplace: the site where families search and compare homes, and the platform where agents manage the listings."
+process: "I ship what I design. The handoff between design and engineering exists mainly for complex contributions that connect to the data layer. The design system is where I spend a large portion of my time, making sure the interfaces we build have consistently reliable design support."
 outcome: "Live and still going. The accessibility floor is set and holding. New surfaces land as we build them."
 ---
-
-<Callout title="This one is ongoing">
-Modern Care Homes is live work, not a finished project. I'm keeping this page
-updated as it moves, so new surfaces and new system decisions get added here.
-The changelog at the bottom tracks what's changed.
-</Callout>
 
 ## What it is
 
@@ -41,6 +38,11 @@ Modern Care Homes is a senior living platform for the Phoenix metro. Families
 search independent living and assisted living homes across Phoenix, Scottsdale,
 Peoria, Paradise Valley, Queen Creek and Surprise, compare what they find, and
 contact a home directly.
+
+<Video
+    src="/case-studies/home-grid-mch.mp4"
+    caption="Browsing homes: the comparison grid families land on after a search."
+/>
 
 What makes it a hard design problem is that two pretty different people use it
 for the same task. There's the resident, usually over 70, on a tablet or a
@@ -53,106 +55,176 @@ They don't have much in common except that neither one has any patience for an
 interface that gets in the way. Pretty much every decision I've made on this
 project comes back to that.
 
-## What I'm trying to do
+There's a second product behind the public site, which is the platform agents
+use to manage their listings. That matters more than it sounds like it should,
+because the same components run in both places. A change to a button is a change
+in two products, and the design system has to be good enough to survive that.
+
+## Guiding principles
 
 <Steps>
 
-<Step>Make homes easy to tell apart.</Step>
-
-A directory is only useful if you can compare things. So the work is less about
-how many results come back and more about whether you can look at two homes and
-see the difference in care level, setting, and what's actually included.
-
 <Step>Design from an accessibility floor instead of toward one.</Step>
 
-The rule I hold everything to is that if it fails at 200% zoom, it isn't done.
-Base type is 18px instead of 16. Minimum touch target is 48 by 48, which is
-above the WCAG 2.2 floor of 44, because of who's using this. AA contrast is the
-minimum and I'm going for AAA on body copy. None of that is a pass I do at the
-end. It's where the layout starts.
-
-<Step>Build a system instead of a pile of pages.</Step>
-
-Every screen comes out of one component library and one set of tokens. Some of
-that is speed, but mostly it's how the accessibility floor stays put. If it's
-baked into the components, I can't accidentally undo it on page eleven.
+<Step>Build a design system instead of a pile of pages.</Step>
 
 <Step>Keep shipping.</Step>
-
-This is ongoing, so there's no launch date to point at. The thing I actually
-care about is whether it gets clearer every month.
 
 </Steps>
 
 ## What I do
 
-I'm the design engineer here, which in practice means I do the design and then I
-build the front end of it.
+<Pipeline>
+    <Stage label="Pattern research" detail="Marketplaces, in Mobbin" mark="search" />
+    <Stage label="Figma" detail="Foundations, tokens, components" mark="figma" />
+    <Stage label="Storybook" detail="Every state, in isolation" mark="storybook" />
+    <Stage label="Shipped" detail="Marketplace and agent platform" mark="react" />
+</Pipeline>
 
-- **Brand and visual direction.** Type scale, color, and the layout and
-  photography language that makes a directory feel like a place instead of a
-  spreadsheet.
-- **Information architecture.** How homes get structured and compared, and what
-  a family sees first when they land on one.
-- **The design system.** Tokens, foundations, components. Foundations are
-  locked. Components are still in progress and I'm publishing them as they get
-  done.
-- **Interface design.** Search, the listing and detail pages, contact, and the
-  editorial pages that hold the posts and resources.
-- **Front-end implementation.** I build what I design. Components, layout,
-  responsive behavior, motion and accessibility all ship as code from me instead
-  of as a spec I hand to someone else.
-- **Accessibility.** Contrast, focus order, keyboard paths, zoom and target
-  sizes get checked on the real build, because a mockup can't tell you what
+I'm the design engineer here, which means I do the design and then I build the
+front end of it. Four things, roughly in order. Work out what the problem
+actually is, design the interfaces, turn whatever survives into a system, then
+ship it.
+
+### Research and strategy
+
+Senior living is a marketplace problem before it's a healthcare one. That
+framing decides a lot, because it means the products worth studying aren't other
+care sites. They're the marketplaces that already spent years and a lot of money
+on search, comparison and listing quality.
+
+- Pattern research. I spend a lot of time in <Tech name="mobbin" /> pulling
+  apart how real estate marketplaces handle search and discovery. Filters,
+  result density, map and list views, saved comparisons, what a card shows at a
+  glance.
+- The same thing for the agent side. Getting a home listed is a long form with
+  photos, pricing and details, and the closest good version of that problem is
+  Airbnb's listing creation flow. I pulled it apart screen by screen and mapped
+  what someone is doing, seeing and thinking at each stage, then marked what
+  works and where the openings are. It's a teardown I keep coming back to,
+  because listing creation is the same problem in every marketplace I work on.
+- What transfers and what doesn't. Most of what those products landed on carries
+  over. Some of it doesn't, because our filters are care levels rather than
+  bedrooms and bathrooms, and the person deciding often isn't the person moving
+  in.
+- Where the effort goes. The core flow is search, then compare, then contact.
+  Compare is where people actually get stuck, so that's where the work goes.
+
+<Video
+  src="/case-studies/airbnb-research-mch.mp4"
+  caption="Tearing down Airbnb's listing creation flow next to the board where I map it: stage, what the person is doing, seeing and thinking, then what works and where the opening is."
+/>
+
+
+### Designing the interfaces
+
+Two kinds of design sit next to each other here and they don't always want the
+same thing. Product design decides whether someone can finish what they came to
+do. Web design decides whether they trust the place enough to keep going. This
+one needs both.
+
+**Product design**
+
+- What a listing shows and in what order. Care level, setting, cost, what's
+  included. A family is mostly trying to rule homes out, and I'd rather help
+  them do that quickly than pad the page.
+- Content design. Senior living has a lot of jargon and most families are
+  learning it while they shop. Independent living, assisted living, levels of
+  care. If the words on the page assume you already know the difference, the
+  page failed.
+- The unglamorous states. Filters, no results, and listings that don't have
+  every field filled in. Those are most of the real sessions and none of the
+  pretty screenshots.
+
+<Compare
+  before="/case-studies/old-dashboard-mch.png"
+  after="/case-studies/new-dashboard-mch.png"
+  beforeAlt="The old agent dashboard shell: a wide sidebar holding only Home Details and Settings, next to an empty content area"
+  afterAlt="The reworked shell: an icon rail, then a column listing Availability, Photos, About, Amenities, Care services and Contact, each with its current state underneath"
+  layout="columns"
+  caption="The agent dashboard shell. It used to be two nav items and a blank canvas, which tells an agent nothing about the listing they're supposed to be finishing. Now the sidebar is the listing: every section carries its own state, so what's thin is visible before you open anything. That idea came out of the Airbnb teardown above."
+/>
+
+**Web design**
+
+- Brand and visual direction. Type scale, color, and the layout and photography
+  language that makes a directory feel like a place instead of a spreadsheet.
+- Page design across pretty different jobs. Marketing pages get to be
+  expressive. Search results have to get out of the way. The editorial side with
+  the posts and resources sits somewhere in between.
+- Responsive behavior. This gets used on a phone in a parking lot and on a
+  desktop at 200% zoom, so a layout that only works at one size isn't done.
+- Pacing. How much a page gives you before you have to scroll, and what earns
+  the top of it.
+
+<Compare
+  before="/case-studies/old-homecard-mch.png"
+  after="/case-studies/new-homecard-mch.png"
+  beforeAlt="The old home card: photo, price above the name in grey, address, and a paragraph of generic marketing copy"
+  afterAlt="The reworked home card: an Available Now badge, a save control, photo carousel dots, then name, address and price"
+  layout="columns"
+  caption="The home card. The old one gave its widest line to copy that read the same on every listing, which is no help when you're comparing. The new one spends that space on what actually differs between homes: whether it's available, more than one photo, and a way to keep it for later."
+/>
+
+### Building the design system
+
+Every interface above has to survive being used twice, once on the marketplace
+and once in the agent platform. That's the job the system does.
+
+- Tokens, foundations, components. Foundations are locked. Components are still
+  in progress and I'm publishing them as they get done.
+- The accessibility floor lives in the components rather than in a checklist.
+  18px base type, 48 by 48 targets, AA contrast as the minimum. Baked into the
+  component, I can't accidentally undo it on page eleven.
+- <Tech name="storybook" />, which is where components get built and argued with
+  before they go anywhere near a page. I can put a component in every state it
+  has, at every size, at 200% zoom, and see it fail on its own instead of
+  finding out inside a layout.
+- The two-product test. Storybook is also how I know a component is ready for
+  both the marketplace and the agent platform, because I can look at it outside
+  of either one. A change to a button is a change in two products.
+
+### Shipping the front end
+
+I build what I design, which is the part that removes the most steps.
+
+- Components, layout, responsive behavior and motion all ship as code from me
+  instead of as a spec I hand to someone else.
+- Accessibility gets verified on the real build. Contrast, focus order,
+  keyboard paths, zoom and target sizes, because a mockup can't tell you what
   happens at 200 percent.
+- Whatever I learn shipping goes back into the system, so the next screen starts
+  further along than the last one did.
 
 The part I like most is that I never have to defend any of it in a handoff
 meeting. If something needs to change, I go change it.
 
-## Working with Spencer
+
+## Collaboration
 
 I build this with
-[Spencer Grzincich](https://www.linkedin.com/in/grzincich/), a Software
-Engineer.
+[Spencer Grzincich](https://www.linkedin.com/in/grzincich/), the Software
+Engineer on the project.
 
 He owns the data layer and the infrastructure. How home data gets modeled,
 stored and served, the integrations, and everything that has to stay up. I own
-everything a family sees.
-
-The split works because there's almost nothing to translate between us. Normally
-the expensive part of design and engineering working together is the handoff,
-where a design gets described to someone who then rebuilds it from the
-description. That step doesn't exist here, because I'm the one writing the
-component. What Spencer and I actually negotiate is the shape of the data a
-screen needs, and that's a short conversation we have once per surface instead
-of a long one we have over and over.
+everything a family or agent sees and interacts with.
 
 ## The stack
 
-The front end is mine. Everything underneath it is Spencer's.
-
 | Tool | Layer | Why |
 | --- | --- | --- |
-| Next.js (App Router) | Framework | Server rendering, because a lot of this traffic is a phone on cell service. Typed routes help as the directory grows. |
-| React and TypeScript | UI | TypeScript catches the things I'd otherwise find in the browser. |
-| Tailwind CSS | Styling | Tokens live as CSS variables, so a system change is one edit instead of forty. |
-| shadcn/ui | Components | I own the source instead of importing it, so when I need to fix an accessibility issue I fix it inside the component. |
-| Figma | Design | Where foundations and components live. Tokens map one to one with the CSS variables. |
-| Vercel | Deployment | A preview build per branch, so I can look at a change on a real phone before it merges. |
-| GitHub | Version control | Where the design and the code actually meet. |
+| <Tech name="nextjs" /> | Framework | Server rendering, because a lot of this traffic is a phone on cell service. Typed routes help as the directory grows. |
+| <Tech name="react" /> <Tech name="typescript" /> | UI | TypeScript catches the things I'd otherwise find in the browser. |
+| <Tech name="tailwindcss" /> | Styling | Tokens live as CSS variables, so a system change is one edit instead of forty. |
+| <Tech name="shadcn-ui" /> | Components | I own the source instead of importing it, so when I need to fix an accessibility issue I fix it inside the component. |
+| <Tech name="figma" /> | Design | Where foundations and components live. Tokens map one to one with the CSS variables. |
+| <Tech name="storybook" /> | Components | Where components get built and tested in isolation, in every state, before they land in either product. |
+| <Tech name="vercel" /> | Deployment | A preview build per branch, so I can look at a change on a real phone before it merges. |
+| <Tech name="github" /> | Version control | Where the design and the code actually meet. |
+| <Tech name="mobbin" /> | Research | Search and discovery patterns from real estate marketplaces, which are further along on this problem than senior living is. |
 | Spencer's side | Data and infrastructure | Home data, integrations, and everything that has to stay up. |
 
-Nothing here is exotic. It's a pretty normal Next.js stack and that's on
-purpose. The interesting part isn't the tools, it's that I'm not maintaining a
-design and a separate implementation of it. When a token changes in Figma I
-change it in `globals.css` and every screen follows.
-
-## Screen designs
-
-<Video
-  src="/case-studies/home-grid-mch.mp4"
-  caption="Browsing homes: the comparison grid families land on after a search."
-/>
 
 ## What's next
 
@@ -162,8 +234,3 @@ change it in `globals.css` and every screen follows.
 - More editorial. The resources and posts answer the questions people have
   before they're ready to tour.
 
-I don't have dates on any of that. It's an ongoing project and this list moves.
-
-## Changelog
-
-- **2026-09-02**: First version of this page.

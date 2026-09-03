@@ -24,6 +24,13 @@ outcome: "A model can read a design but cannot infer a design system from it. Us
 pinned: true
 ---
 
+<Pipeline>
+  <Stage label="The question" detail="Can a model use a design system" mark="search" />
+  <Stage label="Figma MCP" detail="The model reads the real design" mark="figma" />
+  <Stage label="Controlled prompts" detail="Same design, varied structure" mark="terminal" />
+  <Stage label="Code Connect" detail="Lookup instead of inference" mark="layers" />
+</Pipeline>
+
 ## Where this starts
 
 The [design system overhaul](/work/design-system-overhaul) rebuilt the system
