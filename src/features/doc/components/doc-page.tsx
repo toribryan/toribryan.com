@@ -77,13 +77,19 @@ export async function DocPage({
     ["Status", m.status],
   ].filter(([, value]) => Boolean(value)) as [string, string][]
 
+  // Outcome is deliberately absent here: it renders above the facts table as
+  // the results strip, so the payoff sits above the fold instead of closing a
+  // block a reader has to scroll to reach.
   const brief = [
     ["Problem", m.problem],
     ["Solution", m.solution],
     ["Task", m.task],
     ["Process", m.process],
-    ["Outcome", m.outcome],
   ].filter(([, value]) => Boolean(value)) as [string, string][]
+
+  // Prefer the authored figures. Docs without a `results` block still promote
+  // their `outcome` prose, so every case study leads with what changed.
+  const results = m.results?.filter((r) => r.value && r.label) ?? []
 
   return (
     <>
@@ -154,11 +160,66 @@ export async function DocPage({
             // The optimizer can't reach gated images — see doc-card.tsx.
             unoptimized
           />
+          {m.imageCredit && (
+            <p className="mt-2 text-xs text-muted-foreground">
+              {m.imageCreditUrl ? (
+                <a
+                  className="underline underline-offset-4"
+                  href={m.imageCreditUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {m.imageCredit}
+                </a>
+              ) : (
+                m.imageCredit
+              )}
+            </p>
+          )}
         </div>
       )}
 
       <Prose className="px-4 pt-8 pb-4">
         <p className="lead text-muted-foreground">{m.description}</p>
+
+        {results.length > 0 ? (
+          <dl
+            className={cn(
+              "not-prose my-6 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-line py-5",
+              results.length === 3 && "sm:grid-cols-3",
+              results.length >= 4 && "sm:grid-cols-4"
+            )}
+          >
+            {results.map(({ value, label }) => (
+              <div key={label} className="flex flex-col gap-1">
+                <dt
+                  className={cn(
+                    "font-heading tabular-nums",
+                    // A short value is a figure and gets display size. A longer
+                    // one is a phrase, and would wrap badly if set that large.
+                    value.length <= 10
+                      ? "text-3xl leading-none font-medium"
+                      : "text-lg leading-tight font-medium text-balance"
+                  )}
+                >
+                  {value}
+                </dt>
+                <dd className="font-mono text-xs leading-relaxed tracking-wide text-muted-foreground text-pretty">
+                  {label}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        ) : (
+          m.outcome && (
+            <div className="not-prose my-6 flex flex-col gap-1 border-y border-line py-4">
+              <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                Outcome
+              </p>
+              <p className="text-sm leading-relaxed text-pretty">{m.outcome}</p>
+            </div>
+          )
+        )}
 
         {facts.length > 0 && (
           <dl

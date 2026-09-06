@@ -7,6 +7,13 @@ export type DocMetadata = {
    */
   image?: string
   /**
+   * Attribution shown directly under the cover image, for imagery that is
+   * not the author's own (e.g. an employer's public product marketing).
+   */
+  imageCredit?: string
+  /** Where the credit links to, usually the page the image was taken from. */
+  imageCreditUrl?: string
+  /**
    * Category identifier, derived from the doc's content subfolder
    * (e.g. `content/components/*` → "components"). Not declared in frontmatter;
    * injected when docs are read. Used for filtering (see getDocsByCategory).
@@ -67,6 +74,23 @@ export type DocMetadata = {
   solution?: string
   /** What shipped, and what it changed. */
   outcome?: string
+  /**
+   * The one-line claim shown on the Projects card, under the title. Says what
+   * the work changed, so a reader can decide from the grid whether to open it.
+   * Absent means the card shows title and date only, which is how the Latest
+   * feed still renders.
+   */
+  claim?: string
+  /**
+   * Headline results, shown as a strip directly under the description and
+   * above the facts table. Two to four entries reads best; more than four
+   * wraps into a second row and stops being scannable.
+   *
+   * `value` carries the figure ("94%", "60 days", "40"). Keep it short enough
+   * to hold one line. Entries without a figure can carry a short noun phrase
+   * instead ("In pilot"), which renders at body size rather than display size.
+   */
+  results?: { value: string; label: string }[]
   /** Additional images shown below the body. */
   gallery?: string[]
 

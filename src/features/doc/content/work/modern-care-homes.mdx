@@ -1,9 +1,10 @@
 ---
 title: "Modern Care Homes"
 description: "A senior living marketplace for families looking for care, and the agent platform that runs it. I do the product design, the web design, and the front end that ships them both."
+claim: "I design the interfaces and ship the front end for both sides of it, the site families search and the platform agents run."
 image: "/cover-moderncare.webp"
 createdAt: "2026-01-01"
-updatedAt: "2026-09-02"
+updatedAt: "2026-09-03"
 order: 1
 new: true
 company: "Modern Care Homes"
@@ -26,13 +27,21 @@ skills:
   - "Figma"
   - "Storybook"
   - "Mobbin"
+  - "PostHog"
 problem: "Families looking for a care home are usually doing it fast, under stress, and for the first time. Most senior living sites meet them with a lead form and a stock photo."
 task: "Design and ship the interface and product experience for both sides of a senior living marketplace: the site where families search and compare homes, and the platform where agents manage the listings."
 process: "I ship what I design. The handoff between design and engineering exists mainly for complex contributions that connect to the data layer. The design system is where I spend a large portion of my time, making sure the interfaces we build have consistently reliable design support."
 outcome: "Live and still going. The accessibility floor is set and holding. New surfaces land as we build them."
+results:
+  - value: "Live"
+    label: "Shipping in the Phoenix metro"
+  - value: "2"
+    label: "Products running on one design system"
+  - value: "AA"
+    label: "Floor on every surface, AAA on body copy"
 ---
 
-## What it is
+## Two people, one search
 
 Modern Care Homes is a senior living platform for the Phoenix metro. Families
 search independent living and assisted living homes across Phoenix, Scottsdale,
@@ -60,7 +69,7 @@ use to manage their listings. That matters more than it sounds like it should,
 because the same components run in both places. A change to a button is a change
 in two products, and the design system has to be good enough to survive that.
 
-## Guiding principles
+## Three rules I work from
 
 <Steps>
 
@@ -72,7 +81,7 @@ in two products, and the design system has to be good enough to survive that.
 
 </Steps>
 
-## What I do
+## Design it, then build it
 
 <Pipeline>
     <Stage label="Pattern research" detail="Marketplaces, in Mobbin" mark="search" />
@@ -223,6 +232,7 @@ everything a family or agent sees and interacts with.
 | <Tech name="vercel" /> | Deployment | A preview build per branch, so I can look at a change on a real phone before it merges. |
 | <Tech name="github" /> | Version control | Where the design and the code actually meet. |
 | <Tech name="mobbin" /> | Research | Search and discovery patterns from real estate marketplaces, which are further along on this problem than senior living is. |
+| <Tech name="posthog" /> | Analytics | Events and funnels for the search, compare, contact flow, so I can see where families actually stop. Session replay for the part the numbers only hint at. |
 | Spencer's side | Data and infrastructure | Home data, integrations, and everything that has to stay up. |
 
 

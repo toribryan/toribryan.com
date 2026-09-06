@@ -51,7 +51,7 @@ export const EXPERIENCES: Experience[] = [
         icon: <PenToolIcon />,
         description: `- Independent practice partnering with SLV Technologies to deliver web and product design for their clients, alongside direct clients including Proctorio, Hydra Endura, and Mincredo.
 - Contracted with Proctorio as a design system contributor and product designer: designed the Review Center video player, internal tools and dashboards, and 12+ documented design system components.
-- Redesigned Proctorio's [multi-audience help center](/work/proctorio-help-center) from scratch for students, administrators, and IT admins, with article taxonomy and role-based content visibility.
+- Redesigned Proctorio's multi-audience help center from scratch for students, administrators, and IT admins, with article taxonomy and role-based content visibility.
 - Built brand identities for Hydra Endura and Mincredo: logo, brand guidelines, core UI components, and social strategy.`,
         skills: [
           "Design Systems",
@@ -87,7 +87,7 @@ export const EXPERIENCES: Experience[] = [
 - Rebuilt design-to-engineering handoff around [agentic tooling](/work/agentic-design-system) and prototype-forward delivery: spec production dropped from 3 days–2 weeks to under 30 minutes, returning ~80 hours per cycle to design work, with 100% team adoption.
 - Authored the shared Claude Code skill framework behind it and the hooks that cascade prototype changes into specs and release notes automatically.
 - Shipped features for a customer-facing review product used by three distinct user types (instructors, administrators, and proctoring agents), each opening the same session recording for a different reason.
-- Shipped [Proctor Coverage](/work/proctor-coverage), embedded analytics that turn proctor coverage from an assumption into evidence, and redesigned the [Support Agent Dashboard](/work/support-agent-dashboard) so agents arrive at in-exam chats already holding session context.
+- Shipped Proctor Coverage, embedded analytics that turn proctor coverage from an assumption into evidence, and redesigned the [Support Agent Dashboard](/work/support-agent-dashboard) so agents arrive at in-exam chats already holding session context.
 - Made the case for reintroducing usability testing and put it back in the workflow; partnered with PM and engineering on framing, success metrics, and trade-offs from discovery through launch.`,
         skills: [
           "Design Systems",

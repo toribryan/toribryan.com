@@ -1,6 +1,7 @@
 ---
 title: "Proctor Coverage"
 description: "Embedded analytics that turn proctor coverage from an assumption into evidence, one session at a time."
+claim: "Coverage used to run on the honor system. Now every session leaves evidence an instructor can check."
 image: "/cover-proctorcoverage.webp"
 order: 5
 createdAt: "2026-04-01"
@@ -27,6 +28,13 @@ gallery:
   - "/proctorcoverage-03.svg"
   - "/proctorcoverage-04.svg"
   - "/proctorcoverage-05.svg"
+results:
+  - value: "In pilot"
+    label: "Running with instructors and third-party proctors"
+  - value: "Zero"
+    label: "Added UI for students"
+  - value: "Keyboard"
+    label: "Fully operable without a mouse"
 ---
 
 <Pipeline>
@@ -36,7 +44,7 @@ gallery:
   <Stage label="In pilot" detail="Zero added UI for students" mark="rocket" />
 </Pipeline>
 
-## Context
+## Coverage ran on trust
 
 Proctorio proctors LMS assessment sessions using both internal proctors and
 third-party providers. Neither instructors nor providers could see how a proctor
@@ -48,14 +56,14 @@ watching, proctors ran on the honor system, and when someone asked whether a
 session had really been covered, nobody could answer with anything but a
 shrug.
 
-## Guiding principles
+## The rules I set first
 
 - Evidence over surveillance: build proof, not a live monitor.
 - Anonymized by default, resolvable on demand.
 - Zero new UI for students, no matter what.
 - Accessible from day one, not retrofitted.
 
-## The solution
+## The swimlane timeline
 
 An analytics surface embedded directly in the instructor's review dashboard: a
 swimlane timeline of every proctor in a session, with glanceable markers for
@@ -65,7 +73,7 @@ whole surface is keyboard accessible.
 
 ![The swimlane session timeline embedded in the instructor's review dashboard](/case-studies/proctor-coverage-segs-popovers.svg)
 
-## Key components
+## What's in it
 
 - A swimlane session timeline as the core evidence pattern
 - Status markers distinguishing coverage gaps, connection degradation, and
@@ -75,7 +83,7 @@ whole surface is keyboard accessible.
 
 ![Coverage gap and device-status markers, zoomed into a session window](/case-studies/proctor-coverage-popovers.svg)
 
-## The decisions that shaped it
+## The forks
 
 **Evidence, not a live console.** The first fork was the one that mattered. A
 live monitoring view was the obvious build, and it was wrong: instructors did
@@ -99,14 +107,14 @@ part of the design, not a remediation pass. A timeline is exactly the kind of
 dense, spatial interface that becomes unusable without them, and exactly the
 kind that is expensive to retrofit.
 
-## Where it stands
+## In pilot
 
 In pilot. The surface ships with zero added UI for students, which was the
 hard constraint throughout, and it is being measured on three things: whether
 coverage gaps are actually found, whether instructors report more confidence in
 a session, and whether the interface holds up under keyboard-only use.
 
-## What I learned
+## What surprised me
 
 - The strongest move was refusing the obvious build. A live feed would have
   shipped faster and answered nobody's question.

@@ -1,8 +1,9 @@
 ---
 title: "Support Agent Dashboard"
 description: "A support agent's queue for in-exam chatters that arrive with session context, so agents resolve friction before the exam window closes."
+claim: "Agents used to reconstruct what went wrong by asking. Now the session context arrives attached to the chat."
 image: "/cover-supportdash.webp"
-order: 2
+order: 3
 createdAt: "2026-10-01"
 updatedAt: "2024-10-01"
 role: "Product design + front-end build"
@@ -19,6 +20,11 @@ problem: "Test-takers who hit friction mid-exam needed an easy, accessible way t
 task: "Route test-taker conversations to a human in real time with session and exam context attached: where the test-taker is, exam settings, and what they were doing when they got stuck. That required deep consideration on the test-taker context panel, product/institution-aware suggestions, agent commands, and customizable performance insights."
 process: "The core decision was to route chat with session context attached (where the test-taker is, what they were doing when they got stuck) rather than a blank conversation an agent has to reconstruct by asking. Chat state was designed to persist through a paused exam, so a test-taker stepping away doesn't cost the agent their place in the thread."
 outcome: 'The majority of "I couldn''t finish because ___" tickets no longer exist: they''re resolved in-session, by an agent working from context instead of reconstructing it after the fact.'
+results:
+  - value: "In-session"
+    label: "Friction resolved before the exam window closes"
+  - value: "Full context"
+    label: "Where the test-taker is, exam settings, and what they were doing when they got stuck"
 ---
 
 <Pipeline>
@@ -28,7 +34,7 @@ outcome: 'The majority of "I couldn''t finish because ___" tickets no longer exi
   <Stage label="Shipped" detail="Inbox, knowledge, reports, review" mark="rocket" />
 </Pipeline>
 
-## Guiding principles
+## Never pull them out of the exam
 
 - Never pull the test-taker out of the exam to get help.
 - Give the agent context before they ask for it.
@@ -136,7 +142,7 @@ the product.
   caption="AI Assist."
 />
 
-## The solution
+## The console, live
 
 A chat that lives inside the exam UI and routes straight to a support agent,
 arriving with the context of where the test-taker is in their session, so the

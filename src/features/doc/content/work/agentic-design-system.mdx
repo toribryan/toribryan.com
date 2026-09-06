@@ -1,6 +1,7 @@
 ---
 title: "Agentic Design System"
 description: "Internal R&D on whether a model can use a design system. It cannot, without being told how. That finding is what Code Connect exists to fix."
+claim: "I tested whether a model can use our design system. It cannot, unless the components carry their own instructions."
 image: "/cover-agenticds.webp"
 order: 8
 createdAt: "2026-01-01"
@@ -22,6 +23,13 @@ task: "Run the research: test whether a model can take a design and a design sys
 process: "Tested the workflow end to end with Figma MCP and controlled prompt pipelines, holding the design and the prompt constant and varying how much structure the system exposed to the model."
 outcome: "A model can read a design but cannot infer a design system from it. Usage instructions have to be attached to the components themselves, which is precisely the job Code Connect does. The system was restructured into three token tiers, JSON component contracts, and one canonical source everything else derives from."
 pinned: true
+results:
+  - value: "The finding"
+    label: "A model reads a design but cannot infer the system behind it"
+  - value: "3"
+    label: "Token tiers it can reason about"
+  - value: "1"
+    label: "Canonical source everything else derives from"
 ---
 
 <Pipeline>
