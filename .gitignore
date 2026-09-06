@@ -38,3 +38,6 @@ pnpm-debug.log*
 # `pnpm --frozen-lockfile` and fail the build when it drifts from package.json.
 pnpm-lock.yaml
 pnpm-workspace.yaml
+
+# career docs, not for publication
+_career/

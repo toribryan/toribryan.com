@@ -26,7 +26,15 @@ export function DocCard({
   imageLoading?: ImageProps["loading"]
 }) {
   const Heading = headingAs ?? "h2"
-  const { image, title, period, createdAt, new: isNew, updated } = doc.metadata
+  const {
+    image,
+    title,
+    period,
+    createdAt,
+    claim,
+    new: isNew,
+    updated,
+  } = doc.metadata
 
   return (
     <div className="group/doc-card relative flex h-full flex-col gap-2 p-2 transition-[background-color] ease-out hover:bg-accent-muted">
@@ -81,9 +89,25 @@ export function DocCard({
           )}
         </Heading>
 
+        {/* The claim is what makes the grid readable without opening anything:
+            the title names the project, this says what it changed. Clamped to
+            two lines so a long one can't push the cards out of alignment. */}
+        {claim && (
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground text-pretty">
+            {claim}
+          </p>
+        )}
+
         <dl>
           <dt className="sr-only">Published</dt>
-          <dd className="text-sm text-muted-foreground">
+          <dd
+            className={cn(
+              "text-muted-foreground",
+              // With a claim above it the date is the third line down, so it
+              // steps back. Without one (the Latest feed) it keeps its size.
+              claim ? "font-mono text-xs tracking-wide" : "text-sm"
+            )}
+          >
             {/* Case studies show their run dates; posts show a publish date. */}
             {period ?? (
               <time dateTime={new Date(createdAt).toISOString()}>
