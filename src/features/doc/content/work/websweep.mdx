@@ -1,16 +1,33 @@
 ---
 title: "WebSweep"
 description: "Exam content leaks to the open web. WebSweep goes looking for it, and turns a find into an action."
+claim: "Institutions had no practical way to find their leaked exam content. Now they get told, and they get a next step."
 image: "/cover-websweep.webp"
 order: 7
-createdAt: "2024-01-01"
-updatedAt: "2024-01-01"
+createdAt: "2026-02-01"
+updatedAt: "2026-09-06"
 company: "Proctorio"
-role: "Staff Designer"
+role: "Staff Product Designer"
 type: "New Product Suite"
-period: "Q1 2026"
+period: "Q1 – Q2 2026"
+skills:
+  - "End-to-end Product Design"
+  - "Design Systems"
+  - "Data-dense Interfaces"
+  - "Responsive Design"
+  - "Design Tokens"
+  - "Figma"
 problem: "Exam questions end up on homework-help sites, forums, and file-shares, and institutions have no practical way to find out. By the time anyone notices, the assessment is already compromised."
-outcome: "WebSweep ships as part of Vault by Proctorio, alongside ScreenBlock: surfacing exposed content and giving institutions a path to act on it."
+task: "WebSweep had been designed on the legacy design system. Once the overhaul shipped, bring it onto the new system without losing the launch window, and make it the first product surface to prove the new language, tokens, and components could carry a real product."
+process: "Rebuilt the flow on the new tokens and components first, then designed what the system did not have yet: a graph component for resolution and activity, and a responsive table that collapses to cards on mobile. Both went back into the system instead of living inside the product."
+outcome: "First tier live to customers in May 2026 after an April beta, shipping as one half of Vault by Proctorio alongside ScreenBlock. The graph and responsive table it produced are now shared system components."
+results:
+  - value: "May 2026"
+    label: "First tier live to customers, after an April beta"
+  - value: "First"
+    label: "Product surface shipped on the overhauled design system"
+  - value: "2"
+    label: "New system components: a graph, and a table that becomes cards"
 ---
 
 <Pipeline>
@@ -20,6 +37,8 @@ outcome: "WebSweep ships as part of Vault by Proctorio, alongside ScreenBlock: s
   <Stage label="Vault" detail="Shipped alongside ScreenBlock" mark="shield" />
 </Pipeline>
 
+## The institution is the last to know
+
 Assessment content is expensive to write and easy to lose. A single question
 photographed and posted to a homework-help site is enough to devalue an exam
 that took months to build, and the institution is usually the last to know.
@@ -28,10 +47,80 @@ WebSweep scans the web for leaked assessment content and surfaces what it finds.
 From there the point isn't the alert, it's the next move: send a takedown
 notice, or swap the affected questions and keep the exam usable.
 
-It ships as one half of **Vault by Proctorio**: WebSweep covering content that
-has already escaped, ScreenBlock covering the device-level capture that lets it
-escape in the first place. The suite spans education, workforce and government
-screening, and credentialing.
+## A find is only useful if it comes with a next step
+
+The product has two jobs in its navigation, Scan and Takedown, and the whole
+dashboard is arranged so a find never dead-ends.
+
+- **Resolution rate is the headline number**, not the count of leaks. The
+  figure an administrator sees first is how much compromised content has
+  already been removed from the internet, because that is the number they are
+  accountable for.
+- **Activity over time** shows leaks found against leaks resolved, so a spike
+  reads as a trend to act on rather than a one-off alarm.
+- **Compromised content is a working table**, not a report: every row is a
+  course and quiz with the leaked content and its link count, filterable and
+  selectable.
+- **Question details carry the action.** Opening a row shows the quiz, course,
+  and question ID, the question text itself, and every compromised link with
+  its source. Links are checkboxes, so a takedown can be issued for two of two,
+  or all of them, without leaving the panel.
+
+<Figure
+  src="/cover-websweep.webp"
+  alt="The WebSweep dashboard: a resolution-rate ring, an activity-over-time chart, a compromised content table, and a question details panel listing compromised links with their sources selected for takedown"
+  caption="Resolution rate, activity over time, the compromised content table, and the question details panel where the takedown starts."
+/>
+
+## Built twice
+
+WebSweep was first designed on the legacy design system, the one with 587 card
+variants and no semantic token layer. While it was in progress I was leading the
+[overhaul of that system](/work/design-system-overhaul), and the overhaul
+shipped in January 2026 before WebSweep did.
+
+That left a choice: launch a brand-new product on a system we had just retired,
+or redesign it on the new one and hold the launch window. I redesigned it. The
+work ran from February, went to beta with real customers in April, and the first
+tier launched in May 2026.
+
+It was the first new product surface released on the overhauled system, which
+made it the first real test of the design language. A system proves itself on a
+product, not in a library.
+
+## The design language, applied
+
+The overhaul had set principles on paper: no product logic in components, no
+variants for hypothetical use, start from the foundation and let the foundation
+grow. WebSweep is where those principles met a product with its own needs.
+
+Most of the dashboard composed cleanly from what the system already had. Two
+things did not exist yet, and rather than build them as one-off product
+components, both were designed as system components and fed back into the
+library. That is the "let the foundation grow" principle doing its job: a real
+pattern shows up in a real product, and the system absorbs it.
+
+## Two components the system did not have
+
+**A graph component.** The resolution-rate ring and the activity-over-time
+chart were the first data visualizations the system had to carry. They were
+designed on the semantic token layer, so chart color, typography, and spacing
+come from the same tokens as everything else and the graph themes with the rest
+of the product instead of carrying its own palette.
+
+**A table that becomes cards.** The compromised content table is dense by
+nature: course, quiz, content, link counts, status. It reads well on a wide
+screen and falls apart on a phone. Rather than a separate mobile component, the
+table is one component with two presentations: rows on desktop, and on mobile
+each row collapses into a card that keeps the same data and the same actions.
+One data model, one set of behaviours, no fork.
+
+## Live, as half of Vault
+
+WebSweep ships as one half of **Vault by Proctorio**: WebSweep covering content
+that has already escaped, ScreenBlock covering the device-level capture that
+lets it escape in the first place. The suite spans education, workforce and
+government screening, and credentialing.
 
 <LinkButton href="https://proctorio.com/solutions/vault">
   See Vault on Proctorio
