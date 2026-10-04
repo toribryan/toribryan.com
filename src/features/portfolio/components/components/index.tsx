@@ -1,16 +1,13 @@
 import Link from "next/link"
 
 import { ArrowRightIcon } from "@/components/animated-icons/arrow-right-icon"
+import { AnimationsPauseToggle } from "@/components/animations-pause"
 import { Button } from "@/components/base/ui/button"
 import { NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
 
 import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "../panel"
 import { PanelTitleCopy } from "../panel-title-copy"
-import {
-  ComponentCardList,
-  CoversPauseProvider,
-  CoversPauseToggle,
-} from "./component-card-list"
+import { ComponentCardList } from "./component-card-list"
 
 const ID = "components"
 
@@ -21,18 +18,16 @@ const ID = "components"
 export function Components() {
   return (
     <Panel id={ID} className="screen-line-top-none">
-      <CoversPauseProvider>
-        <PanelHeader className="flex items-center justify-between gap-2">
-          <PanelTitle>
-            <a href={`#${ID}`}>Components</a>
-            <PanelTitleSup>({NICHE_PARTS.length})</PanelTitleSup>
-            <PanelTitleCopy id={ID} />
-          </PanelTitle>
-          <CoversPauseToggle />
-        </PanelHeader>
+      <PanelHeader className="flex items-center justify-between gap-2">
+        <PanelTitle>
+          <a href={`#${ID}`}>Components</a>
+          <PanelTitleSup>({NICHE_PARTS.length})</PanelTitleSup>
+          <PanelTitleCopy id={ID} />
+        </PanelTitle>
+        <AnimationsPauseToggle />
+      </PanelHeader>
 
-        <ComponentCardList home />
-      </CoversPauseProvider>
+      <ComponentCardList home />
 
       <div className="screen-line-top flex justify-center py-4">
         <Button

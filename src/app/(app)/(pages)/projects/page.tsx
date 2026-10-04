@@ -4,6 +4,7 @@ import type { CollectionPage, WithContext } from "schema-dts"
 import { JSON_LD_ID } from "@/config/json-ld"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { absoluteUrl } from "@/lib/utils"
+import { AnimationsPauseToggle } from "@/components/animations-pause"
 import {
   PageHeading,
   PageHeadingDescription,
@@ -61,7 +62,10 @@ export default function Page() {
 
       <PageHeading>
         <PageHeadingTagline>Work</PageHeadingTagline>
-        <PageHeadingTitle>Projects</PageHeadingTitle>
+        <div className="relative">
+          <PageHeadingTitle className="pr-14">Projects</PageHeadingTitle>
+          <AnimationsPauseToggle className="absolute top-1/2 right-3 -translate-y-1/2" />
+        </div>
         <PageHeadingDescription>{description}</PageHeadingDescription>
       </PageHeading>
 
