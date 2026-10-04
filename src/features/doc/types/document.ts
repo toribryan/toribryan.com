@@ -51,6 +51,11 @@ export type DocMetadata = {
    */
   hideLead?: boolean
   /**
+   * Opens on `description`, then the brief (problem, task, process), then
+   * the outcome, rather than leading with the outcome.
+   */
+  leadFirst?: boolean
+  /**
    * Takes a case study off the home page, /projects, the sitemap and the
    * next and previous arrows. Its page still builds, so a shared link works.
    */

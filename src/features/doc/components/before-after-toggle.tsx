@@ -20,7 +20,7 @@ export function BeforeAfterToggle({
     <span
       role="group"
       aria-label={label}
-      className="flex rounded-md border border-line p-0.5 font-sans"
+      className="flex h-8 rounded-[min(var(--radius-lg),10px)] border border-line p-0.5 font-sans"
     >
       {CHOICES.map(({ label, value }) => (
         <button
@@ -29,7 +29,7 @@ export function BeforeAfterToggle({
           aria-pressed={isAfter === value}
           onClick={() => onChange(value)}
           className={cn(
-            "rounded-[5px] px-2.5 py-0.5 text-xs transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring-subtle",
+            "rounded-[7px] px-2.5 text-sm transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring-subtle",
             isAfter === value
               ? "bg-foreground text-background"
               : "text-muted-foreground hover:text-foreground"

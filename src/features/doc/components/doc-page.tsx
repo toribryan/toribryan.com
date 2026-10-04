@@ -126,13 +126,16 @@ export async function DocPage({
     ["Status", m.status],
   ].filter(([, value]) => Boolean(value)) as [string, string][]
 
-  // Outcome is deliberately absent here: it renders as the results strip,
-  // ahead of the lead, so the payoff comes before the story.
+  // Outcome usually renders as the results strip, ahead of the lead, so the
+  // payoff comes before the story. A doc that leads with its description
+  // closes its brief on the outcome instead, unless it has figures.
+  const outcomeInBrief = m.leadFirst && !m.results?.length
   const brief = [
     ["Problem", m.problem],
     ["Solution", m.solution],
     ["Task", m.task],
     ["Process", m.process],
+    ["Outcome", outcomeInBrief ? m.outcome : undefined],
   ].filter(([, value]) => Boolean(value)) as [string, string][]
 
   // Prefer the authored figures. Docs without a `results` block still promote
@@ -144,6 +147,45 @@ export async function DocPage({
   // brings every value down a step rather than sitting small beside its
   // neighbors.
   const resultsAreFigures = results.every(({ value }) => value.length <= 10)
+
+  // The results strip, or the outcome when there are no figures.
+  const summary =
+    results.length > 0 ? (
+      <dl
+        className={cn(
+          "not-prose my-6 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-line py-5",
+          results.length === 3 && "sm:grid-cols-3",
+          results.length >= 4 && "sm:grid-cols-4"
+        )}
+      >
+        {results.map(({ value, label }) => (
+          <div key={label} className="flex flex-col gap-1">
+            <dt
+              className={cn(
+                "font-heading font-medium tabular-nums",
+                resultsAreFigures
+                  ? "text-3xl leading-none"
+                  : "text-2xl leading-tight text-balance"
+              )}
+            >
+              <ResultFigure value={value} />
+            </dt>
+            <dd className="font-mono text-xs leading-relaxed tracking-wide text-pretty text-muted-foreground">
+              {label}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    ) : (
+      m.outcome && (
+        <div className="not-prose my-6 flex flex-col gap-1 border-y border-line py-4">
+          <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+            Outcome
+          </p>
+          <p className="text-sm leading-relaxed text-pretty">{m.outcome}</p>
+        </div>
+      )
+    )
 
   return (
     // Nothing here has a pause toggle, so a pause set on another page
@@ -292,42 +334,7 @@ export async function DocPage({
           </ul>
         )}
 
-        {results.length > 0 ? (
-          <dl
-            className={cn(
-              "not-prose my-6 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-line py-5",
-              results.length === 3 && "sm:grid-cols-3",
-              results.length >= 4 && "sm:grid-cols-4"
-            )}
-          >
-            {results.map(({ value, label }) => (
-              <div key={label} className="flex flex-col gap-1">
-                <dt
-                  className={cn(
-                    "font-heading font-medium tabular-nums",
-                    resultsAreFigures
-                      ? "text-3xl leading-none"
-                      : "text-2xl leading-tight text-balance"
-                  )}
-                >
-                  <ResultFigure value={value} />
-                </dt>
-                <dd className="font-mono text-xs leading-relaxed tracking-wide text-pretty text-muted-foreground">
-                  {label}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        ) : (
-          m.outcome && (
-            <div className="not-prose my-6 flex flex-col gap-1 border-y border-line py-4">
-              <p className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
-                Outcome
-              </p>
-              <p className="text-sm leading-relaxed text-pretty">{m.outcome}</p>
-            </div>
-          )
-        )}
+        {!m.leadFirst && summary}
 
         {!m.hideLead && <p>{m.description}</p>}
 
@@ -343,6 +350,8 @@ export async function DocPage({
             ))}
           </div>
         )}
+
+        {m.leadFirst && !outcomeInBrief && summary}
 
         <div>
           <MDX code={doc.content} components={DOC_COMPONENTS} />

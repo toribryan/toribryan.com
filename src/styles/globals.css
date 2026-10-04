@@ -624,6 +624,16 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Geist Pixel, the mono face, sits a touch tight; it opens up 1% wherever
+     it's used. A label that sets its own tracking keeps it. */
+  .font-mono,
+  code,
+  kbd,
+  pre,
+  samp {
+    letter-spacing: 0.01em;
+  }
+
   /* Custom scrollbar styling. Thanks @shadcn-ui */
   ::-webkit-scrollbar {
     width: 5px;
@@ -988,6 +998,12 @@
 /* Held on their first frame until the hero scrolls into view. */
 [data-intro="wait"] .fibo-tile {
   animation-play-state: paused;
+}
+
+/* Shown as they are, with no fade. */
+[data-intro="still"] .fibo-tile {
+  opacity: 1;
+  animation: none;
 }
 
 /* A pixel rabbit pixel flying out when he bursts apart. */

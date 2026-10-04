@@ -11,7 +11,7 @@ import { Pipeline, Stage } from "./mdx-pipeline"
  */
 export function PipelineHero() {
   return (
-    <Pipeline>
+    <Pipeline plain>
       <Stage label="Prototype" detail="Built in Claude Code" mark="terminal" />
       <Stage label="Skill" detail="One command per phase" mark="claude" />
       <Stage label="Figma" detail="MCP + Code Connect" mark="figma" />

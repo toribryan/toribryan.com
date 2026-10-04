@@ -61,7 +61,7 @@ export function Exhibit({
   return (
     <figure
       className={cn(
-        "not-prose my-6 overflow-hidden rounded-xl border border-line bg-background",
+        "not-prose my-6 overflow-hidden rounded-xl border border-line bg-cover-plate",
         className
       )}
     >

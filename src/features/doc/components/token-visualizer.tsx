@@ -593,12 +593,12 @@ export function TokenVisualizer() {
             }
             disabled={system === "before"}
             onClick={() => setMode(mode === "light" ? "dark" : "light")}
-            className="inline-flex size-[26px] items-center justify-center rounded-md border border-line text-muted-foreground outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring-subtle disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex size-8 items-center justify-center rounded-[min(var(--radius-lg),10px)] border border-line text-muted-foreground outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring-subtle disabled:cursor-not-allowed disabled:opacity-40"
           >
             {mode === "dark" ? (
-              <MoonIcon aria-hidden size={14} />
+              <MoonIcon aria-hidden size={16} />
             ) : (
-              <SunMediumIcon aria-hidden size={14} />
+              <SunMediumIcon aria-hidden size={16} />
             )}
           </button>
         </div>
