@@ -1,12 +1,13 @@
 import { Caveat, Fraunces } from "next/font/google"
 import localFont from "next/font/local"
 import { GeistMono } from "geist/font/mono"
+import { GeistPixelSquare } from "geist/font/pixel"
 import { GeistSans } from "geist/font/sans"
 
 import { cn } from "@/lib/utils"
 
-// Geist sans + mono carry over unchanged from the Astro site — they were
-// already --font-sans and --font-mono there.
+// Geist sans carries over unchanged from the Astro site. --font-mono is set to
+// Geist Pixel (Square) below; Geist Mono stays loaded for its fallback.
 const fontSans = GeistSans
 const fontMono = GeistMono
 
@@ -40,9 +41,10 @@ const fontHandwritten = Caveat({
 export const fontVariables = cn(
   fontSans.variable,
   fontMono.variable,
+  GeistPixelSquare.variable,
   fontDisplay.variable,
   fontSerif.variable,
   fontHandwritten.variable,
   "[--font-sans:var(--font-geist-sans)]",
-  "[--font-mono:var(--font-geist-mono)]"
+  "[--font-mono:var(--font-geist-pixel-square)]"
 )

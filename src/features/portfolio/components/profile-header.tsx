@@ -36,7 +36,7 @@ export function ProfileHeader() {
             <VerifiedIcon className="size-4.5 select-none" aria-hidden />
           </div>
 
-          <div className="border-t border-line py-1.5 pl-4 font-mono text-sm text-balance text-muted-foreground max-[22.5rem]:text-[0.8125rem]">
+          <div className="border-t border-line py-1.5 pl-4 font-mono text-xs text-balance text-muted-foreground sm:text-sm">
             {USER.headerLines.map((line) => (
               <p key={line}>{line}</p>
             ))}
