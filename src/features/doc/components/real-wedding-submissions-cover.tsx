@@ -83,8 +83,11 @@ function Radio({ checked }: { checked: boolean }) {
  */
 export function RealWeddingSubmissionsCover({
   loop = false,
+  onPlate = false,
 }: {
   loop?: boolean
+  /** Sits on the site's cover plate, like the other cards, instead of blush. */
+  onPlate?: boolean
 }) {
   const frame = useRef<HTMLDivElement>(null)
   const shown = useCoverSteps(frame, STEP_AT, { loop })
@@ -99,20 +102,32 @@ export function RealWeddingSubmissionsCover({
   return (
     <div
       ref={frame}
-      className={cn("absolute inset-0", urbanist.className)}
-      style={{ background: PLATE, color: INK }}
+      className={cn(
+        "absolute inset-0",
+        urbanist.className,
+        onPlate && "bg-cover-plate"
+      )}
+      style={{ background: onPlate ? undefined : PLATE, color: INK }}
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          backgroundImage: `radial-gradient(circle, ${DOTS} 1px, transparent 1px)`,
-          backgroundSize: "14px 14px",
-        }}
-        aria-hidden
-      />
+      {onPlate ? null : (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            backgroundImage: `radial-gradient(circle, ${DOTS} 1px, transparent 1px)`,
+            backgroundSize: "14px 14px",
+          }}
+          aria-hidden
+        />
+      )}
       <ScaledStage width={560} zoom>
         {/* The step runs off the bottom of the cover, under a fixed header. */}
-        <div className="absolute top-3 -bottom-10 left-1/2 flex w-[300px] -translate-x-1/2 flex-col overflow-hidden rounded-xl bg-white shadow-[0_12px_32px_rgb(0_0_0/0.18)]">
+        <div
+          className={cn(
+            "absolute top-3 -bottom-10 left-1/2 flex w-[300px] -translate-x-1/2 flex-col overflow-hidden rounded-xl bg-white shadow-[0_12px_32px_rgb(0_0_0/0.18)]",
+            // White on the white plate needs an edge of its own.
+            onPlate && "ring-1 ring-black/10"
+          )}
+        >
           <div className="relative z-20 flex shrink-0 items-center justify-between bg-white px-4 py-2">
             <span className="text-[11px] font-bold tracking-tight">
               Arizona Bride
@@ -238,4 +253,9 @@ export function RealWeddingSubmissionsCover({
       </ScaledStage>
     </div>
   )
+}
+
+/** The cover on its project card, on the cover plate like the others. */
+export function RealWeddingSubmissionsCardCover({ loop }: { loop?: boolean }) {
+  return <RealWeddingSubmissionsCover loop={loop} onPlate />
 }
