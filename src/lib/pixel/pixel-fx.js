@@ -345,9 +345,15 @@ export function ditherField(canvas, field, opts = {}) {
   const rng = mulberry32(seed);
 
   const bits = Uint8Array.from(field.start, (c) => +c);
+  // Flips come as cell indices, or as `flipGaps`: per frame, the base-36 gaps between sorted indices,
+  // which compress several times smaller.
+  const flips = field.flips ?? field.flipGaps.map((frame) => {
+    let i = -1;
+    return frame ? frame.split(",").map((gap) => (i += parseInt(gap, 36) + 1)) : [];
+  });
   let frame = 0;
   const applyFlips = (upto) => {
-    for (; frame < Math.min(upto, field.flips.length); frame++) for (const i of field.flips[frame]) bits[i] ^= 1;
+    for (; frame < Math.min(upto, flips.length); frame++) for (const i of flips[frame]) bits[i] ^= 1;
   };
   if (!build || still) applyFlips(Infinity);
 
@@ -522,7 +528,7 @@ export function ditherField(canvas, field, opts = {}) {
   let raf = 0;
   const loop = (now) => {
     raf = 0;
-    if (frame < field.flips.length) {
+    if (frame < flips.length) {
       applyFlips(Math.floor(((now - t0) / 1000) * field.fps));
       dirty = true;
     } else if (!still && flicker > 0) {
