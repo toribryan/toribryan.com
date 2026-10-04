@@ -27,7 +27,9 @@ const PLATES = {
 /*
  * The launch cards from fibo's brand kit. Each animation starts on the photo
  * alone and builds the dither out around it; the resolved still stands in
- * when motion is reduced.
+ * when motion is reduced. The animations are lossless WebP: pixel for pixel
+ * the brand kit's GIFs at a fifth of the weight, where a video codec would
+ * soften the dither and need its own lazy loading and reduced-motion work.
  */
 function Plate({ name }: { name: keyof typeof PLATES }) {
   const { alt, caption } = PLATES[name]
@@ -39,7 +41,7 @@ function Plate({ name }: { name: keyof typeof PLATES }) {
           media="(prefers-reduced-motion: reduce)"
         />
         <img
-          src={`/images/fibo/${name}-dither.gif`}
+          src={`/images/fibo/${name}-dither.webp`}
           alt={alt}
           width={1080}
           height={1350}
