@@ -338,6 +338,15 @@ export function ditherField(canvas, field, opts = {}) {
     g = c > 1 ? Math.max(1, Math.round((gap * c) / cell)) : 0;
     const spare = bw - cols * c;
     x0 = align === "left" ? 0 : align === "right" ? spare : Math.round(spare / 2);
+    // field.keep: a span of the art, as fractions of its width, slid on screen when the crop would
+    // cut it, or centered when it's wider than the canvas.
+    if (field.keep && spare < 0) {
+      const [k0, k1] = field.keep.map((f) => f * cols * c);
+      if (k1 - k0 > bw) x0 = Math.round(bw / 2 - (k0 + k1) / 2);
+      else if (x0 + k1 > bw) x0 = bw - Math.ceil(k1);
+      else if (x0 + k0 < 0) x0 = -Math.floor(k0);
+      x0 = Math.min(0, Math.max(spare, x0));
+    }
     y0 = Math.round((bh - rows * c) / 2);
   };
   layout();
