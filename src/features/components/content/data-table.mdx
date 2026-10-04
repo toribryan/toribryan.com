@@ -1,19 +1,21 @@
 ---
 title: Data table
-description: A table for lists people work through, with selection, bulk actions, locked rows, pinned columns and a phone layout.
+description: A table for lists people work through, with sorting, search, filters, selection, bulk actions, locked rows, pinned columns and a phone layout.
 createdAt: 2026-10-02
-updatedAt: 2026-10-02
+updatedAt: 2026-10-04
 new: true
 ---
 
 Data table is one table for every list people work through. Selection is
 always the first column, every action lives in one toolbar above the rows,
-and the same parts hold up from a wide dashboard down to a phone.
+and the same parts hold up from a wide dashboard down to a phone. TanStack
+Table works out the rows and keeps the state; Data table draws them in a
+native table.
 
 <Exhibit
   of="data-table.Default"
   title="Data table"
-  description="Select a row. The toolbar swaps in place to the count and bulk actions. Shift-click selects a range, and Escape clears."
+  description="Sort by a header, search, filter by status or team, or hide a column. Select a row and the toolbar swaps in place to the count and bulk actions. Shift-click selects a range, and Escape clears."
 >
 <ExhibitCode label="Install">
 
@@ -21,7 +23,9 @@ and the same parts hold up from a wide dashboard down to a phone.
 npx shadcn@latest add https://fibo.toribryan.com/r/data-table.json
 ```
 
-It brings Table, Checkbox, Avatar, Tooltip, Button, Menu and Sheet with it.
+It brings Table, Checkbox, Avatar, Tooltip, Button, Input, Menu, Sheet and
+Pagination with it, and the `@tanstack/react-table` and
+`@tanstack/react-store` packages.
 
 </ExhibitCode>
 <ExhibitCode label="Usage">
@@ -29,84 +33,94 @@ It brings Table, Checkbox, Avatar, Tooltip, Button, Menu and Sheet with it.
 ```tsx
 import { Badge } from "@/components/ui/badge"
 import {
+  createDataTableColumnHelper,
   DataTable,
-  DataTableBody,
-  DataTableCell,
   DataTableContent,
-  DataTableHead,
-  DataTableHeader,
-  DataTableRow,
-  useDataTableSelection,
+  DataTableFilters,
+  DataTableSearch,
+  DataTableToolbar,
+  useDataTable,
 } from "@/components/ui/data-table"
 
+// Outside the component, so the rows aren't worked out again every render.
+const column = createDataTableColumnHelper<Member>()
+const columns = column.columns([
+  column.accessor("name", {
+    header: "Member",
+    meta: {
+      type: "person",
+      avatar: (member: Member) => ({
+        src: member.photo,
+        fallback: member.initials,
+      }),
+    },
+  }),
+  column.accessor("status", {
+    header: "Status",
+    filterFn: "arrHas",
+    meta: { type: "status" },
+    cell: ({ getValue }) => <Badge variant="success">{getValue()}</Badge>,
+  }),
+])
+
 export function Members({ members }: { members: Member[] }) {
-  const selection = useDataTableSelection()
+  const table = useDataTable({
+    data: members,
+    columns,
+    lockedReason: (member) =>
+      member.isOwner ? "The workspace owner can't be removed" : undefined,
+    initialState: { columnPinning: { start: ["name"], end: [] } },
+  })
   return (
     <DataTable
+      table={table}
       aria-label="Members"
-      rowIds={members.map((member) => member.id)}
       noun={{ one: "member", other: "members" }}
-      {...selection}
     >
-      <DataTableContent>
-        <DataTableHeader>
-          <DataTableHead type="person" pinned="start">
-            Member
-          </DataTableHead>
-          <DataTableHead type="status">Status</DataTableHead>
-        </DataTableHeader>
-        <DataTableBody>
-          {members.map((member) => (
-            <DataTableRow
-              key={member.id}
-              id={member.id}
-              lockedReason={
-                member.isOwner
-                  ? "The workspace owner can't be removed"
-                  : undefined
-              }
-            >
-              <DataTableCell
-                type="person"
-                pinned="start"
-                avatar={{ src: member.photo, fallback: member.initials }}
-              >
-                {member.name}
-              </DataTableCell>
-              <DataTableCell type="status">
-                <Badge variant="success">{member.status}</Badge>
-              </DataTableCell>
-            </DataTableRow>
-          ))}
-        </DataTableBody>
-      </DataTableContent>
+      <DataTableToolbar>
+        <DataTableFilters
+          search={<DataTableSearch aria-label="Search members" />}
+        />
+      </DataTableToolbar>
+      <DataTableContent />
     </DataTable>
   )
 }
 ```
 
-Give each head the same `type` and `pinned` as its column's cells. The first
-column is primary or person, because its text names the row's checkbox. The
-table only ever holds one page: the app sorts, filters and pages its own data.
+Every row needs an `id`, or pass `getRowId`: selection is kept by id, so it
+survives sorting, filtering and paging. Keep `columns` and `data` stable
+between renders. The first primary or person column names each row's
+checkbox. Every row shows until the table has a page size.
+
+</ExhibitCode>
+<ExhibitCode label="Column meta">
+
+```ts
+type DataTableColumnMeta = {
+  type?: "primary" | "text" | "person" | "status" | "numeric" | "actions"
+  label?: string // in the Columns menu, filters and cards
+  className?: string // on the head and every cell, such as a width
+  secondary?: (row: Row) => ReactNode
+  avatar?: (row: Row) => { src?: string; fallback: string } | undefined
+  icon?: ReactNode
+}
+```
 
 </ExhibitCode>
 <ExhibitCode label="Props">
 
-| Prop                       | Type                             | Default     | Description                                                             |
-| -------------------------- | -------------------------------- | ----------- | ----------------------------------------------------------------------- |
-| `rowIds`                   | `string[]`                       |             | The ids of the rows on this page, in the order they're shown.           |
-| `value`                    | `Set<string> \| "all"`           |             | The selection. `"all"` means every matching row, on every page.         |
-| `defaultValue`             | `Set<string> \| "all"`           | `new Set()` | The selection to start with when it isn't controlled.                   |
-| `onValueChange`            | `(value) => void`                |             | Called with the new selection.                                          |
-| `totalCount`               | `number`                         | rows shown  | How many rows match across every page, for Select all matching.         |
-| `noun`                     | `{ one: string; other: string }` | rows        | What a row is, for counts and labels.                                   |
-| `narrowLayout`             | `"scroll" \| "cards"`            | `"scroll"`  | Under 32rem, keep the table and scroll it, or show a card per row.      |
-| `showSelectedOnly`         | `boolean`                        | `false`     | Whether the app is showing only the selected rows.                      |
-| `onShowSelectedOnlyChange` | `(show: boolean) => void`        |             | Shows Show selected only while rows are selected. The app filters rows. |
+| Prop                       | Type                             | Default    | Description                                                             |
+| -------------------------- | -------------------------------- | ---------- | ----------------------------------------------------------------------- |
+| `table`                    | `DataTableInstance`              |            | The table from `useDataTable`.                                          |
+| `noun`                     | `{ one: string; other: string }` | rows       | What a row is, for counts and labels.                                   |
+| `narrowLayout`             | `"scroll" \| "cards"`            | `"scroll"` | Under 32rem, keep the table and scroll it, or show a card per row.      |
+| `showSelectedOnly`         | `boolean`                        | `false`    | Whether the app is showing only the selected rows.                      |
+| `onShowSelectedOnlyChange` | `(show: boolean) => void`        |            | Shows Show selected only while rows are selected. The app filters rows. |
 
-Head and Cell take `type` (primary, text, person, status, numeric, actions)
-and `pinned` (none, start, end). Cell also takes `secondary`, `icon` and
-`avatar`. Row takes `id` and `lockedReason`.
+`useDataTable` takes TanStack Table's options for Data table's features,
+`data` and `columns` among them, plus `lockedReason`, a function that says
+why a row can't be selected.
 
 </ExhibitCode>
 </Exhibit>
@@ -114,30 +128,37 @@ and `pinned` (none, start, end). Cell also takes `secondary`, `icon` and
 ## Anatomy
 
 A native table inside a box that measures its own width. The toolbar sits
-above it, and the cards replace it on a narrow screen.
+above it, and the cards replace it on a narrow screen. Both draw the rows
+from the same TanStack row model.
 
 <Exhibit
-  of="data-table.Pinned"
-  title="Pinned columns"
-  description="Scroll it sideways. The name and the actions stay put, with a shadow where there's more under them."
+  of="data-table.ColumnVisibility"
+  title="Column visibility and pinning"
+  description="Columns shows and hides every column that can hide; Last active starts hidden. Scroll it sideways: the name and the actions stay put, with a shadow where there's more under them."
 >
 <ExhibitCode label="Structure">
 
 ```text
-DataTable                 data-table
-├─ DataTableToolbar       data-table-toolbar
-│  ├─ DataTableFilters    data-table-filters      (idle)
-│  ├─ DataTableActions    data-table-actions      (idle)
-│  └─ DataTableBulkActions data-table-bulk-actions (selecting)
-├─ DataTableContent       data-table-content      (a Table)
-│  ├─ DataTableHeader     data-table-header
-│  │  └─ DataTableHead    data-table-head
-│  └─ DataTableBody       data-table-body
-│     └─ DataTableRow     data-table-row
-│        └─ DataTableCell data-table-cell
-├─ DataTableCards         data-table-cards        (narrow, cards)
-│  └─ DataTableCard       data-table-card
-└─ DataTableFooter        data-table-footer
+DataTable                   data-table
+├─ DataTableToolbar         data-table-toolbar
+│  ├─ DataTableFilters      data-table-filters       (idle)
+│  │  ├─ DataTableSearch    data-table-search-field
+│  │  └─ DataTableFacetFilter data-table-facet-filter
+│  ├─ DataTableActions      data-table-actions       (idle)
+│  │  ├─ DataTableColumns   data-table-columns
+│  │  └─ DataTableAction    data-table-action
+│  └─ DataTableBulkActions  data-table-bulk-actions  (selecting)
+├─ DataTableContent         data-table-content       (a Table)
+│  ├─ DataTableHeader       data-table-header
+│  │  └─ Head               data-table-head
+│  └─ DataTableBody         data-table-body
+│     └─ Row                data-table-row
+│        └─ Cell            data-table-cell
+├─ DataTableCards           data-table-cards         (narrow, cards)
+│  └─ DataTableCard         data-table-card
+└─ DataTableFooter          data-table-footer
+   ├─ DataTablePagination   data-table-pagination
+   └─ DataTableSelectionCount data-table-selection-count
 ```
 
 </ExhibitCode>
@@ -151,6 +172,11 @@ DataTable                 data-table
       when: "It's narrower than 32rem.",
     },
     {
+      attribute: 'data-layout="table" | "cards"',
+      element: "The root",
+      when: "Always: which of the table and the cards is showing.",
+    },
+    {
       attribute: "data-scroll-start, data-scroll-end",
       element: "The root",
       when: "There's more table to scroll to on that side.",
@@ -161,6 +187,21 @@ DataTable                 data-table
       when: "Rows are selected and it shows bulk actions.",
     },
     {
+      attribute: "data-filtered",
+      element: "A facet filter button",
+      when: "One or more of its values are ticked.",
+    },
+    {
+      attribute: 'aria-sort="ascending" | "descending"',
+      element: "A column header",
+      when: "The table is sorted by that column, on that head only.",
+    },
+    {
+      attribute: "data-row-id",
+      element: "A row",
+      when: "Always: the row's id.",
+    },
+    {
       attribute: "data-selected",
       element: "A row or card",
       when: "It's selected.",
@@ -168,7 +209,7 @@ DataTable                 data-table
     {
       attribute: "data-locked",
       element: "A row or card",
-      when: "It has a lockedReason.",
+      when: "lockedReason gives it a reason.",
     },
     {
       attribute: "data-type, data-pinned",
@@ -183,6 +224,91 @@ DataTable                 data-table
 
 ## Variants and states
 
+### Search, filters and pages
+
+The table sorts, searches, filters and pages its own rows from its state.
+
+<Exhibit
+  of="data-table.FacetedFilters"
+  title="Faceted filters"
+  description="Each filter menu shows how many rows hold each value under the other filters, so a choice never leads to an empty table."
+>
+<ExhibitCode>
+
+```tsx
+column.accessor("status", { header: "Status", filterFn: "arrHas" })
+
+<DataTableFilters search={<DataTableSearch aria-label="Search members" />}>
+  <DataTableFacetFilter column="status" />
+  <DataTableFacetFilter column="team" />
+</DataTableFilters>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+<Exhibit
+  of="data-table.WithPagination"
+  title="With pagination"
+  description="Four rows to a page. Sorting, the search and filters start it again from the first page; new data keeps the page."
+>
+<ExhibitCode>
+
+```tsx
+const table = useDataTable({
+  data,
+  columns,
+  initialState: { pagination: { pageIndex: 0, pageSize: 4 } },
+})
+
+<DataTableFooter className="justify-end">
+  <DataTablePagination />
+</DataTableFooter>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### In the URL
+
+Sorting, the search, filters and the page can each live in a search param,
+so a link opens the same view. `useSearchParamsAtom` writes with
+`history.replaceState`, so typing a search doesn't fill the back button. It
+starts empty on the server and in the first render, so hydration matches,
+and applies the URL's value once mounted.
+
+<Exhibit
+  of="data-table.UrlSynced"
+  title="URL-synced state"
+  description="Sort, page or search and watch the params below the table, and the address bar, change. Reload and the view comes back."
+>
+<ExhibitCode>
+
+```tsx
+const sorting = useSearchParamsAtom("sort", dataTableCodecs.sorting)
+const globalFilter = useSearchParamsAtom("q", dataTableCodecs.text)
+const columnFilters = useSearchParamsAtom(
+  "filters",
+  dataTableCodecs.columnFilters
+)
+const pagination = useSearchParamsAtom("page", dataTableCodecs.pagination(4))
+
+const table = useDataTable({
+  data,
+  columns,
+  atoms: { sorting, globalFilter, columnFilters, pagination },
+})
+```
+
+Selection, column visibility and pinning stay in the table. For rows that
+page on a server, set `manualSorting`, `manualFiltering`,
+`manualPagination` and `rowCount`, and load the rows the atoms describe.
+
+</ExhibitCode>
+</Exhibit>
+
+### Rows
+
 <ExhibitGrid>
 <Exhibit
   of="data-table.Locked"
@@ -192,7 +318,7 @@ DataTable                 data-table
 <ExhibitCode>
 
 ```tsx
-<DataTableRow id={member.id} lockedReason="The workspace owner can't be removed">
+useDataTable({ data, columns, lockedReason: (member) => member.lock })
 ```
 
 </ExhibitCode>
@@ -205,9 +331,10 @@ DataTable                 data-table
 <ExhibitCode>
 
 ```tsx
-<DataTableCell type="person" secondary={member.email}>
-  {member.name}
-</DataTableCell>
+column.accessor("name", {
+  header: "Member",
+  meta: { type: "person", secondary: (member: Member) => member.email },
+})
 ```
 
 </ExhibitCode>
@@ -238,20 +365,32 @@ dimmed, while more are selected.
 </ExhibitCode>
 </Exhibit>
 
+<Exhibit
+  of="data-table.ReviewQueue"
+  title="Review queue"
+  description="Approve then Deny, and no Delete. Second lines carry the details."
+/>
+
 ### Across pages
 
 Select the page, and the toolbar offers every matching row. Show selected
-only hands the filtering to the app.
+only hands the filtering to the app, which keeps the selection in an atom
+it reads.
 
-<Exhibit of="data-table.Directory" title="A directory of 248 members">
+<Exhibit of="data-table.Directory" title="A directory, five to a page">
 <ExhibitCode>
 
 ```tsx
+const rowSelection = useCreateAtom<Record<string, true>>({})
+const selected = useSelector(rowSelection)
+const rows = showSelectedOnly
+  ? members.filter((member) => selected[member.id])
+  : members
+
+const table = useDataTable({ data: rows, columns, atoms: { rowSelection } })
+
 <DataTable
-  rowIds={pageIds}
-  totalCount={248}
-  value={selection}
-  onValueChange={setSelection}
+  table={table}
   showSelectedOnly={showSelectedOnly}
   onShowSelectedOnlyChange={setShowSelectedOnly}
 >
@@ -263,14 +402,15 @@ only hands the filtering to the app.
 ### On a phone
 
 Under 32rem of its own width, the table scrolls under an icon-only toolbar,
-or each row becomes a card. Sort and filters move into a sheet.
+or each row becomes a card read from the same rows, so the search, sort and
+pages work the same. Filters move into a sheet.
 
 <ExhibitGrid>
 <Exhibit of="data-table.NarrowScroll" title="Scroll">
 <ExhibitCode>
 
 ```tsx
-<DataTable narrowLayout="scroll">
+<DataTable table={table} narrowLayout="scroll">
 ```
 
 </ExhibitCode>
@@ -279,15 +419,16 @@ or each row becomes a card. Sort and filters move into a sheet.
 <ExhibitCode>
 
 ```tsx
-<DataTable narrowLayout="cards">
-  {/* toolbar and content */}
-  <DataTableCards>
-    <DataTableCard id={member.id} title={member.name} status={badge}>
-      <DataTableCardField label="Team">{member.team}</DataTableCardField>
-    </DataTableCard>
-  </DataTableCards>
+<DataTable table={table} narrowLayout="cards">
+  {/* toolbar */}
+  <DataTableContent />
+  <DataTableCards />
 </DataTable>
 ```
+
+Cards take their title from the first primary or person column, their
+badge from the status column and their fields from the rest. They need a
+DataTableToolbar, since that's where select all goes.
 
 </ExhibitCode>
 </Exhibit>
@@ -309,14 +450,67 @@ As a picker, the selection is the form's value and the footer counts it.
 </ExhibitCode>
 </Exhibit>
 
+## Reading and owning state
+
+The component that calls `useDataTable` doesn't re-render when the state
+changes; each part subscribes to what it shows, so ticking a row re-renders
+that row and the toolbar, not the table. To read state there, pass a
+selector, `useDataTable(options, (state) => state.rowSelection)`, and read
+`table.state`, or use `table.Subscribe`. Act on the selection with
+`table.getSelectedRowIds()` and `table.resetRowSelection()`.
+
+## Migrating to the table API
+
+The `rowIds`, `totalCount`, `value`, `defaultValue` and `onValueChange`
+props, `useDataTableSelection`, and hand-written `DataTableRow`,
+`DataTableCell` and `DataTableHead` are deprecated in fibo 0.2.0 and removed
+in 0.3.0. Until then they run on the same TanStack table as the new API.
+
+<UsageGuidelines
+  guidelines={[
+    <>
+      <code>rowIds</code> becomes <code>data</code>, your rows themselves, each
+      with an <code>id</code>.
+    </>,
+    <>
+      Each <code>DataTableHead</code> and the cells under it become one column:
+      its <code>header</code>, a <code>cell</code> renderer for what the cell
+      held, and <code>meta.type</code>. <code>secondary</code>,{" "}
+      <code>icon</code> and <code>avatar</code> move to <code>meta</code>.
+    </>,
+    <>
+      <code>pinned</code> becomes the table's <code>columnPinning</code> state,
+      by column id.
+    </>,
+    <>
+      <code>lockedReason</code> moves from each row to one function on{" "}
+      <code>useDataTable</code>.
+    </>,
+    <>
+      <code>value</code> and <code>onValueChange</code> become{" "}
+      <code>state.rowSelection</code> and <code>onRowSelectionChange</code>, a
+      record of ids rather than a Set. <code>"all"</code> is gone: Select all
+      matching selects every matching id the table has loaded.
+    </>,
+    <>
+      <code>totalCount</code> becomes <code>rowCount</code> with{" "}
+      <code>manualPagination</code>, when the app pages on a server.
+    </>,
+    "Sorting, filtering and paging that the app did itself can go: the table does them from its state.",
+  ]}
+/>
+
 ## Usage
 
 <UsageGuidelines
   guidelines={[
     "Selection is always the first column, and row actions are always the last, pinned to the end.",
+    "Let the table sort, filter and page: give useDataTable all the rows, or set the manual options and load the rows its state describes. Don't sort or filter the rows yourself as well.",
+    "Keep sorting, the search, filters and the page in the URL with useSearchParamsAtom when people share or bookmark the list.",
+    'Give a column that people filter by a few values filterFn: "arrHas" and a DataTableFacetFilter, so the menu shows how many rows hold each.',
     "Put every action in the toolbar. Don't add hover actions or a floating bar; they split actions across places.",
     "Pin the row's name to the start and at most one must-see column to the end.",
-    "Lock a row that can't be selected, and say why in lockedReason.",
+    "Lock a row that can't be selected, and say why in useDataTable's lockedReason.",
     "Give actions an icon, so they still fit on a phone.",
     <>
       Use <code>narrowLayout="cards"</code> when a row reads better as a
@@ -359,10 +553,12 @@ As a picker, the selection is the form's value and the footer counts it.
 
 <UsageGuidelines
   guidelines={[
-    "It's a native table, not a grid: checkboxes and buttons are ordinary Tab stops.",
+    "It's a native table, not a grid: checkboxes and buttons are ordinary Tab stops. TanStack Table only works out the rows; the markup is Data table's.",
+    "A sortable head holds a button named by the column. Only the sorted head carries aria-sort, so the order is announced once, where it applies.",
+    "DataTableSearch is a search field; give it an aria-label when there's no visible label. Facet filter menus name each choice with its count, “Active 3”.",
     "Each row checkbox is named from its first name cell, “Select Maya Okafor”, and select all says its scope, “Select all members on this page”.",
     "A locked row's checkbox is disabled and described by the reason, and the lock is focusable so keyboard users can open its tooltip.",
-    "Selection changes are announced through a status region, and Escape clears the selection.",
+    "Selection changes are announced through a status region once they take effect, and Escape clears the selection.",
     "When the focused control goes away, such as Clear or a row that swaps to a card, focus moves somewhere sensible instead of the page.",
     "Only one of the table and the cards is ever in the page, so screen readers don't meet each row twice.",
   ]}
@@ -374,6 +570,8 @@ As a picker, the selection is the form's value and the footer counts it.
 
 ## References
 
+- [fibo plan 005: Data table on TanStack Table](https://github.com/toribryan/fibo/blob/main/plans/005-data-table-on-tanstack.md)
+- [TanStack Table](https://tanstack.com/table)
 - [WAI-ARIA APG: Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/)
 - [Shopify Polaris: Index table](https://polaris-react.shopify.com/components/tables/index-table)
 - [React Aria: Table](https://react-aria.adobe.com/Table)

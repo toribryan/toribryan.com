@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useCreateAtom, useSelector } from "@tanstack/react-store"
 import {
   CheckIcon,
   DownloadIcon,
@@ -11,101 +12,170 @@ import {
 
 import { Button } from "@/components/fibo/button"
 import {
+  createDataTableColumnHelper,
   DataTable,
-  DataTableBody,
   DataTableBulkAction,
   DataTableBulkActions,
-  DataTableCell,
+  dataTableCodecs,
   DataTableContent,
   DataTableFooter,
-  DataTableHead,
-  DataTableHeader,
-  DataTableRow,
   DataTableSelectionCount,
-  type DataTableSelection,
+  useDataTable,
+  useSearchParamsAtom,
 } from "@/components/fibo/data-table"
 import { MenuItem } from "@/components/fibo/menu"
-import { Pagination } from "@/components/fibo/pagination"
 
-import { MEMBERS, MembersTable, MembersToolbar } from "./data-table-data"
+import {
+  COLUMNS_WITH_EMAIL,
+  MEMBERS,
+  MembersTable,
+  MembersToolbar,
+  PAGINATION,
+  selection,
+} from "./data-table-data"
 
+/*
+ * Pages hold five rows, so Select all matching has a sixth to offer, as in
+ * fibo's playground.
+ */
 export function Default() {
-  return <MembersTable toolbar={<MembersToolbar />} />
+  return (
+    <div className="w-full">
+      <MembersTable
+        pageSize={5}
+        toolbar={<MembersToolbar />}
+        footer={PAGINATION}
+      />
+    </div>
+  )
+}
+
+const PAGE_OF_FOUR = dataTableCodecs.pagination(4)
+
+/*
+ * The panel shows what the atoms write, from their own values, rather than
+ * reading the URL during render, so the server and the first client render
+ * agree.
+ */
+export function UrlSynced() {
+  const sorting = useSearchParamsAtom("sort", dataTableCodecs.sorting)
+  const globalFilter = useSearchParamsAtom("q", dataTableCodecs.text)
+  const columnFilters = useSearchParamsAtom(
+    "filters",
+    dataTableCodecs.columnFilters
+  )
+  const page = useSearchParamsAtom("page", PAGE_OF_FOUR)
+  const values = {
+    sort: dataTableCodecs.sorting.serialize(useSelector(sorting)),
+    q: dataTableCodecs.text.serialize(useSelector(globalFilter)),
+    filters: dataTableCodecs.columnFilters.serialize(
+      useSelector(columnFilters)
+    ),
+    page: PAGE_OF_FOUR.serialize(useSelector(page)),
+  }
+  const shown = Object.entries(values).flatMap(([key, value]) =>
+    value === null ? [] : [`${key}=${value}`]
+  )
+  return (
+    <div className="flex w-full flex-col gap-3">
+      <MembersTable
+        atoms={{ sorting, globalFilter, columnFilters, pagination: page }}
+        toolbar={<MembersToolbar />}
+        footer={PAGINATION}
+      />
+      <output
+        aria-label="Search params"
+        className="rounded-md border border-border px-3 py-2 font-mono text-xs break-all text-muted-foreground"
+      >
+        {shown.length ? `?${shown.join("&")}` : "No search params yet"}
+      </output>
+    </div>
+  )
+}
+
+export function FacetedFilters() {
+  return (
+    <div className="w-full">
+      <MembersTable toolbar={<MembersToolbar />} />
+    </div>
+  )
+}
+
+export function ColumnVisibility() {
+  return (
+    <div className="w-full max-w-2xl">
+      <MembersTable
+        hiddenColumns={["lastActive"]}
+        toolbar={<MembersToolbar />}
+      />
+    </div>
+  )
 }
 
 export function Locked() {
-  return <MembersTable members={MEMBERS.slice(3, 6)} />
+  return (
+    <div className="w-full">
+      <MembersTable members={MEMBERS.slice(3, 6)} />
+    </div>
+  )
 }
 
 export function SecondaryText() {
-  return <MembersTable secondary defaultValue={new Set(["priya"])} />
-}
-
-export function Pinned() {
   return (
-    <div className="max-w-2xl">
-      <MembersTable />
+    <div className="w-full">
+      <MembersTable columns={COLUMNS_WITH_EMAIL} initialSelection={["priya"]} />
     </div>
   )
 }
 
 export function WithPagination() {
-  const [page, setPage] = React.useState(1)
   return (
-    <MembersTable
-      totalCount={248}
-      footer={
-        <DataTableFooter className="justify-end">
-          <Pagination
-            page={page}
-            onPageChange={setPage}
-            pageCount={42}
-            pageSize={6}
-            totalCount={248}
-            noun="members"
-          />
-        </DataTableFooter>
-      }
-    />
+    <div className="w-full">
+      <MembersTable
+        pageSize={4}
+        toolbar={<MembersToolbar />}
+        footer={PAGINATION}
+      />
+    </div>
   )
 }
 
+type Document = { id: string; title: string; access: string }
+
+const DOCUMENTS: Document[] = [
+  { id: "onboarding", title: "Onboarding checklist", access: "Workspace" },
+  { id: "brand", title: "Brand guidelines", access: "Public" },
+  { id: "release", title: "Release notes", access: "Public" },
+]
+
+const doc = createDataTableColumnHelper<Document>()
+const DOCUMENT_COLUMNS = doc.columns([
+  doc.accessor("title", {
+    header: "Title",
+    meta: { type: "primary", icon: <FileTextIcon /> },
+  }),
+  doc.accessor("access", { header: "Access" }),
+])
+
 export function Picker() {
-  const [value, setValue] = React.useState<DataTableSelection>(
-    new Set(["onboarding", "release"])
-  )
+  const table = useDataTable({
+    data: DOCUMENTS,
+    columns: DOCUMENT_COLUMNS,
+    initialState: { rowSelection: selection(["onboarding", "release"]) },
+  })
   return (
-    <DataTable
-      aria-label="Documents"
-      rowIds={["onboarding", "brand", "release"]}
-      noun={{ one: "document", other: "documents" }}
-      value={value}
-      onValueChange={setValue}
-    >
-      <DataTableContent>
-        <DataTableHeader>
-          <DataTableHead type="primary">Title</DataTableHead>
-          <DataTableHead>Access</DataTableHead>
-        </DataTableHeader>
-        <DataTableBody>
-          {[
-            ["onboarding", "Onboarding checklist", "Workspace"],
-            ["brand", "Brand guidelines", "Public"],
-            ["release", "Release notes", "Public"],
-          ].map(([id, title, access]) => (
-            <DataTableRow key={id} id={id!}>
-              <DataTableCell type="primary" icon={<FileTextIcon />}>
-                {title}
-              </DataTableCell>
-              <DataTableCell>{access}</DataTableCell>
-            </DataTableRow>
-          ))}
-        </DataTableBody>
-      </DataTableContent>
-      <DataTableFooter>
-        <DataTableSelectionCount />
-      </DataTableFooter>
-    </DataTable>
+    <div className="w-full">
+      <DataTable
+        table={table}
+        aria-label="Documents"
+        noun={{ one: "document", other: "documents" }}
+      >
+        <DataTableContent />
+        <DataTableFooter>
+          <DataTableSelectionCount />
+        </DataTableFooter>
+      </DataTable>
+    </div>
   )
 }
 
@@ -156,7 +226,7 @@ export function BulkActionPatterns() {
           <h3 className="text-sm font-medium">{label}</h3>
           <MembersTable
             members={MEMBERS.slice(0, 2)}
-            defaultValue={new Set(["maya", "priya"])}
+            initialSelection={["maya", "priya"]}
             toolbar={<MembersToolbar>{bulk}</MembersToolbar>}
           />
         </section>
@@ -167,43 +237,54 @@ export function BulkActionPatterns() {
 
 export function ReviewQueue() {
   return (
-    <MembersTable
-      secondary
-      defaultValue={new Set(["priya", "sam"])}
-      toolbar={
-        <MembersToolbar>
-          <DataTableBulkActions>
-            <Button size="sm">
-              <CheckIcon data-icon="inline-start" />
-              Approve
-            </Button>
-            <Button variant="destructive" size="sm">
-              <XIcon data-icon="inline-start" />
-              Deny
-            </Button>
-          </DataTableBulkActions>
-        </MembersToolbar>
-      }
-    />
+    <div className="w-full">
+      <MembersTable
+        columns={COLUMNS_WITH_EMAIL}
+        initialSelection={["priya", "sam"]}
+        toolbar={
+          <MembersToolbar>
+            <DataTableBulkActions>
+              <Button size="sm">
+                <CheckIcon data-icon="inline-start" />
+                Approve
+              </Button>
+              <Button variant="destructive" size="sm">
+                <XIcon data-icon="inline-start" />
+                Deny
+              </Button>
+            </DataTableBulkActions>
+          </MembersToolbar>
+        }
+      />
+    </div>
   )
 }
 
+/*
+ * The app owns Show selected only: it keeps the selection in an atom it
+ * reads, and passes the table only the selected rows.
+ */
 export function Directory() {
   const [showSelectedOnly, setShowSelectedOnly] = React.useState(false)
-  const [value, setValue] = React.useState<DataTableSelection>(new Set())
-  const members = showSelectedOnly
-    ? MEMBERS.filter((member) => value === "all" || value.has(member.id))
-    : MEMBERS
+  const rowSelection = useCreateAtom<Record<string, true>>({})
+  const selected = useSelector(rowSelection)
+  const members = React.useMemo(
+    () =>
+      showSelectedOnly ? MEMBERS.filter((row) => selected[row.id]) : MEMBERS,
+    [showSelectedOnly, selected]
+  )
   return (
-    <MembersTable
-      members={members}
-      totalCount={248}
-      value={value}
-      onValueChange={setValue}
-      showSelectedOnly={showSelectedOnly}
-      onShowSelectedOnlyChange={setShowSelectedOnly}
-      toolbar={<MembersToolbar />}
-    />
+    <div className="w-full">
+      <MembersTable
+        members={members}
+        pageSize={5}
+        atoms={{ rowSelection }}
+        showSelectedOnly={showSelectedOnly}
+        onShowSelectedOnlyChange={setShowSelectedOnly}
+        toolbar={<MembersToolbar />}
+        footer={PAGINATION}
+      />
+    </div>
   )
 }
 
@@ -220,7 +301,7 @@ export function NarrowCards() {
     <div className="w-full max-w-[375px]">
       <MembersTable
         narrowLayout="cards"
-        defaultValue={new Set(["priya"])}
+        initialSelection={["priya"]}
         toolbar={
           <MembersToolbar>
             <DataTableBulkActions onDelete={() => {}}>
