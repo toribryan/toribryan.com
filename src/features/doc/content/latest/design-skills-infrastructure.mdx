@@ -34,6 +34,16 @@ A shared Claude Code skills infrastructure that gives designers one command for 
 
 <SkillCommandsVisual />
 
+## Skills in fibo
+
+I carried the same approach into [fibo](/fibo), my own design system. Its skills live in the repo next to the code, so anyone working on fibo, or an agent working for them, follows the same steps:
+
+- **`add-component`** adds a component end to end: the source file, stories, the Storybook docs page, catalog metadata and the registry entry. A component isn't done until all of them exist.
+- **`figma-drift`** checks the Figma library against the code for drift in color variables, radii and variant properties, and reports where Figma and code disagree. It never fixes either side on its own.
+- **`retire-component`** deprecates a component and later removes it: the docs banner and migration notes, a codemod with its tests, the changelogs and the removal release.
+
+<FiboSkillsTree />
+
 ## Impact
 
 - Cut spec production from 3 days–2 weeks to under 30 minutes, up to 80 hours per handoff cycle returned to design work.
