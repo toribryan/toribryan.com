@@ -1,7 +1,10 @@
+"use client"
+
 import type { CSSProperties } from "react"
 import Image from "next/image"
 
 import { cn } from "@/lib/utils"
+import { useAnimationsPaused } from "@/components/animations-pause"
 
 type Themed = { light: string; dark: string }
 
@@ -44,7 +47,7 @@ function ThemedImage({
  * The base is the art with the figure painted out, and the sprite is the
  * figure cut from the box `sprite.box` (x, y, width, height) of the art. The
  * figure hops while the card is hovered or focused, or on a loop with `loop`
- * or on a touch screen.
+ * or on a touch screen. Paused, it only hops on hover or focus.
  */
 export function SpriteCover({
   art,
@@ -63,6 +66,7 @@ export function SpriteCover({
   loop?: boolean
 }) {
   const [x, y, width, height] = sprite.box
+  const paused = useAnimationsPaused()
   return (
     <div className="absolute inset-0">
       <ThemedImage
@@ -74,9 +78,10 @@ export function SpriteCover({
       <div
         className={cn(
           "absolute motion-reduce:animate-none",
-          loop
+          loop && !paused
             ? "animate-cover-hop"
-            : "group-focus-within/doc-card:animate-cover-hop group-hover/doc-card:animate-cover-hop [@media(hover:none)]:animate-cover-hop"
+            : "group-focus-within/doc-card:animate-cover-hop group-hover/doc-card:animate-cover-hop",
+          !paused && "[@media(hover:none)]:animate-cover-hop"
         )}
         style={
           {
