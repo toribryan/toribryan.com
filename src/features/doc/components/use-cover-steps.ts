@@ -6,6 +6,7 @@ import { useInView } from "motion/react"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePageVisible } from "@/hooks/use-page-visible"
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion"
+import { useAnimationsPaused } from "@/components/animations-pause"
 
 /**
  * Steps a live cover through a short sequence. `stepAt` gives each step's
@@ -14,7 +15,8 @@ import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion"
  * screen, where nothing can hover, it plays on its own while in view,
  * holding the last step for `hold` before starting over. With `repeat` a
  * hovered card starts over the same way rather than holding. With reduced
- * motion the cover shows the last step, still. Nothing plays while the tab
+ * motion the cover shows the last step, still. Paused, it never plays on
+ * its own and waits for hover or focus instead. Nothing plays while the tab
  * is hidden.
  */
 export function useCoverSteps(
@@ -34,7 +36,8 @@ export function useCoverSteps(
   const reduceMotion = usePrefersReducedMotion()
   const visible = usePageVisible()
   const touch = useMediaQuery("(hover: none)")
-  const autoplay = loop || touch
+  const paused = useAnimationsPaused()
+  const autoplay = (loop || touch) && !paused
   const active = visible && (autoplay ? inView : engaged)
   const last = stepAt.length - 1
   const timing = stepAt.join()
