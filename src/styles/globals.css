@@ -990,6 +990,12 @@
   animation-play-state: paused;
 }
 
+/* Shown as they are, with no fade. */
+[data-intro="still"] .fibo-tile {
+  opacity: 1;
+  animation: none;
+}
+
 /* A pixel rabbit pixel flying out when he bursts apart. */
 @keyframes pixel-burst {
   to {

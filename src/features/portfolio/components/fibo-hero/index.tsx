@@ -950,7 +950,8 @@ export function FiboHero({
   return (
     <section
       ref={area}
-      data-intro={seen ? "play" : "wait"}
+      // On the home page it's there from the start; fibo's own page fades in.
+      data-intro={variant === "section" ? "still" : seen ? "play" : "wait"}
       id="fibo"
       aria-label="fibo"
       className="screen-line-top screen-line-bottom relative border-x border-line"
