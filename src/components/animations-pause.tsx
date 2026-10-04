@@ -1,5 +1,6 @@
 "use client"
 
+import { createContext, useContext, type ReactNode } from "react"
 import { atom, useAtom, useAtomValue } from "jotai"
 import { PauseIcon, PlayIcon } from "lucide-react"
 
@@ -13,13 +14,25 @@ import { Button } from "@/components/base/ui/button"
  */
 const animationsPausedAtom = atom(false)
 
+const PauseExempt = createContext(false)
+
+/**
+ * Keeps the covers below it playing whatever the pause says, for a page with
+ * no toggle on it, where a pause set elsewhere couldn't be undone.
+ */
+export function AnimationsPauseExempt({ children }: { children: ReactNode }) {
+  return <PauseExempt.Provider value>{children}</PauseExempt.Provider>
+}
+
 /**
  * Whether the reader has paused the covers. A paused cover stops playing on
  * its own but still plays while its card is hovered or focused, since the
  * reader asked for that.
  */
 export function useAnimationsPaused() {
-  return useAtomValue(animationsPausedAtom)
+  const paused = useAtomValue(animationsPausedAtom)
+  const exempt = useContext(PauseExempt)
+  return paused && !exempt
 }
 
 /**
