@@ -7,10 +7,10 @@ import { ditherField } from "@/lib/pixel/pixel-fx"
 import { cn } from "@/lib/utils"
 
 /*
- * The profile header's fibo dither: an otter and a bunny in headphones,
- * facing each other, built from paper on load, then idling with a few cells
- * blinking. A photo lens follows the pointer and a press ripples the cells.
- * The cell data and photo come from pixel-studio's `poster --field` export;
+ * The profile header's fibo dither: a bunny in earbuds under a bank of
+ * clouds, built from paper on load, then idling with a few cells blinking.
+ * A window of the photo sits still over his face and ears, and a press
+ * ripples the cells. The cell data and photo come from pixel-studio's `poster --field` export;
  * regenerate them there rather than editing the JSON.
  */
 
@@ -77,7 +77,8 @@ export function HeroDither({
       ...themeTokens(resolvedTheme === "dark" ? "dark" : "light"),
       photo: photo.current,
       build: !built.current,
-      lens: [96, 54],
+      lens: null,
+      pinWindow: true,
       align: "center",
     })
     built.current = true
@@ -86,13 +87,13 @@ export function HeroDither({
 
   return (
     <div id={id} className={cn("overflow-hidden", className)}>
-      {/* The field covers the strip from its middle, where the otter and
-          the bunny face each other, so narrow screens crop both ends. */}
+      {/* The field covers the strip from its middle, so narrow screens crop
+          both ends and keep the bunny. */}
       <canvas
         ref={ref}
         role="img"
-        aria-label="An otter in headphones and a white bunny in earbuds, facing each other, drawn in 1-bit dither"
-        className="absolute inset-0 size-full cursor-crosshair"
+        aria-label="A white bunny in earbuds under a bank of clouds, drawn in 1-bit dither"
+        className="absolute inset-0 size-full"
       />
     </div>
   )
