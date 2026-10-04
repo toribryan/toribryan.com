@@ -95,13 +95,25 @@ export function Stage({
  * MDX without a component per page. Two columns on a phone, one column per
  * stage from `sm` up, for two to five stages.
  */
-export function Pipeline({ children }: { children?: React.ReactNode }) {
+export function Pipeline({
+  plain = false,
+  children,
+}: {
+  /** Drops the warm fill, leaving only the outline. */
+  plain?: boolean
+  children?: React.ReactNode
+}) {
   const stages = Children.toArray(children).filter(isValidElement)
 
   if (stages.length === 0) return null
 
   return (
-    <div className="not-prose my-8 overflow-hidden rounded-xl bg-surface-warm inset-ring-1 inset-ring-border/64">
+    <div
+      className={cn(
+        "not-prose my-8 overflow-hidden rounded-xl inset-ring-1 inset-ring-border/64",
+        !plain && "bg-surface-warm"
+      )}
+    >
       <div
         className={cn(
           "grid grid-cols-2 divide-y divide-border sm:divide-x sm:divide-y-0",

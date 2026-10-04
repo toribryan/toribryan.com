@@ -56,7 +56,7 @@ function FileTree({ label, tree }: { label: string; tree: Node[] }) {
   return (
     <div
       ref={frame}
-      className="not-prose my-8 rounded-xl bg-surface-warm p-5 inset-ring-1 inset-ring-border/64"
+      className="not-prose my-8 rounded-xl p-5 inset-ring-1 inset-ring-border/64"
     >
       <p className="mb-4 font-mono text-xs font-medium tracking-wide text-muted-foreground uppercase">
         {label}
