@@ -50,6 +50,7 @@ import { SkillCommandsVisual } from "./mdx-skill-commands"
 import { StepTransition } from "./mdx-step-transition"
 import { StoryEmbed } from "./mdx-story-embed"
 import { Tech } from "./mdx-tech"
+import { TimeSavedChart } from "./mdx-time-saved"
 import { ToolLabel } from "./mdx-tool-label"
 import { Video } from "./mdx-video"
 import { WhoStepDemo } from "./mdx-who-step-demo"
@@ -92,6 +93,7 @@ const components: MDXRemoteProps["components"] = {
   PageGrid,
   Pipeline,
   PipelineHero,
+  TimeSavedChart,
   SkillsRepoTree,
   FiboSkillsTree,
   Stage,
