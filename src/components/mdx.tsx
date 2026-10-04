@@ -24,6 +24,7 @@ import { mdxCodeBlockComponents } from "./mdx-code-block"
 import { Compare } from "./mdx-compare"
 import { Embed } from "./mdx-embed"
 import { Figure } from "./mdx-figure"
+import { FiboSkillsTree, SkillsRepoTree } from "./mdx-file-tree"
 import { ImageCycle } from "./mdx-image-cycle"
 import { ImagePan } from "./mdx-image-pan"
 import { InboxRegions } from "./mdx-inbox-regions"
@@ -91,6 +92,8 @@ const components: MDXRemoteProps["components"] = {
   PageGrid,
   Pipeline,
   PipelineHero,
+  SkillsRepoTree,
+  FiboSkillsTree,
   Stage,
   SkillCommandsVisual,
   StepTransition,
