@@ -7,7 +7,7 @@ import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { absoluteUrl } from "@/lib/utils"
 import { DocPage } from "@/features/doc/components/doc-page"
-import { getDocBySlug, getLatestPosts } from "@/features/doc/data/documents"
+import { getAllLatestPosts, getDocBySlug } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
 
 export const revalidate = false
@@ -15,7 +15,7 @@ export const dynamic = "force-static"
 export const dynamicParams = false
 
 export async function generateStaticParams() {
-  return getLatestPosts().map((doc) => ({ slug: doc.slug }))
+  return getAllLatestPosts().map((doc) => ({ slug: doc.slug }))
 }
 
 function findPost(slug: string) {

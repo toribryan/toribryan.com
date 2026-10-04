@@ -98,8 +98,13 @@ export function getComponentDocs() {
   return getDocsByCategory(COMPONENTS_CATEGORY)
 }
 
-/** Latest posts — docs under the `latest/` content folder. */
+/** Latest posts — docs under the `latest/` content folder, archived ones left out. */
 export function getLatestPosts() {
+  return getAllLatestPosts().filter((doc) => !doc.metadata.archived)
+}
+
+/** Every latest post, archived ones too, for building their pages. */
+export function getAllLatestPosts() {
   return getDocsByCategory(LATEST_CATEGORY)
 }
 
