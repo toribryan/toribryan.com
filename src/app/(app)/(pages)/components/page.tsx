@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { ArrowUpRightIcon } from "@/components/animated-icons/arrow-up-right-icon"
+import { AnimationsPauseToggle } from "@/components/animations-pause"
 import { Button } from "@/components/base/ui/button"
 import {
   PageHeading,
@@ -42,7 +43,10 @@ export default function Page() {
 
       <PageHeading>
         <PageHeadingTagline>fibo</PageHeadingTagline>
-        <PageHeadingTitle>Components</PageHeadingTitle>
+        <div className="relative">
+          <PageHeadingTitle className="pr-14">Components</PageHeadingTitle>
+          <AnimationsPauseToggle className="absolute top-1/2 right-3 -translate-y-1/2" />
+        </div>
         <PageHeadingDescription>{description}</PageHeadingDescription>
       </PageHeading>
 

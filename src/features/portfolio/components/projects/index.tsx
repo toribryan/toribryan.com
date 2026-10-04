@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { ArrowRightIcon } from "@/components/animated-icons/arrow-right-icon"
+import { AnimationsPauseToggle } from "@/components/animations-pause"
 import { Button } from "@/components/base/ui/button"
 import { DocCardList } from "@/features/doc/components/doc-card-list"
 import { getWorkDocs } from "@/features/doc/data/documents"
@@ -23,12 +24,13 @@ export function Projects() {
 
   return (
     <Panel id={ID}>
-      <PanelHeader>
+      <PanelHeader className="flex items-center justify-between gap-2">
         <PanelTitle>
           <a href={`#${ID}`}>Projects</a>
           <PanelTitleSup>({projects.length})</PanelTitleSup>
           <PanelTitleCopy id={ID} />
         </PanelTitle>
+        <AnimationsPauseToggle />
       </PanelHeader>
 
       <div className="px-2 pb-4">

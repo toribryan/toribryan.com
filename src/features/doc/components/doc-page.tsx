@@ -8,6 +8,7 @@ import { cleanTableOfContents } from "@/lib/toc"
 import { cn } from "@/lib/utils"
 import { ArrowLeftIcon } from "@/components/animated-icons/arrow-left-icon"
 import { ArrowRightIcon } from "@/components/animated-icons/arrow-right-icon"
+import { AnimationsPauseExempt } from "@/components/animations-pause"
 import { Button } from "@/components/base/ui/button"
 import {
   Tooltip,
@@ -145,7 +146,9 @@ export async function DocPage({
   const resultsAreFigures = results.every(({ value }) => value.length <= 10)
 
   return (
-    <>
+    // Nothing here has a pause toggle, so a pause set on another page
+    // mustn't freeze the cover or the demos in the body.
+    <AnimationsPauseExempt>
       <div className="screen-line-bottom flex items-center justify-between p-2 pl-4">
         <Button
           className="h-7 gap-2 border-none px-0 tracking-wider text-muted-foreground hover:text-foreground hover:no-underline"
@@ -367,7 +370,7 @@ export async function DocPage({
             without a `liveUrl` can place their own <LinkButton> in the body. */}
         {m.liveUrl && <LinkButton href={m.liveUrl}>{liveLabel}</LinkButton>}
       </Prose>
-    </>
+    </AnimationsPauseExempt>
   )
 }
 
