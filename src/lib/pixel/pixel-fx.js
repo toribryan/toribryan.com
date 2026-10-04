@@ -312,14 +312,15 @@ export function playSheet(canvas, sheetUrl, meta) {
  *
  * opts: photo (loaded <img> of field.photo), build (true), pinWindow (show the exported --window at
  * rest), lens ([w, h] in cells, or null), flicker (cells lit at once), idleFps, ripple (true),
- * align ("center" | "left" | "right"), paper and ink (any canvas color, to match a host page instead
- * of the preset's), invert (fill the paper cells instead of the ink ones: with a dark paper and light
- * ink this keeps the photo right-way-round for a dark theme instead of turning it into a negative).
+ * align ("center" | "left" | "right"), drift (true: let a field's drift clouds move; false holds them
+ * still), paper and ink (any canvas color, to match a host page instead of the preset's), invert
+ * (fill the paper cells instead of the ink ones: with a dark paper and light ink this keeps the
+ * photo right-way-round for a dark theme instead of turning it into a negative).
  */
 export function ditherField(canvas, field, opts = {}) {
   const {
     photo = null, build = true, pinWindow = false, lens = [26, 14],
-    flicker = 24, idleFps = 10, ripple = true, seed = 11, align = "center",
+    flicker = 24, idleFps = 10, ripple = true, seed = 11, align = "center", drift: moving = true,
     paper = field.paper, ink = field.ink, invert = false,
   } = opts;
   const { cols, rows, cell, gap, ox, oy } = field;
@@ -365,6 +366,42 @@ export function ditherField(canvas, field, opts = {}) {
     for (; frame < Math.min(upto, flips.length); frame++) for (const i of flips[frame]) bits[i] ^= 1;
   };
   if (!build || still) applyFlips(Infinity);
+
+  // Drift: a seamless tone map over the top rows, dithered live with the field's own Bayer matrix as it
+  // slides along, so the clouds move while every cell stays on the grid. They part where the optional
+  // `gap` (opacity per column, hex) is low and never draw on the cells `hold` covers. They develop
+  // alongside the build, from `start`.
+  const drift = field.drift ?? null;
+  const cloud = drift ? new Uint8Array(cols * drift.rows) : null;
+  let driftAt = -Infinity;
+  if (drift) {
+    drift.tones = Uint8Array.from(atob(drift.map), (ch) => ch.charCodeAt(0));
+    drift.open = drift.gap
+      ? Uint8Array.from({ length: cols }, (_, x) => parseInt(drift.gap.slice(x * 2, x * 2 + 2), 16))
+      : null;
+    drift.held = new Map(drift.hold.map(([y, a, b]) => [y, [a, b]]));
+    drift.mat = bayer(8);
+  }
+  const shade = (offset, strength) => {
+    const { rows: band, scale, mapCols, mapRows, tones, open, held, mat, spread, mid } = drift;
+    for (let y = 0; y < band; y++) {
+      const v = Math.min(y / scale, mapRows - 1);
+      const v0 = Math.floor(v), v1 = Math.min(v0 + 1, mapRows - 1), fv = v - v0;
+      const span = held.get(y);
+      const row = mat[y % 8];
+      for (let x = 0; x < cols; x++) {
+        const i = y * cols + x;
+        const o = open ? open[x] : 255;
+        if (!o || (span && x >= span[0] && x < span[1])) { cloud[i] = 0; continue; }
+        const u = ((((x + offset) / scale) % mapCols) + mapCols) % mapCols;
+        const u0 = Math.floor(u), u1 = (u0 + 1) % mapCols, fu = u - u0;
+        const t = (tones[v0 * mapCols + u0] * (1 - fu) + tones[v0 * mapCols + u1] * fu) * (1 - fv)
+          + (tones[v1 * mapCols + u0] * (1 - fu) + tones[v1 * mapCols + u1] * fu) * fv;
+        const tone = t * (o / 255) * strength;
+        cloud[i] = tone + (row[x % 8] - 0.5) * spread * 255 >= mid ? 1 : 0;
+      }
+    }
+  };
 
   // Blinks only where ink and paper meet; one inside solid ink or open paper reads as a glitch.
   let pool = null;
@@ -420,7 +457,9 @@ export function ditherField(canvas, field, opts = {}) {
       const px = x0 + x * c;
       if (px + c <= 0 || px >= bw) continue;
       const y = (i / cols) | 0;
-      let v = bits[i] ^ (blinks.has(i) ? 1 : 0) ^ (invert ? 1 : 0);
+      let v = bits[i] ^ (blinks.has(i) ? 1 : 0);
+      if (v && cloud && i < cloud.length && cloud[i]) v = 0;
+      v ^= invert ? 1 : 0;
       if (wave && Math.abs(Math.hypot(x - wave.x, y - wave.y) - r) < 1.2) v ^= 1;
       if (v) ctx.fillRect(px, y0 + y * c, c - g, c - g);
     }
@@ -543,6 +582,13 @@ export function ditherField(canvas, field, opts = {}) {
     } else if (!still && flicker > 0) {
       if (!pool) buildPool();
       if (now - lastIdle >= 1000 / idleFps) { tickBlinks(); lastIdle = now; dirty = true; }
+    }
+    if (drift && now - driftAt >= 1000 / idleFps) {
+      const since = (now - t0) / 1000;
+      const built = flips.length / field.fps;
+      if (still || !moving) { if (driftAt < 0) { shade(drift.start ?? 0, 1); dirty = true; } }
+      else { shade((drift.start ?? 0) + since * drift.speed, Math.min(1, since / built)); dirty = true; }
+      driftAt = now;
     }
     if (lensState.size !== lensState.target) {
       const step = still ? 1 : 0.12;
