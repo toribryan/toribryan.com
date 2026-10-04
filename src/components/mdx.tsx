@@ -46,7 +46,6 @@ import {
   TokenTiers,
   TwoJobs,
 } from "./mdx-review-artifacts"
-import { SkillCommandsVisual } from "./mdx-skill-commands"
 import { StepTransition } from "./mdx-step-transition"
 import { StoryEmbed } from "./mdx-story-embed"
 import { Tech } from "./mdx-tech"
@@ -97,7 +96,6 @@ const components: MDXRemoteProps["components"] = {
   SkillsRepoTree,
   FiboSkillsTree,
   Stage,
-  SkillCommandsVisual,
   StepTransition,
   SubmissionJourney,
   StoryEmbed,

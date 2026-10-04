@@ -16,42 +16,39 @@ leadFirst: true
 
 <PipelineHero />
 
-## What I built
+## A workflow problem, not a document problem
 
-A shared Claude Code skills infrastructure that gives designers one command for each phase of the design process. It lives in a single repository that each designer clones and symlinks to their machine, so the whole team works from the same commands and standards.
+Handoff was where the trouble showed, but it started earlier. Every designer ran each phase of the work their own way: how they synthesized research, wrote interface copy and documented a design. Specs came out inconsistent because everything before them did.
+
+So instead of a better spec template, I gave the team one shared way to do each phase: a Claude Code skill per phase, grounded in our brand goals and product context, so the output stays on brand and consistent no matter who runs it. The skills live in one repository that every designer clones and links into Claude Code, with a documented protocol around them, so the process doesn't depend on any one designer.
 
 <SkillsRepoTree />
 
-**A command per phase.** `/write-spec`, `/research-synthesis`, `/ux-copy`, and more: each skill is grounded in our brand goals and product context, so its output stays on-brand and consistent by default.
+## One feature, start to finish
 
-**A handoff skill at the center.** It generates the handoff directly from prototypes built in Claude Code. The old handoff was one long, polished document; I split it into three Markdown specs, each with one job:
+A feature moves through the skills in order. `/research-synthesis` turns raw interview notes into findings, and `/ux-copy` drafts the interface copy on brand. The prototype is built in Claude Code, and `/write-spec` turns it into the design-to-dev spec. `/handoff` packages that spec for engineering, and when the prototype changes later, it logs the change in the release notes.
+
+## The handoff, rebuilt
+
+The old handoff was one long, polished document. The handoff skill splits it into three Markdown specs, each with one job:
 
 - **Handoff:** an overview of the package, with the prototype and a full feature map.
 - **Style guide:** the visual design and the design system elements the feature uses.
 - **Test plan:** how each feature should behave, as a functional spec.
 
-Three things changed with it:
+They're plain Markdown on purpose. Plain text reads well for everyone, screen readers included, and designers spend their time on what a spec says instead of how it looks. Visual references are Figma links and the prototype itself, which stays the source of truth: the specs follow it instead of being kept up beside it. I shaped the format through feedback loops with engineers, keeping the references that actually helped them build and dropping the rest.
 
-- **Markdown is the standard.** Plain text reads well for everyone, screen readers included, and designers spend their time on what the spec says instead of how the document looks.
-- **The prototype is the source of truth.** Visual references are Figma links and the prototype itself. A handoff update tool logs every change to the prototype in the release notes, so the specs and the prototype never drift apart.
-- **Engineers shaped it.** I refined the format through feedback loops with engineers, keeping the references that actually helped them build and dropping the rest.
+## Connected to the design system
 
-**Figma connected to the pipeline.** MCP and Code Connect tie prototypes to real design-system components. From there, an agentic pipeline ingests a PRD, aligns it to our coding standards and design system, and outputs production-ready code.
-
-**A documented protocol around the tooling.** The process is repeatable across the team rather than dependent on any one designer.
-
-<SkillCommandsVisual />
+All of this builds on the RDS v2 design system I [overhauled](/work/design-system-overhaul): 37 components, 94% fewer card variants, and a card that dropped from two weeks to 1.5 days to build. Figma MCP and Code Connect tie prototypes to its real components. From there, an agentic pipeline ingests a PRD, aligns it to our coding standards and the design system, and outputs production-ready code.
 
 ## Impact
 
 <TimeSavedChart />
 
-- Cut spec production from 3 days–2 weeks to under 30 minutes, up to 80 hours per handoff cycle returned to design work.
-- Reached 100% adoption across the design team, validated with 4 designers across 3 products plus 3 engineers and 1 PM.
-- Reduced the friction engineers hit when consuming specs, replacing hand-maintained docs with a consistent structure and automated release notes.
-- Kept specs in sync with design by generating them from the source prototype instead of maintaining them separately.
-
-It builds on the RDS v2 design system I overhauled (37 components, 94% fewer card variants), where a v2 card dropped from two weeks to 1.5 days to build, saving roughly 64 engineering hours per component.
+- Up to 80 hours per handoff cycle returned to design work.
+- 100% adoption across the design team, validated with 4 designers across 3 products, plus 3 engineers and 1 PM.
+- Less friction for engineers reading specs: one consistent structure, and release notes that keep themselves up to date.
 
 I presented the finished process to the organization on July 26, 2026.
 
