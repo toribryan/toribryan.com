@@ -40,8 +40,8 @@ shadcn@latest add https://fibo.toribryan.com/r/<name>.json --path
 src/components/fibo`); re-run that to update one, and check its imports still
 point at `@/components/fibo/`; the install also drops a stray `utils.ts`
 and a `cn` package, and writes dark values for fibo's extra roles into
-`globals.css` that this site mixes itself, so revert those, but keep `--warning` and the two `--sticker-*` tokens
-that Sticker avatar needs, which this site declares itself. Three parts carry
+`globals.css` that this site mixes itself, so revert those, but keep `--warning` and the three `--sticker-*` tokens
+(edge, ink and shadow) that Sticker avatar needs, which this site declares itself. Three parts carry
 local changes. `chapter-scrubber.tsx` keeps `preview="none"`,
 which fibo dropped, for a rail with no preview at all; the home page cover
 and its doc use it. `command-menu.tsx` shows its preview pane by the dialog's own width
@@ -52,9 +52,8 @@ any element inside its record button in place of the flat drawing, and a
 and its copy and download buttons carry words ("Copy", "Download .md")
 beside their icons, and closing the transcript plays an exit before it's
 removed and hands focus back to the device, with `onDismiss` as it starts
-and `onDismissed` once it's gone, and it tidies each settled phrase
-(`tidy`: drops fillers and repeated words, capitalises, ends sentences);
-with a custom device the button draws no focus ring, so the device draws
+and `onDismissed` once it's gone (tidying each settled phrase,
+`tidyPhrase`, is fibo's own now); with a custom device the button draws no focus ring, so the device draws
 its own. The Voice memo project page (`/work/voice-memo`) and its bare
 `/voice-memo` page use all three for the 3D device, in
 `features/doc/components/voice-memo-hero.tsx` (the device itself, which the
@@ -79,9 +78,15 @@ part, a `fibo-niche.ts` entry, an MDX file, an examples module and a home
 page cover in `features/portfolio/components/components/covers.tsx`.
 Each entry has a `shelf`, `special` or `base`, which picks the
 Storybook URL. Data table is the one base part so far; it brings
-fibo's Table, Checkbox, Avatar, Tooltip, Button, Menu, Sheet, Input, Select
-and Pagination into `src/components/fibo/`, written from their registry JSON
-rather than the CLI, so they can't land in `components/ui/`. Its badges use
+fibo's Table, Checkbox, Avatar, Tooltip, Button, Input, Menu, Sheet and
+Pagination into `src/components/fibo/`, written from their registry JSON
+rather than the CLI, so they can't land in `components/ui/`. It runs on
+TanStack Table v9 (`@tanstack/react-table` and `@tanstack/react-store`, at
+fibo's versions): a table is made with `useDataTable` and a column helper
+and passed as `<DataTable table={table}>`; the old `rowIds` and
+hand-written-row API is deprecated in fibo and unused here. The home cover
+animates by calling `table.setRowSelection`, and the doc's URL-synced
+example keeps its state in the query string with `useSearchParamsAtom`. Its examples' badges use
 `success-subtle`, `warning-subtle` and `info-subtle`, which this site mixes
 in `globals.css` like `destructive-subtle`.
 
