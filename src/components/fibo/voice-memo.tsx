@@ -149,7 +149,7 @@ const ASKS =
  * question mark when it opens like a question. Punctuation the recogniser
  * already added is kept.
  */
-function tidy(phrase: string) {
+function tidyPhrase(phrase: string) {
   let text = phrase
     .replace(FILLERS, " ")
     .replace(/\b(?!(?:had|that)\b)(\w+)(\s+\1\b)+/gi, "$1")
@@ -412,7 +412,7 @@ function VoiceMemo({
       for (let i = event.resultIndex; i < event.results.length; i++) {
         const result = event.results[i]!
         if (result.isFinal) {
-          const text = tidy(result[0]!.transcript)
+          const text = tidyPhrase(result[0]!.transcript)
           settled = join(settled, text)
           if (text) segments.current.push({ at: elapsed(), text })
         } else pending = join(pending, result[0]!.transcript)
@@ -1004,6 +1004,7 @@ export {
   voiceMemoVariants,
   formatElapsed,
   transcriptToMarkdown,
+  tidyPhrase,
   type VoiceMemoProps,
   type VoiceMemoResult,
   type VoiceMemoSegment,
