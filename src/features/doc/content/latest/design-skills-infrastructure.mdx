@@ -24,7 +24,17 @@ A shared Claude Code skills infrastructure that gives designers one command for 
 
 **A command per phase.** `/write-spec`, `/research-synthesis`, `/ux-copy`, and more: each skill is grounded in our brand goals and product context, so its output stays on-brand and consistent by default.
 
-**A handoff skill at the center.** It generates design-to-dev specs directly from prototypes built in Claude Code. Every spec follows a structure I defined: a walkthrough of the prototype, how each screen looks, and how it behaves. Updating a spec generates its release notes.
+**A handoff skill at the center.** It generates the handoff directly from prototypes built in Claude Code. The old handoff was one long, polished document; I split it into three Markdown specs, each with one job:
+
+- **Handoff:** an overview of the package, with the prototype and a full feature map.
+- **Style guide:** the visual design and the design system elements the feature uses.
+- **Test plan:** how each feature should behave, as a functional spec.
+
+Three things changed with it:
+
+- **Markdown is the standard.** Plain text reads well for everyone, screen readers included, and designers spend their time on what the spec says instead of how the document looks.
+- **The prototype is the source of truth.** Visual references are Figma links and the prototype itself. A handoff update tool logs every change to the prototype in the release notes, so the specs and the prototype never drift apart.
+- **Engineers shaped it.** I refined the format through feedback loops with engineers, keeping the references that actually helped them build and dropping the rest.
 
 **Figma connected to the pipeline.** MCP and Code Connect tie prototypes to real design-system components. From there, an agentic pipeline ingests a PRD, aligns it to our coding standards and design system, and outputs production-ready code.
 
