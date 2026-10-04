@@ -1,35 +1,28 @@
 "use client"
 
 import * as React from "react"
-import {
-  ArrowUpDownIcon,
-  EllipsisIcon,
-  PencilIcon,
-  PlusIcon,
-  SearchIcon,
-  Trash2Icon,
-} from "lucide-react"
+import { EllipsisIcon, PencilIcon, PlusIcon, Trash2Icon } from "lucide-react"
 
 import { Badge } from "@/components/fibo/badge"
 import { Button } from "@/components/fibo/button"
 import {
+  createDataTableColumnHelper,
   DataTable,
   DataTableAction,
   DataTableActions,
-  DataTableBody,
   DataTableBulkActions,
-  DataTableCard,
-  DataTableCardField,
   DataTableCards,
-  DataTableCell,
+  DataTableColumns,
   DataTableContent,
+  DataTableFacetFilter,
   DataTableFilters,
-  DataTableHead,
-  DataTableHeader,
-  DataTableRow,
+  DataTableFooter,
+  DataTablePagination,
+  DataTableSearch,
   DataTableToolbar,
+  useDataTable,
+  type DataTableOptions,
 } from "@/components/fibo/data-table"
-import { Input } from "@/components/fibo/input"
 import {
   Menu,
   MenuContent,
@@ -37,16 +30,9 @@ import {
   MenuSeparator,
   MenuTrigger,
 } from "@/components/fibo/menu"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/fibo/select"
 
 /*
- * Sample data and the table the examples share, ported from fibo's
+ * Sample data, columns and the table the examples share, ported from fibo's
  * data-table.stories.tsx.
  */
 
@@ -140,6 +126,8 @@ export const MEMBERS: Member[] = [
   },
 ]
 
+export const MEMBER_NOUN = { one: "member", other: "members" }
+
 export function RowActions({ name }: { name: string }) {
   return (
     <Menu>
@@ -169,6 +157,120 @@ export function RowActions({ name }: { name: string }) {
   )
 }
 
+const member = createDataTableColumnHelper<Member>()
+
+// Columns live outside the component, so the table's models aren't rebuilt
+// on every render.
+function memberColumns({ secondary }: { secondary: boolean }) {
+  return member.columns([
+    member.accessor("name", {
+      header: "Member",
+      meta: {
+        type: "person",
+        className: "w-56",
+        avatar: (row: Member) => ({ fallback: row.initials }),
+        secondary: secondary ? (row: Member) => row.email : undefined,
+      },
+    }),
+    member.accessor("team", {
+      header: "Team",
+      filterFn: "arrHas",
+      meta: { className: "w-44" },
+    }),
+    member.accessor("role", {
+      header: "Role",
+      filterFn: "arrHas",
+      meta: { className: "w-32" },
+    }),
+    member.accessor("status", {
+      header: "Status",
+      filterFn: "arrHas",
+      meta: { type: "status" },
+      cell: ({ getValue }) => (
+        <Badge variant={STATUS[getValue()]}>{getValue()}</Badge>
+      ),
+    }),
+    member.accessor("projects", {
+      header: "Projects",
+      meta: { type: "numeric" },
+    }),
+    member.accessor("lastActive", {
+      header: "Last active",
+      enableSorting: false,
+      meta: { className: "w-32" },
+    }),
+    member.display({
+      id: "actions",
+      header: () => <span className="sr-only">Actions</span>,
+      enableHiding: false,
+      meta: { type: "actions", label: "Actions" },
+      cell: ({ row }) => <RowActions name={row.original.name} />,
+    }),
+  ])
+}
+
+export const COLUMNS = memberColumns({ secondary: false })
+export const COLUMNS_WITH_EMAIL = memberColumns({ secondary: true })
+
+const PINNED = { start: ["name"], end: ["actions"] }
+const UNPINNED = { start: [], end: [] }
+
+/** A row selection holding these ids. */
+export function selection(ids: readonly string[]) {
+  return Object.fromEntries(ids.map((id) => [id, true as const]))
+}
+
+type MembersTableProps = Omit<
+  React.ComponentProps<typeof DataTable>,
+  "table" | "children"
+> & {
+  members?: Member[]
+  columns?: typeof COLUMNS
+  pageSize?: number
+  pinned?: boolean
+  initialSelection?: string[]
+  hiddenColumns?: string[]
+  atoms?: DataTableOptions<Member>["atoms"]
+  toolbar?: React.ReactNode
+  footer?: React.ReactNode
+}
+
+export function MembersTable({
+  members = MEMBERS,
+  columns = COLUMNS,
+  pageSize,
+  pinned = true,
+  initialSelection = [],
+  hiddenColumns = [],
+  atoms,
+  toolbar,
+  footer,
+  ...props
+}: MembersTableProps) {
+  const table = useDataTable({
+    data: members,
+    columns,
+    atoms,
+    lockedReason: (row) => row.lock,
+    initialState: {
+      columnPinning: pinned ? PINNED : UNPINNED,
+      columnVisibility: Object.fromEntries(
+        hiddenColumns.map((id) => [id, false])
+      ),
+      rowSelection: selection(initialSelection),
+      ...(pageSize ? { pagination: { pageIndex: 0, pageSize } } : {}),
+    },
+  })
+  return (
+    <DataTable table={table} aria-label="Members" noun={MEMBER_NOUN} {...props}>
+      {toolbar}
+      <DataTableContent />
+      <DataTableCards />
+      {footer}
+    </DataTable>
+  )
+}
+
 export function MembersToolbar({
   children,
 }: {
@@ -179,39 +281,17 @@ export function MembersToolbar({
     <DataTableToolbar>
       <DataTableFilters
         search={
-          <div className="relative w-full">
-            <SearchIcon className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              size="sm"
-              className="pl-8"
-              placeholder="Search 248 members"
-              aria-label="Search members"
-            />
-          </div>
+          <DataTableSearch
+            placeholder="Search members"
+            aria-label="Search members"
+          />
         }
       >
-        <Select
-          defaultValue="name"
-          items={[
-            { value: "name", label: "Name" },
-            { value: "team", label: "Team" },
-          ]}
-        >
-          <SelectTrigger size="sm" aria-label="Sort by">
-            <ArrowUpDownIcon />
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="name">Name</SelectItem>
-            <SelectItem value="team">Team</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button variant="ghost" size="sm">
-          <PlusIcon data-icon="inline-start" />
-          Add filter
-        </Button>
+        <DataTableFacetFilter column="status" />
+        <DataTableFacetFilter column="team" />
       </DataTableFilters>
       <DataTableActions>
+        <DataTableColumns />
         <DataTableAction icon={<PlusIcon data-icon="inline-start" />}>
           Add member
         </DataTableAction>
@@ -221,97 +301,8 @@ export function MembersToolbar({
   )
 }
 
-export function MembersTable({
-  members = MEMBERS,
-  secondary = false,
-  pinned = true,
-  footer,
-  toolbar,
-  ...props
-}: Partial<React.ComponentProps<typeof DataTable>> & {
-  members?: Member[]
-  secondary?: boolean
-  pinned?: boolean
-  footer?: React.ReactNode
-  toolbar?: React.ReactNode
-}) {
-  const start = pinned ? "start" : "none"
-  const end = pinned ? "end" : "none"
-  return (
-    <DataTable
-      aria-label="Members"
-      rowIds={members.map((member) => member.id)}
-      noun={{ one: "member", other: "members" }}
-      {...props}
-    >
-      {toolbar}
-      <DataTableContent>
-        <DataTableHeader>
-          <DataTableHead type="person" pinned={start} className="w-56">
-            Member
-          </DataTableHead>
-          <DataTableHead className="w-44">Team</DataTableHead>
-          <DataTableHead className="w-32">Role</DataTableHead>
-          <DataTableHead type="status">Status</DataTableHead>
-          <DataTableHead type="numeric">Projects</DataTableHead>
-          <DataTableHead className="w-32">Last active</DataTableHead>
-          <DataTableHead type="actions" pinned={end}>
-            <span className="sr-only">Actions</span>
-          </DataTableHead>
-        </DataTableHeader>
-        <DataTableBody>
-          {members.map((member) => (
-            <DataTableRow
-              key={member.id}
-              id={member.id}
-              lockedReason={member.lock}
-            >
-              <DataTableCell
-                type="person"
-                pinned={start}
-                avatar={{ fallback: member.initials }}
-                secondary={secondary ? member.email : undefined}
-              >
-                {member.name}
-              </DataTableCell>
-              <DataTableCell>{member.team}</DataTableCell>
-              <DataTableCell>{member.role}</DataTableCell>
-              <DataTableCell type="status">
-                <Badge variant={STATUS[member.status]}>{member.status}</Badge>
-              </DataTableCell>
-              <DataTableCell type="numeric">{member.projects}</DataTableCell>
-              <DataTableCell>{member.lastActive}</DataTableCell>
-              <DataTableCell type="actions" pinned={end}>
-                <RowActions name={member.name} />
-              </DataTableCell>
-            </DataTableRow>
-          ))}
-        </DataTableBody>
-      </DataTableContent>
-      <DataTableCards>
-        {members.map((member) => (
-          <DataTableCard
-            key={member.id}
-            id={member.id}
-            title={member.name}
-            avatar={{ fallback: member.initials }}
-            status={
-              <Badge variant={STATUS[member.status]}>{member.status}</Badge>
-            }
-            lockedReason={member.lock}
-          >
-            <DataTableCardField label="Team">{member.team}</DataTableCardField>
-            <DataTableCardField label="Last active">
-              {member.lastActive}
-            </DataTableCardField>
-            <DataTableCardField label="Role">{member.role}</DataTableCardField>
-            <DataTableCardField label="Projects">
-              {member.projects}
-            </DataTableCardField>
-          </DataTableCard>
-        ))}
-      </DataTableCards>
-      {footer}
-    </DataTable>
-  )
-}
+export const PAGINATION = (
+  <DataTableFooter className="justify-end">
+    <DataTablePagination />
+  </DataTableFooter>
+)

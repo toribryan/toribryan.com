@@ -30,13 +30,14 @@ import {
 } from "@/components/fibo/chapter-scrubber"
 import { CommandMenu } from "@/components/fibo/command-menu"
 import {
+  createDataTableColumnHelper,
   DataTable,
   DataTableBulkActions,
-  DataTableCard,
-  DataTableCardField,
   DataTableCards,
   DataTableFilters,
+  DataTableSearch,
   DataTableToolbar,
+  useDataTable,
 } from "@/components/fibo/data-table"
 import {
   FilterMenu,
@@ -47,7 +48,6 @@ import {
   FloatingNav,
   type FloatingNavItem,
 } from "@/components/fibo/floating-nav"
-import { Input } from "@/components/fibo/input"
 import {
   IntegrationVisual,
   type IntegrationItem,
@@ -522,7 +522,18 @@ function FloatingNavCover({ active }: CoverProps) {
   )
 }
 
-const COVER_MEMBERS = [
+type CoverMember = {
+  id: string
+  name: string
+  initials: string
+  team: string
+  role: string
+  status: keyof typeof COVER_STATUS
+}
+
+const COVER_STATUS = { Active: "success", Away: "warning" } as const
+
+const COVER_MEMBERS: CoverMember[] = [
   {
     id: "maya",
     name: "Maya Okafor",
@@ -547,9 +558,30 @@ const COVER_MEMBERS = [
     role: "Viewer",
     status: "Active",
   },
-] as const
+]
 
-const COVER_STATUS = { Active: "success", Away: "warning" } as const
+const coverMember = createDataTableColumnHelper<CoverMember>()
+
+// The name titles each card and the status sits beside it; the other two
+// columns become its fields, in this order.
+const COVER_COLUMNS = coverMember.columns([
+  coverMember.accessor("name", {
+    header: "Member",
+    meta: {
+      type: "person",
+      avatar: (member: CoverMember) => ({ fallback: member.initials }),
+    },
+  }),
+  coverMember.accessor("team", { header: "Team" }),
+  coverMember.accessor("role", { header: "Role" }),
+  coverMember.accessor("status", {
+    header: "Status",
+    meta: { type: "status" },
+    cell: ({ getValue }) => (
+      <Badge variant={COVER_STATUS[getValue()]}>{getValue()}</Badge>
+    ),
+  }),
+])
 
 // One row, two, the whole page, then nothing. At rest it shows the first,
 // so the cover always opens on the selection toolbar.
@@ -560,6 +592,9 @@ const COVER_SELECTIONS: string[][] = [
   [],
 ]
 
+const coverSelection = (step: number) =>
+  Object.fromEntries(COVER_SELECTIONS[step]!.map((id) => [id, true as const]))
+
 /**
  * The table as it looks on a phone: a card per member, with select all in
  * the toolbar. While active, cards are selected one by one until the page is,
@@ -567,6 +602,16 @@ const COVER_SELECTIONS: string[][] = [
  */
 function DataTableCover({ active }: CoverProps) {
   const step = useCycle(COVER_SELECTIONS.length, 1600, active)
+  const table = useDataTable({
+    data: COVER_MEMBERS,
+    columns: COVER_COLUMNS,
+    initialState: { rowSelection: coverSelection(0) },
+  })
+  // Each step sets the table's own selection, as a person ticking cards
+  // would, so the toolbar and cards follow it through their subscriptions.
+  useEffect(() => {
+    table.setRowSelection(coverSelection(step))
+  }, [table, step])
   return (
     <ScaledStage width={375}>
       {/* Top-aligned, so the toolbar where the selection shows stays in view
@@ -578,17 +623,15 @@ function DataTableCover({ active }: CoverProps) {
             between idle and selecting. */}
         <div className="[--background:oklch(1_0_0)] dark:[--background:inherit] [&_[data-slot=checkbox]]:transition-[background-color,border-color,color] [&_[data-slot=checkbox]]:duration-200 [&_[data-slot=data-table-card]]:transition-colors [&_[data-slot=data-table-card]]:duration-300 [&_[data-slot=data-table-toolbar]>*]:animate-in [&_[data-slot=data-table-toolbar]>*]:duration-300 [&_[data-slot=data-table-toolbar]>*]:fade-in-0">
           <DataTable
+            table={table}
             aria-label="Members"
-            rowIds={COVER_MEMBERS.map((member) => member.id)}
             noun={{ one: "member", other: "members" }}
             narrowLayout="cards"
-            value={new Set(COVER_SELECTIONS[step])}
           >
             <DataTableToolbar>
               <DataTableFilters
                 search={
-                  <Input
-                    size="sm"
+                  <DataTableSearch
                     placeholder="Search members"
                     aria-label="Search members"
                   />
@@ -596,28 +639,7 @@ function DataTableCover({ active }: CoverProps) {
               />
               <DataTableBulkActions onDelete={() => {}} />
             </DataTableToolbar>
-            <DataTableCards>
-              {COVER_MEMBERS.map((member) => (
-                <DataTableCard
-                  key={member.id}
-                  id={member.id}
-                  title={member.name}
-                  avatar={{ fallback: member.initials }}
-                  status={
-                    <Badge variant={COVER_STATUS[member.status]}>
-                      {member.status}
-                    </Badge>
-                  }
-                >
-                  <DataTableCardField label="Team">
-                    {member.team}
-                  </DataTableCardField>
-                  <DataTableCardField label="Role">
-                    {member.role}
-                  </DataTableCardField>
-                </DataTableCard>
-              ))}
-            </DataTableCards>
+            <DataTableCards />
           </DataTable>
         </div>
       </div>
