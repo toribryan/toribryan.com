@@ -126,13 +126,16 @@ export async function DocPage({
     ["Status", m.status],
   ].filter(([, value]) => Boolean(value)) as [string, string][]
 
-  // Outcome is deliberately absent here: it renders as the results strip,
-  // ahead of the lead, so the payoff comes before the story.
+  // Outcome usually renders as the results strip, ahead of the lead, so the
+  // payoff comes before the story. A doc that leads with its description
+  // closes its brief on the outcome instead, unless it has figures.
+  const outcomeInBrief = m.leadFirst && !m.results?.length
   const brief = [
     ["Problem", m.problem],
     ["Solution", m.solution],
     ["Task", m.task],
     ["Process", m.process],
+    ["Outcome", outcomeInBrief ? m.outcome : undefined],
   ].filter(([, value]) => Boolean(value)) as [string, string][]
 
   // Prefer the authored figures. Docs without a `results` block still promote
@@ -348,7 +351,7 @@ export async function DocPage({
           </div>
         )}
 
-        {m.leadFirst && summary}
+        {m.leadFirst && !outcomeInBrief && summary}
 
         <div>
           <MDX code={doc.content} components={DOC_COMPONENTS} />
