@@ -59,6 +59,7 @@
   --color-sticker-edge: var(--sticker-edge);
   --color-sticker-ink: var(--sticker-ink);
   --color-sticker-shadow: var(--sticker-shadow);
+  --color-particle-shadow: var(--particle-shadow);
   --color-surface-warm: var(--surface-warm);
   --color-surface-foreground: var(--surface-foreground);
   --color-code: var(--code);
@@ -1072,6 +1073,9 @@
   --sticker-edge: var(--color-white);
   --sticker-ink: var(--color-neutral-900);
   --sticker-shadow: color-mix(in oklch, var(--color-black) 30%, transparent);
+  /* Reactions' flying emoji cast a soft shadow so they read over any page,
+     the same in both themes, as the sticker's does. */
+  --particle-shadow: color-mix(in oklch, var(--color-black) 18%, transparent);
 }
 
 /* The scrim behind fibo's dialogs darkens further in dark mode, where a light

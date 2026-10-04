@@ -6,6 +6,7 @@ import { cva } from "class-variance-authority"
 import { SnailIcon } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
 
+import { mergeRefs } from "@/lib/merge-refs"
 import { cn } from "@/lib/utils"
 
 type IntegrationItem = {
@@ -311,11 +312,14 @@ function IntegrationVisual({
   label = "Integrations",
   centerLabel,
   className,
+  ref,
   ...props
 }: IntegrationVisualProps) {
   const reduceMotion = useReducedMotion()
   const plateId = React.useId()
   const plate = React.useRef<HTMLDivElement>(null)
+  // A caller's ref would otherwise replace the one that pauses it off screen.
+  const plateRef = React.useMemo(() => mergeRefs(plate, ref), [ref])
   const animate = useInView(plate) && !reduceMotion
 
   const shown = items.slice(0, MAX_ITEMS[layout])
@@ -352,7 +356,7 @@ function IntegrationVisual({
 
   return (
     <div
-      ref={plate}
+      ref={plateRef}
       data-slot="integration-visual"
       data-layout={layout}
       role="group"

@@ -457,7 +457,14 @@ changes; each part subscribes to what it shows, so ticking a row re-renders
 that row and the toolbar, not the table. To read state there, pass a
 selector, `useDataTable(options, (state) => state.rowSelection)`, and read
 `table.state`, or use `table.Subscribe`. Act on the selection with
-`table.getSelectedRowIds()` and `table.resetRowSelection()`.
+`table.getSelectedRowIds()` and `table.resetRowSelection()`. The selection
+holds every selected row still in the data: ids a refetch drops leave it,
+but rows a search or filter hides stay selected, and the toolbar, the
+announcement and DataTableSelectionCount say how many, as in “5 members
+selected, 2 hidden by filters”. Bulk actions act on all of them, hidden
+ones included. The header checkbox speaks for the page; Select all matching
+adds every row the filters let through and keeps the hidden ones; Clear and
+Escape clear everything.
 
 ## Migrating to the table API
 
