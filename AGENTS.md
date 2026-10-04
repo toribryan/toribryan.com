@@ -41,8 +41,10 @@ src/components/fibo`); re-run that to update one, and check its imports still
 point at `@/components/fibo/`; the install also drops a stray `utils.ts`
 and a `cn` package, and writes dark values for fibo's extra roles into
 `globals.css` that this site mixes itself, so revert those, but keep `--warning` and the three `--sticker-*` tokens
-(edge, ink and shadow) that Sticker avatar needs, which this site declares itself. Three parts carry
-local changes. `chapter-scrubber.tsx` keeps `preview="none"`,
+(edge, ink and shadow) that Sticker avatar needs and the `--particle-shadow` that
+Reactions' flying emoji use, which this site declares itself. `src/lib/merge-refs.ts` is fibo's `mergeRefs`,
+which Pixel snail, Integration visual and Token flow import as
+`@/lib/merge-refs`. Three parts carry local changes. `chapter-scrubber.tsx` keeps `preview="none"`,
 which fibo dropped, for a rail with no preview at all; the home page cover
 and its doc use it. `command-menu.tsx` shows its preview pane by the dialog's own width
 (`@xl/command-menu`) rather than the viewport's, so the pane stays in the
