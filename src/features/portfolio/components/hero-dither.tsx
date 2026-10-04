@@ -7,11 +7,11 @@ import { ditherField } from "@/lib/pixel/pixel-fx"
 import { cn } from "@/lib/utils"
 
 /*
- * The profile header's fibo dither: a bunny in earbuds under a bank of
- * clouds, built from paper on load, then idling with a few cells blinking.
- * A window of the photo sits still over his face and ears, and a press
- * ripples the cells. The cell data and photo come from pixel-studio's `poster --field` export;
- * regenerate them there rather than editing the JSON.
+ * The profile header's fibo dither: a bunny in earbuds, built from paper on
+ * load, under a bank of clouds that drift past on a loop, dithered live. A
+ * window of the photo sits still over his face and ears, and a press ripples
+ * the cells. scripts/header-field.py builds the cell data, cloud map and
+ * photo; regenerate them there rather than editing the JSON.
  */
 
 const FIELD = "/images/header/bunny-field.json"
