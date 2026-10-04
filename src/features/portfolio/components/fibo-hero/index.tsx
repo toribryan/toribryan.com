@@ -78,7 +78,7 @@ const WIDE: Geometry = {
     "M105.1 -170.853L464.633 411.625",
     "M-267.831 375.247L600.141 -159.777",
   ],
-  lines: ["M260 0.5V80", "M339.5 80.5H210", "M210 210V0.5"],
+  lines: ["M260 0.5V80", "M339.5 80.5H210", "M210 210V0.5", "M250 50.5V60.5"],
   rects: [
     { x: 210, y: 50.5, width: 30, height: 30 },
     { x: 240, y: 60.5, width: 20, height: 20 },
@@ -119,6 +119,7 @@ const TALL: Geometry = {
     "M0 210L209.5 210",
     "M160 240L130.133 240",
     "M149.5 240L149.5 260",
+    "M149.5 250L159.5 250",
   ],
   rects: [
     {
@@ -950,7 +951,8 @@ export function FiboHero({
   return (
     <section
       ref={area}
-      data-intro={seen ? "play" : "wait"}
+      // On the home page it's there from the start; fibo's own page fades in.
+      data-intro={variant === "section" ? "still" : seen ? "play" : "wait"}
       id="fibo"
       aria-label="fibo"
       className="screen-line-top screen-line-bottom relative border-x border-line"

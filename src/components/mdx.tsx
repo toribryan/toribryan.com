@@ -24,6 +24,7 @@ import { mdxCodeBlockComponents } from "./mdx-code-block"
 import { Compare } from "./mdx-compare"
 import { Embed } from "./mdx-embed"
 import { Figure } from "./mdx-figure"
+import { FiboSkillsTree, SkillsRepoTree } from "./mdx-file-tree"
 import { ImageCycle } from "./mdx-image-cycle"
 import { ImagePan } from "./mdx-image-pan"
 import { InboxRegions } from "./mdx-inbox-regions"
@@ -45,10 +46,10 @@ import {
   TokenTiers,
   TwoJobs,
 } from "./mdx-review-artifacts"
-import { SkillCommandsVisual } from "./mdx-skill-commands"
 import { StepTransition } from "./mdx-step-transition"
 import { StoryEmbed } from "./mdx-story-embed"
 import { Tech } from "./mdx-tech"
+import { TimeSavedChart } from "./mdx-time-saved"
 import { ToolLabel } from "./mdx-tool-label"
 import { Video } from "./mdx-video"
 import { WhoStepDemo } from "./mdx-who-step-demo"
@@ -91,8 +92,10 @@ const components: MDXRemoteProps["components"] = {
   PageGrid,
   Pipeline,
   PipelineHero,
+  TimeSavedChart,
+  SkillsRepoTree,
+  FiboSkillsTree,
   Stage,
-  SkillCommandsVisual,
   StepTransition,
   SubmissionJourney,
   StoryEmbed,
