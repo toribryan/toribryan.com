@@ -2,7 +2,7 @@
 title: Integration visual
 description: A hub and the tools wired into it, with pulses along the routes.
 createdAt: 2026-09-28
-updatedAt: 2026-09-30
+updatedAt: 2026-10-05
 new: true
 ---
 
@@ -21,7 +21,9 @@ preview on hover.
 npx shadcn@latest add https://fibo.toribryan.com/r/integration-visual.json
 ```
 
-It installs the `motion` package with it, for the pulses and the halo.
+It installs the `motion` package with it, for the pulses and the halo, and
+`lib/merge-refs.ts`, a small helper that lets a `ref` you pass share the
+plate with the one that pauses it off screen.
 
 </ExhibitCode>
 <ExhibitCode label="Usage">
@@ -63,7 +65,7 @@ Each `title` names its tile for screen readers.
 | `label`       | `string`                                       | `"Integrations"` | Accessible name for the diagram.                                                                                                                                                                       |
 | `centerLabel` | `string`                                       |                  | Accessible name for the hub, which becomes a button when there's a preview. Defaults to `center` when that's text, otherwise to `label`.                                                               |
 
-It also takes the props of a `div`, except `children`.
+It also takes the props of a `div`, `ref` included, except `children`.
 
 ```ts
 type IntegrationItem = {
@@ -83,92 +85,7 @@ type IntegrationPreviewMedia = {
 </ExhibitCode>
 </Exhibit>
 
-## Anatomy
-
-A plate of dots, a hub in the middle, and a tile for each tool, joined to the
-hub by a route. Pulses travel along live routes, and a halo breathes out from
-the hub.
-
-<Exhibit
-  of="integration-visual.Anatomy"
-  title="The diagram"
-  description="Four tools in the corners, all live."
->
-<ExhibitCode label="Structure">
-
-```text
-IntegrationVisual        integration-visual
-├─ plate                 dots or grid, decorative
-├─ routes                decorative
-│  ├─ track              one per tool
-│  └─ pulse              one per live tool
-├─ item                  integration-visual-item
-├─ hub                   integration-visual-hub
-│  ├─ face               integration-visual-hub-face
-│  └─ halo               decorative
-└─ preview               integration-visual-preview  (while open)
-```
-
-</ExhibitCode>
-<ExhibitCode label="Data attributes">
-
-<DataAttributes
-  rows={[
-    {
-      attribute: 'data-slot="integration-visual"',
-      element: "The root",
-      when: "Always.",
-    },
-    {
-      attribute: 'data-slot="integration-visual-item"',
-      element: "Each tool tile",
-      when: "Always.",
-    },
-    {
-      attribute: 'data-slot="integration-visual-hub"',
-      element: "The hub, a button when there's a preview",
-      when: "Always.",
-    },
-    {
-      attribute: 'data-slot="integration-visual-hub-face"',
-      element: (
-        <>
-          The face inside the hub that shows <code>center</code>
-        </>
-      ),
-      when: "Always.",
-    },
-    {
-      attribute: 'data-slot="integration-visual-preview"',
-      element: "The preview above the hub",
-      when: "While the preview is open.",
-    },
-    {
-      attribute: "data-layout",
-      element: "The root",
-      when: (
-        <>
-          Always. <code>corners</code>, <code>orbit</code> or <code>sides</code>
-          .
-        </>
-      ),
-    },
-    {
-      attribute: "data-status",
-      element: "Each tool tile",
-      when: (
-        <>
-          Always. <code>active</code>, or <code>idle</code> for idle items.
-        </>
-      ),
-    },
-  ]}
-/>
-
-</ExhibitCode>
-</Exhibit>
-
-## Variants and states
+## Examples
 
 ### Layouts
 
@@ -273,8 +190,9 @@ items={[
 ### Motion
 
 Pulses run along live routes, into the hub by default. The halo is a slow
-ring breathing out from the hub. Either can be turned off, and both stop for
-people who ask for reduced motion.
+ring breathing out from the hub. Either can be turned off, both rest while
+the diagram is off screen, even when you pass your own `ref`, and both stop
+for people who ask for reduced motion.
 
 <ExhibitGrid>
 <Exhibit
@@ -457,18 +375,6 @@ Routes are a solid hairline, or dashed for a lighter touch.
 </Exhibit>
 </ExhibitGrid>
 
-## Usage
-
-<UsageGuidelines
-  guidelines={[
-    "Choose the layout by count: corners for up to four tools, orbit for five to eight, and sides when data flows in one side and out the other.",
-    "Show tools that aren't connected yet as idle rather than leaving them out.",
-    "Match the pulse to the story: inward for sources feeding the hub, outward for the hub sending to them, through for a pipeline.",
-    "Name the hub with the product's mark, a count or a single word.",
-    "Put it at the top of a card and let the card's text make the claim.",
-  ]}
-/>
-
 ### In a card
 
 A count in the hub and the claim in the card text below it.
@@ -515,6 +421,103 @@ of thing into another.
 
 </ExhibitCode>
 </Exhibit>
+
+## Anatomy
+
+A plate of dots, a hub in the middle, and a tile for each tool, joined to the
+hub by a route. Pulses travel along live routes, and a halo breathes out from
+the hub.
+
+<Exhibit
+  of="integration-visual.Anatomy"
+  title="The diagram"
+  description="Four tools in the corners, all live."
+>
+<ExhibitCode label="Structure">
+
+```text
+IntegrationVisual        integration-visual
+├─ plate                 dots or grid, decorative
+├─ routes                decorative
+│  ├─ track              one per tool
+│  └─ pulse              one per live tool
+├─ item                  integration-visual-item
+├─ hub                   integration-visual-hub
+│  ├─ face               integration-visual-hub-face
+│  └─ halo               decorative
+└─ preview               integration-visual-preview  (while open)
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="integration-visual"',
+      element: "The root",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="integration-visual-item"',
+      element: "Each tool tile",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="integration-visual-hub"',
+      element: "The hub, a button when there's a preview",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="integration-visual-hub-face"',
+      element: (
+        <>
+          The face inside the hub that shows <code>center</code>
+        </>
+      ),
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="integration-visual-preview"',
+      element: "The preview above the hub",
+      when: "While the preview is open.",
+    },
+    {
+      attribute: "data-layout",
+      element: "The root",
+      when: (
+        <>
+          Always. <code>corners</code>, <code>orbit</code> or <code>sides</code>
+          .
+        </>
+      ),
+    },
+    {
+      attribute: "data-status",
+      element: "Each tool tile",
+      when: (
+        <>
+          Always. <code>active</code>, or <code>idle</code> for idle items.
+        </>
+      ),
+    },
+  ]}
+/>
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Choose the layout by count: corners for up to four tools, orbit for five to eight, and sides when data flows in one side and out the other.",
+    "Show tools that aren't connected yet as idle rather than leaving them out.",
+    "Match the pulse to the story: inward for sources feeding the hub, outward for the hub sending to them, through for a pipeline.",
+    "Name the hub with the product's mark, a count or a single word.",
+    "Put it at the top of a card and let the card's text make the claim.",
+  ]}
+/>
 
 ## Best practices
 
@@ -573,7 +576,7 @@ keyboard is the hub, and only when it has a preview.
     "A screen reader hears one named group, Integrations unless you name it for what it shows, then each tool by its name, with idle added for idle ones.",
     "The plate, routes, pulses and halo are decoration and are hidden from assistive technology.",
     "With a preview, the hub is a button named after the text in the hub, or the diagram's name. Focusing it opens the preview the same way hovering does, the preview describes it, and Escape closes it.",
-    "For people who ask for reduced motion, the pulses and halo stop, tiles appear without springing in, the preview fades in place, and a preview video waits on its first frame.",
+    "For people who ask for reduced motion, the pulses and halo stop, tiles appear without springing in, the preview fades in place, and a preview video waits on its first frame, or pauses if reduced motion is turned on while it plays.",
     "If the diagram only decorates a card whose text says the same thing, a screen reader still reads the tool names. Give it a name that adds to the card rather than repeats it.",
   ]}
 />
