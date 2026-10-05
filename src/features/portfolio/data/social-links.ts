@@ -36,6 +36,12 @@ export const SOCIAL = {
   },
 } satisfies Record<string, SocialProfile>
 
+/**
+ * Discord has no profile page to link by username, so the header offers it as
+ * a username to copy rather than a link.
+ */
+export const DISCORD_HANDLE = "vambooster"
+
 export type SocialName = keyof typeof SOCIAL
 
 export type SocialLink = SocialProfile & { name: SocialName }
