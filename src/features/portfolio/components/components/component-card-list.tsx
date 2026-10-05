@@ -102,19 +102,12 @@ function CardGrid({
   details?: boolean
 }) {
   // Blank cells finish the last row, so the grid's line color doesn't show
-  // through as a block where cards run out: two across, and on the home page
-  // three from md up. The catalog stays two across for its descriptions.
-  const wide = !details
+  // through as a block where cards run out: two across, three from md up.
   const fillers = (columns: number) =>
     (columns - (parts.length % columns)) % columns
-  const blanks = wide ? Math.max(fillers(2), fillers(3)) : fillers(2)
+  const blanks = Math.max(fillers(2), fillers(3))
   return (
-    <ul
-      className={cn(
-        "grid grid-cols-2 gap-px bg-line",
-        wide && "md:grid-cols-3"
-      )}
-    >
+    <ul className="grid grid-cols-2 gap-px bg-line md:grid-cols-3">
       {parts.map((part) => (
         <li key={part.name} className="bg-background">
           <ComponentCard part={part} details={details} />
@@ -126,8 +119,8 @@ function CardGrid({
           aria-hidden
           className={cn(
             "bg-background",
-            wide && index >= fillers(2) && "max-md:hidden",
-            wide && index >= fillers(3) && "md:hidden"
+            index >= fillers(2) && "max-md:hidden",
+            index >= fillers(3) && "md:hidden"
           )}
         />
       ))}
