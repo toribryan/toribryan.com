@@ -77,6 +77,13 @@ export const NICHE_PARTS: NichePart[] = [
     home: false,
   },
   {
+    name: "date-picker",
+    title: "Date picker",
+    description:
+      "A field that opens a calendar to pick a day, or a range with presets and Apply; a popover on desktop, a drawer on phones.",
+    home: false,
+  },
+  {
     name: "empty-state",
     figma: "710-144",
     title: "Empty state",

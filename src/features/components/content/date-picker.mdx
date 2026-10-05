@@ -1,0 +1,553 @@
+---
+title: Date picker
+description: A field that opens a calendar to pick a day, or a range with presets and Apply; a popover on desktop, a drawer on phones.
+createdAt: 2026-10-05
+updatedAt: 2026-10-05
+new: true
+---
+
+A field that opens a calendar. `DatePicker` picks one day and closes;
+`DateRangePicker` picks a start and an end, with presets, and applies them
+together. On a phone both open as a drawer from the bottom.
+
+<Exhibit
+  of="date-picker.Default"
+  title="Date picker"
+  description="Open it and pick a day. The panel closes on the pick, and the arrow keys move through the month."
+>
+<ExhibitCode label="Install">
+
+```bash
+npx shadcn@latest add https://fibo.toribryan.com/r/date-picker.json
+```
+
+It installs fibo's Calendar, Button and Sheet with it, and `lib/dates.ts`.
+
+</ExhibitCode>
+<ExhibitCode label="Usage">
+
+```tsx
+import { DateRangePicker, type DateRange } from "@/components/ui/date-picker"
+
+export function ReportPeriod() {
+  const [range, setRange] = useState<DateRange | null>(null)
+  return (
+    <DateRangePicker
+      label="Report period"
+      value={range}
+      onChange={setRange}
+      maxDate={new Date()}
+    />
+  )
+}
+```
+
+Give each picker a `label` that says what the dates are for. It names the
+trigger and the panel, and the trigger reads it with the value.
+
+</ExhibitCode>
+<ExhibitCode label="Props">
+
+Both pickers take:
+
+| Prop             | Type                              | Default   | Description                                                                               |
+| ---------------- | --------------------------------- | --------- | ----------------------------------------------------------------------------------------- |
+| `label`          | `string`                          |           | Names the panel and titles the drawer; names the trigger too unless a FieldLabel does.    |
+| `placeholder`    | `string`                          |           | Shown in the trigger while nothing is picked.                                             |
+| `type`           | `"auto" \| "popover" \| "drawer"` | `"auto"`  | A drawer below the sm breakpoint on `auto`; `popover` or `drawer` on every screen.        |
+| `size`           | `"sm" \| "default"`               |           | Matches Input at 36 pixels tall, or 32 for dense forms.                                   |
+| `minDate`        | `Date \| null`                    |           | The earliest day that can be picked.                                                      |
+| `maxDate`        | `Date \| null`                    |           | The latest day that can be picked.                                                        |
+| `isDateDisabled` | `(date: Date) => boolean`         |           | Return true for a day that can't be picked, such as a weekend.                            |
+| `weekStartsOn`   | `0 \| 1`                          | `0`       | The first column of the calendar: 0 for Sunday, 1 for Monday.                             |
+| `locale`         | `string`                          | `"en-US"` | A BCP 47 locale for the calendar and the formatted value.                                 |
+| `open`           | `boolean`                         |           | Whether the panel is open, when you control it.                                           |
+| `defaultOpen`    | `boolean`                         | `false`   | Opens the panel on first render, when the picker keeps its own state.                     |
+| `onOpenChange`   | `(open: boolean) => void`         |           | Called when the panel opens or closes.                                                    |
+| `container`      | `HTMLElement`                     | body      | The element the panel portals into.                                                       |
+| `modal`          | `boolean`                         | `true`    | Traps focus, blocks the page and moves focus to the calendar. Turn off to show it inline. |
+
+`DatePicker` adds:
+
+| Prop           | Type                   | Default | Description                                      |
+| -------------- | ---------------------- | ------- | ------------------------------------------------ |
+| `value`        | `Date \| null`         |         | The picked day, when you control it.             |
+| `defaultValue` | `Date \| null`         | `null`  | The picked day at first.                         |
+| `onChange`     | `(date: Date) => void` |         | Called with the day as soon as it's picked.      |
+| `presets`      | `DatePreset[]`         | `[]`    | Shortcuts beside the calendar, such as Tomorrow. |
+
+`DateRangePicker` adds:
+
+| Prop           | Type                         | Default                   | Description                                                           |
+| -------------- | ---------------------------- | ------------------------- | --------------------------------------------------------------------- |
+| `value`        | `DateRange \| null`          |                           | The applied range, when you control it.                               |
+| `defaultValue` | `DateRange \| null`          | `null`                    | The applied range at first.                                           |
+| `onChange`     | `(range: DateRange) => void` |                           | Called with the range when Apply is pressed.                          |
+| `presets`      | `DateRangePreset[]`          | `defaultDateRangePresets` | Shortcuts beside the calendar. Pass an empty array to leave them out. |
+| `months`       | `1 \| 2`                     | `2`                       | Months side by side in the popover; one below md. The drawer scrolls. |
+
+Both also take the props of a `button`, for the trigger. Presets are a label
+and a function of today:
+
+```ts
+type DateRangePreset = {
+  label: string
+  range: (today: Date) => { from: Date; to: Date }
+}
+
+type DatePreset = {
+  label: string
+  date: (today: Date) => Date
+}
+```
+
+`defaultDatePresets` and `defaultDateRangePresets` are exported too.
+
+</ExhibitCode>
+</Exhibit>
+
+<Exhibit
+  of="date-picker.Range"
+  title="Date range picker"
+  description="Two picks make a draft, with the range and its length in the footer. Nothing changes until Apply."
+>
+<ExhibitCode>
+
+```tsx
+<DateRangePicker label="Date range" defaultValue={week} />
+```
+
+</ExhibitCode>
+</Exhibit>
+
+## Features
+
+- `DatePicker` picks as soon as a day is chosen. Presets such as Tomorrow are
+  there when you pass them.
+- `DateRangePicker` keeps a draft: two picks, a live preview between them, the
+  range and its length in the footer, then Apply. Cancel and Escape leave the
+  value as it was.
+- Presets are functions of today, so "Last 7 days" stays right tomorrow.
+  They're clamped to `minDate` and `maxDate`, and turned off when none of
+  their range is allowed.
+- Below the `sm` breakpoint the panel is a drawer: presets in a chip row,
+  months in one vertical scroll with 44 pixel days, Apply at the bottom.
+  `type` forces either.
+
+## Examples
+
+### Open
+
+The range panel as it opens on a desktop: presets, two months, and the footer
+with Cancel and Apply. Here `open` holds it open inside a frame given as its
+`container`, and `modal={false}` keeps it from taking focus from the page.
+`defaultOpen` opens it once and lets it close.
+
+<Exhibit
+  of="date-picker.DesktopPanel"
+  title="Open"
+  description="Held open in a frame. Below the md breakpoint the popover shows one month."
+>
+<ExhibitCode>
+
+```tsx
+<DateRangePicker
+  label="Report period"
+  type="popover"
+  open
+  modal={false}
+  container={frame}
+  defaultValue={week}
+/>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Single day
+
+<ExhibitGrid>
+<Exhibit
+  of="date-picker.WithPresets"
+  title="With presets"
+  description="defaultDatePresets in a rail beside the month. A preset picks and closes, like a day does."
+>
+<ExhibitCode>
+
+```tsx
+<DatePicker label="Due date" presets={defaultDatePresets} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="date-picker.MinAndMax"
+  title="Min and max"
+  description="Bounds and a rule for weekends. Days outside them are struck through, and a preset that lands on one is turned off."
+>
+<ExhibitCode>
+
+```tsx
+<DatePicker
+  label="Delivery"
+  presets={weekdays}
+  minDate={new Date(2026, 9, 7)}
+  maxDate={new Date(2026, 9, 30)}
+  isDateDisabled={(date) => date.getDay() === 0 || date.getDay() === 6}
+/>
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="date-picker.Controlled"
+  title="Controlled"
+  description="value and onChange from the parent, which here prints the day."
+>
+<ExhibitCode>
+
+```tsx
+const [date, setDate] = useState<Date | null>(new Date(2026, 9, 14))
+
+<DatePicker label="Due date" value={date} onChange={setDate} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="date-picker.OnAPhone"
+  title="On a phone"
+  description={'type="drawer" shows the phone layout at any width. It opens over the page, and a pick closes it.'}
+>
+<ExhibitCode>
+
+```tsx
+<DatePicker label="Due date" type="drawer" />
+```
+
+</ExhibitCode>
+</Exhibit>
+</ExhibitGrid>
+
+The drawer scrolls through a year either side of the picked day. In a phone's
+frame:
+
+<Exhibit
+  of="date-picker.PhoneDrawer"
+  title="Drawer"
+  description="The handle, the label as its title with Cancel beside it, and the months in one vertical scroll."
+/>
+
+### Range
+
+<ExhibitGrid>
+<Exhibit
+  of="date-picker.RangeControlled"
+  title="Range, controlled"
+  description="The value held by the parent. onChange fires on Apply, never on a half-picked range."
+>
+<ExhibitCode>
+
+```tsx
+const [range, setRange] = useState<DateRange | null>(week)
+
+<DateRangePicker label="Report period" value={range} onChange={setRange} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="date-picker.RangeCustomPresets"
+  title="Range with custom presets"
+  description="presets replaces the rail. Each one gets today and returns a range; this one also starts the week on Monday."
+>
+<ExhibitCode>
+
+```tsx
+<DateRangePicker label="Sprint" presets={sprints} weekStartsOn={1} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="date-picker.RangeOneMonth"
+  title="Range, one month"
+  description="months={1} and no presets, for a narrow column. presets={[]} leaves the rail out."
+>
+<ExhibitCode>
+
+```tsx
+<DateRangePicker label="Stay" presets={[]} months={1} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="date-picker.RangeOnAPhone"
+  title="Range on a phone"
+  description="The drawer, opened over the page."
+>
+<ExhibitCode>
+
+```tsx
+<DateRangePicker label="Date range" type="drawer" />
+```
+
+</ExhibitCode>
+</Exhibit>
+</ExhibitGrid>
+
+The range drawer: a chip row of presets, the weekday header fixed over a
+vertical scroll of months, and the range with Apply at the bottom.
+
+<Exhibit
+  of="date-picker.RangePhoneDrawer"
+  title="Range drawer"
+  description="Pick two days, or a preset from the chip row. The footer counts the days."
+/>
+
+## Which layout appears
+
+| Screen            | DatePicker                                                                                                                   | DateRangePicker                                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| sm and up (640px) | Popover below the trigger: an optional preset rail and one month. A pick closes it.                                          | Popover: preset rail, two months (one below md, 768px), and a footer with the range, its length, Cancel and Apply. |
+| Below sm          | Drawer from the bottom: handle, the label as title with Cancel, chip row, and months in a vertical scroll. A pick closes it. | The same drawer, with a footer of the range, its length and a full-width Apply.                                    |
+
+## Layout and spacing
+
+| Part        | Size                                   | Spacing                                             | Tokens                                                                                     |
+| ----------- | -------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Trigger     | 36px tall, or 32 at sm; hugs its value | 12px sides, 8px between icon, value and chevron     | `input-subtle` fill, `input` border, `radius-sm`; `muted-foreground` placeholder and icons |
+| Popover     | Hugs the calendar and rail             | 12px around the calendar                            | `popover` fill, `border`, `radius-xl`, large shadow                                        |
+| Preset rail | 144px wide; 32px rows                  | 8px padding, 2px between rows                       | Ghost buttons; the active one on `muted`. A `border` rule on its right                     |
+| Day         | 36px circle; 44px in the drawer        | No gap, so the range bar runs on                    | Ends on `primary` with `primary-foreground`; the bar on `muted`; today bold with a dot     |
+| Footer      | Full width                             | 12px sides, 10px top and bottom; 16px in the drawer | `border` rule above; the count in `muted-foreground`                                       |
+| Drawer      | 85% of the screen's height             | 16px sides; 4×40px handle                           | `background` fill, `border` top, `radius-xl` top corners                                   |
+
+## States
+
+<ExhibitGrid>
+  <Exhibit
+    of="date-picker.StateEmpty"
+    title="Empty"
+    description="The placeholder in muted-foreground says what to pick."
+  />
+  <Exhibit
+    of="date-picker.StateFilled"
+    title="Filled"
+    description="The range as the locale writes it, sharing what both ends share."
+  />
+  <Exhibit
+    of="date-picker.StatePicking"
+    title="Picking"
+    description="After the first pick: a solid thumb on the start and nothing else until the pointer moves."
+  />
+  <Exhibit
+    of="date-picker.StatePicked"
+    title="Picked"
+    description="Solid thumbs on both ends and one bar per week between them."
+  />
+  <Exhibit
+    of="date-picker.StateDisabledDays"
+    title="Disabled days"
+    description="Muted, struck through and half opacity. They still take focus."
+  />
+  <Exhibit
+    of="date-picker.StateDisabled"
+    title="Disabled"
+    description="The whole trigger at half opacity; it doesn't open."
+  />
+</ExhibitGrid>
+
+## Anatomy
+
+The trigger is the only element in the page until it opens. The panel is a
+popover from it, or a drawer on a phone, and holds a Calendar.
+
+<Exhibit
+  of="date-picker.DesktopPanel"
+  title="The parts"
+  description="The trigger, and the popover with its preset rail, calendar and footer."
+>
+<ExhibitCode label="Structure">
+
+```text
+DatePicker / DateRangePicker   date-picker / date-range-picker
+├─ value                       date-picker-value
+├─ popup                       date-picker-popup         (sm and up)
+│  ├─ presets                  date-picker-presets       (when there are any)
+│  │  └─ preset                date-picker-preset
+│  ├─ Calendar                 calendar
+│  └─ footer                   date-picker-footer        (range only)
+│     ├─ summary               date-picker-summary
+│     ├─ count                 date-picker-count
+│     ├─ Cancel                date-picker-cancel
+│     └─ Apply                 date-picker-apply
+└─ drawer                      date-picker-drawer        (below sm)
+   ├─ handle                   date-picker-handle
+   ├─ title                    sheet-title               (the label)
+   ├─ Cancel                   date-picker-close
+   ├─ presets                  date-picker-presets       (a chip row)
+   ├─ Calendar                 calendar                  (scroll type, large)
+   └─ footer                   date-picker-footer        (range only)
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="date-picker"',
+      element: "The DatePicker trigger",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="date-range-picker"',
+      element: "The DateRangePicker trigger",
+      when: "Always.",
+    },
+    {
+      attribute: "data-size",
+      element: "The trigger",
+      when: (
+        <>
+          Always. <code>sm</code> or <code>default</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-placeholder",
+      element: "The trigger",
+      when: "Nothing is picked yet.",
+    },
+    {
+      attribute: "data-popup-open",
+      element: "The trigger",
+      when: "The panel is open.",
+    },
+    {
+      attribute: 'data-slot="date-picker-popup"',
+      element: "The popover",
+      when: "Open, at the sm breakpoint and up.",
+    },
+    {
+      attribute: 'data-slot="date-picker-drawer"',
+      element: "The drawer",
+      when: "Open, below the sm breakpoint.",
+    },
+    {
+      attribute: 'data-slot="date-picker-value"',
+      element: "The value or placeholder in the trigger",
+      when: "Always. With a FieldLabel, it's the second half of the trigger's name.",
+    },
+    {
+      attribute: 'data-slot="date-picker-presets"',
+      element: "The preset rail, or the chip row in the drawer",
+      when: "Open, when there are presets.",
+    },
+    {
+      attribute: 'data-slot="date-picker-handle"',
+      element: "The drawer's grab handle",
+      when: "Open as a drawer.",
+    },
+    {
+      attribute: 'data-slot="date-picker-close"',
+      element: "The drawer's Cancel button",
+      when: "Open as a drawer.",
+    },
+    {
+      attribute: 'data-slot="date-picker-footer"',
+      element: "The row with the range and Apply",
+      when: "DateRangePicker, open.",
+    },
+    {
+      attribute: 'data-slot="date-picker-summary"',
+      element: "The range, or what to pick next",
+      when: "DateRangePicker, open.",
+    },
+    {
+      attribute: 'data-slot="date-picker-count"',
+      element: "The range's length in days",
+      when: "DateRangePicker, open, once both ends are picked.",
+    },
+    {
+      attribute: 'data-slot="date-picker-cancel"',
+      element: "Cancel in the popover footer",
+      when: "DateRangePicker, open as a popover.",
+    },
+    {
+      attribute: 'data-slot="date-picker-apply"',
+      element: "Apply",
+      when: "DateRangePicker, open.",
+    },
+    {
+      attribute: 'data-slot="date-picker-preset"',
+      element: "A preset",
+      when: (
+        <>
+          One per preset; <code>aria-pressed</code> when the draft matches it.
+        </>
+      ),
+    },
+  ]}
+/>
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Use DatePicker for one day, such as a due date, and DateRangePicker for a span, such as a report period or a stay. Don't use two DatePickers for a range.",
+    "Offer presets for the ranges people pick most. The defaults suit reports; a booking flow wants This weekend or Next week.",
+    "Bound the calendar to what's allowed rather than validating after Apply.",
+    <>
+      Leave <code>type</code> on <code>auto</code> in products. Force{" "}
+      <code>drawer</code> or <code>popover</code> only to show or test one.
+    </>,
+  ]}
+/>
+
+## Best practices
+
+<ComponentRules
+  rules={[
+    {
+      positive: {
+        component: <Live of="date-picker.DoOneRange" />,
+        description: "Use one range picker for a span of dates.",
+      },
+      negative: {
+        component: <Live of="date-picker.DontTwoPickers" />,
+        description:
+          "Don't split it into two pickers. Nothing stops the end coming before the start, and nobody sees the range.",
+      },
+    },
+  ]}
+/>
+
+## Accessibility
+
+<UsageGuidelines
+  guidelines={[
+    "The trigger is a button named by the label and the value, such as Date range: Oct 5 – 11, 2026. Inside a Field, the FieldLabel and the value name it instead, and clicking the label focuses it. The panel is a dialog named by the label, which the drawer also shows as its title.",
+    "Opening moves focus to the picked day, or today, so the arrows work at once. Escape closes and returns focus to the trigger.",
+    "The calendar's grid keyboard model applies inside; see Calendar.",
+    "Presets are toggle buttons: the one matching the draft is aria-pressed.",
+    "Apply stays disabled until both ends are picked, and the footer says what's missing.",
+    "Day cells in the drawer are 44 pixels, above the minimum touch target.",
+  ]}
+/>
+
+## Related components
+
+<RelatedComponents names={["Calendar", "Sheet", "Field"]} />
+
+## References
+
+- [WAI-ARIA date picker dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)
+- [Base UI Popover](https://base-ui.com/react/components/popover) and
+  [Drawer](https://base-ui.com/react/components/drawer)
+- [`Intl.DateTimeFormat.prototype.formatRange`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/formatRange)
