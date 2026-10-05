@@ -47,6 +47,7 @@ export function TOCScrubber({
       chapters={chapters}
       orientation="vertical"
       side="left"
+      size="lg"
       preview="label"
       label="On this page"
       currentIndex={current}
