@@ -13,6 +13,9 @@ export type CatalogPart = {
   status?: "new" | "beta" | "deprecated"
 }
 
+// fibo parts this site leaves off its list.
+const HIDDEN = new Set(["pixel-snail", "map-pin"])
+
 /**
  * Every fibo part, from a copy of fibo's components.meta.json that
  * `npm run sync:fibo-catalog` refreshes. It is the same file fibo's own
@@ -29,32 +32,34 @@ export const CATALOG: CatalogPart[] = Object.entries(
       status?: string
     }
   >
-).map(([name, part]) => ({
-  name,
-  title: part.title,
-  description: part.description,
-  shelf: part.tier as CatalogShelf,
-  group: part.group,
-  status: part.status as CatalogPart["status"],
-}))
+)
+  .filter(([name]) => !HIDDEN.has(name))
+  .map(([name, part]) => ({
+    name,
+    title: part.title,
+    description: part.description,
+    shelf: part.tier as CatalogShelf,
+    group: part.group,
+    status: part.status as CatalogPart["status"],
+  }))
 
-/** fibo's two shelves, in the order its Catalog shows them. */
+/** fibo's two shelves, special first. */
 export const SHELVES: {
   id: CatalogShelf
   title: string
   description: string
 }[] = [
   {
-    id: "base-components",
-    title: "Base components",
-    description:
-      "The parts most interfaces need. They depend on nothing beyond Base UI, class-variance-authority and lucide-react.",
-  },
-  {
     id: "special-components",
     title: "Special components",
     description:
       "Playful parts built for one kind of moment, such as a diagram, a reading rail or a reaction. Some use the motion library, which installs along with them.",
+  },
+  {
+    id: "base-components",
+    title: "Base components",
+    description:
+      "The parts most interfaces need. They depend on nothing beyond Base UI, class-variance-authority and lucide-react.",
   },
 ]
 

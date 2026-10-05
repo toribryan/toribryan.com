@@ -34,12 +34,10 @@ const LEAD: Record<string, string> = {
   "chapter-scrubber": "Default",
   "command-menu": "Default",
   reactions: "InMessage",
-  "pixel-snail": "Default",
   "integration-visual": "Default",
   "token-flow": "WithUse",
   "floating-nav": "Default",
   "sticker-avatar": "Default",
-  "map-pin": "Default",
   "typing-indicator": "InAConversation",
   "status-dot": "Default",
   "input-group": "Default",
@@ -54,7 +52,6 @@ const LEAD: Record<string, string> = {
 const ON_21ST = new Set([
   "filter-menu",
   "reactions",
-  "pixel-snail",
   "integration-visual",
   "token-flow",
 ])

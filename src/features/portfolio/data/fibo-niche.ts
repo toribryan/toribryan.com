@@ -122,14 +122,6 @@ export const NICHE_PARTS: NichePart[] = [
     home: false,
   },
   {
-    name: "map-pin",
-    figma: "601-75",
-    title: "Map pin",
-    description:
-      "A dot, icon or labeled pill for a point on a map, with a preview card that springs open on click or tap.",
-    home: false,
-  },
-  {
     name: "reactions",
     figma: "169-18",
     title: "Reactions",
@@ -141,13 +133,6 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Sticker avatar",
     description:
       "An avatar cut out like a die-cut sticker, with a paper edge that follows its shape and a status told by shape.",
-  },
-  {
-    name: "pixel-snail",
-    title: "Pixel snail",
-    description:
-      "A one-color pixel snail that crawls on a loop while something loads.",
-    home: false,
   },
   {
     name: "command-menu",

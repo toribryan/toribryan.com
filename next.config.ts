@@ -131,8 +131,13 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/components/map-marker/:path*",
-        destination: "/components/map-pin/:path*",
+        source: "/components/:slug(map-marker|map-pin|pixel-snail)/:path*",
+        destination: "/components",
+        permanent: true,
+      },
+      {
+        source: "/components/:slug(map-marker|map-pin|pixel-snail)",
+        destination: "/components",
         permanent: true,
       },
       {
