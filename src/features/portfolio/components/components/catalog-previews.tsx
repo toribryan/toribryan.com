@@ -19,7 +19,9 @@ import { Skeleton } from "@/components/fibo/skeleton"
 /**
  * Still previews for the fibo parts with no page or cover on this site,
  * ported from the cards on fibo's Catalog page. Labels, Textareas and
- * Spinners aren't installed here, so theirs are drawn.
+ * Spinners aren't installed here, so theirs are drawn. The skeleton's own
+ * muted fill matches this site's cover plate, so its preview uses the border
+ * color to show its shapes.
  */
 export const PREVIEWS: Record<string, ReactNode> = {
   button: (
@@ -121,7 +123,7 @@ export const PREVIEWS: Record<string, ReactNode> = {
   ),
   count: (
     <span className="flex items-center gap-3 text-sm font-medium">
-      <span className="rounded-full bg-secondary px-2 py-0.5">99+</span>
+      <span className="rounded-full border border-border px-2 py-0.5">99+</span>
       <span className="text-muted-foreground">1.2K</span>
       <span>+4</span>
     </span>
@@ -216,11 +218,11 @@ export const PREVIEWS: Record<string, ReactNode> = {
     </div>
   ),
   skeleton: (
-    <div className="flex items-center gap-3">
-      <Skeleton className="size-10 rounded-full" />
+    <div className="flex items-center gap-3 rounded-lg border border-border bg-background p-3">
+      <Skeleton className="size-10 rounded-full bg-border" />
       <div className="flex flex-col gap-2">
-        <Skeleton className="h-3.5 w-32" />
-        <Skeleton className="h-3 w-20" />
+        <Skeleton className="h-3.5 w-32 bg-border" />
+        <Skeleton className="h-3 w-20 bg-border" />
       </div>
     </div>
   ),

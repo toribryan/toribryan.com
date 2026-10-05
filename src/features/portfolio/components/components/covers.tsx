@@ -170,7 +170,7 @@ function TokenFlowCover({ active }: CoverProps) {
   const other = resolvedTheme === "dark" ? "light" : "dark"
 
   return (
-    <ScaledStage width={narrow ? 320 : 600}>
+    <ScaledStage width={narrow ? 320 : 520}>
       <TokenFlow
         rows={narrow ? TOKEN_ROWS.slice(0, 1) : TOKEN_ROWS}
         theme={flipped ? other : undefined}
@@ -279,12 +279,7 @@ function ReactionsCover({ active }: CoverProps) {
   }, [active])
 
   return (
-    // Two cards across a phone leave too little room for the pills on one
-    // row, so they're zoomed down there rather than wrapping against the edge.
-    <div
-      ref={root}
-      className="flex size-full items-center justify-center p-2 max-sm:[zoom:0.8]"
-    >
+    <div ref={root} className="flex size-full items-center justify-center">
       <Reactions defaultReactions={SEEDED} />
     </div>
   )
@@ -340,6 +335,8 @@ const FIELDS: FilterField[] = [
   },
 ]
 
+const FILTERED: FilterValue = { priority: ["urgent"] }
+
 function typeInto(input: HTMLInputElement, text: string) {
   Object.getOwnPropertyDescriptor(
     HTMLInputElement.prototype,
@@ -350,16 +347,17 @@ function typeInto(input: HTMLInputElement, text: string) {
 
 /**
  * The menu with its Search filters button, run the way a person would: it
- * opens, slides over to search, "urg" is typed, Enter picks Urgent and a chip
- * appears beside the trigger. Then it closes, clears and starts again. The
- * popup renders inside the cover rather than at the end of the page.
+ * clears, opens, slides over to search, "urg" is typed, Enter picks Urgent
+ * and a chip appears beside the trigger. Then it closes and starts again. At
+ * rest it holds the Urgent chip. The popup renders inside the cover rather
+ * than at the end of the page.
  */
 function FilterMenuCover({ active }: CoverProps) {
   const [stage, setStage] = useState<HTMLDivElement | null>(null)
   // The popup's own layer over the row, so its portal never takes a place
   // in the row and nudges the chips.
   const [layer, setLayer] = useState<HTMLDivElement | null>(null)
-  const [value, setValue] = useState<FilterValue>({})
+  const [value, setValue] = useState<FilterValue>(FILTERED)
   const labelOf = (fieldId: string, optionValue: string) =>
     FIELDS.find((f) => f.id === fieldId)?.options.find(
       (o) => o.value === optionValue
@@ -377,6 +375,7 @@ function FilterMenuCover({ active }: CoverProps) {
     const run = () => {
       // Every timer from the last run has fired by now.
       timers.length = 0
+      setValue({})
       at(700, () => trigger()?.click())
       at(1600, () =>
         stage
@@ -395,7 +394,6 @@ function FilterMenuCover({ active }: CoverProps) {
         )
       )
       at(4200, () => trigger()?.click())
-      at(6000, () => setValue({}))
       timers.push(window.setTimeout(run, 6600))
     }
     run()
@@ -404,7 +402,7 @@ function FilterMenuCover({ active }: CoverProps) {
       timers.forEach((id) => window.clearTimeout(id))
       if (stage.querySelector("[data-slot=filter-menu]"))
         uninerted(stage, () => trigger()?.click())
-      setValue({})
+      setValue(FILTERED)
     }
   }, [active, stage])
 
@@ -492,23 +490,25 @@ function CommandMenuCover({ active }: CoverProps) {
 
   return (
     <ScaledStage width={640}>
-      <div ref={setStage} className="relative h-full">
-        {/* The trigger sits on the page; the dialog opens into the layer. */}
-        <div className="p-6">
-          {layer && (
-            <CommandMenu
-              groups={GROUPS}
-              open
-              modal={false}
-              hotkey={null}
-              container={layer}
-              // The dialog grows to make room for the pane, which shows once
-              // the dialog is wide enough for it and then fades in from the
-              // side it opens on.
-              popupClassName="top-14 h-[340px] w-[440px] max-w-none transition-[width] duration-300 ease-out data-preview:w-[600px] data-preview:max-w-none [&_[data-slot=command-menu-preview]]:animate-in [&_[data-slot=command-menu-preview]]:duration-300 [&_[data-slot=command-menu-preview]]:fade-in-0 [&_[data-slot=command-menu-preview]]:slide-in-from-right-2"
-            />
-          )}
-        </div>
+      {/* The dialog opens into the layer, without the page's scrim. */}
+      <div
+        ref={setStage}
+        className="relative h-full [&_[data-slot=command-menu-backdrop]]:hidden"
+      >
+        {layer && (
+          <CommandMenu
+            groups={GROUPS}
+            open
+            modal={false}
+            hotkey={null}
+            trigger={null}
+            container={layer}
+            // The dialog grows to make room for the pane, which shows once
+            // the dialog is wide enough for it and then fades in from the
+            // side it opens on.
+            popupClassName="top-10 h-[340px] w-[440px] max-w-none transition-[width] duration-300 ease-out data-preview:w-[600px] data-preview:max-w-none [&_[data-slot=command-menu-preview]]:animate-in [&_[data-slot=command-menu-preview]]:duration-300 [&_[data-slot=command-menu-preview]]:fade-in-0 [&_[data-slot=command-menu-preview]]:slide-in-from-right-2"
+          />
+        )}
         <div ref={setLayer} className="absolute inset-0" />
       </div>
     </ScaledStage>
@@ -522,10 +522,7 @@ const NAV_ITEMS: FloatingNavItem[] = [
   { value: "profile", label: "Profile", icon: <UserIcon /> },
 ]
 
-/**
- * Steps the current item along the bar while active, so the pill slides.
- * Scaled down so the bar fits with its widest label, Profile, open.
- */
+/** Steps the current item along the bar while active, so the pill slides. */
 function FloatingNavCover({ active }: CoverProps) {
   const [current, setCurrent] = useState(0)
 
@@ -541,7 +538,7 @@ function FloatingNavCover({ active }: CoverProps) {
   }, [active])
 
   return (
-    <div className="flex size-full [zoom:0.85] items-center justify-center p-2 max-sm:[zoom:0.7]">
+    <div className="flex size-full items-center justify-center">
       <FloatingNav
         aria-label="Floating nav"
         position="static"
@@ -646,8 +643,8 @@ function DataTableCover({ active }: CoverProps) {
   return (
     <ScaledStage width={375}>
       {/* Top-aligned, so the toolbar where the selection shows stays in view
-          and the cards run off the bottom like a phone screen. */}
-      <div className="px-5 pt-5">
+          and the cards run off the bottom like a phone screen, fading out. */}
+      <div className="h-full mask-b-from-60% px-5 pt-5">
         {/* White in the light theme rather than the site's warm page color;
             the dark theme keeps its own background. Also eases the checkbox
             and card colors, and fades the toolbar's contents in as it swaps
@@ -715,7 +712,7 @@ const TYPING_STEPS = [1, 2, 3, 4]
 function TypingIndicatorCover({ active }: CoverProps) {
   const step = useCycle(TYPING_STEPS.length, 1400, active)
   return (
-    <div className="flex size-full items-center justify-center p-2 max-sm:[zoom:0.8] sm:[zoom:1.15]">
+    <div className="flex size-full items-center justify-center">
       <TypingIndicator
         people={TYPISTS.slice(0, active ? TYPING_STEPS[step] : 2)}
         className={cn(
@@ -737,7 +734,7 @@ const MEMBERS = ["AR", "BK", "CY"]
 function StatusDotCover({ active }: CoverProps) {
   const step = useCycle(PRESENCE.length, 1200, active)
   return (
-    <div className="flex size-full items-center justify-center gap-4 max-sm:[zoom:0.8] sm:[zoom:1.3]">
+    <div className="flex size-full items-center justify-center gap-4">
       {MEMBERS.map((initials, i) => (
         <Avatar key={initials} size="lg">
           <AvatarFallback>{initials}</AvatarFallback>
@@ -783,7 +780,7 @@ function EmptyStateCover({ active }: CoverProps) {
   const step = useCycle(EMPTY_STATES.length, 1800, active)
   const state = EMPTY_STATES[active ? step : 0]!
   return (
-    <div className="flex size-full items-center justify-center p-2 max-sm:[zoom:0.8]">
+    <div className="flex size-full items-center justify-center">
       <EmptyState
         key={state.title}
         className="animate-in py-0 duration-300 fade-in-0"
@@ -899,10 +896,10 @@ function InputGroupCover({ active }: CoverProps) {
   const step = useCycle(QUERY.length + 6, 180, active)
   const value = active ? QUERY.slice(0, Math.max(0, step - 1)) : ""
   return (
-    <div className="flex size-full items-center justify-center p-4 max-sm:[zoom:0.8] sm:[zoom:1.15]">
+    <div className="flex size-full items-center justify-center">
       <InputGroup
         className={cn(
-          "w-56 max-w-full",
+          "w-56",
           active && "border-ring ring-[3px] ring-ring-subtle"
         )}
       >
@@ -945,21 +942,19 @@ function JumpBarCover({ active }: CoverProps) {
   const step = useCycle(JUMP_STEPS.length, 1800, active)
   const bar = JUMP_STEPS[active ? step : 0]!
   return (
-    <div className="flex size-full items-center justify-center p-4">
-      <div className="relative h-40 w-72 max-w-full overflow-hidden rounded-xl border border-line bg-card">
-        <div className="flex flex-col gap-3 px-4 py-14">
-          {JUMP_LINES.map((width, i) => (
-            <div key={i} className={cn("h-2 rounded-full bg-muted", width)} />
-          ))}
+    // Laid out wider than the cover, so the bar fits with Mark as read.
+    <ScaledStage width={360}>
+      <div className="flex size-full items-center justify-center p-6">
+        <div className="relative h-full w-full overflow-hidden rounded-xl border border-line bg-card">
+          <div className="flex flex-col gap-3 px-4 pt-14">
+            {JUMP_LINES.map((width, i) => (
+              <div key={i} className={cn("h-2 rounded-full bg-muted", width)} />
+            ))}
+          </div>
+          <JumpBar type={bar.type} count={bar.count} onMarkRead={() => {}} />
         </div>
-        <JumpBar
-          type={bar.type}
-          count={bar.count}
-          since={new Date(2026, 9, 1, 15, 42)}
-          onMarkRead={() => {}}
-        />
       </div>
-    </div>
+    </ScaledStage>
   )
 }
 
@@ -1072,7 +1067,7 @@ export function ScaledStage({
     <div ref={frame} className="absolute inset-0">
       <div
         className={cn(
-          "origin-top-left transition-opacity duration-300",
+          "relative origin-top-left transition-opacity duration-300",
           scale === null && "opacity-0"
         )}
         style={{
