@@ -80,7 +80,7 @@ export function Stage({
     <>
       <IconTile className="size-10">{mark ? STAGE_MARKS[mark] : null}</IconTile>
 
-      <div className="font-medium text-surface-foreground">{label}</div>
+      <div className="leading-snug font-medium text-surface-foreground">{label}</div>
 
       {detail && <div className="text-xs text-muted-foreground">{detail}</div>}
     </>
@@ -115,15 +115,19 @@ export function Pipeline({
       )}
     >
       <div
-        className={cn(
-          "grid grid-cols-2 divide-y divide-border sm:divide-x sm:divide-y-0",
-          COLUMNS[stages.length] ?? COLUMNS[4]
-        )}
+        className={cn("grid grid-cols-2", COLUMNS[stages.length] ?? COLUMNS[4])}
       >
         {stages.map((stage, index) => (
           <div
             key={index}
-            className="relative flex flex-col items-center gap-2 p-6 text-center"
+            className={cn(
+              "relative flex flex-col items-center gap-2 border-border p-6 text-center",
+              // Two columns on a phone: a line between them and between
+              // rows. One row from sm up: a line between each stage.
+              index % 2 === 1 && "max-sm:border-l",
+              index >= 2 && "max-sm:border-t",
+              index > 0 && "sm:border-l"
+            )}
           >
             {stage}
 
