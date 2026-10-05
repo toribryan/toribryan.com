@@ -19,7 +19,12 @@ import {
 import { NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
 
 import { PREVIEWS } from "./catalog-previews"
-import { COVERS } from "./covers"
+import { COVERS, ScaledStage } from "./covers"
+
+// Every cover and preview is laid out on a stage this wide, at the plate's
+// 4:3, and scaled to the card, so they share one size on the home page, in
+// the catalog and on a phone.
+const STAGE = 288
 
 // Parts whose cover is a one-off gesture rather than a loop, so it waits for
 // the pointer instead of repeating on its own.
@@ -184,13 +189,15 @@ function ComponentCard({
         aria-hidden
         inert
       >
-        {Cover ? (
-          <Cover active={active} />
-        ) : preview ? (
-          <div className="flex size-full items-center justify-center max-sm:[zoom:0.7]">
-            {preview}
-          </div>
-        ) : null}
+        <ScaledStage width={STAGE}>
+          {Cover ? (
+            <Cover active={active} />
+          ) : preview ? (
+            <div className="flex size-full items-center justify-center">
+              {preview}
+            </div>
+          ) : null}
+        </ScaledStage>
         <div className="pointer-events-none absolute inset-0 rounded-xl inset-ring-1 inset-ring-black/15 dark:inset-ring-white/15" />
       </div>
 
