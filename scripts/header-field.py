@@ -180,7 +180,7 @@ def main(bunny_path):
             "--cell", str(CELL), "--gap", "1", "--spread", str(TONE["spread"]), "--detail", "2",
             "--levels", ",".join(map(str, TONE["levels"])), "--gamma", str(TONE["gamma"]),
             "--soften", "0.3", "--wash", "0", "--window", window,
-            "--frames", "44", "--fps", "40", "--field", str(field_path),
+            "--frames", "44", "--fps", "60", "--field", str(field_path),
         ], check=True, capture_output=True)
         field = json.loads(field_path.read_text())
 
