@@ -25,11 +25,11 @@ export const NICHE_PARTS: NichePart[] = [
       "A table for lists people work through: selection, bulk actions, locked rows, pinned columns and a phone layout.",
   },
   {
-    name: "chat-composer",
-    figma: "509-2",
-    title: "Chat composer",
+    name: "chapter-scrubber",
+    figma: "371-4",
+    title: "Chapter scrubber",
     description:
-      "A message box built from parts around one draft, so each chat surface composes its own.",
+      "A rail of marks that swell under the pointer like the Dock, previewing the chapter at the crest.",
     home: false,
   },
   {
@@ -46,11 +46,11 @@ export const NICHE_PARTS: NichePart[] = [
       "A filter menu of fields and values that turns into a search as you type.",
   },
   {
-    name: "chapter-scrubber",
-    figma: "371-4",
-    title: "Chapter scrubber",
+    name: "chat-composer",
+    figma: "509-2",
+    title: "Chat composer",
     description:
-      "A rail of marks that swell under the pointer like the Dock, previewing the chapter at the crest.",
+      "A message box built from parts around one draft, so each chat surface composes its own.",
   },
   {
     name: "floating-nav",
