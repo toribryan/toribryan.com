@@ -105,7 +105,7 @@ export function ComponentPageActions({
       />
 
       <div className="flex items-center gap-2">
-        <div className="flex h-7 items-center overflow-hidden rounded-lg border border-border bg-background shadow-xs dark:border-input dark:bg-input/30">
+        <div className="flex h-7 items-center overflow-hidden rounded-lg border border-border bg-popover shadow-xs dark:border-input dark:bg-input/30">
           <Button
             className="h-full gap-2 rounded-none pr-3 pl-2.5"
             variant="ghost"
