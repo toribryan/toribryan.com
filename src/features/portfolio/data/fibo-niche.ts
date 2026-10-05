@@ -96,6 +96,15 @@ export const NICHE_PARTS: NichePart[] = [
     home: false,
   },
   {
+    name: "jump-bar",
+    figma: "567-9880",
+    title: "Jump bar",
+    shelf: "base",
+    description:
+      "Takes people to unread messages, new messages or the present in a conversation.",
+    home: false,
+  },
+  {
     name: "map-pin",
     figma: "601-75",
     title: "Map pin",

@@ -71,6 +71,7 @@ import {
   IntegrationVisual,
   type IntegrationItem,
 } from "@/components/fibo/integration-visual"
+import { JumpBar, type JumpBarProps } from "@/components/fibo/jump-bar"
 import { Kbd } from "@/components/fibo/kbd"
 import { MapPin } from "@/components/fibo/map-pin"
 import { MessageList, type ChatMessage } from "@/components/fibo/message-list"
@@ -916,6 +917,41 @@ function InputGroupCover({ active }: CoverProps) {
   )
 }
 
+const JUMP_STEPS: Pick<JumpBarProps, "type" | "count">[] = [
+  { type: "unread-above", count: 12 },
+  { type: "new-below", count: 3 },
+  { type: "history" },
+]
+
+// Widths of the stand-in messages, so the conversation has a ragged edge.
+const JUMP_LINES = ["w-3/4", "w-1/2", "w-2/3", "w-5/6", "w-2/5", "w-3/5"]
+
+/**
+ * A stand-in conversation with a bar over it. While active it steps through
+ * unread above, new below and history; at rest it shows the unread bar.
+ */
+function JumpBarCover({ active }: CoverProps) {
+  const step = useCycle(JUMP_STEPS.length, 1800, active)
+  const bar = JUMP_STEPS[active ? step : 0]!
+  return (
+    <div className="flex size-full items-center justify-center p-4">
+      <div className="relative h-40 w-72 max-w-full overflow-hidden rounded-xl border border-line bg-card">
+        <div className="flex flex-col gap-3 px-4 py-14">
+          {JUMP_LINES.map((width, i) => (
+            <div key={i} className={cn("h-2 rounded-full bg-muted", width)} />
+          ))}
+        </div>
+        <JumpBar
+          type={bar.type}
+          count={bar.count}
+          since={new Date(2026, 9, 1, 15, 42)}
+          onMarkRead={() => {}}
+        />
+      </div>
+    </div>
+  )
+}
+
 export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "data-table": DataTableCover,
   "filter-menu": FilterMenuCover,
@@ -933,6 +969,7 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "empty-state": EmptyStateCover,
   "message-list": MessageListCover,
   "map-pin": MapPinCover,
+  "jump-bar": JumpBarCover,
 }
 
 /**

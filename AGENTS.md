@@ -46,7 +46,7 @@ Reactions' flying emoji use, and the three `--glass-*` tokens of Floating nav's
 glass variant, which this site declares itself. `src/lib/merge-refs.ts` is fibo's `mergeRefs`,
 which Pixel snail, Integration visual and Token flow import as
 `@/lib/merge-refs`. `field-size.ts` (Input and Input group) and
-`format-count.ts` (Count) are fibo's helpers the same way. Three parts carry local changes. `chapter-scrubber.tsx` keeps `preview="none"`,
+`format-count.ts` (Count, and Jump bar) are fibo's helpers the same way. Three parts carry local changes. `chapter-scrubber.tsx` keeps `preview="none"`,
 which fibo dropped, for a rail with no preview at all; the home page cover
 and its doc use it. `command-menu.tsx` shows its preview pane by the dialog's own width
 (`@xl/command-menu`) rather than the viewport's, and widens for it at any

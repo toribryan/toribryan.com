@@ -1,0 +1,272 @@
+---
+title: Jump bar
+description: Takes people to unread messages, new messages or the present in a conversation.
+createdAt: 2026-10-05
+updatedAt: 2026-10-05
+new: true
+---
+
+A jump bar takes people somewhere else in a conversation: up to the messages
+they haven't read, down to ones that arrived while they were scrolled up, or
+back to the present from history. Counts stop at 99+ on screen, with the full
+number after them for screen readers.
+
+<Exhibit
+  of="jump-bar.Default"
+  title="Unread messages above"
+  description="Jump up to the first unread message, or mark the conversation read."
+>
+<ExhibitCode label="Install">
+
+```bash
+npx shadcn@latest add https://fibo.toribryan.com/r/jump-bar.json
+```
+
+It brings fibo's Button with it. Nothing else to install.
+
+</ExhibitCode>
+<ExhibitCode label="Usage">
+
+```tsx
+import { useState } from "react"
+
+import { JumpBar, jumpTo, useAtBottom } from "@/components/ui/jump-bar"
+import { MessageList, type ChatMessage } from "@/components/ui/message-list"
+
+export function Channel({
+  messages,
+  unreadFrom,
+  newBelow,
+}: {
+  messages: ChatMessage[]
+  unreadFrom?: string
+  newBelow: number
+}) {
+  const [scroller, setScroller] = useState<HTMLDivElement | null>(null)
+  const atBottom = useAtBottom(scroller)
+
+  function jumpToPresent() {
+    const last = scroller?.querySelector<HTMLElement>(
+      '[data-slot="message"]:last-of-type'
+    )
+    if (last) jumpTo(last, { container: scroller, block: "end" })
+  }
+
+  return (
+    <div className="relative">
+      <div ref={setScroller} className="h-96 overflow-y-auto">
+        <MessageList messages={messages} unreadFrom={unreadFrom} />
+      </div>
+      {newBelow > 0 && !atBottom ? (
+        <JumpBar type="new-below" count={newBelow} onJump={jumpToPresent} />
+      ) : null}
+    </div>
+  )
+}
+```
+
+The bars position themselves, so put them inside a `relative` wrapper around
+the scroll container, not inside the container itself.
+
+</ExhibitCode>
+<ExhibitCode label="Props">
+
+| Prop         | Type                                         | Default | Description                                                            |
+| ------------ | -------------------------------------------- | ------- | ---------------------------------------------------------------------- |
+| `type`       | `"unread-above" \| "new-below" \| "history"` |         | Which bar: unread messages above, new messages below, or history.      |
+| `count`      | `number`                                     | `0`     | How many unread or new messages. Shown up to 99+, read out in full.    |
+| `since`      | `Date`                                       |         | When the unread messages begin, for `unread-above`.                    |
+| `onJump`     | `() => void`                                 |         | Jumps to the first unread message, the newest message, or the present. |
+| `onMarkRead` | `() => void`                                 |         | Marks the conversation read, for `unread-above`.                       |
+| `locale`     | `string`                                     | `"en"`  | Locale for the count and time.                                         |
+| `strings`    | `Partial<JumpBarStrings>`                    |         | The bar's copy. Swap it to translate.                                  |
+
+It also takes every prop of a `div`, except `children`.
+
+```ts
+type JumpBarStrings = {
+  // shown is the count as displayed, capped at 99+; since is empty without a time
+  unreadAbove: (count: number, shown: string, since: string) => string
+  newBelow: (count: number, shown: string) => string
+  history: string
+  markRead: string
+  jumpToPresent: string
+}
+```
+
+`jumpTo(target, { container, block })` scrolls `target` into view and
+focuses it. `useAtBottom(element, threshold = 150)` returns whether `element`
+is scrolled to within `threshold` pixels of its end.
+
+</ExhibitCode>
+</Exhibit>
+
+## Examples
+
+<ExhibitGrid>
+<Exhibit
+  of="jump-bar.NewBelow"
+  title="New messages below"
+  description="A pill over the bottom of the conversation, for messages that arrived while people were scrolled up."
+>
+<ExhibitCode>
+
+```tsx
+<JumpBar type="new-below" count={3} onJump={jumpToPresent} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="jump-bar.Capped"
+  title="Over 99"
+  description="The count stops at 99+ on screen. The button's name keeps those words and adds the full number, “99+ new messages (128)”, so speech input can still say what's on screen."
+>
+<ExhibitCode>
+
+```tsx
+<JumpBar type="new-below" count={128} onJump={jumpToPresent} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="jump-bar.History"
+  title="Viewing history"
+  description="For when people have scrolled far from the present."
+>
+<ExhibitCode>
+
+```tsx
+<JumpBar type="history" onJump={jumpToPresent} />
+```
+
+</ExhibitCode>
+</Exhibit>
+</ExhibitGrid>
+
+<Exhibit
+  of="jump-bar.InATimeline"
+  title="In a timeline"
+  description="A message list with an unread divider, both bars, a typing indicator and a composer. Scroll up and use “Ben sends a message” to see the pill. Escape on a message or in the composer marks the conversation read."
+>
+<ExhibitCode>
+
+```tsx
+const [scroller, setScroller] = useState<HTMLDivElement | null>(null)
+const atBottom = useAtBottom(scroller)
+
+<div className="relative">
+  <div ref={setScroller} className="h-96 overflow-y-auto">
+    <MessageList messages={messages} unreadFrom={unreadFrom} />
+  </div>
+  {unreadFrom && dividerAbove ? (
+    <JumpBar
+      type="unread-above"
+      count={unreadCount}
+      since={unreadSince}
+      onJump={() => jumpTo(firstUnread, { container: scroller })}
+      onMarkRead={markRead}
+    />
+  ) : null}
+  {bottom ? (
+    <JumpBar type={bottom} count={newBelow} onJump={jumpToPresent} />
+  ) : null}
+</div>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+## Anatomy
+
+A positioned root that holds plain buttons. Unread above is a bar across the
+top with a jump button and "Mark as read"; new below is a single pill; history
+is a bar across the bottom with a line of text and "Jump to present".
+
+<Exhibit of="jump-bar.Anatomy" title="The unread bar" description="Twelve unread messages since 3:42.">
+<ExhibitCode label="Structure">
+
+```text
+JumpBar                 jump-bar              (data-type="unread-above")
+├─ jump button          Button
+└─ mark as read         Button                (with onMarkRead)
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="jump-bar"',
+      element: "The root",
+      when: "Always.",
+    },
+    {
+      attribute: "data-type",
+      element: "The root",
+      when: (
+        <>
+          <code>unread-above</code>, <code>new-below</code> or{" "}
+          <code>history</code>.
+        </>
+      ),
+    },
+  ]}
+/>
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Show unread-above while the unread divider is above the view, and hide it once people scroll past it or mark the conversation read.",
+    "Show new-below when messages arrive while people are scrolled up. When they're at the bottom, scroll to the new message instead.",
+    "Show history when the newest messages aren't on screen, or aren't loaded, and nothing new has arrived.",
+    "Sending a message always scrolls to the bottom and clears the unread marker.",
+    "Count a message as read only when the window has focus and the message is on screen.",
+  ]}
+/>
+
+## Best practices
+
+<ComponentRules
+  rules={[
+    {
+      positive: {
+        component: <Live of="jump-bar.DoCount" />,
+        description: "Say how many messages are waiting.",
+      },
+      negative: {
+        component: <Live of="jump-bar.DontHideCount" />,
+        description:
+          "Don't hide the count. People decide whether to jump by how much they missed.",
+      },
+    },
+  ]}
+/>
+
+## Accessibility
+
+<UsageGuidelines
+  guidelines={[
+    "Every bar is plain buttons, reachable by Tab. A capped count keeps its visible words in the name and adds the full number after them (WCAG 2.5.3).",
+    "Move focus when a jump happens: to the first unread message, or to the newest message. jumpTo does this. Never leave focus on a button whose bar has just disappeared; after Mark as read, move it to the composer.",
+    "jumpTo scrolls instantly under reduced motion, and for any jump longer than three screens.",
+    "The unread divider itself carries a “New” label, so the marker isn't colour alone.",
+  ]}
+/>
+
+## Related components
+
+<RelatedComponents names={["Message list", "Typing indicator", "Button"]} />
+
+## References
+
+- [Discord: keyboard shortcuts](https://support.discord.com/hc/en-us/articles/225977308), for Escape to mark read and Shift+Page Up to jump to unread
+- [Matrix: read markers](https://spec.matrix.org/latest/client-server-api/#fully-read-markers), which keeps the divider position apart from read receipts
+- [WCAG 1.4.1 Use of color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
+- [WCAG 2.3.3 Animation from interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)
