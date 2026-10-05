@@ -148,7 +148,7 @@ Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's pro
         employmentType: "Full-time",
         icon: <PenToolIcon />,
         description: `- Rejoined after two years of contracting, and stepped into Staff 90 days later.
-- Shipped two product surfaces and the ProctorioX conference agenda.
+- Shipped two product surfaces and the ProctorioX conference agenda site.
 - Wrote the strategy proposal that became the design system overhaul.`,
         skills: [
           "Product Design",
