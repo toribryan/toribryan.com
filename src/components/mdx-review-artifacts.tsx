@@ -130,7 +130,9 @@ export function PivotFlows({ caption }: { caption?: string }) {
 export function TwoJobs({ caption }: { caption?: string }) {
   return (
     <Artifact caption={caption}>
-      <TwoJobsGrid />
+      {/* Its diagrams carry their own background, so the grid stops at the
+          page's border instead of bleeding over it as it does in the deck. */}
+      <TwoJobsGrid className="md:-mx-4" />
     </Artifact>
   )
 }
