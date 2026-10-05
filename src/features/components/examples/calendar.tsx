@@ -1,8 +1,11 @@
 "use client"
 
 import type { ReactNode } from "react"
+import { PlusIcon, SearchIcon } from "lucide-react"
 
-import { Calendar } from "@/components/fibo/calendar"
+import { Button } from "@/components/fibo/button"
+import { Calendar, type CalendarEvent } from "@/components/fibo/calendar"
+import { ScaledStage } from "@/features/portfolio/components/components/covers"
 
 import { AnatomyMap, slot, type Callout } from "../components/anatomy-map"
 
@@ -140,5 +143,101 @@ export function Anatomy() {
         </div>
       </div>
     </AnatomyMap>
+  )
+}
+
+const at = (day: number, hour: number, minute = 0) =>
+  new Date(2026, 9, day, hour, minute)
+
+// fibo's month stories' October.
+const MONTH_EVENTS: CalendarEvent[] = [
+  {
+    id: "planning",
+    title: "Quarterly planning",
+    start: at(1, 9),
+    end: at(1, 11),
+  },
+  { id: "review-5", title: "Design review", start: at(5, 10), end: at(5, 11) },
+  { id: "one-on-one", title: "1:1 with Ana", start: at(5, 14) },
+  { id: "offsite", title: "Team offsite", start: at(8, 0), allDay: true },
+  { id: "standup", title: "Standup", start: at(14, 9, 30) },
+  { id: "launch", title: "Launch prep", start: at(14, 13), end: at(14, 15) },
+  { id: "review-20", title: "Design review", start: at(20, 10) },
+  { id: "dentist", title: "Dentist", start: at(20, 16, 30) },
+  { id: "workshop", title: "Research workshop", start: at(21, 13) },
+  { id: "release", title: "Release 0.3", start: at(23, 0), allDay: true },
+  { id: "retro", title: "Retro", start: at(27, 15), end: at(27, 16) },
+  { id: "party", title: "Halloween party", start: at(30, 18) },
+]
+
+/*
+ * The month view switches layout by its own width, and this page's column is
+ * narrower than its desktop layout, so the desktop examples lay out at 1100
+ * pixels and scale to fit, like a screenshot of a wide screen.
+ */
+function Desktop({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div
+      role="group"
+      aria-label={label}
+      className="relative w-full overflow-hidden rounded-xl border border-line bg-background"
+      style={{ aspectRatio: "1100 / 720" }}
+    >
+      <ScaledStage width={1100}>
+        <div className="flex h-full flex-col p-6">{children}</div>
+      </ScaledStage>
+    </div>
+  )
+}
+
+export function Month() {
+  return (
+    <Desktop label="Month view on a wide screen">
+      <Calendar
+        type="month"
+        events={MONTH_EVENTS}
+        defaultMonth={OCTOBER}
+        defaultValue={new Date(2026, 9, 14)}
+      />
+    </Desktop>
+  )
+}
+
+export function MonthWithActions() {
+  return (
+    <Desktop label="Month view with search and a new event button">
+      <Calendar
+        type="month"
+        events={MONTH_EVENTS}
+        defaultMonth={OCTOBER}
+        defaultValue={new Date(2026, 9, 14)}
+      >
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Search"
+        >
+          <SearchIcon aria-hidden="true" />
+        </Button>
+        <Button type="button" size="sm">
+          <PlusIcon aria-hidden="true" data-icon="inline-start" />
+          New event
+        </Button>
+      </Calendar>
+    </Desktop>
+  )
+}
+
+export function MonthOnAPhone() {
+  return (
+    <div className="mx-auto flex h-[720px] w-full max-w-[390px] flex-col rounded-[2rem] border border-line bg-background p-4">
+      <Calendar
+        type="month"
+        events={MONTH_EVENTS}
+        defaultMonth={OCTOBER}
+        defaultValue={new Date(2026, 9, 20)}
+      />
+    </div>
   )
 }
