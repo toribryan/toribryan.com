@@ -41,6 +41,7 @@ const LEAD: Record<string, string> = {
   "typing-indicator": "InAConversation",
   "status-dot": "Default",
   "input-group": "Default",
+  "empty-state": "Default",
 }
 
 // The parts also published on 21st.dev, under the same names.
