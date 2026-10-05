@@ -67,7 +67,18 @@ import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/fibo/avatar"
 import { Button } from "@/components/fibo/button"
 import { Checkbox } from "@/components/fibo/checkbox"
-import { Input } from "@/components/fibo/input"
+import { Count } from "@/components/fibo/count"
+import {
+  EmptyState,
+  EmptyStateActions,
+  EmptyStateDescription,
+  EmptyStateTitle,
+} from "@/components/fibo/empty-state"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/fibo/input-group"
 import {
   Menu,
   MenuCheckboxItem,
@@ -77,6 +88,7 @@ import {
   MenuTrigger,
 } from "@/components/fibo/menu"
 import { Pagination, type PaginationProps } from "@/components/fibo/pagination"
+import { Separator } from "@/components/fibo/separator"
 import {
   Sheet,
   SheetBody,
@@ -85,6 +97,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/fibo/sheet"
+import { Skeleton } from "@/components/fibo/skeleton"
 import {
   Table,
   TableBody,
@@ -555,6 +568,8 @@ type DataTableContextValue = {
   narrow: boolean
   cards: boolean
   narrowLayout: DataTableNarrowLayout
+  empty: React.ReactNode
+  loading: boolean
 }
 
 const DataTableContext = React.createContext<DataTableContextValue | null>(null)
@@ -764,6 +779,10 @@ type DataTableProps<TData extends RowData = RowData> = Omit<
   onShowSelectedOnlyChange?: (showSelectedOnly: boolean) => void
   /** Under 32rem: keep the table and scroll it, or show DataTableCards instead. */
   narrowLayout?: DataTableNarrowLayout
+  /** Shown in place of the rows when there are none. Defaults to DataTableEmpty. */
+  empty?: React.ReactNode
+  /** Shows skeleton rows in place of the body while the data loads. */
+  loading?: boolean
   /**
    * The ids of the rows on this page, in the order they're shown.
    * @deprecated Pass `table` from useDataTable; its data sets the rows.
@@ -1024,6 +1043,8 @@ function DataTableRoot({
   showSelectedOnly = false,
   onShowSelectedOnlyChange,
   narrowLayout = "scroll",
+  empty,
+  loading = false,
   children,
   ...props
 }: RootProps &
@@ -1178,6 +1199,8 @@ function DataTableRoot({
       narrow,
       cards,
       narrowLayout,
+      empty: empty === undefined ? <DataTableEmpty /> : empty,
+      loading,
     }),
     [
       table,
@@ -1192,6 +1215,8 @@ function DataTableRoot({
       narrow,
       cards,
       narrowLayout,
+      empty,
+      loading,
     ]
   )
 
@@ -1445,25 +1470,26 @@ function DataTableSearch({
   className,
   ...props
 }: Omit<
-  React.ComponentProps<typeof Input>,
-  "value" | "defaultValue" | "onChange" | "type"
+  React.ComponentProps<typeof InputGroupInput>,
+  "value" | "defaultValue" | "onChange" | "type" | "render"
 >) {
   const { table } = useDataTableRoot()
   const value = useSelector(table.atoms.globalFilter, (filter) =>
     typeof filter === "string" ? filter : ""
   )
   return (
-    <div data-slot="data-table-search-field" className="relative w-full">
-      <SearchIcon className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
-      <Input
+    <InputGroup data-slot="data-table-search-field" size="sm">
+      <InputGroupAddon>
+        <SearchIcon aria-hidden="true" />
+      </InputGroupAddon>
+      <InputGroupInput
         type="search"
-        size="sm"
-        className={cn("pl-8", className)}
+        className={className}
         value={value}
         onChange={(event) => table.setGlobalFilter(event.target.value)}
         {...props}
       />
-    </div>
+    </InputGroup>
   )
 }
 
@@ -1537,11 +1563,11 @@ function DataTableFacetFilter({
         <ListFilterIcon data-icon="inline-start" />
         {name}
         {ticked.length ? (
-          <span className="rounded-sm bg-muted px-1 text-xs tabular-nums">
-            <span className="sr-only">, </span>
-            {ticked.length}
-            <span className="sr-only"> selected</span>
-          </span>
+          <Count
+            value={ticked.length}
+            label={(n) => `, ${n} selected`}
+            className="rounded-sm bg-muted px-1 text-xs"
+          />
         ) : null}
       </MenuTrigger>
       <MenuContent>
@@ -1554,9 +1580,10 @@ function DataTableFacetFilter({
               onCheckedChange={(checked) => toggle(value, checked)}
             >
               <span className="flex-1 truncate">{String(value)}</span>{" "}
-              <span className="ml-auto text-xs text-muted-foreground tabular-nums">
-                {count}
-              </span>
+              <Count
+                value={count}
+                className="ml-auto text-xs text-muted-foreground"
+              />
             </MenuCheckboxItem>
           ))}
         </MenuGroup>
@@ -1743,7 +1770,10 @@ function DataTableBulkActions({
       {onDelete ? (
         <>
           {hasOthers ? (
-            <span aria-hidden="true" className="mx-1 h-5 w-px bg-border" />
+            <Separator
+              orientation="vertical"
+              className="mx-1 h-5 self-center"
+            />
           ) : null}
           <span id={countId} hidden>
             {reach}
@@ -1853,7 +1883,7 @@ function DataTableContent({
   children,
   ...props
 }: React.ComponentProps<typeof Table>) {
-  const { cards, narrowLayout } = useDataTableRoot()
+  const { cards, narrowLayout, loading } = useDataTableRoot()
   const tableRef = React.useRef<HTMLTableElement>(null)
 
   // Scroll shadows: mark the edges a pinned column covers while there's more
@@ -1890,6 +1920,7 @@ function DataTableContent({
     <Table
       ref={tableRef}
       data-slot="data-table-content"
+      aria-busy={loading || undefined}
       className={cn(
         "table-fixed",
         // Before the first measurement, CSS keeps a narrow cards table from
@@ -2127,23 +2158,40 @@ function useRowModelInputs() {
 }
 
 function ModelRows() {
-  const { table } = useDataTableRoot()
+  const { table, empty, loading } = useDataTableRoot()
   const inputs = useRowModelInputs()
   // TanStack keeps a row's object until the data changes, so new columns or
   // a new lockedReason over the same data have to reach the memo as props.
   const columns = table.getVisibleLeafColumns()
   const lockedReason = table.options.meta?.lockedReason
-  return table
-    .getRowModel()
-    .rows.map((row) => (
-      <ModelRow
-        key={row.id}
-        row={row}
-        inputs={inputs}
-        columns={columns}
-        lockedReason={lockedReason?.(row.original)}
-      />
-    ))
+  if (loading) return <DataTableSkeleton />
+  const { rows } = table.getRowModel()
+  if (rows.length === 0) {
+    return empty ? (
+      <TableRow
+        data-slot="data-table-empty-row"
+        className="hover:bg-transparent"
+      >
+        {/* One more for the selection column. */}
+        <TableCell colSpan={columns.length + 1} className="p-0">
+          {/* The table can be wider than its scroller, so the message keeps
+              to the visible width rather than centring on the whole row. */}
+          <div className="sticky left-0 w-[100cqw] whitespace-normal">
+            {empty}
+          </div>
+        </TableCell>
+      </TableRow>
+    ) : null
+  }
+  return rows.map((row) => (
+    <ModelRow
+      key={row.id}
+      row={row}
+      inputs={inputs}
+      columns={columns}
+      lockedReason={lockedReason?.(row.original)}
+    />
+  ))
 }
 
 const ModelRow = React.memo(function ModelRow({
@@ -2416,11 +2464,12 @@ function DataTableCards({
   /** Cards written by hand, or a function that renders one for each row. */
   children?: React.ReactNode | ((row: DataTableAnyRow) => React.ReactNode)
 }) {
-  const { cards } = useDataTableRoot()
+  const { cards, loading } = useDataTableRoot()
   if (!cards) return null
   return (
     <ul
       data-slot="data-table-cards"
+      aria-busy={loading || undefined}
       className={cn("flex flex-col", className)}
       {...props}
     >
@@ -2438,17 +2487,20 @@ function ModelCards({
 }: {
   render?: (row: DataTableAnyRow) => React.ReactNode
 }) {
-  const { table } = useDataTableRoot()
+  const { table, empty, loading } = useDataTableRoot()
   useRowModelInputs()
-  return table
-    .getRowModel()
-    .rows.map((row) =>
-      render ? (
-        <React.Fragment key={row.id}>{render(row)}</React.Fragment>
-      ) : (
-        <ModelCard key={row.id} row={row} />
-      )
+  if (loading) return <DataTableSkeleton />
+  const { rows } = table.getRowModel()
+  if (rows.length === 0) {
+    return empty ? <li data-slot="data-table-empty-card">{empty}</li> : null
+  }
+  return rows.map((row) =>
+    render ? (
+      <React.Fragment key={row.id}>{render(row)}</React.Fragment>
+    ) : (
+      <ModelCard key={row.id} row={row} />
     )
+  )
 }
 
 function ModelCard({ row }: { row: DataTableAnyRow }) {
@@ -2603,6 +2655,185 @@ function DataTableCardField({
   )
 }
 
+// Varied so the rows read as text rather than a grid of equal bars.
+const SKELETON_WIDTHS = ["w-3/4", "w-1/2", "w-2/3", "w-2/5"]
+
+/**
+ * Placeholder rows shaped like the visible columns, or placeholder cards
+ * on a narrow cards table. The body and the cards show it while `loading`
+ * is set; a hand-written body can render it too. Hidden from screen
+ * readers: the table is aria-busy instead.
+ */
+function DataTableSkeleton({
+  rows = 5,
+}: {
+  /** How many placeholder rows or cards. */
+  rows?: number
+}) {
+  const { table, cards } = useDataTableRoot()
+  useRowModelInputs()
+  const columns = table.getVisibleLeafColumns()
+  const indexes = Array.from({ length: rows }, (_, i) => i)
+
+  if (cards) {
+    // As many fields as ModelCard lays out, so the cards keep their height
+    // when the data arrives.
+    const typeOf = (column: DataTableAnyColumn) =>
+      column.columnDef.meta?.type ?? "text"
+    const title =
+      columns.find((column) =>
+        ["primary", "person"].includes(typeOf(column))
+      ) ?? columns[0]
+    const fields = columns.filter(
+      (column) =>
+        column !== title &&
+        typeOf(column) !== "status" &&
+        typeOf(column) !== "actions"
+    ).length
+    return indexes.map((i) => (
+      <li
+        key={i}
+        aria-hidden="true"
+        data-slot="data-table-skeleton"
+        className="flex gap-3 border-b border-border p-3 last:border-b-0"
+      >
+        <span className="flex pt-0.5">
+          <Skeleton className="size-4 rounded-sm" />
+        </span>
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
+          <div className="flex h-6 items-center gap-2">
+            {title && typeOf(title) === "person" ? (
+              <Skeleton className="size-6 shrink-0 rounded-full" />
+            ) : null}
+            <Skeleton className={cn("h-3.5", SKELETON_WIDTHS[i % 4])} />
+          </div>
+          {fields ? (
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+              {Array.from({ length: fields }, (_, j) => (
+                <div key={j} className="flex flex-col">
+                  <div className="flex h-4 items-center">
+                    <Skeleton className="h-2.5 w-12" />
+                  </div>
+                  <div className="flex h-5 items-center">
+                    <Skeleton className="h-3.5 w-20" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </li>
+    ))
+  }
+
+  return indexes.map((i) => (
+    <TableRow
+      key={i}
+      aria-hidden="true"
+      data-slot="data-table-skeleton"
+      className="[tbody>&]:hover:bg-background"
+    >
+      <TableCell className={selectColumnClasses}>
+        <Skeleton className="size-4 rounded-sm" />
+      </TableCell>
+      {columns.map((column, j) => {
+        const type = column.columnDef.meta?.type ?? "text"
+        const pinned = pinnedOf(column)
+        return (
+          <TableCell
+            key={column.id}
+            data-type={type}
+            data-pinned={pinned === "none" ? undefined : pinned}
+            className={cn(
+              pinnedClasses[pinned],
+              column.columnDef.meta?.className
+            )}
+          >
+            <div
+              className={cn(
+                // The heights of an avatar and of a row's action button,
+                // so the rows keep their height when the data arrives.
+                "flex h-6 items-center gap-2",
+                type === "actions" && "h-8",
+                (type === "numeric" || type === "actions") && "justify-end"
+              )}
+            >
+              {type === "person" ? (
+                <Skeleton className="size-6 shrink-0 rounded-full" />
+              ) : null}
+              {type === "status" ? (
+                <Skeleton className="h-5 w-16 rounded-full" />
+              ) : type === "actions" ? (
+                <Skeleton className="size-6" />
+              ) : type === "numeric" ? (
+                <Skeleton className="h-3.5 w-10" />
+              ) : (
+                <Skeleton
+                  className={cn("h-3.5", SKELETON_WIDTHS[(i + j) % 4])}
+                />
+              )}
+            </div>
+          </TableCell>
+        )
+      })}
+    </TableRow>
+  ))
+}
+
+/**
+ * What a table with no rows shows. With a search or filter on, it says
+ * nothing matched and offers to clear them; otherwise it says there are no
+ * rows yet. Children replace the copy and the button.
+ */
+function DataTableEmpty({
+  children,
+  ...props
+}: React.ComponentProps<typeof EmptyState>) {
+  const { table, noun } = useDataTableRoot()
+  const filtered = useSelector(
+    table.store,
+    (state) => state.columnFilters.length > 0 || Boolean(state.globalFilter)
+  )
+  return (
+    <EmptyState data-slot="data-table-empty" {...props}>
+      {children ?? (
+        <>
+          <EmptyStateTitle>
+            {filtered ? `No matching ${noun.other}` : `No ${noun.other} yet`}
+          </EmptyStateTitle>
+          {filtered ? (
+            <>
+              <EmptyStateDescription>
+                Try another search, or clear the filters.
+              </EmptyStateDescription>
+              <EmptyStateActions>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={(event) => {
+                    // The button leaves with the empty state, so focus goes
+                    // to the search, where someone would try again.
+                    event.currentTarget
+                      .closest('[data-slot="data-table"]')
+                      ?.querySelector<HTMLElement>(
+                        '[data-slot="data-table-search"] input'
+                      )
+                      ?.focus()
+                    table.resetColumnFilters(true)
+                    table.setGlobalFilter("")
+                  }}
+                >
+                  Clear filters
+                </Button>
+              </EmptyStateActions>
+            </>
+          ) : null}
+        </>
+      )}
+    </EmptyState>
+  )
+}
+
 function DataTableFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -2686,6 +2917,8 @@ export {
   DataTableCard,
   DataTableCardField,
   DataTableCards,
+  DataTableEmpty,
+  DataTableSkeleton,
   DataTableCell,
   DataTableColumns,
   DataTableContent,

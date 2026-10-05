@@ -3,11 +3,19 @@
 import * as React from "react"
 import { Autocomplete as AutocompletePrimitive } from "@base-ui/react/autocomplete"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
+import { cva } from "class-variance-authority"
 import { ChevronLeftIcon, ChevronRightIcon, SearchIcon } from "lucide-react"
 import { motion, useReducedMotion, type Transition } from "motion/react"
 
 import { cn } from "@/lib/utils"
+import { Badge } from "@/components/fibo/badge"
 import { Button } from "@/components/fibo/button"
+import { EmptyState, EmptyStateTitle } from "@/components/fibo/empty-state"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/fibo/input-group"
 import { Kbd, KbdGroup } from "@/components/fibo/kbd"
 
 type CommandMenuItem = {
@@ -107,6 +115,8 @@ type CommandMenuProps = {
    * rather than over the page.
    */
   modal?: boolean
+  /** `inset` sets the list in a card inside a muted shell that holds the search and hints. */
+  variant?: "default" | "inset"
   /** Where the dialog portals to. Defaults to the body. */
   container?: DialogPrimitive.Portal.Props["container"]
   /** Classes for the trigger. */
@@ -126,6 +136,21 @@ type Entry = {
 
 type Row = { key: string; entry: Entry; context?: string }
 type Section = { label: string; items: Row[] }
+
+const commandMenuVariants = cva(
+  "@container/command-menu fixed top-[15vh] left-1/2 z-50 flex h-[min(26rem,70vh)] w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 flex-col overflow-hidden border border-border text-popover-foreground shadow-lg outline-hidden transition-[max-width] duration-150 data-preview:max-w-3xl motion-reduce:animate-none motion-reduce:transition-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+  {
+    variants: {
+      variant: {
+        default: "rounded-xl bg-popover",
+        // The shell is muted so the list's card reads as a layer above it,
+        // lighter in light mode and darker in dark.
+        inset: "rounded-2xl bg-muted p-1",
+      },
+    },
+    defaultVariants: { variant: "default" },
+  }
+)
 
 const SLIDE: Transition = { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
 const INSTANT: Transition = { duration: 0 }
@@ -235,6 +260,7 @@ function CommandMenu({
   labels,
   hints = true,
   modal = true,
+  variant = "default",
   container,
   className,
   popupClassName,
@@ -481,11 +507,9 @@ function CommandMenu({
           data-slot="command-menu"
           data-page={page ? page.value : undefined}
           data-preview={hasPreview || undefined}
+          data-variant={variant}
           initialFocus={modal ? inputRef : false}
-          className={cn(
-            "@container/command-menu fixed top-[15vh] left-1/2 z-50 flex h-[min(26rem,70vh)] w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 flex-col overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-lg outline-hidden transition-[max-width] duration-150 data-preview:max-w-3xl motion-reduce:animate-none motion-reduce:transition-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-            popupClassName
-          )}
+          className={cn(commandMenuVariants({ variant }), popupClassName)}
         >
           <DialogPrimitive.Title className="sr-only">
             {label}
@@ -510,38 +534,44 @@ function CommandMenu({
             autoHighlight="always"
             keepHighlight
           >
-            <div
+            <InputGroup
+              variant="ghost"
               data-slot="command-menu-search"
-              className="flex h-12 shrink-0 items-center gap-2 border-b border-border px-3"
-            >
-              {page ? (
-                <>
-                  <button
-                    type="button"
-                    data-slot="command-menu-back"
-                    aria-label={text.back(parent ? parent.label : text.home)}
-                    onClick={() => {
-                      back()
-                      inputRef.current?.focus()
-                    }}
-                    className="flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring-subtle"
-                  >
-                    <ChevronLeftIcon aria-hidden="true" className="size-4" />
-                  </button>
-                  <span
-                    data-slot="command-menu-breadcrumb"
-                    className="shrink-0 rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium"
-                  >
-                    {page.label}
-                  </span>
-                </>
-              ) : (
-                <SearchIcon
-                  aria-hidden="true"
-                  className="mx-1 size-4 shrink-0 text-muted-foreground"
-                />
+              className={cn(
+                "h-12 shrink-0",
+                variant === "default" && "border-b border-border"
               )}
-              <AutocompletePrimitive.Input
+            >
+              <InputGroupAddon className="has-[>button]:pl-3">
+                {page ? (
+                  <>
+                    <Button
+                      variant="ghost"
+                      size="icon-xs"
+                      data-slot="command-menu-back"
+                      aria-label={text.back(parent ? parent.label : text.home)}
+                      onClick={() => {
+                        back()
+                        inputRef.current?.focus()
+                      }}
+                      className="text-muted-foreground"
+                    >
+                      <ChevronLeftIcon aria-hidden="true" className="size-4" />
+                    </Button>
+                    <Badge
+                      variant="secondary"
+                      data-slot="command-menu-breadcrumb"
+                      className="shrink-0 font-medium"
+                    >
+                      {page.label}
+                    </Badge>
+                  </>
+                ) : (
+                  <SearchIcon aria-hidden="true" className="mx-1" />
+                )}
+              </InputGroupAddon>
+              <InputGroupInput
+                render={<AutocompletePrimitive.Input />}
                 ref={inputRef}
                 aria-label={page ? `${label}, ${page.label}` : label}
                 placeholder={page?.placeholder ?? placeholder}
@@ -552,10 +582,17 @@ function CommandMenu({
                     back()
                   }
                 }}
-                className="h-full min-w-0 flex-1 bg-transparent text-sm outline-hidden placeholder:text-muted-foreground"
+                className="text-sm"
               />
-            </div>
-            <div className="flex min-h-0 flex-1">
+            </InputGroup>
+            <div
+              data-slot="command-menu-body"
+              className={cn(
+                "flex min-h-0 flex-1",
+                variant === "inset" &&
+                  "overflow-hidden rounded-xl border border-border bg-popover shadow-xs"
+              )}
+            >
               <motion.div
                 key={pageKey}
                 initial={
@@ -569,9 +606,11 @@ function CommandMenu({
               >
                 <AutocompletePrimitive.Empty
                   data-slot="command-menu-empty"
-                  className="px-2 py-10 text-center text-sm text-muted-foreground empty:hidden empty:p-0"
+                  className="empty:hidden"
                 >
-                  {emptyText}
+                  <EmptyState size="sm" className="py-10">
+                    <EmptyStateTitle>{emptyText}</EmptyStateTitle>
+                  </EmptyState>
                 </AutocompletePrimitive.Empty>
                 <AutocompletePrimitive.List
                   data-slot="command-menu-list"
@@ -626,7 +665,10 @@ function CommandMenu({
             <div
               data-slot="command-menu-hints"
               aria-hidden="true"
-              className="flex h-10 shrink-0 items-center gap-4 border-t border-border px-4 text-xs text-muted-foreground"
+              className={cn(
+                "flex h-10 shrink-0 items-center gap-4 text-xs text-muted-foreground",
+                variant === "default" ? "border-t border-border px-4" : "px-3"
+              )}
             >
               <span className="flex items-center gap-1.5">
                 <Kbd>↵</Kbd>
@@ -729,7 +771,7 @@ function CommandMenuRow({
   )
 }
 
-export { CommandMenu }
+export { CommandMenu, commandMenuVariants }
 export type {
   CommandMenuGroup,
   CommandMenuItem,

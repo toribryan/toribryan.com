@@ -60,6 +60,9 @@
   --color-sticker-ink: var(--sticker-ink);
   --color-sticker-shadow: var(--sticker-shadow);
   --color-particle-shadow: var(--particle-shadow);
+  --color-glass: var(--glass);
+  --color-glass-edge: var(--glass-edge);
+  --color-glass-lens: var(--glass-lens);
   --color-surface-warm: var(--surface-warm);
   --color-surface-foreground: var(--surface-foreground);
   --color-code: var(--code);
@@ -156,6 +159,19 @@
     30% {
       opacity: 1;
       transform: translateY(-2px);
+    }
+  }
+
+  /* fibo's progress with no value: a segment that sweeps across the track. */
+  --animate-progress-indeterminate: progress-indeterminate 1.4s ease-in-out
+    infinite;
+
+  @keyframes progress-indeterminate {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(300%);
     }
   }
 
@@ -1079,10 +1095,17 @@
   /* Reactions' flying emoji cast a soft shadow so they read over any page,
      the same in both themes, as the sticker's does. */
   --particle-shadow: color-mix(in oklch, var(--color-black) 18%, transparent);
+  /* Floating nav's liquid glass: a clear tint of the page, a bright rim, and
+     the lens on the current item. */
+  --glass: color-mix(in oklch, var(--background) 20%, transparent);
+  --glass-edge: color-mix(in oklch, var(--color-white) 85%, transparent);
+  --glass-lens: color-mix(in oklch, var(--foreground) 10%, transparent);
 }
 
-/* The scrim behind fibo's dialogs darkens further in dark mode, where a light
-   tint of the page would not read as a layer. */
+/* In dark mode the scrim behind fibo's dialogs darkens further, where a light
+   tint of the page would not read as a layer, and the glass rim dims so it
+   doesn't glare. */
 .dark {
   --backdrop: color-mix(in oklch, var(--color-black) 60%, transparent);
+  --glass-edge: color-mix(in oklch, var(--color-white) 15%, transparent);
 }
