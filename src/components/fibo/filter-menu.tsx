@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
 import {
-  CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ListFilterIcon,
@@ -22,6 +21,14 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/fibo/button"
+import { CheckboxMark } from "@/components/fibo/checkbox"
+import { Count } from "@/components/fibo/count"
+import { EmptyState, EmptyStateTitle } from "@/components/fibo/empty-state"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/fibo/input-group"
 
 type FilterOption = {
   value: string
@@ -469,21 +476,22 @@ function FilterMenu({
   }
 
   const backButton = (onBack: () => void, name: string) => (
-    <button
-      type="button"
+    <Button
+      variant="ghost"
+      size="icon-xs"
       aria-label={name}
       onClick={() => {
         onBack()
         home.current?.focus({ preventScroll: true })
       }}
-      className="flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring-subtle"
+      className="text-muted-foreground"
     >
       <ChevronLeftIcon className="size-4" />
-    </button>
+    </Button>
   )
 
   const searchInput = (
-    <input
+    <InputGroupInput
       ref={inputRef}
       role="combobox"
       aria-label={searchLabel}
@@ -509,7 +517,7 @@ function FilterMenu({
         setHighlight(0)
       }}
       onKeyDown={onKeyDown}
-      className="h-10 min-w-0 flex-1 bg-transparent text-sm outline-hidden placeholder:text-muted-foreground"
+      className="pr-0 text-sm"
     />
   )
 
@@ -587,38 +595,40 @@ function FilterMenu({
                   className="relative flex h-10 items-center overflow-hidden border-b border-border"
                 >
                   {search === "inline" ? (
-                    <div className="flex w-full items-center gap-2 px-2">
-                      <AnimatePresence initial={false} mode="popLayout">
-                        {view === "values" ? (
-                          <motion.span
-                            key="back"
-                            initial={{ opacity: 0, x: slide }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: slide }}
-                            transition={transition}
-                          >
-                            {backButton(back, text.backToFields)}
-                          </motion.span>
-                        ) : (
-                          <motion.span
-                            key={view === "search" ? "search" : "filter"}
-                            aria-hidden="true"
-                            initial={{ opacity: 0, scale: 0.6 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.6 }}
-                            transition={transition}
-                            className="flex size-6 shrink-0 items-center justify-center text-muted-foreground"
-                          >
-                            {view === "search" ? (
-                              <SearchIcon className="size-4" />
-                            ) : (
-                              <ListFilterIcon className="size-4" />
-                            )}
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
+                    <InputGroup variant="ghost" className="h-full px-2">
+                      <InputGroupAddon className="pl-0">
+                        <AnimatePresence initial={false} mode="popLayout">
+                          {view === "values" ? (
+                            <motion.span
+                              key="back"
+                              initial={{ opacity: 0, x: slide }}
+                              animate={{ opacity: 1, x: 0 }}
+                              exit={{ opacity: 0, x: slide }}
+                              transition={transition}
+                            >
+                              {backButton(back, text.backToFields)}
+                            </motion.span>
+                          ) : (
+                            <motion.span
+                              key={view === "search" ? "search" : "filter"}
+                              aria-hidden="true"
+                              initial={{ opacity: 0, scale: 0.6 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.6 }}
+                              transition={transition}
+                              className="flex size-6 shrink-0 items-center justify-center text-muted-foreground"
+                            >
+                              {view === "search" ? (
+                                <SearchIcon className="size-4" />
+                              ) : (
+                                <ListFilterIcon className="size-4" />
+                              )}
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
+                      </InputGroupAddon>
                       {searchInput}
-                    </div>
+                    </InputGroup>
                   ) : (
                     // The header slides with the body: the Search filters
                     // button, a field's name, or the search box.
@@ -633,20 +643,18 @@ function FilterMenu({
                         className="flex w-full items-center gap-2 px-2"
                       >
                         {view === "fields" ? (
-                          <button
-                            type="button"
+                          <Button
+                            variant="ghost"
+                            size="sm"
                             data-slot="filter-menu-search-button"
                             onClick={() => enterSearch()}
-                            className="-mx-1 flex h-8 flex-1 items-center gap-2 rounded-md px-1 text-sm text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring-subtle"
+                            className="-mx-1 flex-1 justify-start gap-2 px-1 font-normal text-muted-foreground"
                           >
                             <span className="flex size-6 shrink-0 items-center justify-center">
-                              <SearchIcon
-                                aria-hidden="true"
-                                className="size-4"
-                              />
+                              <SearchIcon aria-hidden="true" />
                             </span>
                             {searchLabel}
-                          </button>
+                          </Button>
                         ) : view === "values" ? (
                           <>
                             {backButton(back, text.backToFields)}
@@ -655,15 +663,17 @@ function FilterMenu({
                             </span>
                           </>
                         ) : (
-                          <>
-                            {backButton(
-                              exitSearch,
-                              field
-                                ? text.backToField(field.label)
-                                : text.backToFilters
-                            )}
+                          <InputGroup variant="ghost" className="h-full">
+                            <InputGroupAddon className="pl-0">
+                              {backButton(
+                                exitSearch,
+                                field
+                                  ? text.backToField(field.label)
+                                  : text.backToFilters
+                              )}
+                            </InputGroupAddon>
                             {searchInput}
-                          </>
+                          </InputGroup>
                         )}
                       </View>
                     </AnimatePresence>
@@ -697,9 +707,9 @@ function FilterMenu({
                   >
                     <View key={viewKey} {...slides}>
                       {count === 0 ? (
-                        <p className="px-2 py-6 text-center text-sm text-muted-foreground">
-                          {emptyText}
-                        </p>
+                        <EmptyState size="sm">
+                          <EmptyStateTitle>{emptyText}</EmptyStateTitle>
+                        </EmptyState>
                       ) : (
                         groups.map((group, index) => (
                           <div
@@ -787,15 +797,7 @@ function FilterMenuRow({
       onClick={onActivate}
       className="flex h-8 cursor-default items-center gap-2 rounded-md px-2 text-sm select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
     >
-      {row.kind === "option" ? (
-        <span
-          aria-hidden="true"
-          data-checked={checked || undefined}
-          className="flex size-4 items-center justify-center rounded-sm border border-input bg-input-subtle text-primary-foreground data-checked:border-primary data-checked:bg-primary"
-        >
-          {checked ? <CheckIcon className="size-3" /> : null}
-        </span>
-      ) : null}
+      {row.kind === "option" ? <CheckboxMark checked={checked} /> : null}
       {icon ? (
         <span aria-hidden="true" className="text-muted-foreground">
           {icon}
@@ -811,10 +813,11 @@ function FilterMenuRow({
       {row.kind === "field" ? (
         <>
           {chosen.length ? (
-            <span className="font-mono text-xs text-muted-foreground tabular-nums">
-              {chosen.length}
-              <span className="sr-only"> selected</span>
-            </span>
+            <Count
+              value={chosen.length}
+              label={(n) => `${n} selected`}
+              className="font-mono text-xs text-muted-foreground"
+            />
           ) : null}
           <span className="sr-only">, opens values</span>
           <ChevronRightIcon

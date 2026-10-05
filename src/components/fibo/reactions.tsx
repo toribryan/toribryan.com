@@ -3,9 +3,11 @@
 import * as React from "react"
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover"
 import { cva, type VariantProps } from "class-variance-authority"
-import { SmilePlusIcon } from "lucide-react"
+import { motion, useReducedMotion, type Variants } from "motion/react"
 
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/fibo/button"
+import { Count } from "@/components/fibo/count"
 
 type Reaction = {
   /** The emoji itself. Also the reaction's identity, so keep it unique. */
@@ -28,10 +30,6 @@ const DEFAULT_CHOICES: Reaction[] = [
   { emoji: "\u{1F62E}", label: "Surprised" },
   { emoji: "\u{1F525}", label: "Fire" },
 ]
-
-function formatCount(count: number, compact: Intl.NumberFormat) {
-  return count < 1000 ? String(count) : compact.format(count)
-}
 
 function describeCount(count: number) {
   return `${count} ${count === 1 ? "reaction" : "reactions"}`
@@ -219,6 +217,51 @@ function burst(
   }
 }
 
+const FACE: Variants = {
+  closed: { scale: 1 },
+  open: {
+    scale: 1.1,
+    transition: { type: "spring", stiffness: 200, damping: 20 },
+  },
+}
+
+// The plus turns a quarter and grows a beat after the face swells.
+const PLUS: Variants = {
+  closed: { rotate: 0, scale: 1 },
+  open: {
+    rotate: 90,
+    scale: 1.2,
+    transition: { type: "spring", stiffness: 200, damping: 20, delay: 0.1 },
+  },
+}
+
+// lucide's smile-plus, drawn here so the face and the plus move separately.
+function SmilePlus({ open }: { open: boolean }) {
+  const reduceMotion = useReducedMotion()
+  const state = open && !reduceMotion ? "open" : "closed"
+  return (
+    <motion.svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={false}
+      animate={state}
+      variants={FACE}
+    >
+      <path d="M22 11v1a10 10 0 1 1-9-10" />
+      <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+      <line x1="9" x2="9.01" y1="9" y2="9" />
+      <line x1="15" x2="15.01" y1="9" y2="9" />
+      <motion.path d="M16 5h6" variants={PLUS} />
+      <motion.path d="M19 2v6" variants={PLUS} />
+    </motion.svg>
+  )
+}
+
 function animatePill(pill: HTMLElement) {
   if (prefersReducedMotion()) return
 
@@ -313,16 +356,6 @@ function Reactions({
   const [pulse, setPulse] = React.useState<{ emoji: string; nonce: number }>()
   const [open, setOpen] = React.useState(false)
   const [announcement, setAnnouncement] = React.useState("")
-  // A fixed locale rather than the runtime's, so the server and the browser
-  // write the same count and hydration matches.
-  const compact = React.useMemo(
-    () =>
-      new Intl.NumberFormat(locale, {
-        notation: "compact",
-        maximumFractionDigits: 1,
-      }),
-    [locale]
-  )
 
   const isControlled = reactionsProp !== undefined
   const items = isControlled ? reactionsProp : uncontrolled
@@ -438,10 +471,14 @@ function Reactions({
     <span
       ref={badgeRef}
       data-slot="reactions-badge"
-      className="inline-flex h-8 min-w-6 shrink-0 items-center justify-center px-1.5 text-xs font-medium text-muted-foreground tabular-nums"
+      className="inline-flex h-8 min-w-6 shrink-0 items-center justify-center px-1.5 text-xs font-medium text-muted-foreground"
     >
-      <span aria-hidden="true">{formatCount(total, compact)}</span>
-      <span className="sr-only">{describeCount(total)}</span>
+      <Count
+        value={total}
+        notation="compact"
+        locale={locale}
+        label={describeCount}
+      />
     </span>
   )
 
@@ -451,17 +488,15 @@ function Reactions({
       data-slot="reactions-trigger"
       data-state={open ? "open" : "closed"}
       aria-label={triggerLabel}
+      render={<Button variant="ghost" size="icon-sm" />}
       className={cn(
-        "group/trigger relative inline-flex shrink-0 items-center justify-center rounded-full transition-[background-color,color,transform,box-shadow] duration-200 outline-none focus-visible:ring-[3px] focus-visible:ring-ring-subtle",
+        "group/trigger relative",
         type === "inline"
-          ? "size-7 text-muted-foreground hover:bg-muted hover:text-foreground data-[state=open]:bg-muted data-[state=open]:text-foreground [&_svg]:size-4"
-          : "size-8 touch-manipulation text-foreground hover:bg-muted data-[state=open]:bg-muted motion-safe:active:scale-95 [&_svg]:size-4"
+          ? "text-muted-foreground"
+          : "touch-manipulation motion-safe:active:scale-95"
       )}
     >
-      <SmilePlusIcon
-        aria-hidden="true"
-        className="transition-transform duration-300 ease-out motion-safe:group-data-[state=open]/trigger:rotate-90"
-      />
+      <SmilePlus open={open} />
     </PopoverPrimitive.Trigger>
   )
 
@@ -503,13 +538,15 @@ function Reactions({
               {item.emoji}
             </span>
             {showCounts && (
-              <span
+              // The pill's own name already says the count.
+              <Count
                 data-slot="reactions-pill-count"
-                aria-hidden="true"
-                className="font-medium text-muted-foreground tabular-nums group-data-active/pill:text-primary"
-              >
-                {formatCount(item.count ?? 0, compact)}
-              </span>
+                value={item.count ?? 0}
+                notation="compact"
+                locale={locale}
+                label={null}
+                className="font-medium text-muted-foreground group-data-active/pill:text-primary"
+              />
             )}
           </button>
         ))}
