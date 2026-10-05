@@ -38,33 +38,23 @@ export const CATALOG: CatalogPart[] = Object.entries(
   status: part.status as CatalogPart["status"],
 }))
 
-/** The shelves and their groups, in the order fibo's Catalog shows them. */
+/** fibo's two shelves, in the order its Catalog shows them. */
 export const SHELVES: {
   id: CatalogShelf
   title: string
   description: string
-  groups: string[]
 }[] = [
   {
     id: "base-components",
     title: "Base components",
     description:
       "The parts most interfaces need. They depend on nothing beyond Base UI, class-variance-authority and lucide-react.",
-    groups: [
-      "Actions",
-      "Forms",
-      "Display",
-      "Navigation",
-      "Overlays",
-      "Feedback",
-    ],
   },
   {
     id: "special-components",
     title: "Special components",
     description:
       "Playful parts built for one kind of moment, such as a diagram, a reading rail or a reaction. Some use the motion library, which installs along with them.",
-    groups: ["Diagrams", "Navigation", "Forms", "Display", "Feedback"],
   },
 ]
 
