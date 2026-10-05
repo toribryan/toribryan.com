@@ -13,6 +13,7 @@ import {
   UserIcon,
 } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import {
   FloatingNav,
   type FloatingNavItem,
@@ -33,11 +34,12 @@ function Phone({
   feed = true,
 }: {
   children: ReactNode
-  feed?: boolean
+  /** The page behind the bar: a feed of cards, a gallery of tiles, or none. */
+  feed?: boolean | "gallery"
 }) {
   return (
     <div className="relative mx-auto h-[30rem] w-full max-w-[22rem] [transform:translateZ(0)] overflow-hidden rounded-[2.5rem] border border-line bg-background">
-      {feed ? <Feed /> : null}
+      {feed === "gallery" ? <Gallery /> : feed ? <Feed /> : null}
       {children}
     </div>
   )
@@ -60,10 +62,53 @@ function Feed() {
   )
 }
 
+// Tiles of every tone, so the glass has something to bend and tint.
+function Gallery() {
+  return (
+    <div className="flex h-full flex-col gap-3 p-5 pt-8">
+      <span className="text-lg font-medium">Library</span>
+      <div className="grid flex-1 grid-cols-3 gap-1.5">
+        {Array.from({ length: 15 }, (_, i) => (
+          <span
+            key={i}
+            className={cn(
+              "rounded-md",
+              [
+                "bg-foreground",
+                "bg-muted-foreground",
+                "bg-muted",
+                "bg-border",
+                "bg-primary",
+              ][(i * 2) % 5]
+            )}
+          />
+        ))}
+      </div>
+      <p className="m-0 text-sm text-muted-foreground">
+        The golden section turns up in seed heads, shells and the spiral of a
+        rabbit population, each term the sum of the two before.
+      </p>
+    </div>
+  )
+}
+
 export function Default() {
   return (
     <Phone>
       <FloatingNav aria-label="Example" items={ITEMS} defaultValue="home" />
+    </Phone>
+  )
+}
+
+export function Glass() {
+  return (
+    <Phone feed="gallery">
+      <FloatingNav
+        aria-label="Example"
+        items={ITEMS}
+        defaultValue="home"
+        variant="glass"
+      />
     </Phone>
   )
 }

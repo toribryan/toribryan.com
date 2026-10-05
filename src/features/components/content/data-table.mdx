@@ -112,13 +112,15 @@ type DataTableColumnMeta = {
 </ExhibitCode>
 <ExhibitCode label="Props">
 
-| Prop                       | Type                             | Default    | Description                                                             |
-| -------------------------- | -------------------------------- | ---------- | ----------------------------------------------------------------------- |
-| `table`                    | `DataTableInstance`              |            | The table from `useDataTable`.                                          |
-| `noun`                     | `{ one: string; other: string }` | rows       | What a row is, for counts and labels.                                   |
-| `narrowLayout`             | `"scroll" \| "cards"`            | `"scroll"` | Under 32rem, keep the table and scroll it, or show a card per row.      |
-| `showSelectedOnly`         | `boolean`                        | `false`    | Whether the app is showing only the selected rows.                      |
-| `onShowSelectedOnlyChange` | `(show: boolean) => void`        |            | Shows Show selected only while rows are selected. The app filters rows. |
+| Prop                       | Type                             | Default        | Description                                                                   |
+| -------------------------- | -------------------------------- | -------------- | ----------------------------------------------------------------------------- |
+| `table`                    | `DataTableInstance`              |                | The table from `useDataTable`.                                                |
+| `noun`                     | `{ one: string; other: string }` | rows           | What a row is, for counts and labels.                                         |
+| `narrowLayout`             | `"scroll" \| "cards"`            | `"scroll"`     | Under 32rem, keep the table and scroll it, or show a card per row.            |
+| `loading`                  | `boolean`                        | `false`        | Shows skeleton rows in place of the body while the data loads.                |
+| `empty`                    | `ReactNode`                      | DataTableEmpty | Shown in place of the rows when there are none. `null` leaves the body blank. |
+| `showSelectedOnly`         | `boolean`                        | `false`        | Whether the app is showing only the selected rows.                            |
+| `onShowSelectedOnlyChange` | `(show: boolean) => void`        |                | Shows Show selected only while rows are selected. The app filters rows.       |
 
 `useDataTable` takes TanStack Table's options for Data table's features,
 `data` and `columns` among them, plus `lockedReason`, a function that says
@@ -172,6 +174,61 @@ const table = useDataTable({
 <DataTableFooter className="justify-end">
   <DataTablePagination />
 </DataTableFooter>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Loading
+
+Set `loading` while the data is on its way. The body shows skeleton rows
+shaped like the visible columns, narrow cards show skeleton cards, and the
+table is `aria-busy`. Both keep the real rows' height, so nothing jumps when
+the data arrives. A hand-written body can render `DataTableSkeleton` itself.
+
+<Exhibit
+  of="data-table.Loading"
+  title="Loading"
+  description="Press Finish loading. The rows land where the skeletons were."
+>
+<ExhibitCode>
+
+```tsx
+const { data, isPending } = useMembers()
+
+<DataTable table={table} loading={isPending}>
+  <DataTableContent />
+  <DataTableCards />
+</DataTable>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Empty and no matches
+
+With no rows, the table says so in place of the body. When a search or filter
+hid them, it says nothing matched and offers Clear filters, which puts focus
+back in the search. Pass `empty` for your own copy, such as an EmptyState with
+an invite button, or `empty={null}` for a blank body.
+
+<Exhibit
+  of="data-table.Empty"
+  title="Empty and no matches"
+  description="Search the second table for something that isn't there."
+>
+<ExhibitCode>
+
+```tsx
+<DataTable
+  table={table}
+  empty={
+    <EmptyState>
+      <EmptyStateTitle>No members yet</EmptyStateTitle>
+      <Button>Invite people</Button>
+    </EmptyState>
+  }
+>
 ```
 
 </ExhibitCode>
@@ -480,6 +537,8 @@ DataTable                      data-table
 │  │  └─ Head                  data-table-head                (per column)
 │  │     └─ Sort button        data-table-sort                (sortable)
 │  └─ DataTableBody            data-table-body
+│     ├─ DataTableSkeleton     data-table-skeleton            (loading)
+│     ├─ DataTableEmpty        data-table-empty               (no rows)
 │     └─ Row                   data-table-row
 │        ├─ Select             data-table-select
 │        └─ Cell               data-table-cell
@@ -652,6 +711,16 @@ DataTable                      data-table
       attribute: 'data-slot="data-table-card"',
       element: "A card",
       when: "Narrow with narrowLayout=cards.",
+    },
+    {
+      attribute: 'data-slot="data-table-skeleton"',
+      element: "Placeholder row or card",
+      when: "While loading is set.",
+    },
+    {
+      attribute: 'data-slot="data-table-empty"',
+      element: "Empty state",
+      when: "When no rows are left, unless empty is null.",
     },
     {
       attribute: 'data-slot="data-table-card-field"',
