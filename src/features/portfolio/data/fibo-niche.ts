@@ -28,6 +28,15 @@ export const NICHE_PARTS: NichePart[] = [
       "A table for lists people work through: selection, bulk actions, locked rows, pinned columns and a phone layout.",
   },
   {
+    name: "chat-composer",
+    figma: "509-2",
+    title: "Chat composer",
+    shelf: "base",
+    description:
+      "A message box built from parts around one draft, so each chat surface composes its own.",
+    home: false,
+  },
+  {
     name: "filter-menu",
     title: "Filter menu",
     shelf: "special",
@@ -182,6 +191,7 @@ const BASE_GROUPS: Record<string, string> = {
   avatar: "display",
   badge: "display",
   button: "actions",
+  "chat-composer": "forms",
   checkbox: "forms",
   "data-table": "display",
   field: "forms",
