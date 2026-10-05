@@ -1,8 +1,8 @@
 import type { ComponentType } from "react"
 
 import { EXAMPLES } from "@/features/components/examples"
+import { fiboStorybookUrl } from "@/features/portfolio/data/fibo-catalog"
 import {
-  fiboStorybookUrl,
   NICHE_PARTS,
   nicheFigmaUrl,
 } from "@/features/portfolio/data/fibo-niche"

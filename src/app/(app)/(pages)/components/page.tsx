@@ -11,7 +11,7 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { ComponentCardList } from "@/features/portfolio/components/components/component-card-list"
+import { CatalogList } from "@/features/portfolio/components/components/component-card-list"
 import {
   FigmaIcon,
   GithubIcon,
@@ -22,7 +22,7 @@ import { FiboInstall } from "@/features/portfolio/components/fibo-install"
 
 const title = "Components"
 const description =
-  "Parts from fibo, built for real product work, and a few just for fun. Each installs as source with one shadcn command."
+  "Every part in fibo, grouped by job as in its Storybook catalog. Each installs as source with one shadcn command."
 
 export const metadata: Metadata = {
   title,
@@ -85,7 +85,7 @@ export default function Page() {
         <FiboInstall />
       </div>
 
-      <ComponentCardList />
+      <CatalogList />
 
       <div className="screen-line-top h-4" />
     </>

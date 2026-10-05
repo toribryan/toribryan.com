@@ -18,10 +18,8 @@ import {
 
 import { cn } from "@/lib/utils"
 import { CopyButton } from "@/components/copy-button"
-import {
-  fiboStorybookUrl,
-  NICHE_PARTS,
-} from "@/features/portfolio/data/fibo-niche"
+import { fiboStorybookUrl } from "@/features/portfolio/data/fibo-catalog"
+import { NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
 
 /*
  * The blocks fibo's Storybook docs are written with, ported so those docs
