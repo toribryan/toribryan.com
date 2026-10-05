@@ -734,31 +734,30 @@ function Pitch({
         {variant === "page" ? (
           <>
             <Button
-              size="lg"
+              size="sm"
               nativeButton={false}
               render={
                 <a href={FIBO.catalog} target="_blank" rel="noreferrer" />
               }
-              className="h-[round(up,1.5rem,var(--u))] w-[round(up,8rem,var(--u))]"
             >
               Components
               <ArrowRightIcon data-icon="inline-end" />
             </Button>
             <Button
-              size="lg"
+              size="sm"
               variant="outline"
               nativeButton={false}
-              className="h-[round(up,1.5rem,var(--u))] w-[round(up,6rem,var(--u))] max-sm:aspect-square max-sm:w-auto max-sm:px-0!"
+              className="max-sm:aspect-square max-sm:px-0!"
               render={<Link href="/fibo/figma" />}
             >
               <FigmaIcon data-icon="inline-start" />
               <span className="max-sm:sr-only">Figma</span>
             </Button>
             <Button
-              size="lg"
+              size="sm"
               variant="outline"
               nativeButton={false}
-              className="h-[round(up,1.5rem,var(--u))] w-[round(up,6rem,var(--u))] max-sm:aspect-square max-sm:w-auto max-sm:px-0!"
+              className="max-sm:aspect-square max-sm:px-0!"
               render={<a href={FIBO.github} target="_blank" rel="noreferrer" />}
             >
               <GithubIcon data-icon="inline-start" />
@@ -768,19 +767,17 @@ function Pitch({
         ) : (
           <>
             <Button
-              size="lg"
+              size="sm"
               nativeButton={false}
               render={<Link href="/components" />}
-              className="h-[round(up,1.5rem,var(--u))] w-[round(up,8rem,var(--u))]"
             >
               Components
               <ArrowRightIcon data-icon="inline-end" />
             </Button>
             <Button
-              size="lg"
+              size="sm"
               variant="outline"
               nativeButton={false}
-              className="h-[round(up,1.5rem,var(--u))]"
               render={<Link href="/fibo" />}
             >
               <RabbitIcon data-icon="inline-start" />
