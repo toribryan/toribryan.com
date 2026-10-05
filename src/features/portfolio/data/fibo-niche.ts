@@ -33,6 +33,13 @@ export const NICHE_PARTS: NichePart[] = [
     home: false,
   },
   {
+    name: "rich-text-editor",
+    title: "Rich text editor",
+    description:
+      "Formatted writing on Tiptap: headings, marks, lists, quotes and links from a toolbar or Markdown shortcuts, with an optional character limit.",
+    home: false,
+  },
+  {
     name: "filter-menu",
     title: "Filter menu",
     description:

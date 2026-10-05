@@ -29,6 +29,7 @@ export type ComponentEntry = {
 const LEAD: Record<string, string> = {
   "data-table": "Default",
   "chat-composer": "Default",
+  "rich-text-editor": "Default",
   "filter-menu": "AppliedAsChips",
   "chapter-scrubber": "Default",
   "command-menu": "Default",
