@@ -12,9 +12,7 @@ import * as floatingNav from "./floating-nav"
 import * as inputGroup from "./input-group"
 import * as integrationVisual from "./integration-visual"
 import * as jumpBar from "./jump-bar"
-import * as mapPin from "./map-pin"
 import * as messageList from "./message-list"
-import * as pixelSnail from "./pixel-snail"
 import * as reactions from "./reactions"
 import * as richTextEditor from "./rich-text-editor"
 import * as statusDot from "./status-dot"
@@ -40,9 +38,7 @@ export const EXAMPLES: Record<string, Record<string, ComponentType>> = {
   "input-group": inputGroup,
   "integration-visual": integrationVisual,
   "jump-bar": jumpBar,
-  "map-pin": mapPin,
   "message-list": messageList,
-  "pixel-snail": pixelSnail,
   reactions,
   "rich-text-editor": richTextEditor,
   "status-dot": statusDot,

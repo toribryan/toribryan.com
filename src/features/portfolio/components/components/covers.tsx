@@ -5,16 +5,12 @@ import type { ComponentType } from "react"
 import type { Editor } from "@tiptap/react"
 import {
   BookmarkIcon,
-  BookOpenIcon,
   CalendarIcon,
   CircleDashedIcon,
-  CoffeeIcon,
   CompassIcon,
   DatabaseIcon,
-  FlowerIcon,
   GitBranchIcon,
   HouseIcon,
-  ImageIcon,
   InboxIcon,
   MessageSquareIcon,
   SearchIcon,
@@ -88,9 +84,7 @@ import {
 } from "@/components/fibo/integration-visual"
 import { JumpBar, type JumpBarProps } from "@/components/fibo/jump-bar"
 import { Kbd } from "@/components/fibo/kbd"
-import { MapPin } from "@/components/fibo/map-pin"
 import { MessageList, type ChatMessage } from "@/components/fibo/message-list"
-import { PixelSnailSprite } from "@/components/fibo/pixel-snail"
 import { Reactions, type Reaction } from "@/components/fibo/reactions"
 import { RichTextEditor } from "@/components/fibo/rich-text-editor"
 import { StatusDot, type StatusDotStatus } from "@/components/fibo/status-dot"
@@ -101,11 +95,6 @@ import {
   type TypingPerson,
 } from "@/components/fibo/typing-indicator"
 import { GROUPS } from "@/features/components/examples/command-menu-data"
-import {
-  Pin,
-  PLACES,
-  StandInMap,
-} from "@/features/components/examples/map-pin-data"
 import { useRabbit } from "@/features/components/examples/sticker-avatar-data"
 
 type CoverProps = { active: boolean }
@@ -286,28 +275,6 @@ function ReactionsCover({ active }: CoverProps) {
   return (
     <div ref={root} className="flex size-full items-center justify-center">
       <Reactions defaultReactions={SEEDED} />
-    </div>
-  )
-}
-
-/**
- * Dances while active and looks on, still, otherwise. The sprite's origin is
- * under the middle of its foot, so the view box is the art's box shifted by
- * that.
- */
-function PixelSnailCover({ active }: CoverProps) {
-  return (
-    <div className="flex size-full items-center justify-center text-foreground">
-      <svg
-        // fibo's stories frame the dancing sprite with this box.
-        viewBox="-13 -16 27 18"
-        className="aspect-27/18 h-2/5 w-auto overflow-visible"
-        shapeRendering="crispEdges"
-        fill="currentColor"
-        aria-hidden
-      >
-        <PixelSnailSprite mode="dance" look={active ? null : { x: 1, y: 0 }} />
-      </svg>
     </div>
   )
 }
@@ -841,55 +808,6 @@ function MessageListCover({ active }: CoverProps) {
   )
 }
 
-const PIN_TYPES = ["dot", "icon", "label"] as const
-
-const PIN_ICONS: Record<string, ReactNode> = {
-  cafe: <CoffeeIcon />,
-  books: <BookOpenIcon />,
-  park: <FlowerIcon />,
-  studio: <ImageIcon />,
-}
-
-/**
- * fibo's stand-in city with a pin on each place. While active the pins
- * step through dots, icons and price labels; at rest they're dots. All three
- * sit stacked on each place and cross-fade, so one grows out of the last
- * rather than snapping to a new shape, a beat apart across the map.
- */
-function MapPinCover({ active }: CoverProps) {
-  const step = useCycle(PIN_TYPES.length, 1600, active)
-  return (
-    <ScaledStage width={400}>
-      <StandInMap className="aspect-auto size-full max-w-none rounded-none border-0">
-        {PLACES.map((place, index) => (
-          <Pin key={place.id} place={place}>
-            <div className="grid place-items-center">
-              {PIN_TYPES.map((type, i) => (
-                <div
-                  key={type}
-                  className={cn(
-                    "col-start-1 row-start-1 transition-[opacity,scale] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-                    i === step ? "scale-100 opacity-100" : "scale-75 opacity-0"
-                  )}
-                  style={{ transitionDelay: `${index * 70}ms` }}
-                >
-                  <MapPin
-                    type={type}
-                    icon={PIN_ICONS[place.id]}
-                    label={place.label}
-                    text={place.price}
-                    tabIndex={-1}
-                  />
-                </div>
-              ))}
-            </div>
-          </Pin>
-        ))}
-      </StandInMap>
-    </ScaledStage>
-  )
-}
-
 const QUERY = "Lovelace"
 
 /**
@@ -1156,7 +1074,6 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   reactions: ReactionsCover,
   "token-flow": TokenFlowCover,
   "command-menu": CommandMenuCover,
-  "pixel-snail": PixelSnailCover,
   "floating-nav": FloatingNavCover,
   "sticker-avatar": StickerAvatarCover,
   "typing-indicator": TypingIndicatorCover,
@@ -1164,7 +1081,6 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "input-group": InputGroupCover,
   "empty-state": EmptyStateCover,
   "message-list": MessageListCover,
-  "map-pin": MapPinCover,
   "jump-bar": JumpBarCover,
   calendar: CalendarCover,
   "date-picker": DatePickerCover,
