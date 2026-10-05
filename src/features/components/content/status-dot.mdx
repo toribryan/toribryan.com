@@ -1,0 +1,251 @@
+---
+title: Status dot
+description: A small mark for whether someone is present, away or offline, told apart by shape.
+createdAt: 2026-10-05
+updatedAt: 2026-10-05
+new: true
+---
+
+A status dot says whether someone is present, away or offline. Put it in an
+avatar, a sticker avatar or a badge; the part it sits in places it. The three
+states are a dot, a crescent and a ring, so they read without colour, and a
+page-coloured disc behind the mark keeps a clear edge on a photo or a sticker.
+
+<Exhibit
+  of="status-dot.Default"
+  title="Status dot"
+  description="Present, at the default size."
+>
+<ExhibitCode label="Install">
+
+```bash
+npx shadcn@latest add https://fibo.toribryan.com/r/status-dot.json
+```
+
+It installs `class-variance-authority`, and adds the `success` and `warning`
+tokens if your theme lacks them.
+
+</ExhibitCode>
+<ExhibitCode label="Usage">
+
+```tsx
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { StatusDot } from "@/components/ui/status-dot"
+
+export function Member() {
+  return (
+    <Avatar>
+      <AvatarImage src="/ana.jpg" alt="Ana Ruiz" />
+      <AvatarFallback>AR</AvatarFallback>
+      <StatusDot status="away" />
+    </Avatar>
+  )
+}
+```
+
+Let the dot say the status, or the text beside it, never both: pass
+`label={null}` when the words are already on screen.
+
+</ExhibitCode>
+<ExhibitCode label="Props">
+
+| Prop      | Type                                | Default     | Description                                                                                                |
+| --------- | ----------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------- |
+| `status`  | `"present" \| "away" \| "offline"`  |             | A dot, a crescent or a ring, so status reads without colour.                                               |
+| `label`   | `string \| null`                    | The status  | The spoken status, for translation. Defaults to Present, Away or Offline; `null` makes the dot decorative. |
+| `variant` | `"color" \| "mono"`                 | `"color"`   | Coloured with the `success`, `warning` and `muted-foreground` tokens, or drawn in the text colour.         |
+| `size`    | `"xs" \| "sm" \| "default" \| "lg"` | `"default"` | 8, 10, 12 or 16 pixels. A host can size it too; Avatar matches it to its own size.                         |
+
+It also takes every prop of a `span`, except `children`.
+
+</ExhibitCode>
+</Exhibit>
+
+## Examples
+
+<ExhibitGrid>
+<Exhibit
+  of="status-dot.Statuses"
+  title="Status by shape"
+  description="Present is a dot, away a crescent, offline a ring."
+>
+<ExhibitCode>
+
+```tsx
+<StatusDot status="present" label={null} />
+<StatusDot status="away" label={null} />
+<StatusDot status="offline" label={null} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="status-dot.Mono"
+  title="Without colour"
+  description="Mono draws the marks in the text colour, for places where colour would compete, such as a dense list."
+>
+<ExhibitCode>
+
+```tsx
+<StatusDot status="present" variant="mono" />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="status-dot.Sizes"
+  title="Sizes"
+  description="xs, sm, default and lg: 8, 10, 12 and 16 pixels."
+>
+<ExhibitCode>
+
+```tsx
+<StatusDot status="present" size="lg" />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="status-dot.OnAvatars"
+  title="On avatars"
+  description="Avatar pins it to the corner. Sticker avatar sets it on the paper, turned against the tilt, and adds its label to the sticker's name."
+>
+<ExhibitCode>
+
+```tsx
+<Avatar>
+  <AvatarImage src={bonzo} alt="Bonzo" />
+  <AvatarFallback>BO</AvatarFallback>
+  <StatusDot status="present" />
+</Avatar>
+
+<StickerAvatar name="Bonzo" src={bonzo} size={56}>
+  <StatusDot status="away" />
+</StickerAvatar>
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="status-dot.InABadge"
+  title="In a badge"
+  description="A badge leads with it. The badge's text already says the status, so the dot gets label={null}."
+>
+<ExhibitCode>
+
+```tsx
+<Badge variant="outline">
+  <StatusDot status="present" label={null} />
+  Online
+</Badge>
+```
+
+</ExhibitCode>
+</Exhibit>
+</ExhibitGrid>
+
+## Anatomy
+
+A page-coloured disc with the mark on it, plus a visually hidden label.
+
+<Exhibit of="status-dot.Anatomy" title="The dot" description="Away, drawn large.">
+<ExhibitCode label="Structure">
+
+```text
+StatusDot               status-dot
+├─ svg                  (hidden from screen readers)
+│  ├─ disc              the page colour
+│  └─ mark              a dot, a crescent or a ring
+└─ label                (visually hidden, unless label is null)
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="status-dot"',
+      element: "The dot",
+      when: "Always. Hosts place it through this slot.",
+    },
+    {
+      attribute: "data-status",
+      element: "The dot",
+      when: (
+        <>
+          Always. <code>present</code>, <code>away</code> or{" "}
+          <code>offline</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-variant",
+      element: "The dot",
+      when: (
+        <>
+          Always. <code>color</code> or <code>mono</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-size",
+      element: "The dot",
+      when: (
+        <>
+          Always. <code>xs</code>, <code>sm</code>, <code>default</code> or{" "}
+          <code>lg</code>.
+        </>
+      ),
+    },
+  ]}
+/>
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Use it for presence: whether someone is here, away or gone. For a state of a thing, such as Paid or Failed, use a Badge.",
+    "Pass label to translate the status, or to say it the way your product does, such as Online or Here.",
+    "Keep it on the avatar or in the badge it belongs to, not floating beside a name on its own.",
+    "Use mono where colour would compete; the shapes still tell the states apart.",
+  ]}
+/>
+
+## Best practices
+
+<ComponentRules
+  rules={[
+    {
+      positive: {
+        component: <Live of="status-dot.DoSilence" />,
+        description: "Silence the dot when the word beside it says the status.",
+      },
+      negative: {
+        component: <Live of="status-dot.DontSpeakTwice" />,
+        description:
+          "Don't let both speak, or screen readers hear the status twice.",
+      },
+    },
+  ]}
+/>
+
+## Accessibility
+
+There's nothing to focus: the dot only reports, so it never enters the tab
+order.
+
+<UsageGuidelines
+  guidelines={[
+    "The status is in a visually hidden span, read after whatever comes before it: the photo's alt in an Avatar, the name in a Sticker avatar.",
+    "A Sticker avatar is one image to screen readers, so the dot's label joins its name through aria-labelledby: Ana Ruiz, Away.",
+    "Shape carries the status as well as colour, so it holds for colour blindness and in mono.",
+  ]}
+/>
+
+## Related components
+
+<RelatedComponents names={["Avatar", "Sticker avatar", "Badge"]} />

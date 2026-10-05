@@ -39,6 +39,7 @@ const LEAD: Record<string, string> = {
   "sticker-avatar": "Default",
   "map-pin": "Default",
   "typing-indicator": "InAConversation",
+  "status-dot": "Default",
 }
 
 // The parts also published on 21st.dev, under the same names.

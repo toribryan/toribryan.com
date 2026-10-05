@@ -9,6 +9,7 @@ import * as integrationVisual from "./integration-visual"
 import * as mapPin from "./map-pin"
 import * as pixelSnail from "./pixel-snail"
 import * as reactions from "./reactions"
+import * as statusDot from "./status-dot"
 import * as stickerAvatar from "./sticker-avatar"
 import * as tokenFlow from "./token-flow"
 import * as typingIndicator from "./typing-indicator"
@@ -28,6 +29,7 @@ export const EXAMPLES: Record<string, Record<string, ComponentType>> = {
   "map-pin": mapPin,
   "pixel-snail": pixelSnail,
   reactions,
+  "status-dot": statusDot,
   "sticker-avatar": stickerAvatar,
   "token-flow": tokenFlow,
   "typing-indicator": typingIndicator,

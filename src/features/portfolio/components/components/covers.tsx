@@ -23,6 +23,7 @@ import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { Avatar, AvatarFallback } from "@/components/fibo/avatar"
 import { Badge } from "@/components/fibo/badge"
 import {
   ChapterScrubber,
@@ -694,6 +695,27 @@ function TypingIndicatorCover({ active }: CoverProps) {
   )
 }
 
+const PRESENCE: StatusDotStatus[] = ["present", "away", "offline"]
+const MEMBERS = ["AR", "BK", "CY"]
+
+/**
+ * Three avatars, one in each status. While active each steps on to the next
+ * shape, a beat out of step with its neighbours.
+ */
+function StatusDotCover({ active }: CoverProps) {
+  const step = useCycle(PRESENCE.length, 1200, active)
+  return (
+    <div className="flex size-full items-center justify-center gap-4 max-sm:[zoom:0.8] sm:[zoom:1.3]">
+      {MEMBERS.map((initials, i) => (
+        <Avatar key={initials} size="lg">
+          <AvatarFallback>{initials}</AvatarFallback>
+          <StatusDot status={PRESENCE[(i + step) % PRESENCE.length]!} />
+        </Avatar>
+      ))}
+    </div>
+  )
+}
+
 const PIN_TYPES = ["dot", "icon", "label"] as const
 
 const PIN_ICONS: Record<string, ReactNode> = {
@@ -755,6 +777,7 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "floating-nav": FloatingNavCover,
   "sticker-avatar": StickerAvatarCover,
   "typing-indicator": TypingIndicatorCover,
+  "status-dot": StatusDotCover,
   "map-pin": MapPinCover,
 }
 
