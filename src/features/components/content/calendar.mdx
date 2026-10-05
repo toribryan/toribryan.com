@@ -54,23 +54,27 @@ first, with both after the second. Wait for `to` before you act on it.
 </ExhibitCode>
 <ExhibitCode label="Props">
 
-| Prop             | Type                         | Default                             | Description                                                                                    |
-| ---------------- | ---------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `mode`           | `"single" \| "range"`        | `"single"`                          | `single` picks one day; `range` picks a start and an end.                                      |
-| `value`          | `Date \| DraftRange \| null` |                                     | The selected day or range, when you control it. In a range, `to` is missing between the picks. |
-| `defaultValue`   | `Date \| DraftRange \| null` |                                     | The selection at first, when the calendar keeps its own state.                                 |
-| `onChange`       | `(value) => void`            |                                     | Called with the day picked, or after each pick of a range.                                     |
-| `type`           | `"paged" \| "scroll"`        | `"paged"`                           | `paged` shows whole months with arrows; `scroll` stacks a year either side in one scroll.      |
-| `size`           | `"default" \| "lg"`          | `"default"`                         | Day cells at 36 pixels, or 44 for touch.                                                       |
-| `months`         | `1 \| 2`                     | `1`                                 | Months shown side by side in the paged type. They stack where there isn't room.                |
-| `month`          | `Date`                       |                                     | The first month shown, when you control it.                                                    |
-| `defaultMonth`   | `Date`                       | The selection's month, then today's | The first month shown at first.                                                                |
-| `onMonthChange`  | `(month: Date) => void`      |                                     | Called with the first month shown when it changes.                                             |
-| `minDate`        | `Date \| null`               |                                     | The earliest day that can be picked.                                                           |
-| `maxDate`        | `Date \| null`               |                                     | The latest day that can be picked.                                                             |
-| `isDateDisabled` | `(date: Date) => boolean`    |                                     | Return true for a day that can't be picked, such as a weekend.                                 |
-| `weekStartsOn`   | `0 \| 1`                     | `0`                                 | The first column: 0 for Sunday, 1 for Monday.                                                  |
-| `locale`         | `string`                     | `"en-US"`                           | A BCP 47 locale for month and weekday names and day numbers.                                   |
+| Prop             | Type                             | Default                             | Description                                                                                                                       |
+| ---------------- | -------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `mode`           | `"single" \| "range"`            | `"single"`                          | `single` picks one day; `range` picks a start and an end.                                                                         |
+| `value`          | `Date \| DraftRange \| null`     |                                     | The selected day or range, when you control it. In a range, `to` is missing between the picks.                                    |
+| `defaultValue`   | `Date \| DraftRange \| null`     |                                     | The selection at first, when the calendar keeps its own state.                                                                    |
+| `onChange`       | `(value) => void`                |                                     | Called with the day picked, or after each pick of a range.                                                                        |
+| `type`           | `"paged" \| "scroll" \| "month"` | `"paged"`                           | `paged` shows whole months with arrows; `scroll` stacks a year either side in one scroll; `month` is a full-page month of events. |
+| `events`         | `CalendarEvent[]`                |                                     | With `type="month"`, the events to show, each on the day it starts.                                                               |
+| `onEventClick`   | `(event: CalendarEvent) => void` |                                     | With `type="month"`, makes the events in the selected day's list buttons.                                                         |
+| `labels`         | `Partial<CalendarLabels>`        |                                     | The words it writes for itself, for translation: Today, +N more, No events, All day.                                              |
+| `children`       | `ReactNode`                      |                                     | With `type="month"`, actions at the end of the header.                                                                            |
+| `size`           | `"default" \| "lg"`              | `"default"`                         | Day cells at 36 pixels, or 44 for touch.                                                                                          |
+| `months`         | `1 \| 2`                         | `1`                                 | Months shown side by side in the paged type. They stack where there isn't room.                                                   |
+| `month`          | `Date`                           |                                     | The first month shown, when you control it.                                                                                       |
+| `defaultMonth`   | `Date`                           | The selection's month, then today's | The first month shown at first.                                                                                                   |
+| `onMonthChange`  | `(month: Date) => void`          |                                     | Called with the first month shown when it changes.                                                                                |
+| `minDate`        | `Date \| null`                   |                                     | The earliest day that can be picked.                                                                                              |
+| `maxDate`        | `Date \| null`                   |                                     | The latest day that can be picked.                                                                                                |
+| `isDateDisabled` | `(date: Date) => boolean`        |                                     | Return true for a day that can't be picked, such as a weekend.                                                                    |
+| `weekStartsOn`   | `0 \| 1`                         | `0`                                 | The first column: 0 for Sunday, 1 for Monday.                                                                                     |
+| `locale`         | `string`                         | `"en-US"`                           | A BCP 47 locale for month and weekday names and day numbers.                                                                      |
 
 It also takes every prop of a `div`, except `children`.
 
@@ -161,6 +165,92 @@ shrink below their size.
 scroll, under a weekday header that stays put. Use it with `size="lg"`,
 which makes each day 44 pixels, in a drawer on a phone. Date picker's
 drawer, which it opens below the `sm` breakpoint, is built this way.
+
+## Month view
+
+`type="month"` is a full-page month of events: the month and its date span as
+the title, Previous, Today and Next, and a grid of day cells that fills its
+parent. Each cell shows its day and the first two events as cards, then a
+count of the rest. Picking a day lists all its events, beside the grid from
+1024 pixels wide and under it below that. It picks one day, with the same
+`value`, `onChange`, `month` and bounds as the other types.
+
+<Exhibit
+  of="calendar.Month"
+  title="Month view"
+  description="Pick a day; its events list beside the grid. Laid out at 1100 pixels and scaled to fit."
+>
+<ExhibitCode>
+
+```tsx
+<div className="flex h-dvh flex-col p-6">
+  <Calendar
+    type="month"
+    events={events}
+    value={day}
+    onChange={setDay}
+    onEventClick={(event) => openEvent(event.id)}
+  />
+</div>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Month on a phone
+
+The layout follows the calendar's own width, not the screen's. Below 768
+pixels the cells shrink to the day and up to three dots, and the selected
+day's events fill the space under the grid.
+
+<Exhibit
+  of="calendar.MonthOnAPhone"
+  title="On a phone"
+  description="Tap a day with dots to list its events."
+>
+<ExhibitCode>
+
+```tsx
+<Calendar type="month" events={events} />
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### With actions
+
+Children go at the end of the header, for actions such as search and a new
+event. The other types ignore children.
+
+<Exhibit
+  of="calendar.MonthWithActions"
+  title="With actions"
+  description="Search and New event, passed in as children."
+>
+<ExhibitCode>
+
+```tsx
+type CalendarEvent = {
+  id: string
+  title: string
+  start: Date // the day it shows on
+  end?: Date // same day
+  allDay?: boolean
+}
+;<Calendar type="month" events={events}>
+  <Button size="sm" onClick={newEvent}>
+    <PlusIcon data-icon="inline-start" />
+    New event
+  </Button>
+</Calendar>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+The month view fills its parent, so give the parent a height. It picks one
+day: with `mode="range"` it draws the paged type and warns in the console.
+Its English words (Today, +N more, No events, All day) come from `labels`.
 
 ## Anatomy
 
