@@ -166,9 +166,13 @@ Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's pro
         },
         employmentType: "Full-time",
         icon: <PaletteIcon />,
-        description: `- Led the full Proctorio rebrand: logo, color, visual language, and assets.
+        description: `- Hired full time straight out of the internship.
+- Led the full Proctorio rebrand: logo, color, visual language, and assets, grounded in personas, market strategy, and EdTech competitive research.
+- Designed the ProctorioX conference branding and ran its production across departments and attendees.
+- Designed conference sites and landing pages, managing vendors and templates across simultaneous campaigns.
 - Designed and documented components for Proctorio's design system, ready for engineering handoff.
-- Designed the ProctorioX conference branding.`,
+- Built guide sites reaching thousands of test takers and institutions, plus internal tools and dashboards.
+- Built my own first design system from scratch with a Dribbble mentor formerly at Duolingo.`,
         skills: [
           "Brand Design",
           "Visual Design",
@@ -188,8 +192,11 @@ Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's pro
         },
         employmentType: "Internship",
         icon: <GraduationCapIcon />,
-        description: `- Proctorio's first full-time design intern.
-- Designed conference and sales landing pages, print collateral, and the brand template system.`,
+        description: `- Became Proctorio's first full-time design intern, helping start its design internship program.
+- Designed landing pages for conferences, sales, and website updates.
+- Designed print and conference collateral, from booths and badges to agendas and swag, managing vendors through production.
+- Built brand template systems for decks, documents, email, social, and the blog.
+- Moved from Adobe Creative Cloud to Figma, the start of my shift into UI/UX.`,
         skills: [
           "Graphic Design",
           "Print Design",
