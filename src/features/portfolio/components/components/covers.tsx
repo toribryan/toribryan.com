@@ -14,11 +14,14 @@ import {
   GitBranchIcon,
   HouseIcon,
   ImageIcon,
+  InboxIcon,
   MessageSquareIcon,
   SearchIcon,
+  SearchXIcon,
   SignalHighIcon,
   TagIcon,
   UserIcon,
+  UsersIcon,
   XIcon,
 } from "lucide-react"
 import { useTheme } from "next-themes"
@@ -27,6 +30,7 @@ import { cn } from "@/lib/utils"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { Avatar, AvatarFallback } from "@/components/fibo/avatar"
 import { Badge } from "@/components/fibo/badge"
+import { Button } from "@/components/fibo/button"
 import {
   ChapterScrubber,
   type Chapter,
@@ -42,6 +46,13 @@ import {
   DataTableToolbar,
   useDataTable,
 } from "@/components/fibo/data-table"
+import {
+  EmptyState,
+  EmptyStateActions,
+  EmptyStateDescription,
+  EmptyStateMedia,
+  EmptyStateTitle,
+} from "@/components/fibo/empty-state"
 import {
   FilterMenu,
   type FilterField,
@@ -724,6 +735,59 @@ function StatusDotCover({ active }: CoverProps) {
   )
 }
 
+const EMPTY_STATES = [
+  {
+    icon: <UsersIcon />,
+    title: "No members yet",
+    description: "Invite people to work on this project with you.",
+    action: (
+      <Button size="sm" tabIndex={-1}>
+        Invite members
+      </Button>
+    ),
+  },
+  {
+    icon: <SearchXIcon />,
+    title: "No matching members",
+    description: "Try another search, or clear the filters.",
+    action: (
+      <Button size="sm" variant="outline" tabIndex={-1}>
+        Clear filters
+      </Button>
+    ),
+  },
+  {
+    icon: <InboxIcon />,
+    title: "You're all caught up",
+  },
+]
+
+/**
+ * The empty states from fibo's stories. While active it steps from first run
+ * to no matches to caught up; at rest it holds on first run.
+ */
+function EmptyStateCover({ active }: CoverProps) {
+  const step = useCycle(EMPTY_STATES.length, 1800, active)
+  const state = EMPTY_STATES[active ? step : 0]!
+  return (
+    <div className="flex size-full items-center justify-center p-2 max-sm:[zoom:0.8]">
+      <EmptyState
+        key={state.title}
+        className="animate-in py-0 duration-300 fade-in-0"
+      >
+        <EmptyStateMedia>{state.icon}</EmptyStateMedia>
+        <EmptyStateTitle>{state.title}</EmptyStateTitle>
+        {state.description ? (
+          <EmptyStateDescription>{state.description}</EmptyStateDescription>
+        ) : null}
+        {state.action ? (
+          <EmptyStateActions>{state.action}</EmptyStateActions>
+        ) : null}
+      </EmptyState>
+    </div>
+  )
+}
+
 const PIN_TYPES = ["dot", "icon", "label"] as const
 
 const PIN_ICONS: Record<string, ReactNode> = {
@@ -827,6 +891,7 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "typing-indicator": TypingIndicatorCover,
   "status-dot": StatusDotCover,
   "input-group": InputGroupCover,
+  "empty-state": EmptyStateCover,
   "map-pin": MapPinCover,
 }
 
