@@ -87,6 +87,15 @@ export const NICHE_PARTS: NichePart[] = [
     home: false,
   },
   {
+    name: "message-list",
+    figma: "567-9879",
+    title: "Message list",
+    shelf: "base",
+    description:
+      "A conversation that groups each person's messages under one heading, with a single tab stop.",
+    home: false,
+  },
+  {
     name: "map-pin",
     figma: "601-75",
     title: "Map pin",
@@ -170,8 +179,10 @@ const BASE_GROUPS: Record<string, string> = {
   "empty-state": "feedback",
   input: "forms",
   "input-group": "forms",
+  "jump-bar": "actions",
   kbd: "display",
   menu: "overlays",
+  "message-list": "display",
   pagination: "navigation",
   select: "forms",
   sheet: "overlays",

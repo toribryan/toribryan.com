@@ -73,6 +73,7 @@ import {
 } from "@/components/fibo/integration-visual"
 import { Kbd } from "@/components/fibo/kbd"
 import { MapPin } from "@/components/fibo/map-pin"
+import { MessageList, type ChatMessage } from "@/components/fibo/message-list"
 import { PixelSnailSprite } from "@/components/fibo/pixel-snail"
 import { Reactions, type Reaction } from "@/components/fibo/reactions"
 import { StatusDot, type StatusDotStatus } from "@/components/fibo/status-dot"
@@ -788,6 +789,44 @@ function EmptyStateCover({ active }: CoverProps) {
   )
 }
 
+const COVER_ANA = { id: "ana", name: "Ana Ruiz" }
+const COVER_BEN = { id: "ben", name: "Ben Okafor" }
+
+const COVER_LINES: [ChatMessage["author"], number, string][] = [
+  [COVER_BEN, 12, "Looked through it. Is dark mode in there too?"],
+  [COVER_BEN, 13, "The diff is in #58."],
+  [COVER_ANA, 15, "Both themes, and the drift check passes."],
+  [COVER_ANA, 16, "Merging after lunch unless anyone shouts."],
+  [COVER_BEN, 18, "Ship it."],
+]
+
+const COVER_MESSAGES: ChatMessage[] = COVER_LINES.map(
+  ([author, minute, content], i) => ({
+    id: String(i),
+    author,
+    sentAt: new Date(2026, 9, 1, 9, minute),
+    content,
+  })
+)
+
+/**
+ * A morning's conversation. While active, messages arrive one at a time and
+ * fold into their author's group; at rest it holds the first three.
+ */
+function MessageListCover({ active }: CoverProps) {
+  const step = useCycle(COVER_MESSAGES.length - 1, 1400, active)
+  return (
+    <ScaledStage width={360}>
+      <div className="flex size-full flex-col justify-end px-4 py-5">
+        <MessageList
+          aria-label="Sample conversation"
+          messages={COVER_MESSAGES.slice(0, active ? step + 2 : 3)}
+        />
+      </div>
+    </ScaledStage>
+  )
+}
+
 const PIN_TYPES = ["dot", "icon", "label"] as const
 
 const PIN_ICONS: Record<string, ReactNode> = {
@@ -892,6 +931,7 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "status-dot": StatusDotCover,
   "input-group": InputGroupCover,
   "empty-state": EmptyStateCover,
+  "message-list": MessageListCover,
   "map-pin": MapPinCover,
 }
 

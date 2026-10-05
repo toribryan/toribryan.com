@@ -42,6 +42,7 @@ const LEAD: Record<string, string> = {
   "status-dot": "Default",
   "input-group": "Default",
   "empty-state": "Default",
+  "message-list": "Default",
 }
 
 // The parts also published on 21st.dev, under the same names.
