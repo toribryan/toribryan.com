@@ -5,6 +5,7 @@ import * as chapterScrubber from "./chapter-scrubber"
 import * as chatComposer from "./chat-composer"
 import * as commandMenu from "./command-menu"
 import * as dataTable from "./data-table"
+import * as datePicker from "./date-picker"
 import * as emptyState from "./empty-state"
 import * as filterMenu from "./filter-menu"
 import * as floatingNav from "./floating-nav"
@@ -31,6 +32,7 @@ export const EXAMPLES: Record<string, Record<string, ComponentType>> = {
   "chat-composer": chatComposer,
   "command-menu": commandMenu,
   "data-table": dataTable,
+  "date-picker": datePicker,
   "empty-state": emptyState,
   "filter-menu": filterMenu,
   "floating-nav": floatingNav,

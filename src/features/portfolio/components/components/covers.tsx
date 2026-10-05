@@ -59,6 +59,7 @@ import {
   DataTableToolbar,
   useDataTable,
 } from "@/components/fibo/data-table"
+import { DateRangePicker } from "@/components/fibo/date-picker"
 import {
   EmptyState,
   EmptyStateActions,
@@ -1040,6 +1041,51 @@ function CalendarCover({ active }: CoverProps) {
   )
 }
 
+const PICKER_START = new Date(2026, 9, 5)
+// The first pick, the end sweeping out a day at a time, then a hold.
+const PICKER_STEPS = 22
+
+function rangeAt(step: number) {
+  if (step === 0) return { from: PICKER_START }
+  const days = Math.min(step, 16)
+  return {
+    from: PICKER_START,
+    to: new Date(2026, 9, PICKER_START.getDate() + days),
+  }
+}
+
+/**
+ * The range trigger over its open calendar. While active a start is picked
+ * and the end sweeps out across the month, the trigger following; at rest it
+ * holds a week.
+ */
+function DatePickerCover({ active }: CoverProps) {
+  const step = useCycle(PICKER_STEPS, 140, active)
+  const range = active ? rangeAt(step) : rangeAt(6)
+  return (
+    <ScaledStage width={500}>
+      <div className="flex size-full flex-col items-center justify-center gap-2">
+        <DateRangePicker
+          label="Report period"
+          type="popover"
+          value={range.to ? { from: range.from, to: range.to } : null}
+          placeholder="Pick an end date"
+          tabIndex={-1}
+          className="w-72"
+        />
+        <div className="w-72 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-lg">
+          <Calendar
+            mode="range"
+            defaultMonth={PICKER_START}
+            value={range}
+            className="p-3"
+          />
+        </div>
+      </div>
+    </ScaledStage>
+  )
+}
+
 export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "data-table": DataTableCover,
   "chat-composer": ChatComposerCover,
@@ -1060,6 +1106,7 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "map-pin": MapPinCover,
   "jump-bar": JumpBarCover,
   calendar: CalendarCover,
+  "date-picker": DatePickerCover,
 }
 
 /**
