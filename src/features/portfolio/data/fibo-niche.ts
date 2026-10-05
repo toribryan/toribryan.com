@@ -60,6 +60,15 @@ export const NICHE_PARTS: NichePart[] = [
     home: false,
   },
   {
+    name: "status-dot",
+    figma: "691-2",
+    title: "Status dot",
+    shelf: "base",
+    description:
+      "A small mark for whether someone is present, away or offline, told apart by shape.",
+    home: false,
+  },
+  {
     name: "map-pin",
     figma: "601-75",
     title: "Map pin",
@@ -145,6 +154,7 @@ const BASE_GROUPS: Record<string, string> = {
   pagination: "navigation",
   select: "forms",
   sheet: "overlays",
+  "status-dot": "display",
   table: "display",
   tooltip: "overlays",
   "typing-indicator": "feedback",
