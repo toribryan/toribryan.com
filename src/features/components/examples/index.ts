@@ -5,6 +5,7 @@ import * as commandMenu from "./command-menu"
 import * as dataTable from "./data-table"
 import * as filterMenu from "./filter-menu"
 import * as floatingNav from "./floating-nav"
+import * as inputGroup from "./input-group"
 import * as integrationVisual from "./integration-visual"
 import * as mapPin from "./map-pin"
 import * as pixelSnail from "./pixel-snail"
@@ -25,6 +26,7 @@ export const EXAMPLES: Record<string, Record<string, ComponentType>> = {
   "data-table": dataTable,
   "filter-menu": filterMenu,
   "floating-nav": floatingNav,
+  "input-group": inputGroup,
   "integration-visual": integrationVisual,
   "map-pin": mapPin,
   "pixel-snail": pixelSnail,

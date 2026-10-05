@@ -15,9 +15,11 @@ import {
   HouseIcon,
   ImageIcon,
   MessageSquareIcon,
+  SearchIcon,
   SignalHighIcon,
   TagIcon,
   UserIcon,
+  XIcon,
 } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -50,9 +52,15 @@ import {
   type FloatingNavItem,
 } from "@/components/fibo/floating-nav"
 import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/fibo/input-group"
+import {
   IntegrationVisual,
   type IntegrationItem,
 } from "@/components/fibo/integration-visual"
+import { Kbd } from "@/components/fibo/kbd"
 import { MapPin } from "@/components/fibo/map-pin"
 import { PixelSnailSprite } from "@/components/fibo/pixel-snail"
 import { Reactions, type Reaction } from "@/components/fibo/reactions"
@@ -765,6 +773,46 @@ function MapPinCover({ active }: CoverProps) {
   )
 }
 
+const QUERY = "Lovelace"
+
+/**
+ * A search field. While active it takes focus, "Lovelace" is typed a letter
+ * at a time and the clear button replaces the key hint, then it holds and
+ * starts over; at rest it's empty.
+ */
+function InputGroupCover({ active }: CoverProps) {
+  const step = useCycle(QUERY.length + 6, 180, active)
+  const value = active ? QUERY.slice(0, Math.max(0, step - 1)) : ""
+  return (
+    <div className="flex size-full items-center justify-center p-4 max-sm:[zoom:0.8] sm:[zoom:1.15]">
+      <InputGroup
+        className={cn(
+          "w-56 max-w-full",
+          active && "border-ring ring-[3px] ring-ring-subtle"
+        )}
+      >
+        <InputGroupAddon>
+          <SearchIcon aria-hidden="true" />
+        </InputGroupAddon>
+        <InputGroupInput
+          aria-label="Search people"
+          placeholder="Search people"
+          value={value}
+          readOnly
+          tabIndex={-1}
+        />
+        <InputGroupAddon align="inline-end">
+          {value ? (
+            <XIcon aria-hidden="true" className="size-3.5" />
+          ) : (
+            <Kbd>/</Kbd>
+          )}
+        </InputGroupAddon>
+      </InputGroup>
+    </div>
+  )
+}
+
 export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "data-table": DataTableCover,
   "filter-menu": FilterMenuCover,
@@ -778,6 +826,7 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "sticker-avatar": StickerAvatarCover,
   "typing-indicator": TypingIndicatorCover,
   "status-dot": StatusDotCover,
+  "input-group": InputGroupCover,
   "map-pin": MapPinCover,
 }
 

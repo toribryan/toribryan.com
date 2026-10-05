@@ -69,6 +69,15 @@ export const NICHE_PARTS: NichePart[] = [
     home: false,
   },
   {
+    name: "input-group",
+    figma: "707-59",
+    title: "Input group",
+    shelf: "base",
+    description:
+      "An input with an icon, text or button beside it, drawn as one field.",
+    home: false,
+  },
+  {
     name: "map-pin",
     figma: "601-75",
     title: "Map pin",
@@ -148,7 +157,9 @@ const BASE_GROUPS: Record<string, string> = {
   button: "actions",
   checkbox: "forms",
   "data-table": "display",
+  field: "forms",
   input: "forms",
+  "input-group": "forms",
   kbd: "display",
   menu: "overlays",
   pagination: "navigation",
