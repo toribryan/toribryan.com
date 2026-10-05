@@ -45,6 +45,7 @@ const LEAD: Record<string, string> = {
   "empty-state": "Default",
   "message-list": "Default",
   "jump-bar": "Default",
+  calendar: "Default",
 }
 
 // The parts also published on 21st.dev, under the same names.
