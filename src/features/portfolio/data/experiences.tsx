@@ -64,7 +64,7 @@ export const EXPERIENCES: Experience[] = [
         description: `- Partnered with SLV Technologies on web and product design for their clients.
 - Designed the Review Center video player and action bar in Proctorio's [Integrity](https://proctorio.com/solutions/integrity).
 - Designed Proctorio internal tools, dashboards, and 12+ documented design system components.
-- Redesigned Proctorio's [help center](https://proctorio.com/support/hc) for students, administrators, and IT admins.
+- Redesigned Proctorio's help center for students, administrators, and IT admins.
 - Built brand identities for Hydra Endura and Mincredo.`,
         skills: [
           "Design Systems",
