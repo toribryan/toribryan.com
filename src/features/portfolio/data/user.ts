@@ -31,6 +31,7 @@ export const USER: User = {
   about: `- I’m a Product Designer who specializes in design systems and ships the front end I design.
 - Five years building B2B products, component libraries, and the tooling that connects design to production code.
 - Always exploring new tools and ways to create. Currently learning the drums, and studying the history of the golden ratio and its relevance to design today.
+- When I log off, you'll usually find me gaming on the PC I built myself, piece by piece.
 `,
   avatar: "/images/about/photo-1.jpg",
   headerAvatar: "/images/header/avatar.svg",
