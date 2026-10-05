@@ -2,7 +2,7 @@
 title: Data table
 description: A table for lists people work through, with sorting, search, filters, selection, bulk actions, locked rows, pinned columns and a phone layout.
 createdAt: 2026-10-02
-updatedAt: 2026-10-04
+updatedAt: 2026-10-05
 new: true
 ---
 
@@ -91,7 +91,9 @@ export function Members({ members }: { members: Member[] }) {
 Every row needs an `id`, or pass `getRowId`: selection is kept by id, so it
 survives sorting, filtering and paging. Keep `columns` and `data` stable
 between renders. The first primary or person column names each row's
-checkbox. Every row shows until the table has a page size.
+checkbox. Every row shows until you give the table a page size, in
+`initialState.pagination` or a pagination atom, and put DataTablePagination
+in the footer.
 
 </ExhibitCode>
 <ExhibitCode label="Column meta">
@@ -122,107 +124,13 @@ type DataTableColumnMeta = {
 `data` and `columns` among them, plus `lockedReason`, a function that says
 why a row can't be selected.
 
-</ExhibitCode>
-</Exhibit>
-
-## Anatomy
-
-A native table inside a box that measures its own width. The toolbar sits
-above it, and the cards replace it on a narrow screen. Both draw the rows
-from the same TanStack row model.
-
-<Exhibit
-  of="data-table.ColumnVisibility"
-  title="Column visibility and pinning"
-  description="Columns shows and hides every column that can hide; Last active starts hidden. Scroll it sideways: the name and the actions stay put, with a shadow where there's more under them."
->
-<ExhibitCode label="Structure">
-
-```text
-DataTable                   data-table
-├─ DataTableToolbar         data-table-toolbar
-│  ├─ DataTableFilters      data-table-filters       (idle)
-│  │  ├─ DataTableSearch    data-table-search-field
-│  │  └─ DataTableFacetFilter data-table-facet-filter
-│  ├─ DataTableActions      data-table-actions       (idle)
-│  │  ├─ DataTableColumns   data-table-columns
-│  │  └─ DataTableAction    data-table-action
-│  └─ DataTableBulkActions  data-table-bulk-actions  (selecting)
-├─ DataTableContent         data-table-content       (a Table)
-│  ├─ DataTableHeader       data-table-header
-│  │  └─ Head               data-table-head
-│  └─ DataTableBody         data-table-body
-│     └─ Row                data-table-row
-│        └─ Cell            data-table-cell
-├─ DataTableCards           data-table-cards         (narrow, cards)
-│  └─ DataTableCard         data-table-card
-└─ DataTableFooter          data-table-footer
-   ├─ DataTablePagination   data-table-pagination
-   └─ DataTableSelectionCount data-table-selection-count
-```
-
-</ExhibitCode>
-<ExhibitCode label="Data attributes">
-
-<DataAttributes
-  rows={[
-    {
-      attribute: "data-narrow",
-      element: "The root",
-      when: "It's narrower than 32rem.",
-    },
-    {
-      attribute: 'data-layout="table" | "cards"',
-      element: "The root",
-      when: "Always: which of the table and the cards is showing.",
-    },
-    {
-      attribute: "data-scroll-start, data-scroll-end",
-      element: "The root",
-      when: "There's more table to scroll to on that side.",
-    },
-    {
-      attribute: "data-selecting",
-      element: "The toolbar",
-      when: "Rows are selected and it shows bulk actions.",
-    },
-    {
-      attribute: "data-filtered",
-      element: "A facet filter button",
-      when: "One or more of its values are ticked.",
-    },
-    {
-      attribute: 'aria-sort="ascending" | "descending"',
-      element: "A column header",
-      when: "The table is sorted by that column, on that head only.",
-    },
-    {
-      attribute: "data-row-id",
-      element: "A row",
-      when: "Always: the row's id.",
-    },
-    {
-      attribute: "data-selected",
-      element: "A row or card",
-      when: "It's selected.",
-    },
-    {
-      attribute: "data-locked",
-      element: "A row or card",
-      when: "lockedReason gives it a reason.",
-    },
-    {
-      attribute: "data-type, data-pinned",
-      element: "A head or cell",
-      when: "Always for type; for pinned, when the column is pinned.",
-    },
-  ]}
-/>
+DataTableFacetFilter and DataTableColumns take a `label` for their button.
+A facet filter's defaults to its column's `meta.label`, then its header.
 
 </ExhibitCode>
 </Exhibit>
 
-## Variants and states
+## Examples
 
 ### Search, filters and pages
 
@@ -300,6 +208,10 @@ const table = useDataTable({
 })
 ```
 
+The codecs hold up to a hand-edited link: a sort with no direction sorts
+up, a column sorted or filtered twice counts once, and a page that isn't a
+whole number opens the first.
+
 Selection, column visibility and pinning stay in the table. For rows that
 page on a server, set `manualSorting`, `manualFiltering`,
 `manualPagination` and `rowCount`, and load the rows the atoms describe.
@@ -345,7 +257,8 @@ column.accessor("name", {
 
 Every table's bulk actions read in one order: your actions, then More, then
 Delete behind a divider. An action that works on one row stays in place,
-dimmed, while more are selected.
+dimmed, while more are selected. They act on every selected row, including
+any a search or filter hides, and the toolbar says how many those are.
 
 <Exhibit of="data-table.BulkActionPatterns" title="Bulk action patterns">
 <ExhibitCode>
@@ -428,7 +341,9 @@ pages work the same. Filters move into a sheet.
 
 Cards take their title from the first primary or person column, their
 badge from the status column and their fields from the rest. They need a
-DataTableToolbar, since that's where select all goes.
+DataTableToolbar, since that's where select all goes. Narrow, the toolbar keeps
+the count, Clear and bulk actions; Select all matching and Show selected
+only aren't offered.
 
 </ExhibitCode>
 </Exhibit>
@@ -462,16 +377,35 @@ holds every selected row still in the data: ids a refetch drops leave it,
 but rows a search or filter hides stay selected, and the toolbar, the
 announcement and DataTableSelectionCount say how many, as in “5 members
 selected, 2 hidden by filters”. Bulk actions act on all of them, hidden
-ones included. The header checkbox speaks for the page; Select all matching
-adds every row the filters let through and keeps the hidden ones; Clear and
-Escape clear everything.
+ones included, and Delete's description gives the count. The header
+checkbox speaks for the page; Select all matching adds every row the
+filters let through and keeps the hidden ones; Clear and Escape clear
+everything. With `manualPagination`, ids on other pages stay, since the app
+owns those.
+
+### What it registers
+
+`dataTableFeatures` registers only what Data table uses, so a table carries
+nothing else: sorting (`text`, `alphanumeric`, `basic` and `datetime`
+comparators), column and global filtering (`includesString`, `equals` and
+`arrHas`), faceted unique values, pagination, row selection, column
+visibility and column pinning. Grouping, expanding, resizing, ordering and
+row pinning are left out.
 
 ## Migrating to the table API
 
 The `rowIds`, `totalCount`, `value`, `defaultValue` and `onValueChange`
 props, `useDataTableSelection`, and hand-written `DataTableRow`,
 `DataTableCell` and `DataTableHead` are deprecated in fibo 0.2.0 and removed
-in 0.3.0. Until then they run on the same TanStack table as the new API.
+in 0.3.0. Until then they run on the same TanStack table as the new API,
+built from `rowIds` with selection only, so they behave as they did. A
+codemod lists every use with its file and line; it changes nothing, since
+writing column definitions needs a person.
+
+```sh
+pnpm dlx jscodeshift --parser tsx --dry \
+  -t https://fibo.toribryan.com/codemods/data-table-legacy-api.js src
+```
 
 <UsageGuidelines
   guidelines={[
@@ -507,7 +441,298 @@ in 0.3.0. Until then they run on the same TanStack table as the new API.
   ]}
 />
 
-## Usage
+## Anatomy
+
+A native table inside a box that measures its own width. The toolbar sits
+above it, and the cards replace it on a narrow screen. Both draw the rows
+from the same TanStack row model. The narrow Filters button opens a
+sheet, `data-table-filters-sheet`, holding the sort and filter controls.
+
+<Exhibit
+  of="data-table.ColumnVisibility"
+  title="Column visibility and pinning"
+  description="Columns shows and hides every column that can hide; Last active starts hidden. Scroll it sideways: the name and the actions stay put, with a shadow where there's more under them."
+>
+<ExhibitCode label="Structure">
+
+```text
+DataTable                      data-table
+├─ DataTableToolbar            data-table-toolbar
+│  ├─ DataTableFilters         data-table-filters             (idle)
+│  │  ├─ search slot           data-table-search
+│  │  │  └─ DataTableSearch    data-table-search-field
+│  │  ├─ DataTableFacetFilter  data-table-facet-filter
+│  │  └─ Filters button        data-table-filters-trigger     (narrow)
+│  ├─ DataTableActions         data-table-actions             (idle)
+│  │  ├─ DataTableColumns      data-table-columns
+│  │  └─ DataTableAction       data-table-action
+│  ├─ Clear                    data-table-clear               (selecting)
+│  ├─ Selected label           data-table-selected-label      (selecting)
+│  ├─ Select all matching      data-table-select-all-matching
+│  ├─ Show selected only       data-table-show-selected-only
+│  └─ DataTableBulkActions     data-table-bulk-actions        (selecting)
+│     ├─ DataTableBulkAction   data-table-bulk-action
+│     ├─ More actions
+│     └─ Delete                data-table-delete
+├─ DataTableContent            data-table-content             (a Table)
+│  ├─ DataTableHeader          data-table-header
+│  │  ├─ Select all            data-table-select-all
+│  │  └─ Head                  data-table-head                (per column)
+│  │     └─ Sort button        data-table-sort                (sortable)
+│  └─ DataTableBody            data-table-body
+│     └─ Row                   data-table-row
+│        ├─ Select             data-table-select
+│        └─ Cell               data-table-cell
+│           ├─ Secondary text  data-table-secondary
+│           └─ Lock            data-table-lock
+├─ DataTableCards              data-table-cards               (narrow, cards)
+│  └─ DataTableCard            data-table-card
+│     └─ DataTableCardField    data-table-card-field
+└─ DataTableFooter             data-table-footer
+   ├─ DataTablePagination      data-table-pagination
+   └─ DataTableSelectionCount  data-table-selection-count
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="data-table"',
+      element: "The root",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-toolbar"',
+      element: "The toolbar",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-filters"',
+      element: "Filters",
+      when: "Nothing is selected.",
+    },
+    {
+      attribute: 'data-slot="data-table-search"',
+      element: "The search slot",
+      when: "Filters has a search.",
+    },
+    {
+      attribute: 'data-slot="data-table-search-field"',
+      element: "DataTableSearch",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-facet-filter"',
+      element: "A facet filter button",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-filters-trigger"',
+      element: "The Filters button",
+      when: "Narrow, with sort or filter controls.",
+    },
+    {
+      attribute: 'data-slot="data-table-filters-sheet"',
+      element: "The Filters sheet body",
+      when: "The Filters sheet is open.",
+    },
+    {
+      attribute: 'data-slot="data-table-actions"',
+      element: "Create actions",
+      when: "Nothing is selected.",
+    },
+    {
+      attribute: 'data-slot="data-table-action"',
+      element: "A create action",
+      when: "Nothing is selected.",
+    },
+    {
+      attribute: 'data-slot="data-table-columns"',
+      element: "The Columns menu button",
+      when: "Nothing is selected.",
+    },
+    {
+      attribute: 'data-slot="data-table-clear"',
+      element: "The Clear button",
+      when: "Rows are selected.",
+    },
+    {
+      attribute: 'data-slot="data-table-selected-label"',
+      element: "The selected count",
+      when: "Rows are selected.",
+    },
+    {
+      attribute: 'data-slot="data-table-select-all-matching"',
+      element: "Select all matching",
+      when: "The page is selected and more rows match.",
+    },
+    {
+      attribute: 'data-slot="data-table-show-selected-only"',
+      element: "Show selected only",
+      when: "Rows are selected and onShowSelectedOnlyChange is set.",
+    },
+    {
+      attribute: 'data-slot="data-table-bulk-actions"',
+      element: "Bulk actions",
+      when: "Rows are selected.",
+    },
+    {
+      attribute: 'data-slot="data-table-bulk-action"',
+      element: "A bulk action button",
+      when: "Rows are selected.",
+    },
+    {
+      attribute: 'data-slot="data-table-delete"',
+      element: "Delete",
+      when: "onDelete is set.",
+    },
+    {
+      attribute: 'data-slot="data-table-content"',
+      element: "The table",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-header"',
+      element: "The thead",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-select-all"',
+      element: "The select all header",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-head"',
+      element: "A column header",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-sort"',
+      element: "The sort button in a head",
+      when: "The column can sort.",
+    },
+    {
+      attribute: 'data-slot="data-table-body"',
+      element: "The tbody",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-row"',
+      element: "A row",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-select"',
+      element: "A row's checkbox cell",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-cell"',
+      element: "A cell",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-secondary"',
+      element: "A second line",
+      when: "The cell has secondary text.",
+    },
+    {
+      attribute: 'data-slot="data-table-lock"',
+      element: "The lock",
+      when: "The row is locked, on its primary or person cell.",
+    },
+    {
+      attribute: 'data-slot="data-table-cards"',
+      element: "The card list",
+      when: "Narrow with narrowLayout=cards.",
+    },
+    {
+      attribute: 'data-slot="data-table-card"',
+      element: "A card",
+      when: "Narrow with narrowLayout=cards.",
+    },
+    {
+      attribute: 'data-slot="data-table-card-field"',
+      element: "A card field",
+      when: "Narrow with narrowLayout=cards.",
+    },
+    {
+      attribute: 'data-slot="data-table-footer"',
+      element: "The footer",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-pagination"',
+      element: "DataTablePagination",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="data-table-selection-count"',
+      element: "The selection count",
+      when: "Always.",
+    },
+    {
+      attribute: "data-narrow",
+      element: "The root",
+      when: "It's narrower than 32rem.",
+    },
+    {
+      attribute: 'data-layout="table" | "cards"',
+      element: "The root",
+      when: "Always: which of the table and the cards is showing.",
+    },
+    {
+      attribute: "data-scroll-start, data-scroll-end",
+      element: "The root",
+      when: "There's more table to scroll to on that side.",
+    },
+    {
+      attribute: "data-selecting",
+      element: "The toolbar",
+      when: "Rows are selected and it shows bulk actions.",
+    },
+    {
+      attribute: "data-filtered",
+      element: "A facet filter button",
+      when: "One or more of its values are ticked.",
+    },
+    {
+      attribute: 'aria-sort="ascending" | "descending"',
+      element: "A column header",
+      when: "The table is sorted by that column, on that head only.",
+    },
+    {
+      attribute: "data-row-id",
+      element: "A row",
+      when: "Always: the row's id.",
+    },
+    {
+      attribute: "data-selected",
+      element: "A row or card",
+      when: "It's selected.",
+    },
+    {
+      attribute: "data-locked",
+      element: "A row or card",
+      when: "lockedReason gives it a reason.",
+    },
+    {
+      attribute: "data-type, data-pinned",
+      element: "A head or cell",
+      when: "Always for type; for pinned, when the column is pinned.",
+    },
+  ]}
+/>
+
+Style parts by slot or state, for example with
+`[&_[data-slot=data-table-row][data-locked]]:opacity-70`.
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
 
 <UsageGuidelines
   guidelines={[
@@ -515,14 +740,22 @@ in 0.3.0. Until then they run on the same TanStack table as the new API.
     "Let the table sort, filter and page: give useDataTable all the rows, or set the manual options and load the rows its state describes. Don't sort or filter the rows yourself as well.",
     "Keep sorting, the search, filters and the page in the URL with useSearchParamsAtom when people share or bookmark the list.",
     'Give a column that people filter by a few values filterFn: "arrHas" and a DataTableFacetFilter, so the menu shows how many rows hold each.',
-    "Put every action in the toolbar. Don't add hover actions or a floating bar; they split actions across places.",
-    "Pin the row's name to the start and at most one must-see column to the end.",
+    "Pin the row's name to the start and at most one must-see column, usually status, to the end.",
+    "Rows are 40 pixels, or 52 with secondary text. Nothing goes taller.",
     "Lock a row that can't be selected, and say why in useDataTable's lockedReason.",
-    "Give actions an icon, so they still fit on a phone.",
+    "Pin one column to each edge at most. Pinned columns stick at a fixed offset, so a second one would sit over the first.",
+    "In a picker, put DataTableSelectionCount in the footer, so people see how many they've chosen.",
+    "Put every action in the toolbar. Don't add hover actions or a floating bar; they split actions across places.",
+    "Keep the bulk action order: your actions, then More, then Delete. Approve comes before Deny.",
     <>
-      Use <code>narrowLayout="cards"</code> when a row reads better as a
-      summary, such as people with a status. Keep scroll for data people compare
-      across columns.
+      Give a bulk action that works on one row <code>single</code>, so it stays
+      in place, dimmed, while more are selected.
+    </>,
+    "Give actions an icon, so they still fit on a phone. Under 32rem they show the icon alone, with the label as their name and tooltip.",
+    <>
+      Use <code>narrowLayout="cards"</code> when a row reads better as a summary
+      than as a line, such as people with a status. Keep scroll for data people
+      compare across columns.
     </>,
   ]}
 />
@@ -535,7 +768,7 @@ in 0.3.0. Until then they run on the same TanStack table as the new API.
       positive: {
         component: (
           <div className="flex w-56 items-center gap-2 rounded-md border border-border px-3 py-2 text-sm">
-            <span className="size-4 rounded-sm border border-input opacity-50" />
+            <span className="size-4 rounded-sm border border-input bg-input-subtle opacity-50" />
             <span className="font-medium">Elena Marsh</span>
             <span className="text-xs text-muted-foreground">Locked</span>
           </div>
@@ -545,7 +778,7 @@ in 0.3.0. Until then they run on the same TanStack table as the new API.
       negative: {
         component: (
           <div className="flex w-56 items-center gap-2 rounded-md border border-border px-3 py-2 text-sm">
-            <span className="size-4 rounded-sm border border-input opacity-50" />
+            <span className="size-4 rounded-sm border border-input bg-input-subtle opacity-50" />
             <span className="font-medium">Elena Marsh</span>
           </div>
         ),
@@ -561,13 +794,18 @@ in 0.3.0. Until then they run on the same TanStack table as the new API.
 <UsageGuidelines
   guidelines={[
     "It's a native table, not a grid: checkboxes and buttons are ordinary Tab stops. TanStack Table only works out the rows; the markup is Data table's.",
-    "A sortable head holds a button named by the column. Only the sorted head carries aria-sort, so the order is announced once, where it applies.",
-    "DataTableSearch is a search field; give it an aria-label when there's no visible label. Facet filter menus name each choice with its count, “Active 3”.",
-    "Each row checkbox is named from its first name cell, “Select Maya Okafor”, and select all says its scope, “Select all members on this page”.",
-    "A locked row's checkbox is disabled and described by the reason, and the lock is focusable so keyboard users can open its tooltip.",
-    "Selection changes are announced through a status region once they take effect, and Escape clears the selection.",
-    "When the focused control goes away, such as Clear or a row that swaps to a card, focus moves somewhere sensible instead of the page.",
-    "Only one of the table and the cards is ever in the page, so screen readers don't meet each row twice.",
+    'Every head carries scope="col". A sortable head holds a button named by the column. Only the sorted head carries aria-sort, ascending or descending, so the order is announced once, where it applies.',
+    "DataTableSearch is a search field; give it an aria-label when there's no visible label. Facet filter menus name each choice with its count, “Active 3”, and say how many are ticked on the button.",
+    "Name it with aria-label or aria-labelledby on DataTable.",
+    "Each row checkbox is named from its primary or person cell, “Select Maya Okafor”, or from the row's label when it has neither. Select all says its scope, “Select all members on this page”.",
+    "A locked row's checkbox is disabled and described by the reason. The lock is focusable, so keyboard users can open its tooltip.",
+    "Selection changes are announced through a status region once they take effect, so a change a controlled parent turns down isn't announced. Selected rows a filter hides are counted: “5 members selected, 2 hidden by filters”. Escape clears the selection.",
+    "The toolbar is a group named “Filters and actions” or “Bulk actions”, not a toolbar role, so its controls stay ordinary Tab stops and arrow keys stay with the search field.",
+    "When the focused control goes away, such as Clear or Select all matching, focus moves to Clear, or to select all when nothing is selected, instead of the page.",
+    "A single-row action that's dimmed stays focusable and is described by why: “Works on one member at a time”.",
+    "Only one of the table and the cards is ever in the page, so screen readers don't meet each row twice. Cards are a list, and each card's checkbox is named from its title.",
+    "Icon-only actions on a narrow table keep their label as their accessible name and show it as a tooltip.",
+    "Status badges sit on the background, so their tints keep AA contrast on selected and hovered rows.",
   ]}
 />
 
@@ -577,6 +815,7 @@ in 0.3.0. Until then they run on the same TanStack table as the new API.
 
 ## References
 
+- [fibo plan 003: Data table](https://github.com/toribryan/fibo/blob/main/plans/003-data-table.md)
 - [fibo plan 005: Data table on TanStack Table](https://github.com/toribryan/fibo/blob/main/plans/005-data-table-on-tanstack.md)
 - [TanStack Table](https://tanstack.com/table)
 - [WAI-ARIA APG: Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/)
