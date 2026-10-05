@@ -61,7 +61,10 @@ function FileTree({ label, tree }: { label: string; tree: Node[] }) {
       <p className="mb-4 font-mono text-xs font-medium tracking-wide text-muted-foreground uppercase">
         {label}
       </p>
-      <ul className="flex flex-col font-mono text-sm" aria-label={label}>
+      <ul
+        className="flex flex-col font-mono text-[13px] sm:text-sm"
+        aria-label={label}
+      >
         {rows.map(({ node, depth }, index) => {
           const folder = Boolean(node.children)
           const open = folder && visible > index + 1
@@ -76,7 +79,7 @@ function FileTree({ label, tree }: { label: string; tree: Node[] }) {
             <li
               key={`${depth}-${index}-${node.name}`}
               className={cn(
-                "flex items-center gap-1.5 py-0.5 transition-[opacity,translate] duration-300 ease-out motion-reduce:transition-none",
+                "flex flex-wrap items-center gap-x-1.5 py-0.5 transition-[opacity,translate] duration-300 ease-out motion-reduce:transition-none",
                 index < visible ? "opacity-100" : "translate-x-1 opacity-0"
               )}
               style={{ paddingLeft: depth * 18 }}
@@ -94,8 +97,12 @@ function FileTree({ label, tree }: { label: string; tree: Node[] }) {
                 className="size-4 shrink-0 text-muted-foreground"
               />
               <span className="text-surface-foreground">{node.name}</span>
+              {/* On a phone a link's target drops under its name, lined up
+                  with it, rather than wrapping mid-path. */}
               {node.to ? (
-                <span className="text-muted-foreground">→ {node.to}</span>
+                <span className="text-muted-foreground max-sm:basis-full max-sm:pl-[2.625rem]">
+                  → {node.to}
+                </span>
               ) : null}
               {node.note ? (
                 <span className="truncate text-muted-foreground">
