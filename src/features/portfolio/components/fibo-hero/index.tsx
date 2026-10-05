@@ -66,8 +66,8 @@ type Geometry = {
 }
 
 type Sketch = {
-  /** Dimension lines below the frame, each with end ticks and a label. */
-  dimensions: { d: string; label: string; x: number; y: number }[]
+  /** Dimension lines below the frame, each with end ticks. */
+  dimensions: { d: string }[]
   /** Where the two diagonals cross. */
   pole: { x: number; y: number }
 }
@@ -89,18 +89,8 @@ const WIDE: Geometry = {
   open: { x: 210, y: -400, width: 600, height: 1000 },
   sketch: {
     dimensions: [
-      {
-        d: "M0 220H96M114 220H210M0 216V224M210 216V224",
-        label: "1",
-        x: 105,
-        y: 221.2,
-      },
-      {
-        d: "M210 220H262M288 220H340M340 216V224",
-        label: "0.618",
-        x: 275,
-        y: 221.2,
-      },
+      { d: "M0 220H210M0 216V224M210 216V224" },
+      { d: "M210 220H340M340 216V224" },
     ],
     pole: { x: 246.5, y: 58.2 },
   },
@@ -196,49 +186,30 @@ function Construction({ geometry }: { geometry: Geometry }) {
       </g>
 
       {sketch ? (
-        <>
-          <g opacity={LINE_OPACITY}>
-            <g
-              className="fibo-tile stroke-border"
-              style={{ animationDelay: "0.8s" }}
-            >
-              <path
-                d={`M${sketch.pole.x - 6} ${sketch.pole.y}h12M${sketch.pole.x} ${sketch.pole.y - 6}v12`}
-                vectorEffect="non-scaling-stroke"
-              />
-              <circle
-                cx={sketch.pole.x}
-                cy={sketch.pole.y}
-                r={2.4}
-                vectorEffect="non-scaling-stroke"
-              />
-              {sketch.dimensions.map((dimension) => (
-                <path
-                  key={dimension.d}
-                  d={dimension.d}
-                  vectorEffect="non-scaling-stroke"
-                />
-              ))}
-            </g>
-          </g>
+        <g opacity={LINE_OPACITY}>
           <g
-            className="fibo-tile fill-muted-foreground font-mono"
-            style={{ animationDelay: "1s" }}
+            className="fibo-tile stroke-border"
+            style={{ animationDelay: "0.8s" }}
           >
+            <path
+              d={`M${sketch.pole.x - 6} ${sketch.pole.y}h12M${sketch.pole.x} ${sketch.pole.y - 6}v12`}
+              vectorEffect="non-scaling-stroke"
+            />
+            <circle
+              cx={sketch.pole.x}
+              cy={sketch.pole.y}
+              r={2.4}
+              vectorEffect="non-scaling-stroke"
+            />
             {sketch.dimensions.map((dimension) => (
-              <text
-                key={dimension.label}
-                x={dimension.x}
-                y={dimension.y}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize={5.2}
-              >
-                {dimension.label}
-              </text>
+              <path
+                key={dimension.d}
+                d={dimension.d}
+                vectorEffect="non-scaling-stroke"
+              />
             ))}
           </g>
-        </>
+        </g>
       ) : null}
     </svg>
   )
