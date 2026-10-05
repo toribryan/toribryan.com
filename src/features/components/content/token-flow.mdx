@@ -76,7 +76,7 @@ type TokenRow = {
 </ExhibitCode>
 </Exhibit>
 
-## Variants and states
+## Examples
 
 ### Use lines
 
@@ -178,6 +178,45 @@ A pulse runs along each wire while the plate is on screen, staggered by row.
 It stops off screen, even when you pass your own `ref`, and neither the
 pulse nor the scramble plays when someone has asked for reduced motion.
 
+### In a case study
+
+The lead example: a handful of roles with what each is for, next to the
+writing that explains them.
+
+<Exhibit of="token-flow.WithUse" description="Three roles with their use lines.">
+<ExhibitCode>
+
+```tsx
+<TokenFlow rows={rows} showUse />
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### In a themed preview
+
+A preview that owns its own theme can pin the plate to it, so the values
+match the components beside them.
+
+<Exhibit
+  of="token-flow.InPreview"
+  description="Switch the preview between light and dark: the buttons and the plate move together."
+>
+<ExhibitCode>
+
+```tsx
+<div className={dark ? "dark" : "light"}>
+  <TokenFlow rows={rows} theme={dark ? "dark" : "light"} />
+  <Button>Save changes</Button>
+  <Button variant="destructive">Delete</Button>
+</div>
+```
+
+The class on the wrapper moves the surfaces, and `theme` moves the values.
+
+</ExhibitCode>
+</Exhibit>
+
 ## Anatomy
 
 A dotted plate with a label over each tier, and one row per role below.
@@ -244,7 +283,7 @@ row's color, and the role can carry a short line on what it is for.
 </ExhibitCode>
 </Exhibit>
 
-## Usage
+## Guidelines
 
 <UsageGuidelines
   guidelines={[
@@ -254,45 +293,6 @@ row's color, and the role can carry a short line on what it is for.
     "Show the use lines when readers don't know the role names yet.",
   ]}
 />
-
-### In a case study
-
-The lead example: a handful of roles with what each is for, next to the
-writing that explains them.
-
-<Exhibit of="token-flow.WithUse" description="Three roles with their use lines.">
-<ExhibitCode>
-
-```tsx
-<TokenFlow rows={rows} showUse />
-```
-
-</ExhibitCode>
-</Exhibit>
-
-### In a themed preview
-
-A preview that owns its own theme can pin the plate to it, so the values
-match the components beside them.
-
-<Exhibit
-  of="token-flow.InPreview"
-  description="Switch the preview between light and dark: the buttons and the plate move together."
->
-<ExhibitCode>
-
-```tsx
-<div className={dark ? "dark" : "light"}>
-  <TokenFlow rows={rows} theme={dark ? "dark" : "light"} />
-  <Button>Save changes</Button>
-  <Button variant="destructive">Delete</Button>
-</div>
-```
-
-The class on the wrapper moves the surfaces, and `theme` moves the values.
-
-</ExhibitCode>
-</Exhibit>
 
 ## Best practices
 
