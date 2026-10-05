@@ -16,6 +16,7 @@ import * as mapPin from "./map-pin"
 import * as messageList from "./message-list"
 import * as pixelSnail from "./pixel-snail"
 import * as reactions from "./reactions"
+import * as richTextEditor from "./rich-text-editor"
 import * as statusDot from "./status-dot"
 import * as stickerAvatar from "./sticker-avatar"
 import * as tokenFlow from "./token-flow"
@@ -43,6 +44,7 @@ export const EXAMPLES: Record<string, Record<string, ComponentType>> = {
   "message-list": messageList,
   "pixel-snail": pixelSnail,
   reactions,
+  "rich-text-editor": richTextEditor,
   "status-dot": statusDot,
   "sticker-avatar": stickerAvatar,
   "token-flow": tokenFlow,
