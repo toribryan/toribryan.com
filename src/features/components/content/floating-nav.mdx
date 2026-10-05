@@ -23,7 +23,7 @@ npx shadcn@latest add https://fibo.toribryan.com/r/floating-nav.json
 ```
 
 It installs `motion`, for the indicator and the slide, plus the
-`--popover-overlay` and `--ring-subtle` tokens.
+`--popover-overlay`, `--ring-subtle` and three `--glass-*` tokens.
 
 </ExhibitCode>
 <ExhibitCode label="Usage">
@@ -50,16 +50,17 @@ for screen readers, and the label the current item shows.
 </ExhibitCode>
 <ExhibitCode label="Props">
 
-| Prop            | Type                                         | Default     | Description                                                                         |
-| --------------- | -------------------------------------------- | ----------- | ----------------------------------------------------------------------------------- |
-| `items`         | `FloatingNavItem[]`                          |             | Destinations, left to right. Three to five read best.                               |
-| `value`         | `string`                                     |             | The current item, when controlled.                                                  |
-| `defaultValue`  | `string`                                     |             | The current item on first render, when uncontrolled.                                |
-| `onValueChange` | `(value: string, event: MouseEvent) => void` |             | Fires on a press. Call `event.preventDefault()` on a link to route it yourself.     |
-| `labels`        | `"active" \| "always"`                       | `"active"`  | Only the current item's label, or every label under its icon.                       |
-| `size`          | `"sm" \| "default"`                          | `"default"` | `sm` gives 36px items and 16px icons instead of 44px and 20px.                      |
-| `position`      | `"fixed" \| "static"`                        | `"fixed"`   | Float at the bottom of the viewport, or sit in the flow.                            |
-| `hideOnScroll`  | `boolean`                                    | `false`     | Slide away while the page scrolls down, and back when it scrolls up or takes focus. |
+| Prop            | Type                                         | Default     | Description                                                                                                         |
+| --------------- | -------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------- |
+| `items`         | `FloatingNavItem[]`                          |             | Destinations, left to right. Three to five read best.                                                               |
+| `value`         | `string`                                     |             | The current item, when controlled.                                                                                  |
+| `defaultValue`  | `string`                                     |             | The current item on first render, when uncontrolled.                                                                |
+| `onValueChange` | `(value: string, event: MouseEvent) => void` |             | Fires on a press. Call `event.preventDefault()` on a link to route it yourself.                                     |
+| `labels`        | `"active" \| "always"`                       | `"active"`  | Only the current item's label, or every label under its icon.                                                       |
+| `size`          | `"sm" \| "default"`                          | `"default"` | `sm` gives 36px items and 16px icons instead of 44px and 20px.                                                      |
+| `variant`       | `"default" \| "glass"`                       | `"default"` | `glass` is Apple's liquid glass: a clear bar that bends the page behind its edges, with a lens on the current item. |
+| `position`      | `"fixed" \| "static"`                        | `"fixed"`   | Float at the bottom of the viewport, or sit in the flow.                                                            |
+| `hideOnScroll`  | `boolean`                                    | `false`     | Slide away while the page scrolls down, and back when it scrolls up or takes focus.                                 |
 
 ```ts
 type FloatingNavItem = {
@@ -74,6 +75,41 @@ type FloatingNavItem = {
 </Exhibit>
 
 ## Examples
+
+### Liquid glass
+
+`variant="glass"` draws the bar as liquid glass. A lightly frosted, tinted
+layer and a bright rim work in every browser. In Chromium the page behind the
+rim also bends, through an SVG displacement filter sized to the bar; Safari and
+Firefox keep the blur and rim. The current item sits under a glass lens that
+overshoots a little as it lands, and the bar swells a touch under a finger.
+
+Pressing the bar lifts the lens off it, the way iOS does as you change tabs:
+it grows past the bar's edges, clears, and magnifies the item beneath with a
+fringe of colour at its rim, then travels to the new item and settles back
+into its tint. In Safari and Firefox it lifts and clears without the
+magnifying. With reduced motion it stays put.
+
+The glass bar doesn't clip, so the lens can lift past it, which also means it
+can't scroll sideways the way the default bar does when its items outgrow the
+screen. Keep a glass bar to items that fit, or switch to `size="sm"` on narrow
+screens.
+
+<Exhibit
+  of="floating-nav.Glass"
+  title="Liquid glass"
+  description="Press and hold an item, then let go on another. The lens lifts, travels and settles."
+>
+<ExhibitCode>
+
+```tsx
+<FloatingNav items={items} variant="glass" />
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Labels and size
 
 <ExhibitGrid>
 <Exhibit
@@ -180,8 +216,10 @@ a label and, on the current one, the fill behind it. A text item has no icon.
 ```text
 FloatingNav             floating-nav            (the nav landmark)
 └─ list                 floating-nav-list       (the pill; slides out when hidden)
+   ├─ glass             floating-nav-glass      (variant="glass"; the surface under the items)
    └─ item              floating-nav-item       (a link or button per destination)
       ├─ indicator                              (the current item only)
+      ├─ lens           floating-nav-lens       (in place of the indicator with glass)
       ├─ icon                                   (left out on a text item)
       └─ label
 ```
@@ -205,6 +243,29 @@ FloatingNav             floating-nav            (the nav landmark)
       attribute: 'data-slot="floating-nav-item"',
       element: "Each destination",
       when: "Always.",
+    },
+    {
+      attribute: 'data-slot="floating-nav-glass"',
+      element: "The glass surface, under the items",
+      when: (
+        <>
+          <code>variant="glass"</code>.
+        </>
+      ),
+    },
+    {
+      attribute: 'data-slot="floating-nav-lens"',
+      element: "The glass lens on the current item",
+      when: (
+        <>
+          <code>variant="glass"</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-lifted",
+      element: "The glass lens",
+      when: "From a press until it settles on the new item.",
     },
     {
       attribute: "data-current",
@@ -237,6 +298,15 @@ FloatingNav             floating-nav            (the nav landmark)
       when: (
         <>
           Always. <code>active</code> or <code>always</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-variant",
+      element: "The root",
+      when: (
+        <>
+          Always. <code>default</code> or <code>glass</code>.
         </>
       ),
     },
@@ -317,6 +387,7 @@ keyboard without anything to learn.
       labels stay in the DOM, so every item keeps its name.
     </>,
     "A hidden bar takes no taps or clicks, so it can't catch one meant for the page beneath. Its items stay in the tab order, and tabbing into it brings it back.",
+    "Glass shows the page through it, so its labels' contrast depends on what scrolls beneath. Use it over images and media, and the default bar over dense text.",
     'Every item is at least 44px square, or 36px with size="sm", well above the 24px minimum target.',
     "With reduced motion, the indicator and the bar move without animating.",
   ]}

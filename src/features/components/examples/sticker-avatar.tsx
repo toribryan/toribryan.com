@@ -1,11 +1,11 @@
 "use client"
 
 import { Badge } from "@/components/fibo/badge"
+import { StatusDot, type StatusDotStatus } from "@/components/fibo/status-dot"
 import {
   StickerAvatar,
   StickerAvatarCount,
   StickerAvatarGroup,
-  type StickerAvatarStatus,
 } from "@/components/fibo/sticker-avatar"
 
 import { BONZO, STATUS_NAMES, useRabbit } from "./sticker-avatar-data"
@@ -15,13 +15,9 @@ export function Default() {
   // He's drawn on a canvas in the browser; until then the preview holds his
   // space rather than flashing his initials.
   return rabbit ? (
-    <StickerAvatar
-      name="fibo"
-      src={rabbit}
-      pixelated
-      size={96}
-      status="present"
-    />
+    <StickerAvatar name="fibo" src={rabbit} pixelated size={96}>
+      <StatusDot status="present" />
+    </StickerAvatar>
   ) : (
     <span aria-hidden="true" className="block size-24" />
   )
@@ -48,14 +44,16 @@ export function Sizes() {
   )
 }
 
-const STATUSES: StickerAvatarStatus[] = ["present", "away", "offline"]
+const STATUSES: StatusDotStatus[] = ["present", "away", "offline"]
 
 export function Statuses() {
   return (
     <div className="flex flex-wrap justify-center gap-8">
       {STATUSES.map((status) => (
         <div key={status} className="flex flex-col items-center gap-4">
-          <StickerAvatar name="Bonzo" src={BONZO} size={64} status={status} />
+          <StickerAvatar name="Bonzo" src={BONZO} size={64}>
+            <StatusDot status={status} />
+          </StickerAvatar>
           {/* The sticker already says its status to screen readers. */}
           <Badge variant="outline" aria-hidden="true">
             {STATUS_NAMES[status]}
@@ -83,7 +81,7 @@ export function DirectMessages() {
     name: string
     src?: string
     pixelated?: boolean
-    status: StickerAvatarStatus
+    status: StatusDotStatus
   }[] = [
     { name: "Bonzo", src: BONZO, status: "away" },
     { name: "fibo", src: rabbit, pixelated: true, status: "present" },
@@ -108,8 +106,9 @@ export function DirectMessages() {
             src={person.src}
             pixelated={person.pixelated}
             size={32}
-            status={person.status}
-          />
+          >
+            <StatusDot status={person.status} />
+          </StickerAvatar>
           <span className="flex min-w-0 flex-col leading-tight">
             <span className="truncate font-medium">{person.name}</span>
             <span className="text-xs">{STATUS_NAMES[person.status]}</span>
@@ -141,14 +140,9 @@ export function Group() {
 
 export function Straight() {
   return (
-    <StickerAvatar
-      name="Bonzo"
-      src={BONZO}
-      size={96}
-      status="present"
-      tilt={false}
-      lift={false}
-    />
+    <StickerAvatar name="Bonzo" src={BONZO} size={96} tilt={false} lift={false}>
+      <StatusDot status="present" />
+    </StickerAvatar>
   )
 }
 

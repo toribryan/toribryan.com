@@ -221,6 +221,10 @@ export function Preview() {
   )
 }
 
+export function Inset() {
+  return <Frozen variant="inset" defaultRecent={["theme-dark", "calendar"]} />
+}
+
 export function Empty() {
   return <Frozen query="zzz" />
 }

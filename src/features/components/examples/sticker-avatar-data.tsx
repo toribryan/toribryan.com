@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react"
 
-import type { StickerAvatarStatus } from "@/components/fibo/sticker-avatar"
+import type { StatusDotStatus } from "@/components/fibo/status-dot"
 
 /*
  * Sample images from fibo's sticker-avatar.fixtures.ts, drawn on a canvas so
@@ -65,7 +65,7 @@ export function useRabbit() {
   return useSyncExternalStore(subscribe, drawRabbit, () => undefined)
 }
 
-export const STATUS_NAMES: Record<StickerAvatarStatus, string> = {
+export const STATUS_NAMES: Record<StatusDotStatus, string> = {
   present: "Present",
   away: "Away",
   offline: "Offline",
