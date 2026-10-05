@@ -1,6 +1,7 @@
 import type { ComponentType } from "react"
 
 import * as chapterScrubber from "./chapter-scrubber"
+import * as chatComposer from "./chat-composer"
 import * as commandMenu from "./command-menu"
 import * as dataTable from "./data-table"
 import * as emptyState from "./empty-state"
@@ -25,6 +26,7 @@ import * as typingIndicator from "./typing-indicator"
  */
 export const EXAMPLES: Record<string, Record<string, ComponentType>> = {
   "chapter-scrubber": chapterScrubber,
+  "chat-composer": chatComposer,
   "command-menu": commandMenu,
   "data-table": dataTable,
   "empty-state": emptyState,
