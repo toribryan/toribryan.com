@@ -15,7 +15,7 @@ import {
 import { useCoverSteps } from "./use-cover-steps"
 
 /** The parts beside him, as the home page's component cards show them. */
-const SHELF = ["map-pin", "floating-nav", "chapter-scrubber"] as const
+const SHELF = ["integration-visual", "floating-nav", "chapter-scrubber"] as const
 
 /** Each part is laid out roomier than a home page card, then scaled down. */
 const TILE = { width: 240, height: 280 }

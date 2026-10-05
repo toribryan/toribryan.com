@@ -44,7 +44,7 @@ and a `cn` package, and writes dark values for fibo's extra roles into
 (edge, ink and shadow) that Sticker avatar needs and the `--particle-shadow` that
 Reactions' flying emoji use, and the three `--glass-*` tokens of Floating nav's
 glass variant, which this site declares itself. `src/lib/merge-refs.ts` is fibo's `mergeRefs`,
-which Pixel snail, Integration visual and Token flow import as
+which Integration visual and Token flow import as
 `@/lib/merge-refs`. `field-size.ts` (Input and Input group) and
 `format-count.ts` (Count, and Jump bar) and `dates.ts` (Calendar and Date
 picker) are fibo's helpers the same way. Rich text editor runs on Tiptap
@@ -76,7 +76,7 @@ tiers with, and the scrubber's screen fitting and the command menu's `modal`
 prop, which the home page cover and the command menu doc use, are in fibo
 too. `src/features/portfolio/data/fibo-niche.ts`
 lists the parts with a page here, which drives the home page section and the
-docs; `home: false` keeps a part off the home page (Token flow, Reactions, whose slot Floating nav took, Pixel snail, whose slot Sticker avatar took, and Integration visual, whose slot the Command menu took after Data table joined). Each has a doc at `/components/[slug]`, ported from fibo's Storybook:
+docs; `home: false` keeps a part off the home page (Token flow, Reactions, whose slot Floating nav took, and Integration visual, whose slot the Command menu took after Data table joined). Each has a doc at `/components/[slug]`, ported from fibo's Storybook:
 `src/features/components/content/<slug>.mdx` is the body,
 `examples/<slug>.tsx` holds its live examples (named after the fibo stories
 they port), and `data/registry.tsx` wires the lead preview and links. The
@@ -99,7 +99,8 @@ example keeps its state in the query string with `useSearchParamsAtom`. Its exam
 in `globals.css` like `destructive-subtle`.
 
 fibo has two pages here. `/components` lists every fibo part under its
-shelf, base or special, A to Z, with an
+shelf, special first, A to Z, except Pixel snail and Map pin (`HIDDEN` in
+`fibo-catalog.ts`; their old pages redirect to `/components`), with an
 install block per package manager (`fibo-install.tsx`) above. The parts come
 from `data/fibo-catalog.json`, a copy of fibo's `components.meta.json` that
 `npm run sync:fibo-catalog` refreshes (it reads `../fibo`, or `--repo`);
