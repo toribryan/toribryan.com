@@ -43,7 +43,7 @@ export const MOBILE_MENU: NavItem<Route>[] = [
   { title: "Home", href: "/" },
   { title: "Projects", href: "/projects" },
   { title: "Components", href: "/components" },
-  { title: "Lore", href: "/fibo" },
+  { title: "Fibo lore", href: "/fibo" },
   { title: "Blog", href: "/latest" },
 ]
 
