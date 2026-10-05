@@ -1,0 +1,378 @@
+---
+title: Message list
+description: A conversation that groups each person's messages under one heading, with a single tab stop.
+createdAt: 2026-10-05
+updatedAt: 2026-10-05
+new: true
+---
+
+A message list shows a conversation, grouping each person's messages in a row
+under one heading with their name and picture. A group ends when the author
+changes, the day changes, or enough time passes. Every reason a group breaks
+is a named rule you can test, and the whole list takes one Tab stop: arrow
+keys move between messages, Enter goes into one, Escape comes back out.
+
+<Exhibit
+  of="message-list.Default"
+  title="Message list"
+  description="Tab in, then use the arrow keys. Enter goes into a message with a link, Escape comes back out."
+>
+<ExhibitCode label="Install">
+
+```bash
+npx shadcn@latest add https://fibo.toribryan.com/r/message-list.json
+```
+
+It also installs Avatar, Empty state and Separator, and the `lucide-react`
+package.
+
+</ExhibitCode>
+<ExhibitCode label="Usage">
+
+```tsx
+import { MessageList, type ChatMessage } from "@/components/ui/message-list"
+
+export function Channel({ messages }: { messages: ChatMessage[] }) {
+  return (
+    <div className="h-96 overflow-y-auto">
+      <MessageList messages={messages} aria-label="#design" />
+    </div>
+  )
+}
+```
+
+Pass the whole conversation, oldest first. Grouping looks at each message's
+neighbours, so a list that only holds the rows on screen would start a new
+group at the top of every scroll. If you virtualize, call `groupMessages` on
+the full list and render from its result.
+
+</ExhibitCode>
+<ExhibitCode label="Props">
+
+| Prop            | Type                          | Default      | Description                                                                                                  |
+| --------------- | ----------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------ |
+| `messages`      | `ChatMessage[]`               |              | The conversation, oldest first.                                                                              |
+| `windowMinutes` | `number`                      | `5`          | Minutes a group stays open.                                                                                  |
+| `windowFrom`    | `"previous" \| "first"`       | `"previous"` | Measure the window from the previous message (rolling) or the group's first (fixed).                         |
+| `unreadFrom`    | `string`                      |              | The first unread message. Freeze it when the conversation opens, so the divider stays put while people read. |
+| `dividers`      | `Record<string, string>`      |              | Labels for dividers above messages, keyed by message id. Each one also breaks the group.                     |
+| `headingLevel`  | `2 \| 3 \| 4 \| 5 \| 6`       | `3`          | The level of each group's heading.                                                                           |
+| `locale`        | `string`                      | `"en"`       | Locale for times and dates.                                                                                  |
+| `strings`       | `Partial<MessageListStrings>` |              | Copy for screen readers and deleted messages. Swap it to translate.                                          |
+| `empty`         | `ReactNode`                   |              | Shown in place of the conversation when there are no messages. `null` shows nothing.                         |
+
+It also takes every prop of a `div`, except `children`.
+
+```ts
+type ChatMessage = {
+  id: string
+  author: { id: string; name: string; avatar?: string }
+  sentAt: Date
+  content: React.ReactNode
+  kind?: "message" | "system" // system for events like someone joining
+  deleted?: boolean // its content is replaced
+  replyTo?: { id: string; name: string; text: string } // quoted above it
+}
+```
+
+</ExhibitCode>
+</Exhibit>
+
+## Examples
+
+<Exhibit
+  of="message-list.Window"
+  title="Rolling or fixed window"
+  description="Five messages, four minutes apart. Measured from the previous message, the window never runs out and they stay one group. Measured from the first, a new group starts once five minutes have passed since it began."
+>
+<ExhibitCode>
+
+```tsx
+<MessageList messages={burst} windowMinutes={5} windowFrom="previous" />
+<MessageList messages={burst} windowMinutes={5} windowFrom="first" />
+```
+
+</ExhibitCode>
+</Exhibit>
+
+<ExhibitGrid>
+<Exhibit
+  of="message-list.Unread"
+  title="Unread"
+  description="The divider above the first unread message is red with a “New” label, so it doesn't rely on colour alone, and it breaks the group."
+>
+<ExhibitCode>
+
+```tsx
+<MessageList messages={messages} unreadFrom="7" />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="message-list.Divider"
+  title="With a divider"
+  description="dividers maps a message id to a label. The divider sits above that message, and the message starts a new group."
+>
+<ExhibitCode>
+
+```tsx
+<MessageList messages={messages} dividers={{ "5": "New" }} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="message-list.Spacing"
+  title="Custom spacing"
+  description="Space between groups and within a group are two values. Change the first for a more open list without pulling a group apart."
+>
+<ExhibitCode>
+
+```tsx
+<MessageList
+  messages={messages}
+  style={{ "--message-gap": "0.25rem", "--message-group-gap": "1.5rem" }}
+/>
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="message-list.Translated"
+  title="Translated"
+  description="Times and dates follow locale. strings holds the list's name, the screen reader labels and the deleted message text."
+>
+<ExhibitCode>
+
+```tsx
+<MessageList messages={messages} locale="es" strings={spanish} />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="message-list.Empty"
+  title="Empty"
+  description="With no messages, the list shows strings.empty in an Empty state. Pass empty to show your own, or null to show nothing."
+>
+<ExhibitCode>
+
+```tsx
+<MessageList messages={[]} />
+```
+
+</ExhibitCode>
+</Exhibit>
+</ExhibitGrid>
+
+Freeze `unreadFrom` when the conversation opens, so the line stays where it
+was while people read; clear it when they send a message, press Escape or mark
+the conversation read. Pair it with fibo's Jump bar.
+
+### Break rules
+
+`groupMessages` checks these in order, and the first that holds is the
+message's `breakReason`. The first message in the list is `start`.
+
+| Rule       | A new group starts when                                      |
+| ---------- | ------------------------------------------------------------ |
+| `divider`  | the message has a divider above it                           |
+| `day`      | the message is on a different day from the one before        |
+| `system`   | this message or the one before is a system message           |
+| `deleted`  | this message or the one before was deleted                   |
+| `reply`    | the message is a reply                                       |
+| `author`   | a different person sent it                                   |
+| `identity` | the same person sent it under a new name or picture          |
+| `window`   | more than `windowMinutes` have passed since the window began |
+
+Each message also gets a `position` of `single`, `first`, `middle` or `last`,
+rendered as `data-position`. Bubble layouts use it to square off the corners
+where bubbles meet.
+
+## Anatomy
+
+A log of articles, one per message, with a labelled separator above any
+message that starts a day, carries a divider or is the first unread. The first
+message of a group carries the avatar and heading; later ones keep the time in
+the gutter, shown on hover or focus.
+
+<Exhibit
+  of="message-list.Anatomy"
+  title="A day's first messages"
+  description="A run of two from Ben, then a reply from Ana. The gutter time is held visible here."
+>
+<ExhibitCode label="Structure">
+
+```text
+MessageList              message-list            (sets --message-gap, --message-group-gap)
+├─ divider               message-divider         (new day, a divider, or first unread)
+│  └─ unread label       message-divider-unread  (on the unread divider)
+└─ message               message                 (one article per message)
+   ├─ avatar             avatar                  (first message of a group)
+   ├─ time               message-time            (later messages, on hover or focus)
+   ├─ reply              message-reply           (on a reply)
+   ├─ heading            message-heading         (first message of a group)
+   └─ content            message-content
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="message-list"',
+      element: "The root",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="message"',
+      element: "Each message",
+      when: "Always.",
+    },
+    {
+      attribute: "data-id",
+      element: "Each message",
+      when: "Always. The message's id.",
+    },
+    {
+      attribute: "data-position",
+      element: "Each message",
+      when: (
+        <>
+          <code>single</code>, <code>first</code>, <code>middle</code> or{" "}
+          <code>last</code> in its group.
+        </>
+      ),
+    },
+    {
+      attribute: "data-break",
+      element: "Each message",
+      when: "The rule that started its group. Absent when it continues one.",
+    },
+    {
+      attribute: "data-kind",
+      element: "Each message",
+      when: (
+        <>
+          <code>message</code> or <code>system</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-deleted",
+      element: "Each message",
+      when: "The message was deleted.",
+    },
+    {
+      attribute: 'data-slot="message-divider"',
+      element: "A divider",
+      when: "Above the first message of a day, and above each message in dividers.",
+    },
+    {
+      attribute: 'data-slot="message-divider-unread"',
+      element: "The “New” badge",
+      when: "On the unread divider.",
+    },
+    {
+      attribute: "data-unread",
+      element: "A divider",
+      when: "It marks where unread messages begin.",
+    },
+    {
+      attribute: 'data-slot="message-heading"',
+      element: "The group's heading",
+      when: "On the first message of a group.",
+    },
+    {
+      attribute: 'data-slot="message-time"',
+      element: "A time element",
+      when: "In the heading, or in the gutter of a later message.",
+    },
+    {
+      attribute: 'data-slot="message-reply"',
+      element: "The quoted message",
+      when: "On a reply.",
+    },
+    {
+      attribute: 'data-slot="message-content"',
+      element: "The body",
+      when: "Always.",
+    },
+  ]}
+/>
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Put the list in a scrolling container and keep the composer outside it, so Tab goes from the list straight to the composer.",
+    "Keep the window short. Five minutes keeps a burst of messages together without merging two separate thoughts.",
+    "Use system messages for events, such as someone joining, not for things people said.",
+    "Mark where unread messages begin with unreadFrom. Use dividers for other markers between messages; each one also breaks the group.",
+  ]}
+/>
+
+## Best practices
+
+<ComponentRules
+  rules={[
+    {
+      positive: {
+        component: <Live of="message-list.DoGroup" />,
+        description: "Keep a quick run of messages under one heading.",
+      },
+      negative: {
+        component: <Live of="message-list.DontRepeat" />,
+        description:
+          "Don't repeat the name and picture on every line. The conversation gets hard to scan.",
+      },
+    },
+  ]}
+/>
+
+## Accessibility
+
+| Key                                           | Does                                                               |
+| --------------------------------------------- | ------------------------------------------------------------------ |
+| <Kbd>Tab</Kbd>                                | Moves onto the list, at the newest message or the last one focused |
+| <KbdGroup><Kbd>↑</Kbd><Kbd>↓</Kbd></KbdGroup> | Moves to the previous or next message                              |
+| <Kbd>Home</Kbd> or <Kbd>End</Kbd>             | Jumps to the first or last message                                 |
+| <Kbd>↵</Kbd>                                  | Moves into the message, to its first control                       |
+| <Kbd>Esc</Kbd>                                | Comes back out to the message                                      |
+
+<UsageGuidelines
+  guidelines={[
+    <>
+      The list is a <code>role="log"</code>, so screen readers announce new
+      messages as they arrive. The ARIA feed pattern was the alternative; it
+      suits browsing a long stream, but announces nothing new on its own.
+    </>,
+    "Each group's author is a heading, so screen reader users can jump from author to author. Set headingLevel to fit the page's outline.",
+    "Every message is an article named with its author and time, because a screen reader user can land in the middle of a group and never hear the heading.",
+    "Controls inside a message stay out of the tab order until the message is entered, including ones your content adds later. Clicking into a message enters it too.",
+    "If the focused message is removed, focus moves to the message that takes its place, never to the page.",
+    <>
+      On later messages in a group, the time sits in a <code>time</code> element
+      and shows on hover or focus. A tap focuses the message, so it shows on a
+      phone too.
+    </>,
+    "Day dividers and your own dividers are separators named by their label. The unread divider says “New” as well as turning red, so it doesn't rely on colour alone (WCAG 1.4.1).",
+  ]}
+/>
+
+## Related components
+
+<RelatedComponents names={["Typing indicator", "Jump bar", "Avatar"]} />
+
+## References
+
+- [WAI-ARIA log role](https://www.w3.org/TR/wai-aria-1.2/#log)
+- [WAI-ARIA feed pattern](https://www.w3.org/WAI/ARIA/apg/patterns/feed/), the alternative
+- Stream Chat's message list, for the four positions in a group
+- [Twilio Paste: chat log](https://paste.twilio.design/components/chat-log), which requires a metadata label on every message
+- AFB AccessWorld's review of Discord, December 2023, on author headings
