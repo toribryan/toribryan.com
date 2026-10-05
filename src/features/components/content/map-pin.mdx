@@ -2,7 +2,7 @@
 title: Map pin
 description: A dot, icon or labeled pill for a point on a map, with a preview card that springs open on click or tap.
 createdAt: 2026-10-02
-updatedAt: 2026-10-02
+updatedAt: 2026-10-05
 new: true
 ---
 
@@ -52,6 +52,17 @@ export function Places({ places }: { places: Place[] }) {
 }
 ```
 
+With a library that takes a plain element, render into the element you hand
+it:
+
+```tsx
+const element = document.createElement("div")
+createRoot(element).render(
+  <MapPin label="Blue Bottle Coffee" title="Blue Bottle Coffee" />
+)
+new maplibregl.Marker({ element }).setLngLat([-122.42, 37.77]).addTo(map)
+```
+
 `label` names the pin for screen readers, so give every pin one, even
 when it shows a price.
 
@@ -80,79 +91,7 @@ when it shows a price.
 </ExhibitCode>
 </Exhibit>
 
-## Anatomy
-
-A button on the map, and a card portalled to the body so no map container
-clips it. The card only renders when there's something to preview.
-
-<Exhibit of="map-pin.Anatomy" title="The card" description="Held open over its pin.">
-<ExhibitCode label="Structure">
-
-```text
-MapPin               map-pin
-└─ preview              map-pin-preview         (while open, portalled)
-   ├─ image             map-pin-image
-   ├─ meta              map-pin-meta
-   ├─ title             map-pin-title
-   ├─ description       map-pin-description
-   └─ content           map-pin-content         (your children)
-```
-
-</ExhibitCode>
-<ExhibitCode label="Data attributes">
-
-<DataAttributes
-  rows={[
-    {
-      attribute: 'data-slot="map-pin"',
-      element: "The pin",
-      when: "Always.",
-    },
-    {
-      attribute: 'data-slot="map-pin-preview"',
-      element: "The preview card",
-      when: "While open.",
-    },
-    {
-      attribute: "data-type",
-      element: "The pin",
-      when: (
-        <>
-          Always. <code>dot</code>, <code>icon</code> or <code>label</code>.
-        </>
-      ),
-    },
-    {
-      attribute: "data-variant",
-      element: "The pin",
-      when: (
-        <>
-          Always. <code>default</code>, <code>success</code>,{" "}
-          <code>warning</code>, <code>info</code> or <code>destructive</code>.
-        </>
-      ),
-    },
-    {
-      attribute: "data-size",
-      element: "The pin",
-      when: (
-        <>
-          Always. <code>sm</code> or <code>default</code>.
-        </>
-      ),
-    },
-    {
-      attribute: "data-popup-open",
-      element: "The pin",
-      when: "Its preview is open.",
-    },
-  ]}
-/>
-
-</ExhibitCode>
-</Exhibit>
-
-## Variants and states
+## Examples
 
 <Exhibit
   of="map-pin.LabelPins"
@@ -251,19 +190,7 @@ MapPin               map-pin
 </Exhibit>
 </ExhibitGrid>
 
-## Usage
-
-<UsageGuidelines
-  guidelines={[
-    "Use dots for places, icons when the kind of place matters, and labels when a value matters at a glance, such as prices or times. Keep labels to a few characters.",
-    "Keep pins default unless color means something, such as open or closed. Put the meaning in a legend and in each pin's label too.",
-    "Give every pin a label, the place's name. It's what screen readers announce and what the preview is named by.",
-    "Keep the card short: an image, a title, a line of description. Put the full page behind a link in the content.",
-    "Leave side at top for most maps. The card flips on its own when it would leave the screen.",
-  ]}
-/>
-
-### Actions in the card
+### Custom content
 
 Children go under the other fields, for actions such as directions or saving
 the place. The card stays open until you close it, so it can hold them.
@@ -305,6 +232,140 @@ const [openId, setOpenId] = useState<string | null>(null)
 </ExhibitCode>
 </Exhibit>
 
+## Anatomy
+
+A button on the map, and a card portalled to the body so no map container
+clips it. The card only renders when there's something to preview.
+
+<Exhibit of="map-pin.Anatomy" title="The card" description="Held open over its pin.">
+<ExhibitCode label="Structure">
+
+```text
+MapPin                  map-pin                 (the button on the map)
+└─ preview              map-pin-preview         (while open, portalled)
+   ├─ image             map-pin-image
+   ├─ meta              map-pin-meta
+   ├─ title             map-pin-title
+   ├─ description       map-pin-description
+   └─ content           map-pin-content         (your children)
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="map-pin"',
+      element: "The pin",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="map-pin-preview"',
+      element: "The preview card",
+      when: "While open.",
+    },
+    {
+      attribute: "data-type",
+      element: "The pin",
+      when: (
+        <>
+          Always. <code>dot</code>, <code>icon</code> or <code>label</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-variant",
+      element: "The pin",
+      when: (
+        <>
+          Always. <code>default</code>, <code>success</code>,{" "}
+          <code>warning</code>, <code>info</code> or <code>destructive</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-size",
+      element: "The pin",
+      when: (
+        <>
+          Always. <code>sm</code> or <code>default</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-popup-open",
+      element: "The pin",
+      when: "Its preview is open.",
+    },
+    {
+      attribute: 'data-slot="map-pin-image"',
+      element: "The preview's image",
+      when: (
+        <>
+          With <code>image</code>.
+        </>
+      ),
+    },
+    {
+      attribute: 'data-slot="map-pin-meta"',
+      element: "The preview's meta line",
+      when: (
+        <>
+          With <code>meta</code>.
+        </>
+      ),
+    },
+    {
+      attribute: 'data-slot="map-pin-title"',
+      element: "The preview's title",
+      when: (
+        <>
+          With <code>title</code>.
+        </>
+      ),
+    },
+    {
+      attribute: 'data-slot="map-pin-description"',
+      element: "The preview's description",
+      when: (
+        <>
+          With <code>description</code>.
+        </>
+      ),
+    },
+    {
+      attribute: 'data-slot="map-pin-content"',
+      element: "The preview's extra content",
+      when: (
+        <>
+          With <code>children</code>.
+        </>
+      ),
+    },
+  ]}
+/>
+
+Style the pin by slot or state, for example with
+`[&[data-slot=map-pin][data-popup-open]]:scale-150`. The preview renders in
+a portal on the body, so style it with `previewClassName`.
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Use dots for places, icons when the kind of place matters, and labels when a value matters at a glance, such as prices or times. Keep labels to a few characters.",
+    "Keep pins default unless color means something, such as open or closed. Put the meaning in a legend and in each pin's label too.",
+    "Give every pin a label, the place's name. It's what screen readers announce and what the preview is named by.",
+    "Keep the card short: an image, a title, a line of description. Put the full page behind a link in the content.",
+    "Control which preview is open when a list sits beside the map, so picking a row opens its pin and the two never disagree.",
+    "Leave side at top for most maps. The card flips on its own when it would leave the screen.",
+  ]}
+/>
+
 ## Best practices
 
 <ComponentRules
@@ -334,9 +395,10 @@ const [openId, setOpenId] = useState<string | null>(null)
 <UsageGuidelines
   guidelines={[
     "Each pin is a button named by its label, and says it opens a dialog. A label pin showing a price is still announced by the place's name.",
+    "A click outside the card closes it too, and puts focus back on the pin.",
     "The preview is a dialog named by the pin's label, so screen readers announce which place they're in.",
     "A dot is 16px to look at but takes presses across 32px, above the 24px minimum target.",
-    "Color never stands alone: put the status a color stands for in the pin's label and in the preview.",
+    "Color never stands alone: put the status a color stands for in the pin's label, which screen readers announce, and in the preview.",
     "With reduced motion, the pin changes without animating and the card fades in place.",
   ]}
 />
