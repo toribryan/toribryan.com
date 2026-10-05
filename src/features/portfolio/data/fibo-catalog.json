@@ -1,0 +1,312 @@
+{
+  "avatar": {
+    "title": "Avatar",
+    "description": "A person's photo, or their initials when there's no photo.",
+    "tier": "base-components",
+    "group": "Display",
+    "figma": "238-2"
+  },
+  "badge": {
+    "title": "Badge",
+    "description": "A short label for status, category or count.",
+    "tier": "base-components",
+    "group": "Display",
+    "figma": "169-13"
+  },
+  "button": {
+    "title": "Button",
+    "description": "Triggers an action or event with a single click.",
+    "tier": "base-components",
+    "group": "Actions",
+    "figma": "169-12"
+  },
+  "chapter-scrubber": {
+    "title": "Chapter scrubber",
+    "description": "A rail of marks that swell under the pointer like the Dock, previewing the chapter at the crest.",
+    "tier": "special-components",
+    "group": "Navigation",
+    "figma": "371-4"
+  },
+  "chat-composer": {
+    "title": "Chat composer",
+    "description": "A message box built from parts around one draft, so each chat surface composes its own.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "509-2"
+  },
+  "checkbox": {
+    "title": "Checkbox",
+    "description": "Turns a single option on or off, or picks many from a list.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "169-14"
+  },
+  "command-menu": {
+    "title": "Command menu",
+    "description": "A Cmd+K palette with nested pages, recent commands, ranked search and a preview pane.",
+    "tier": "special-components",
+    "group": "Navigation",
+    "figma": "526-6"
+  },
+  "count": {
+    "title": "Count",
+    "description": "A number at a glance: capped at 99+, shortened to 1.2K or signed as +4, read out in full.",
+    "tier": "base-components",
+    "group": "Display"
+  },
+  "data-table": {
+    "title": "Data table",
+    "description": "A table for lists people work through, on TanStack Table: sorting, search, filters with counts, pages, selection, cell types, locked rows and pinned columns.",
+    "tier": "base-components",
+    "group": "Display",
+    "figma": "230-2"
+  },
+  "empty-state": {
+    "title": "Empty state",
+    "description": "What shows where content would be: a title, why it's empty, and what to do next.",
+    "tier": "base-components",
+    "group": "Feedback",
+    "status": "new",
+    "figma": "710-144"
+  },
+  "field": {
+    "title": "Field",
+    "description": "A label, description and error wired to one form control, with a group that sets the size of a whole form.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "696-2"
+  },
+  "filter-menu": {
+    "title": "Filter menu",
+    "description": "A filter menu of fields and values that turns into a search as you type.",
+    "tier": "special-components",
+    "group": "Navigation",
+    "figma": "631-15"
+  },
+  "floating-nav": {
+    "title": "Floating nav",
+    "description": "A pill of destinations that floats above the bottom of a phone screen and steps aside while you scroll.",
+    "tier": "special-components",
+    "group": "Navigation",
+    "figma": "601-74"
+  },
+  "input": {
+    "title": "Input",
+    "description": "A single line of free text.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "169-15"
+  },
+  "input-group": {
+    "title": "Input group",
+    "description": "An input with an icon, text or button beside it, drawn as one field.",
+    "tier": "base-components",
+    "group": "Forms",
+    "status": "new",
+    "figma": "707-59"
+  },
+  "integration-visual": {
+    "title": "Integration visual",
+    "description": "A hub and the tools wired into it, with pulses along the routes.",
+    "tier": "special-components",
+    "group": "Diagrams",
+    "figma": "371-5"
+  },
+  "jump-bar": {
+    "title": "Jump bar",
+    "description": "Takes people to unread messages, new messages or the present in a conversation.",
+    "tier": "base-components",
+    "group": "Actions",
+    "figma": "567-9880"
+  },
+  "kbd": {
+    "title": "Kbd",
+    "description": "Shows a key or a keyboard shortcut in text.",
+    "tier": "base-components",
+    "group": "Display",
+    "figma": "526-5"
+  },
+  "label": {
+    "title": "Label",
+    "description": "Names a form control and widens its hit area.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "169-16"
+  },
+  "map-pin": {
+    "title": "Map pin",
+    "description": "A pin for a point on a map, with a preview that opens on click or tap.",
+    "tier": "special-components",
+    "group": "Display",
+    "figma": "601-75"
+  },
+  "menu": {
+    "title": "Menu",
+    "description": "A short list of actions that opens from a button.",
+    "tier": "base-components",
+    "group": "Overlays",
+    "figma": "631-9"
+  },
+  "message-list": {
+    "title": "Message list",
+    "description": "A conversation that groups each person's messages under one heading, with a single tab stop.",
+    "tier": "base-components",
+    "group": "Display",
+    "figma": "567-9879"
+  },
+  "pagination": {
+    "title": "Pagination",
+    "description": "Moves through a long list one page at a time.",
+    "tier": "base-components",
+    "group": "Navigation",
+    "figma": "631-7"
+  },
+  "pixel-snail": {
+    "title": "Pixel snail",
+    "description": "A one-colour pixel snail that crawls on a loop while something loads.",
+    "tier": "special-components",
+    "group": "Feedback",
+    "figma": "631-16"
+  },
+  "progress": {
+    "title": "Progress",
+    "description": "Shows how far a task has got, or that it's under way.",
+    "tier": "base-components",
+    "group": "Feedback",
+    "figma": "631-12"
+  },
+  "radio-group": {
+    "title": "Radio group",
+    "description": "Picks exactly one option from a short list.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "631-2"
+  },
+  "reactions": {
+    "title": "Reactions",
+    "description": "Lets people respond to content with an emoji in one tap.",
+    "tier": "special-components",
+    "group": "Feedback",
+    "figma": "169-18"
+  },
+  "select": {
+    "title": "Select",
+    "description": "Picks one option from a list that opens on demand.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "247-1593"
+  },
+  "separator": {
+    "title": "Separator",
+    "description": "A thin rule between groups of content, across or down, with an optional label.",
+    "tier": "base-components",
+    "group": "Display",
+    "status": "new",
+    "figma": "704-2"
+  },
+  "sheet": {
+    "title": "Sheet",
+    "description": "A panel that slides in from an edge for a focused task.",
+    "tier": "base-components",
+    "group": "Overlays",
+    "figma": "631-10"
+  },
+  "skeleton": {
+    "title": "Skeleton",
+    "description": "A placeholder in the shape of content that's still loading.",
+    "tier": "base-components",
+    "group": "Feedback",
+    "figma": "631-13"
+  },
+  "slider": {
+    "title": "Slider",
+    "description": "Picks a number, or a range, by dragging along a track.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "631-3"
+  },
+  "spinner": {
+    "title": "Spinner",
+    "description": "A spinning ring that says something is loading.",
+    "tier": "base-components",
+    "group": "Feedback",
+    "status": "deprecated",
+    "deprecated": {
+      "since": "0.2.0",
+      "removal": "0.3.0",
+      "replacement": "progress",
+      "reason": "A spinner says nothing about how long a wait will be or what is happening. An indeterminate Progress takes a label, and turns determinate once the total is known.",
+      "codemod": "spinner-to-progress"
+    }
+  },
+  "status-dot": {
+    "title": "Status dot",
+    "description": "A small mark for whether someone is present, away or offline, told apart by shape.",
+    "tier": "base-components",
+    "group": "Display",
+    "figma": "691-2"
+  },
+  "sticker-avatar": {
+    "title": "Sticker avatar",
+    "description": "An avatar cut out like a die-cut sticker, with a paper edge that follows its shape and a status told by shape.",
+    "tier": "special-components",
+    "group": "Display",
+    "figma": "621-6"
+  },
+  "switch": {
+    "title": "Switch",
+    "description": "Turns a setting on or off, taking effect at once.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "631-4"
+  },
+  "table": {
+    "title": "Table",
+    "description": "Rows and columns of data, at one compact density.",
+    "tier": "base-components",
+    "group": "Display",
+    "figma": "631-5"
+  },
+  "textarea": {
+    "title": "Textarea",
+    "description": "Several lines of free text that grow with the content.",
+    "tier": "base-components",
+    "group": "Forms",
+    "figma": "169-17"
+  },
+  "toast": {
+    "title": "Toast",
+    "description": "A brief message in the corner about something that just happened.",
+    "tier": "base-components",
+    "group": "Feedback",
+    "figma": "631-14"
+  },
+  "token-flow": {
+    "title": "Token flow",
+    "description": "Walks a colour token from raw value to primitive to semantic role.",
+    "tier": "special-components",
+    "group": "Diagrams",
+    "figma": "371-6"
+  },
+  "tooltip": {
+    "title": "Tooltip",
+    "description": "A short label that appears when a control is hovered or focused.",
+    "tier": "base-components",
+    "group": "Overlays",
+    "figma": "631-11"
+  },
+  "typing-indicator": {
+    "title": "Typing indicator",
+    "description": "Says who's typing in a conversation, naming up to three people.",
+    "tier": "base-components",
+    "group": "Feedback",
+    "figma": "567-9878"
+  },
+  "voice-memo": {
+    "title": "Voice memo",
+    "description": "An aluminium recorder that writes down what you say, with the transcript filling in beside it as you talk.",
+    "tier": "special-components",
+    "group": "Forms",
+    "figma": "621-7"
+  }
+}

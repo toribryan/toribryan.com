@@ -71,7 +71,7 @@ whose `orientation` prop the Design System Overhaul card cover stacks its
 tiers with, and the scrubber's screen fitting and the command menu's `modal`
 prop, which the home page cover and the command menu doc use, are in fibo
 too. `src/features/portfolio/data/fibo-niche.ts`
-lists them, which drives the home page section, `/components` and the
+lists the parts with a page here, which drives the home page section and the
 docs; `home: false` keeps a part off the home page (Token flow, Reactions, whose slot Floating nav took, Pixel snail, whose slot Sticker avatar took, and Integration visual, whose slot the Command menu took after Data table joined). Each has a doc at `/components/[slug]`, ported from fibo's Storybook:
 `src/features/components/content/<slug>.mdx` is the body,
 `examples/<slug>.tsx` holds its live examples (named after the fibo stories
@@ -81,8 +81,7 @@ arrays and elements as props; `components/doc-blocks.tsx` and
 `doc-parts.tsx` are everything it can use. Adding one means installing the
 part, a `fibo-niche.ts` entry, an MDX file, an examples module and a home
 page cover in `features/portfolio/components/components/covers.tsx`.
-Each entry has a `shelf`, `special` or `base`, which picks the
-Storybook URL. Data table is the one base part so far; it brings
+Data table brings
 fibo's Table, Checkbox, Avatar, Tooltip, Button, Input, Menu, Sheet and
 Pagination into `src/components/fibo/`, written from their registry JSON
 rather than the CLI, so they can't land in `components/ui/`. It runs on
@@ -95,8 +94,15 @@ example keeps its state in the query string with `useSearchParamsAtom`. Its exam
 `success-subtle`, `warning-subtle` and `info-subtle`, which this site mixes
 in `globals.css` like `destructive-subtle`.
 
-fibo has two pages here. `/components` lists the special components with an
-install block per package manager (`fibo-install.tsx`); `/components/all`
+fibo has two pages here. `/components` mirrors the Catalog page in fibo's
+Storybook: every fibo part, by shelf and then group in fibo's order, with an
+install block per package manager (`fibo-install.tsx`) above. The parts come
+from `data/fibo-catalog.json`, a copy of fibo's `components.meta.json` that
+`npm run sync:fibo-catalog` refreshes (it reads `../fibo`, or `--repo`);
+re-run it whenever fibo adds or regroups a part. A part with a page here opens
+it and shows its cover; the rest open fibo's Storybook (`fiboStorybookUrl` in
+`fibo-catalog.ts` builds the URL from the shelf and group) and show a still
+preview from `catalog-previews.tsx`, ported from fibo's Catalog cards; `/components/all`
 redirects there. `/fibo` is the lore: `FiboHero` with `variant="page"` (an
 `h1`, and buttons out to the Storybook, Figma and GitHub), then
 `fibo-story.tsx`, with the rabbit farm (`fibo-farm.tsx`) that steps through

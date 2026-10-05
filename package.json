@@ -17,7 +17,8 @@
     "sync:bab": "node scripts/sync-bab.mjs",
     "sync:token-flow": "node scripts/sync-token-flow.mjs",
     "format:check": "prettier --check \"**/*.{ts,tsx,md,mdx}\" --cache",
-    "format:write": "prettier --write \"**/*.{ts,tsx,md,mdx}\" --cache"
+    "format:write": "prettier --write \"**/*.{ts,tsx,md,mdx}\" --cache",
+    "sync:fibo-catalog": "node scripts/sync-fibo-catalog.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
