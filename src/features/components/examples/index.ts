@@ -8,6 +8,7 @@ import * as filterMenu from "./filter-menu"
 import * as floatingNav from "./floating-nav"
 import * as inputGroup from "./input-group"
 import * as integrationVisual from "./integration-visual"
+import * as jumpBar from "./jump-bar"
 import * as mapPin from "./map-pin"
 import * as messageList from "./message-list"
 import * as pixelSnail from "./pixel-snail"
@@ -31,6 +32,7 @@ export const EXAMPLES: Record<string, Record<string, ComponentType>> = {
   "floating-nav": floatingNav,
   "input-group": inputGroup,
   "integration-visual": integrationVisual,
+  "jump-bar": jumpBar,
   "map-pin": mapPin,
   "message-list": messageList,
   "pixel-snail": pixelSnail,

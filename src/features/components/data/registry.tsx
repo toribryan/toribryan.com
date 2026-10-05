@@ -43,6 +43,7 @@ const LEAD: Record<string, string> = {
   "input-group": "Default",
   "empty-state": "Default",
   "message-list": "Default",
+  "jump-bar": "Default",
 }
 
 // The parts also published on 21st.dev, under the same names.
