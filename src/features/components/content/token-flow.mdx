@@ -2,7 +2,7 @@
 title: Token flow
 description: Walks a color token from raw value to primitive to semantic role.
 createdAt: 2026-09-18
-updatedAt: 2026-09-30
+updatedAt: 2026-10-05
 new: true
 ---
 
@@ -21,8 +21,10 @@ theme and the values change underneath while the role's name stays put.
 npx shadcn@latest add https://fibo.toribryan.com/r/token-flow.json
 ```
 
-It installs the part on its own. No animation library: the pulse and the
-scramble use the Web Animations API and `requestAnimationFrame`.
+It installs the part with `lib/merge-refs.ts`, a small helper that lets a
+`ref` you pass share the plate with the one that pauses the pulse off screen.
+No animation library: the pulse and the scramble use the Web Animations API
+and `requestAnimationFrame`.
 
 </ExhibitCode>
 <ExhibitCode label="Usage">
@@ -52,11 +54,14 @@ role resolves differently in the dark theme.
 </ExhibitCode>
 <ExhibitCode label="Props">
 
-| Prop      | Type                | Default | Description                                                                                  |
-| --------- | ------------------- | ------- | -------------------------------------------------------------------------------------------- |
-| `rows`    | `TokenRow[]`        |         | Required. One row per role: `base`, `primitive`, `semantic`, plus optional `use` and `dark`. |
-| `showUse` | `boolean`           | `false` | Print each row's `use` under its semantic chip.                                              |
-| `theme`   | `"light" \| "dark"` |         | Force a theme instead of following the document's `dark` class.                              |
+| Prop          | Type                         | Default        | Description                                                                                                      |
+| ------------- | ---------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `rows`        | `TokenRow[]`                 |                | Required. One color per row, traced from its raw value to the role that uses it.                                 |
+| `showUse`     | `boolean`                    | `false`        | Print each row's `use` under its semantic chip.                                                                  |
+| `theme`       | `"light" \| "dark"`          |                | Force a theme instead of following the document's `dark` class.                                                  |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | `horizontal` wires the tiers left to right, stacking them only on narrow screens; `vertical` stacks them always. |
+
+It also takes a `div`'s props, `ref` included.
 
 ```ts
 type TokenRow = {
@@ -70,6 +75,108 @@ type TokenRow = {
 
 </ExhibitCode>
 </Exhibit>
+
+## Variants and states
+
+### Use lines
+
+Rows print what each role is for only when asked. Leave them off for readers
+who already know the names.
+
+<Exhibit
+  of="token-flow.Default"
+  title="Without use"
+  description="The default: three chips per row, nothing underneath."
+>
+<ExhibitCode>
+
+```tsx
+<TokenFlow rows={rows} />
+```
+
+</ExhibitCode>
+</Exhibit>
+
+<Exhibit
+  of="token-flow.SingleRow"
+  title="Single role"
+  description="One row on its own, with its use line."
+>
+<ExhibitCode>
+
+```tsx
+<TokenFlow rows={[primary]} showUse />
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Orientation
+
+The tiers run left to right and stack top to bottom on narrow screens.
+`orientation="vertical"` stacks them at every width, for a narrow column or
+a card.
+
+<Exhibit
+  of="token-flow.Vertical"
+  title="Vertical"
+  description="The three roles stacked, with their use lines."
+>
+<ExhibitCode>
+
+```tsx
+<TokenFlow rows={rows} orientation="vertical" showUse />
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Theme
+
+The plate follows the site theme. When it changes, rows with a dark pair
+scramble to their new values and the swatches fade across, while the role
+names hold still.
+
+<Exhibit
+  of="token-flow.ThemeChange"
+  title="Theme change"
+  description="Flips between light and dark every few seconds, so the scramble plays."
+>
+<ExhibitCode>
+
+```tsx
+{
+  base: "oklch(0.205 0 0)",
+  primitive: "neutral-900",
+  semantic: "bg-primary",
+  dark: { base: "oklch(0.985 0 0)", primitive: "neutral-50" },
+}
+```
+
+</ExhibitCode>
+</Exhibit>
+
+<Exhibit
+  of="token-flow.PinnedDark"
+  title="Pinned to dark"
+  description="Dark values on dark surfaces, whatever the site theme."
+>
+<ExhibitCode>
+
+```tsx
+<div className="dark">
+  <TokenFlow rows={rows} theme="dark" />
+</div>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Motion
+
+A pulse runs along each wire while the plate is on screen, staggered by row.
+It stops off screen, even when you pass your own `ref`, and neither the
+pulse nor the scramble plays when someone has asked for reduced motion.
 
 ## Anatomy
 
@@ -136,88 +243,6 @@ row's color, and the role can carry a short line on what it is for.
 
 </ExhibitCode>
 </Exhibit>
-
-## Variants and states
-
-### Use lines
-
-Rows print what each role is for only when asked. Leave them off for readers
-who already know the names.
-
-<Exhibit
-  of="token-flow.Default"
-  title="Without use"
-  description="The default: three chips per row, nothing underneath."
->
-<ExhibitCode>
-
-```tsx
-<TokenFlow rows={rows} />
-```
-
-</ExhibitCode>
-</Exhibit>
-
-<Exhibit
-  of="token-flow.SingleRow"
-  title="Single role"
-  description="One row on its own, with its use line."
->
-<ExhibitCode>
-
-```tsx
-<TokenFlow rows={[primary]} showUse />
-```
-
-</ExhibitCode>
-</Exhibit>
-
-### Theme
-
-The plate follows the site theme. When it changes, rows with a dark pair
-scramble to their new values and the swatches fade across, while the role
-names hold still.
-
-<Exhibit
-  of="token-flow.ThemeChange"
-  title="Theme change"
-  description="Flips between light and dark every few seconds, so the scramble plays."
->
-<ExhibitCode>
-
-```tsx
-{
-  base: "oklch(0.205 0 0)",
-  primitive: "neutral-900",
-  semantic: "bg-primary",
-  dark: { base: "oklch(0.985 0 0)", primitive: "neutral-50" },
-}
-```
-
-</ExhibitCode>
-</Exhibit>
-
-<Exhibit
-  of="token-flow.PinnedDark"
-  title="Pinned to dark"
-  description="Dark values on dark surfaces, whatever the site theme."
->
-<ExhibitCode>
-
-```tsx
-<div className="dark">
-  <TokenFlow rows={rows} theme="dark" />
-</div>
-```
-
-</ExhibitCode>
-</Exhibit>
-
-### Motion
-
-A pulse runs along each wire while the plate is on screen, staggered by row.
-It stops off screen, and neither the pulse nor the scramble plays when
-someone has asked for reduced motion.
 
 ## Usage
 

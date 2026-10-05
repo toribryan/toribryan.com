@@ -21,6 +21,10 @@ export function SingleRow() {
   return <TokenFlow rows={[PRIMARY]} showUse />
 }
 
+export function Vertical() {
+  return <TokenFlow rows={ROWS} orientation="vertical" showUse />
+}
+
 /*
  * A pinned theme only moves the values. The wrapper's class moves the
  * surfaces with them, since the plate and chips read the page's tokens.
