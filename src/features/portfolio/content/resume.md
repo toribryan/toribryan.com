@@ -7,7 +7,7 @@ Phoenix, AZ (open to relocating to NYC or SF) | (480) 323-6343 | toribryan.desig
 
 ## Summary
 
-Five years in B2B and B2C product design. Started as Proctorio's first design intern, built its first design system, and came back as Staff to own the multi-brand system behind a platform used by 8 million test takers. Now a React and Next.js design engineer.
+Five years in B2B and B2C product design. Started as Proctorio's first design intern, contributed to its design system, and came back as Staff to own the multi-brand system behind a platform used by 8 million test takers. Now a React and Next.js design engineer.
 
 ## Experience
 
@@ -42,7 +42,7 @@ Five years in B2B and B2C product design. Started as Proctorio's first design in
 **Multimedia Design Intern** | Jun 2021 – 2022
 
 - Joined as the first full-time design intern, then led the full rebrand: logo, color, visual language, and asset library.
-- Built Proctorio's first design system, then moved from marketing into product UI.
+- Designed and documented components for Proctorio's design system, ready for engineering handoff, then moved from marketing into product UI.
 
 ## Skills
 

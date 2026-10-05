@@ -37,10 +37,11 @@ export const EXPERIENCES: Experience[] = [
         },
         employmentType: "Self-employed",
         icon: <CodeIcon />,
-        description: `- Intentional career pivot toward hardening front-end technical skills through independent design engineering work.
-- Full time since August 2026: design systems, product design, and the production front end that ships them, mainly through SLV Technologies for their clients, including [Modern Care Homes](https://www.moderncarehomes.com/).
-- Contribute production code to the SLV Technologies codebase through GitHub PR review, deployed to production: Next.js, React, Tailwind, shadcn, Base UI, Astro, and Storybook.
-- Built and ship [this site](/latest/portfolio-website) as a live Next.js codebase in React, Tailwind, shadcn, and Base UI.`,
+        description: `- Shifted my career toward design engineering to harden my front-end skills.
+- Design systems, product design, and production front end for SLV Technologies' clients, including [Modern Care Homes](https://www.moderncarehomes.com/).
+- Ship production code to SLV's codebase through GitHub PR review.
+- Built and ship [this site](/latest/portfolio-website) in Next.js, React, Tailwind, shadcn, and Base UI.
+- Built [fibo](/fibo), my own design system, published as a shadcn registry you install as source.`,
         skills: [
           "Design Systems",
           "Design Engineering",
@@ -60,10 +61,11 @@ export const EXPERIENCES: Experience[] = [
         },
         employmentType: "Self-employed",
         icon: <PenToolIcon />,
-        description: `- Independent practice partnering with SLV Technologies to deliver web and product design for their clients, alongside direct clients including Proctorio, Hydra Endura, and Mincredo.
-- Contracted with Proctorio as a design system contributor and product designer: designed the Review Center video player and action bar in [Integrity](https://proctorio.com/solutions/integrity), internal tools and dashboards, and 12+ documented design system components.
-- Redesigned Proctorio's multi-audience [help center](https://proctorio.com/support/hc) from scratch for students, administrators, and IT admins, with article taxonomy, role-based content visibility, and an internal CMS.
-- Built brand identities for Hydra Endura and Mincredo: logo, brand guidelines, core UI components, and social strategy.`,
+        description: `- Partnered with SLV Technologies on web and product design for their clients.
+- Designed the Review Center video player and action bar in Proctorio's [Integrity](https://proctorio.com/solutions/integrity).
+- Designed Proctorio internal tools, dashboards, and 12+ documented design system components.
+- Redesigned Proctorio's [help center](https://proctorio.com/support/hc) for students, administrators, and IT admins.
+- Built brand identities for Hydra Endura and Mincredo.`,
         skills: [
           "Design Systems",
           "Product Design",
@@ -93,33 +95,33 @@ export const EXPERIENCES: Experience[] = [
         },
         employmentType: "Full-time",
         icon: <DraftingCompassIcon />,
-        description: `- Owned the multi-brand design system, its governance, and the technical design standards the design team and the engineering org build from, leading design across three products and eight surfaces on a [platform](https://proctorio.com/solutions) serving 8 million test takers.
-- Coached designers on the system, reviewed work against its standards, and mentored junior designers and interns through structured critique.
+        description: `- Owned the multi-brand design system and its governance across three products, on a [platform](https://proctorio.com/solutions) serving 8 million test takers.
+- Coached designers and mentored juniors through structured critique.
 
 Design system: [RDS v2 overhaul](/work/design-system-overhaul)
 
-- Led a legacy overhaul with two engineers: 37 components, MVP in 60 days, button variants down 59% (1,160 to 480) and card variants down 94% (587 to 32).
-- Took contrast from roughly 40% of button variants failing WCAG to a 100% AAA pass.
-- Shipped the v2 Card in 1.5 days against 2 weeks for v1.
+- Rebuilt 37 components with two engineers, MVP in 60 days.
+- Cut card variants 94% and button variants 59%.
+- Took buttons from 40% failing WCAG to 100% AAA.
 
 Design operations: [Claude Code skill framework](/latest/design-skills-infrastructure)
 
-- Rebuilt design-to-engineering handoff around [agentic tooling](/work/agentic-design-system) and prototype-forward delivery: spec production and review dropped from 3 days to 2 weeks down to under 30 minutes, returning roughly 80 hours per cycle to design work, with 100% team adoption.
-- Authored the shared skill framework behind it and the hooks that cascade prototype changes into specs and release notes automatically.
+- Cut spec production from up to 2 weeks to under 30 minutes, with full team adoption.
+- Built [agentic handoff](/work/agentic-design-system) that syncs prototype changes into specs and release notes.
 
 Product: [WebSweep](https://proctorio.com/solutions/vault), in Vault
 
-- Shipped it as the first product surface on the overhauled system, establishing its design language and adding two components to the system: a graph and a table that collapses to cards on mobile. [Case study](/work/websweep).
+- Shipped the first product on the new system. [Case study](/work/websweep).
 
 Product: [AuthorProof](https://proctorio.com/solutions/origin), in Origin
 
-- Took it from an assigned brief to a production-ready MVP in 4 to 6 weeks: tested the pre-chosen solution against user research, pitched a smaller flow, and designed it through. [Case study](/work/author-proof).
+- Took it from brief to production-ready MVP in 4 to 6 weeks. [Case study](/work/author-proof).
 
 Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's proctoring
 
-- Designed the operational screens where dense exam and staffing data has to be read fast, including Proctor Coverage Analytics and the Support Agent Dashboard.
-- Shipped features for a review product used by instructors, administrators, and proctoring agents, each opening the same session recording for a different reason.
-- Made the case for putting usability testing back in the process, then ran it: the in-person Exam Precheck study, six participants across three demographics, made transparency a core design principle, and the 30+ customer beta reported majority high satisfaction on every targeted area.`,
+- Designed Proctor Coverage Analytics and the Support Agent Dashboard.
+- Shipped features for the session review product.
+- Brought usability testing back with the Exam Precheck study.`,
         skills: [
           "Design Systems",
           "Design System Governance",
@@ -145,8 +147,9 @@ Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's pro
         },
         employmentType: "Full-time",
         icon: <PenToolIcon />,
-        description: `- Rejoined Proctorio after two years of contracting with them, and stepped into the Staff role 90 days later.
-- In those 90 days, designed and shipped two product surfaces, designed the ProctorioX conference agenda interface, and wrote the 60-day strategy proposal that became the design system overhaul.`,
+        description: `- Rejoined after two years of contracting, and stepped into Staff 90 days later.
+- Shipped two product surfaces and the ProctorioX conference agenda site.
+- Wrote the strategy proposal that became the design system overhaul.`,
         skills: [
           "Product Design",
           "Design Systems",
@@ -163,9 +166,13 @@ Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's pro
         },
         employmentType: "Full-time",
         icon: <PaletteIcon />,
-        description: `- Led the full Proctorio rebrand (logo, color palette, visual language, and asset library), grounded in user personas, market strategy, user research, and EdTech competitive analysis.
-- Built a first design system from scratch, then moved into product UI: components and screens for the product design system, guide sites reaching thousands of test-takers and institutions, and interfaces for internal tools and dashboards.
-- Designed ProctorioX conference branding and managed material production across departments and attendees.`,
+        description: `- Hired full time straight out of the internship.
+- Led the full Proctorio rebrand: logo, color, visual language, and assets, grounded in personas, market strategy, and EdTech competitive research.
+- Designed the ProctorioX conference branding and ran its production across departments and attendees.
+- Designed conference sites and landing pages, managing vendors and templates across simultaneous campaigns.
+- Designed and documented components for Proctorio's design system, ready for engineering handoff.
+- Built guide sites reaching thousands of test takers and institutions, plus internal tools and dashboards.
+- Built my own first design system from scratch with a Dribbble mentor formerly at Duolingo.`,
         skills: [
           "Brand Design",
           "Visual Design",
@@ -185,8 +192,11 @@ Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's pro
         },
         employmentType: "Internship",
         icon: <GraduationCapIcon />,
-        description: `- First full-time design intern, helping kickstart Proctorio's design internship program.
-- Designed landing pages for conferences and sales, print and conference collateral, and the digital brand template system, managing production vendors end to end.`,
+        description: `- Became Proctorio's first full-time design intern, helping start its design internship program.
+- Designed landing pages for conferences, sales, and website updates.
+- Designed print and conference collateral, from booths and badges to agendas and swag, managing vendors through production.
+- Built brand template systems for decks, documents, email, social, and the blog.
+- Moved from Adobe Creative Cloud to Figma, the start of my shift into UI/UX.`,
         skills: [
           "Graphic Design",
           "Print Design",
@@ -210,9 +220,9 @@ Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's pro
         },
         employmentType: "Contract",
         icon: <LayoutGridIcon />,
-        description: `- Via SLV Technologies: defined the design system for the agent platform and redesigned the [senior living search and discovery marketplace](/work/modern-care-homes), partnering with engineering.
-- Designed the family-facing search end to end, for a tool that did not previously exist: multi-criteria filtering, facility listings, and profiles.
-- Own the visual language: type scale, color, components, and page templates.`,
+        description: `- Defined the design system for the agent platform, via SLV Technologies.
+- Designed the [senior living marketplace](/work/modern-care-homes) search end to end.
+- Own the visual language: type, color, components, and page templates.`,
         skills: [
           "Design Systems",
           "Product Design",
@@ -237,9 +247,9 @@ Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's pro
         },
         employmentType: "Contract",
         icon: <LayoutGridIcon />,
-        description: `- Via SLV Technologies: partnered with engineering on a redesign of the editorial website and vendor platform across seven sister brands, starting with [Arizona Bride](/work/arizona-bride) and Minnesota Bride.
-- Built one themed design system the seven publications share, and shipped its front-end styling and markup.
-- Designed a two-sided dashboard connecting vendors and couples, and standardized ad placements to industry sizing.`,
+        description: `- Redesigned the editorial site and vendor platform for seven bridal brands, via SLV Technologies.
+- Built one themed design system the seven publications share, starting with [Arizona Bride](/work/arizona-bride).
+- Designed a two-sided dashboard connecting vendors and couples.`,
         skills: [
           "Design Systems",
           "Web Design",
