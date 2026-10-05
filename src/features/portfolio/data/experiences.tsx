@@ -40,7 +40,8 @@ export const EXPERIENCES: Experience[] = [
         description: `- Shifted my career toward design engineering to harden my front-end skills.
 - Design systems, product design, and production front end for SLV Technologies' clients, including [Modern Care Homes](https://www.moderncarehomes.com/).
 - Ship production code to SLV's codebase through GitHub PR review.
-- Built and ship [this site](/latest/portfolio-website) in Next.js, React, Tailwind, shadcn, and Base UI.`,
+- Built and ship [this site](/latest/portfolio-website) in Next.js, React, Tailwind, shadcn, and Base UI.
+- Built [fibo](/fibo), my own design system, published as a shadcn registry you install as source.`,
         skills: [
           "Design Systems",
           "Design Engineering",
