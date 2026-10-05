@@ -27,13 +27,12 @@ import {
 } from "lucide-react"
 import { useTheme } from "next-themes"
 
-import { addDays } from "@/lib/dates"
 import { cn } from "@/lib/utils"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { Avatar, AvatarFallback } from "@/components/fibo/avatar"
 import { Badge } from "@/components/fibo/badge"
 import { Button } from "@/components/fibo/button"
-import { Calendar } from "@/components/fibo/calendar"
+import { Calendar, type CalendarEvent } from "@/components/fibo/calendar"
 import {
   ChapterScrubber,
   type Chapter,
@@ -1012,32 +1011,48 @@ function ChatComposerCover({ active }: CoverProps) {
   )
 }
 
-const RANGE_START = new Date(2026, 9, 6)
-// The start alone, then the end walking out a day at a time, then a beat on
-// the finished week and a half before it starts over.
-const RANGE_STEPS = 14
+const COVER_MONTH = new Date(2026, 9, 1)
+const coverAt = (day: number, hour: number, minute = 0) =>
+  new Date(2026, 9, day, hour, minute)
+
+const COVER_EVENTS: CalendarEvent[] = [
+  { id: "planning", title: "Quarterly planning", start: coverAt(1, 9) },
+  { id: "review", title: "Design review", start: coverAt(5, 10) },
+  { id: "ana", title: "1:1 with Ana", start: coverAt(5, 14) },
+  { id: "offsite", title: "Team offsite", start: coverAt(8, 0), allDay: true },
+  { id: "standup", title: "Standup", start: coverAt(14, 9, 30) },
+  { id: "launch", title: "Launch prep", start: coverAt(14, 13) },
+  { id: "crit", title: "Crit", start: coverAt(16, 11) },
+  { id: "dentist", title: "Dentist", start: coverAt(20, 16, 30) },
+  { id: "workshop", title: "Research workshop", start: coverAt(21, 13) },
+  { id: "release", title: "Release 0.3", start: coverAt(23, 0), allDay: true },
+  { id: "retro", title: "Retro", start: coverAt(27, 15) },
+  { id: "party", title: "Halloween party", start: coverAt(30, 18) },
+]
+
+// The busy days the selection steps through while the card is active, all
+// in the middle of the month the cover zooms in on.
+const COVER_DAYS = [14, 16, 21, 20, 8, 23]
 
 /**
- * October in range mode. While active a range is picked: the start, then
- * the bar grows a day at a time to the end and holds. At rest it shows the
- * week from fibo's Range story.
+ * October in the month view, its events as cards in the day cells, zoomed in
+ * on the middle of the month so the cards read at card size. While active the
+ * selection steps from one busy day to the next; at rest it holds on the 14th.
  */
 function CalendarCover({ active }: CoverProps) {
-  const step = useCycle(RANGE_STEPS, 260, active)
-  const length = active ? Math.min(step, 10) : 6
+  const step = useCycle(COVER_DAYS.length, 1200, active)
+  const day = COVER_DAYS[active ? step : 0]!
   return (
-    <ScaledStage width={400}>
-      <div className="flex size-full items-center justify-center">
-        <div className="rounded-xl border border-line bg-card p-3">
-          <Calendar
-            mode="range"
-            defaultMonth={RANGE_START}
-            value={{
-              from: RANGE_START,
-              to: length > 0 ? addDays(RANGE_START, length) : undefined,
-            }}
-          />
-        </div>
+    <ScaledStage width={960}>
+      {/* White in the light theme, like the plate, rather than the site's
+          warm page color; the dark theme keeps its own background. */}
+      <div className="flex h-full origin-center scale-[1.7] flex-col p-5 [--background:oklch(1_0_0)] dark:[--background:inherit]">
+        <Calendar
+          type="month"
+          events={COVER_EVENTS}
+          month={COVER_MONTH}
+          value={new Date(2026, 9, day)}
+        />
       </div>
     </ScaledStage>
   )
