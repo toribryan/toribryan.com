@@ -42,7 +42,7 @@ Five years in B2B and B2C product design. Started as Proctorio's first design in
 **Multimedia Design Intern** | Jun 2021 – 2022
 
 - Joined as the first full-time design intern, then led the full rebrand: logo, color, visual language, and asset library.
-- Contributed to Proctorio's design system, designing components and documenting them for handoff to engineering, then moved from marketing into product UI.
+- Designed and documented components for Proctorio's design system, ready for engineering handoff, then moved from marketing into product UI.
 
 ## Skills
 
