@@ -101,6 +101,44 @@ export function FacetedFilters() {
   )
 }
 
+export function Loading() {
+  const [loading, setLoading] = React.useState(true)
+  return (
+    <div className="flex w-full flex-col items-start gap-4">
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => setLoading((value) => !value)}
+      >
+        {loading ? "Finish loading" : "Load again"}
+      </Button>
+      <div className="flex w-full flex-wrap items-start gap-6">
+        <MembersTable
+          loading={loading}
+          toolbar={<MembersToolbar />}
+          className="min-w-0 flex-1"
+        />
+        <div className="w-full max-w-[375px]">
+          <MembersTable
+            loading={loading}
+            narrowLayout="cards"
+            aria-label="Members on a phone"
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function Empty() {
+  return (
+    <div className="flex w-full flex-col gap-6">
+      <MembersTable members={[]} aria-label="Invited members" />
+      <MembersTable toolbar={<MembersToolbar />} />
+    </div>
+  )
+}
+
 export function ColumnVisibility() {
   return (
     <div className="w-full max-w-2xl">
