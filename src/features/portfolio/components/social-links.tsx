@@ -10,6 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
 import { ResumeMenu } from "@/components/resume-menu"
+import { DiscordButton } from "@/features/portfolio/components/discord-button"
 import { SOCIAL_ICONS } from "@/features/portfolio/components/social-link-icons"
 import { SOCIAL_LINKS } from "@/features/portfolio/data/social-links"
 
@@ -17,8 +18,8 @@ const BUTTON =
   "text-foreground/80 shadow-none [&_svg:not([class*='size-'])]:size-4.5"
 
 /**
- * The resume, then the social profiles, as icon buttons. The resume opens the
- * same menu of formats as the footer. LinkedIn sits in the overview instead,
+ * The resume, then the social profiles, as icon buttons, then Discord as a
+ * username to copy. The resume opens the same menu of formats as the footer. LinkedIn sits in the overview instead,
  * as a line of its own.
  */
 export function SocialLinks({ className }: { className?: string }) {
@@ -75,6 +76,10 @@ export function SocialLinks({ className }: { className?: string }) {
           </Tooltip>
         </li>
       ))}
+
+      <li>
+        <DiscordButton className={BUTTON} />
+      </li>
     </ul>
   )
 }
