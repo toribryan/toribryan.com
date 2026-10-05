@@ -167,7 +167,7 @@ Product: [Integrity](https://proctorio.com/solutions/integrity), Proctorio's pro
         employmentType: "Full-time",
         icon: <PaletteIcon />,
         description: `- Led the full Proctorio rebrand: logo, color, visual language, and assets.
-- Built Proctorio's first design system, then moved into product UI.
+- Contributed to Proctorio's design system, designing components and documenting them for handoff to engineering.
 - Designed the ProctorioX conference branding.`,
         skills: [
           "Brand Design",
