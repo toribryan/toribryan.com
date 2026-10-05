@@ -42,12 +42,15 @@ point at `@/components/fibo/`; the install also drops a stray `utils.ts`
 and a `cn` package, and writes dark values for fibo's extra roles into
 `globals.css` that this site mixes itself, so revert those, but keep `--warning` and the three `--sticker-*` tokens
 (edge, ink and shadow) that Sticker avatar needs and the `--particle-shadow` that
-Reactions' flying emoji use, which this site declares itself. `src/lib/merge-refs.ts` is fibo's `mergeRefs`,
+Reactions' flying emoji use, and the three `--glass-*` tokens of Floating nav's
+glass variant, which this site declares itself. `src/lib/merge-refs.ts` is fibo's `mergeRefs`,
 which Pixel snail, Integration visual and Token flow import as
-`@/lib/merge-refs`. Three parts carry local changes. `chapter-scrubber.tsx` keeps `preview="none"`,
+`@/lib/merge-refs`. `field-size.ts` (Input and Input group) and
+`format-count.ts` (Count) are fibo's helpers the same way. Three parts carry local changes. `chapter-scrubber.tsx` keeps `preview="none"`,
 which fibo dropped, for a rail with no preview at all; the home page cover
 and its doc use it. `command-menu.tsx` shows its preview pane by the dialog's own width
-(`@xl/command-menu`) rather than the viewport's, so the pane stays in the
+(`@xl/command-menu`) rather than the viewport's, and widens for it at any
+viewport (`data-preview:max-w-3xl`, where fibo has `sm:`), so the pane stays in the
 scaled cover on a phone. `voice-memo.tsx` has a `device` prop that puts
 any element inside its record button in place of the flat drawing, and a
 `panelClassName` for placing the transcript, and an `onCopy` callback,
