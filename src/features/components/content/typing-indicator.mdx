@@ -2,7 +2,7 @@
 title: Typing indicator
 description: Says who's typing in a conversation, naming up to three people.
 createdAt: 2026-10-02
-updatedAt: 2026-10-02
+updatedAt: 2026-10-05
 new: true
 ---
 
@@ -86,58 +86,7 @@ type TypingSentence = {
 </ExhibitCode>
 </Exhibit>
 
-## Anatomy
-
-A row of a fixed height with the dots and the sentence, plus a hidden status
-region that screen readers hear instead.
-
-<Exhibit of="typing-indicator.Anatomy" title="The row" description="Two people typing.">
-<ExhibitCode label="Structure">
-
-```text
-TypingIndicator         typing-indicator
-├─ dots                 typing-indicator-dots      (while someone types)
-├─ text                 typing-indicator-text      (while someone types)
-└─ status               typing-indicator-status    (visually hidden)
-```
-
-</ExhibitCode>
-<ExhibitCode label="Data attributes">
-
-<DataAttributes
-  rows={[
-    {
-      attribute: 'data-slot="typing-indicator"',
-      element: "The root",
-      when: "Always.",
-    },
-    {
-      attribute: "data-active",
-      element: "The root",
-      when: "Someone other than the current person is typing.",
-    },
-    {
-      attribute: 'data-slot="typing-indicator-dots"',
-      element: "The dots or custom indicator",
-      when: "Someone is typing.",
-    },
-    {
-      attribute: 'data-slot="typing-indicator-text"',
-      element: "The sentence",
-      when: "Someone is typing.",
-    },
-    {
-      attribute: 'data-slot="typing-indicator-status"',
-      element: "The status region",
-      when: "Always.",
-    },
-  ]}
-/>
-
-</ExhibitCode>
-</Exhibit>
-
-## Variants and states
+## Examples
 
 <ExhibitGrid>
 <Exhibit
@@ -195,7 +144,7 @@ TypingIndicator         typing-indicator
 <Exhibit
   of="typing-indicator.CustomIndicator"
   title="Custom indicator"
-  description="A person's indicator replaces the dots while they're the only one typing."
+  description="A person's indicator replaces the dots while they're the only one typing. With two or more, everyone gets the dots again."
 >
 <ExhibitCode>
 
@@ -222,17 +171,6 @@ const ana = { id: "ana", name: "Ana", indicator: <PencilIcon /> }
 </Exhibit>
 </ExhibitGrid>
 
-## Usage
-
-<UsageGuidelines
-  guidelines={[
-    "Put it between the messages and the composer, where people look while they wait for a reply.",
-    "Keep it mounted for the life of the conversation. The status region has to be in the page before it changes, or screen readers miss the first announcement.",
-    "Name at most three people. Past that, a list of names is harder to read than a count.",
-    "In large rooms, consider turning it off. Teams does in chats of more than 20 people.",
-  ]}
-/>
-
 ### Translating it
 
 `format` gets `{ count, names, list }` and returns the whole sentence. Never
@@ -251,6 +189,68 @@ change with them. Write one sentence per case, as an ICU message for instance:
 with a separate message for "Several people are typing…" when `names` is
 empty. Pass the same `locale` the messages use, so the names are joined in that
 language.
+
+## Anatomy
+
+A row of a fixed height with the dots and the sentence, plus a hidden status
+region that screen readers hear instead.
+
+<Exhibit of="typing-indicator.Anatomy" title="The row" description="Two people typing.">
+<ExhibitCode label="Structure">
+
+```text
+TypingIndicator         typing-indicator
+├─ dots                 typing-indicator-dots      (while someone types)
+├─ text                 typing-indicator-text      (while someone types)
+└─ status               typing-indicator-status    (visually hidden)
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="typing-indicator"',
+      element: "The root",
+      when: "Always.",
+    },
+    {
+      attribute: "data-active",
+      element: "The root",
+      when: "Someone other than the current person is typing.",
+    },
+    {
+      attribute: 'data-slot="typing-indicator-dots"',
+      element: "The dots or custom indicator",
+      when: "Someone is typing.",
+    },
+    {
+      attribute: 'data-slot="typing-indicator-text"',
+      element: "The sentence",
+      when: "Someone is typing.",
+    },
+    {
+      attribute: 'data-slot="typing-indicator-status"',
+      element: "The status region",
+      when: "Always.",
+    },
+  ]}
+/>
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Put it between the messages and the composer, where people look while they wait for a reply.",
+    "Keep it mounted for the life of the conversation. The status region has to be in the page before it changes, or screen readers miss the first announcement.",
+    "Name at most three people. Past that, a list of names is harder to read than a count.",
+    "In large rooms, consider turning it off. Teams does in chats of more than 20 people.",
+  ]}
+/>
 
 ## Best practices
 
