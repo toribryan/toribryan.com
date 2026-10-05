@@ -19,6 +19,7 @@ import { Prose } from "@/components/base/ui/typography"
 import { MDX } from "@/components/mdx"
 import { LinkButton } from "@/components/mdx-link-button"
 import { TOCInline } from "@/components/toc-inline"
+import { TOCScrubber } from "@/components/toc-scrubber"
 import {
   findNeighbor,
   getDocsByCategory,
@@ -298,7 +299,13 @@ export async function DocPage({
       )}
 
       <Prose className="p-4">
-        <TOCInline className="mt-0" items={toc} />
+        <TOCInline className="mt-0 xl:hidden" items={toc} />
+        {/* Wide screens get the scrubber in the right margin; narrower ones,
+            with no margin to hold it, keep the inline outline. */}
+        <TOCScrubber
+          items={toc}
+          className="fixed top-1/2 right-[calc((100vw-48rem)/4-2.25rem)] z-40 -translate-y-1/2 max-xl:hidden"
+        />
 
         {facts.length > 0 && (
           <dl
