@@ -26,11 +26,13 @@ import {
 } from "lucide-react"
 import { useTheme } from "next-themes"
 
+import { addDays } from "@/lib/dates"
 import { cn } from "@/lib/utils"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { Avatar, AvatarFallback } from "@/components/fibo/avatar"
 import { Badge } from "@/components/fibo/badge"
 import { Button } from "@/components/fibo/button"
+import { Calendar } from "@/components/fibo/calendar"
 import {
   ChapterScrubber,
   type Chapter,
@@ -1007,6 +1009,37 @@ function ChatComposerCover({ active }: CoverProps) {
   )
 }
 
+const RANGE_START = new Date(2026, 9, 6)
+// The start alone, then the end walking out a day at a time, then a beat on
+// the finished week and a half before it starts over.
+const RANGE_STEPS = 14
+
+/**
+ * October in range mode. While active a range is picked: the start, then
+ * the bar grows a day at a time to the end and holds. At rest it shows the
+ * week from fibo's Range story.
+ */
+function CalendarCover({ active }: CoverProps) {
+  const step = useCycle(RANGE_STEPS, 260, active)
+  const length = active ? Math.min(step, 10) : 6
+  return (
+    <ScaledStage width={400}>
+      <div className="flex size-full items-center justify-center">
+        <div className="rounded-xl border border-line bg-card p-3">
+          <Calendar
+            mode="range"
+            defaultMonth={RANGE_START}
+            value={{
+              from: RANGE_START,
+              to: length > 0 ? addDays(RANGE_START, length) : undefined,
+            }}
+          />
+        </div>
+      </div>
+    </ScaledStage>
+  )
+}
+
 export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "data-table": DataTableCover,
   "chat-composer": ChatComposerCover,
@@ -1026,6 +1059,7 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "message-list": MessageListCover,
   "map-pin": MapPinCover,
   "jump-bar": JumpBarCover,
+  calendar: CalendarCover,
 }
 
 /**

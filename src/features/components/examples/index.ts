@@ -1,5 +1,6 @@
 import type { ComponentType } from "react"
 
+import * as calendar from "./calendar"
 import * as chapterScrubber from "./chapter-scrubber"
 import * as chatComposer from "./chat-composer"
 import * as commandMenu from "./command-menu"
@@ -25,6 +26,7 @@ import * as typingIndicator from "./typing-indicator"
  * matches `Default` in fibo's reactions.stories.tsx.
  */
 export const EXAMPLES: Record<string, Record<string, ComponentType>> = {
+  calendar,
   "chapter-scrubber": chapterScrubber,
   "chat-composer": chatComposer,
   "command-menu": commandMenu,

@@ -101,6 +101,13 @@ export const NICHE_PARTS: NichePart[] = [
     home: false,
   },
   {
+    name: "calendar",
+    title: "Calendar",
+    description:
+      "A month grid for picking a day or a range, with full keyboard use; pages side by side or scrolls on phones.",
+    home: false,
+  },
+  {
     name: "map-pin",
     figma: "601-75",
     title: "Map pin",
