@@ -76,7 +76,7 @@ tiers with, and the scrubber's screen fitting and the command menu's `modal`
 prop, which the home page cover and the command menu doc use, are in fibo
 too. `src/features/portfolio/data/fibo-niche.ts`
 lists the parts with a page here, which drives the home page section and the
-docs; `home: false` keeps a part off the home page (Token flow, Reactions, whose slot Floating nav took, and Integration visual, whose slot the Command menu took after Data table joined). Each has a doc at `/components/[slug]`, ported from fibo's Storybook:
+docs; `home: false` keeps a part off the home page (Token flow, Reactions, whose slot Floating nav took, Integration visual, whose slot the Command menu took after Data table joined, and Chapter scrubber, whose slot Chat composer took). Each has a doc at `/components/[slug]`, ported from fibo's Storybook:
 `src/features/components/content/<slug>.mdx` is the body,
 `examples/<slug>.tsx` holds its live examples (named after the fibo stories
 they port), and `data/registry.tsx` wires the lead preview and links. The
