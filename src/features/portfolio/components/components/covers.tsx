@@ -904,7 +904,7 @@ function ChatComposerCover({ active }: CoverProps) {
   const sent = step >= typed + 10
   return (
     <ScaledStage width={420}>
-      <div className="flex min-h-56 items-center px-6">
+      <div className="flex h-full items-center px-6">
         <ChatComposerProvider
           state={{
             value: sent ? "" : COMPOSER_MESSAGE.slice(0, step),
