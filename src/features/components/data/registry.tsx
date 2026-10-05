@@ -2,9 +2,9 @@ import type { ComponentType } from "react"
 
 import { EXAMPLES } from "@/features/components/examples"
 import {
+  fiboStorybookUrl,
   NICHE_PARTS,
   nicheFigmaUrl,
-  nicheStorybookUrl,
 } from "@/features/portfolio/data/fibo-niche"
 
 export type ComponentEntry = {
@@ -74,7 +74,7 @@ export const COMPONENTS: Record<string, ComponentEntry | undefined> =
         Preview: EXAMPLES[name]![LEAD[name]!]!,
         source: `${name}.tsx`,
         links: {
-          storybook: nicheStorybookUrl(name),
+          storybook: fiboStorybookUrl(name),
           figma: nicheFigmaUrl(name),
           ...(ON_21ST.has(name) && {
             registry: {
