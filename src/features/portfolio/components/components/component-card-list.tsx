@@ -47,56 +47,45 @@ export function ComponentCardList({
 const HAS_PAGE = new Set(NICHE_PARTS.map((part) => part.name))
 
 /**
- * Every fibo part laid out like fibo's Catalog page: each shelf, then its
- * groups in fibo's order, with deprecated parts last in their group. Parts
- * with a page here open it; the rest open their docs in fibo's Storybook.
+ * Every fibo part, by fibo's two shelves. Parts with a page here open it;
+ * the rest open their docs in fibo's Storybook.
  */
 export function CatalogList() {
   return (
     <div className="flex flex-col">
-      {SHELVES.map((shelf) => (
-        <section key={shelf.id} aria-labelledby={shelf.id}>
-          <header className="screen-line-bottom flex flex-col gap-1 p-4">
-            <h2
-              id={shelf.id}
-              className="font-heading text-2xl/9 font-medium text-balance"
-            >
-              {shelf.title}
-            </h2>
-            <p className="text-balance text-muted-foreground">
-              {shelf.description}
-            </p>
-          </header>
-          {shelf.groups.map((group) => {
-            const parts = CATALOG.filter(
-              (part) => part.shelf === shelf.id && part.group === group
-            ).sort(
-              (a, b) =>
-                Number(a.status === "deprecated") -
-                Number(b.status === "deprecated")
-            )
-            if (parts.length === 0) return null
-            return (
-              <section
-                key={group}
-                aria-labelledby={`${shelf.id}-${group}`}
-                className="screen-line-bottom"
+      {SHELVES.map((shelf) => {
+        // A to Z within the shelf, deprecated parts last so new work starts
+        // elsewhere.
+        const parts = CATALOG.filter((part) => part.shelf === shelf.id).sort(
+          (a, b) =>
+            Number(a.status === "deprecated") -
+              Number(b.status === "deprecated") ||
+            a.title.localeCompare(b.title)
+        )
+        return (
+          <section
+            key={shelf.id}
+            aria-labelledby={shelf.id}
+            className="screen-line-bottom"
+          >
+            <header className="screen-line-bottom flex flex-col gap-1 p-4">
+              <h2
+                id={shelf.id}
+                className="font-heading text-2xl/9 font-medium text-balance"
               >
-                <h3
-                  id={`${shelf.id}-${group}`}
-                  className="screen-line-bottom flex items-baseline gap-2 px-4 py-2 text-sm font-medium"
-                >
-                  {group}
-                  <span className="font-mono text-xs text-muted-foreground">
-                    {parts.length}
-                  </span>
-                </h3>
-                <CardGrid parts={parts} details />
-              </section>
-            )
-          })}
-        </section>
-      ))}
+                {shelf.title}
+                <sup className="top-[-0.75em] ml-1 text-sm font-medium text-muted-foreground">
+                  ({parts.length})
+                </sup>
+              </h2>
+              <p className="text-balance text-muted-foreground">
+                {shelf.description}
+              </p>
+            </header>
+            <CardGrid parts={parts} details />
+          </section>
+        )
+      })}
     </div>
   )
 }

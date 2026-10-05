@@ -22,7 +22,7 @@ import { FiboInstall } from "@/features/portfolio/components/fibo-install"
 
 const title = "Components"
 const description =
-  "Every part in fibo, grouped by job as in its Storybook catalog. Each installs as source with one shadcn command."
+  "Every part in fibo, base and special. Each installs as source with one shadcn command."
 
 export const metadata: Metadata = {
   title,

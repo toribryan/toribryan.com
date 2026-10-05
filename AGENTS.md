@@ -98,8 +98,8 @@ example keeps its state in the query string with `useSearchParamsAtom`. Its exam
 `success-subtle`, `warning-subtle` and `info-subtle`, which this site mixes
 in `globals.css` like `destructive-subtle`.
 
-fibo has two pages here. `/components` mirrors the Catalog page in fibo's
-Storybook: every fibo part, by shelf and then group in fibo's order, with an
+fibo has two pages here. `/components` lists every fibo part under its
+shelf, base or special, A to Z, with an
 install block per package manager (`fibo-install.tsx`) above. The parts come
 from `data/fibo-catalog.json`, a copy of fibo's `components.meta.json` that
 `npm run sync:fibo-catalog` refreshes (it reads `../fibo`, or `--repo`);
