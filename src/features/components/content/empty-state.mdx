@@ -1,0 +1,222 @@
+---
+title: Empty state
+description: "What shows where content would be: a title, why it's empty, and what to do next."
+createdAt: 2026-10-05
+updatedAt: 2026-10-05
+new: true
+---
+
+An empty state fills the space where content would be. It says what's
+missing, why when that isn't obvious, and what to do next. Data table shows
+one when it has no rows, with Clear filters when a search or filter hid
+them, and Command menu and Filter menu show the small one as their no
+results line.
+
+<Exhibit
+  of="empty-state.Default"
+  title="Empty state"
+  description="A first-run empty state: what's missing, why, and one action."
+>
+<ExhibitCode label="Install">
+
+```bash
+npx shadcn@latest add https://fibo.toribryan.com/r/empty-state.json
+```
+
+Nothing else to install.
+
+</ExhibitCode>
+<ExhibitCode label="Usage">
+
+```tsx
+import { Button } from "@/components/ui/button"
+import {
+  EmptyState,
+  EmptyStateActions,
+  EmptyStateDescription,
+  EmptyStateTitle,
+} from "@/components/ui/empty-state"
+
+export function NoMembers({ onInvite }: { onInvite: () => void }) {
+  return (
+    <EmptyState>
+      <EmptyStateTitle>No members yet</EmptyStateTitle>
+      <EmptyStateDescription>
+        Invite people to work on this project with you.
+      </EmptyStateDescription>
+      <EmptyStateActions>
+        <Button size="sm" onClick={onInvite}>
+          Invite members
+        </Button>
+      </EmptyStateActions>
+    </EmptyState>
+  )
+}
+```
+
+Say what's missing in the title and what to do in the action; the
+description is for why, when it isn't obvious.
+
+</ExhibitCode>
+<ExhibitCode label="Props">
+
+| Prop   | Type                | Default     | Description                                                      |
+| ------ | ------------------- | ----------- | ---------------------------------------------------------------- |
+| `size` | `"sm" \| "default"` | `"default"` | `sm` for a menu or popover, `default` for a table, list or page. |
+
+`EmptyState` also takes every prop of a `div`. `EmptyStateMedia` and
+`EmptyStateActions` are `div`s, and `EmptyStateTitle` and
+`EmptyStateDescription` are `p`s, each taking that element's props.
+
+</ExhibitCode>
+</Exhibit>
+
+## Examples
+
+<ExhibitGrid>
+<Exhibit
+  of="empty-state.Small"
+  title="Small, in a menu"
+  description="The title alone, in muted text. Command menu and Filter menu show their no results line this way."
+>
+<ExhibitCode>
+
+```tsx
+<EmptyState size="sm">
+  <EmptyStateTitle>No matching filters</EmptyStateTitle>
+</EmptyState>
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="empty-state.NoMatches"
+  title="No matches"
+  description="When a search or filter hid everything, say so and offer the way back."
+>
+<ExhibitCode>
+
+```tsx
+<EmptyState>
+  <EmptyStateMedia>
+    <SearchXIcon />
+  </EmptyStateMedia>
+  <EmptyStateTitle>No matching members</EmptyStateTitle>
+  <EmptyStateDescription>
+    Try another search, or clear the filters.
+  </EmptyStateDescription>
+  <EmptyStateActions>
+    <Button variant="outline" size="sm">
+      Clear filters
+    </Button>
+  </EmptyStateActions>
+</EmptyState>
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="empty-state.TitleOnly"
+  title="Title only"
+  description="When there's nothing to do about it, the title is enough."
+>
+<ExhibitCode>
+
+```tsx
+<EmptyState>
+  <EmptyStateMedia>
+    <InboxIcon />
+  </EmptyStateMedia>
+  <EmptyStateTitle>You're all caught up</EmptyStateTitle>
+</EmptyState>
+```
+
+</ExhibitCode>
+</Exhibit>
+</ExhibitGrid>
+
+## Anatomy
+
+A centred column: an icon in a muted tile, the title, a description and one
+or two buttons. Only the title is required.
+
+<Exhibit of="empty-state.Anatomy" title="The parts" description="The first-run example.">
+<ExhibitCode label="Structure">
+
+```text
+EmptyState              empty-state                Centres its parts and sets their size
+├─ EmptyStateMedia      empty-state-media          An icon in a muted tile, hidden from screen readers
+├─ EmptyStateTitle      empty-state-title          What's missing
+├─ EmptyStateDescription empty-state-description   Why, or what fills it
+└─ EmptyStateActions    empty-state-actions        One or two buttons
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="empty-state"',
+      element: "The root",
+      when: "Always.",
+    },
+    {
+      attribute: "data-size",
+      element: "The root",
+      when: (
+        <>
+          Always. <code>sm</code> or <code>default</code>.
+        </>
+      ),
+    },
+  ]}
+/>
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Name what's missing in the title: No members yet, not Nothing here.",
+    "Tell first-run empty apart from no matches. One invites people to add something, the other to clear a search.",
+    "One primary action at most. A second one, if any, is outline or ghost.",
+    "Leave the icon out of small empty states; a menu has no room for it.",
+  ]}
+/>
+
+## Best practices
+
+<ComponentRules
+  rules={[
+    {
+      positive: {
+        component: <Live of="empty-state.DoNextStep" />,
+        description: "Say what's missing and offer the next step.",
+      },
+      negative: {
+        component: <Live of="empty-state.DontDeadEnd" />,
+        description: "Don't leave people with a dead end.",
+      },
+    },
+  ]}
+/>
+
+## Accessibility
+
+There's nothing to focus but its buttons, which are ordinary buttons in the
+tab order.
+
+<UsageGuidelines
+  guidelines={[
+    "The title and description are plain text, read in order with what's around them.",
+    "The icon is hidden from screen readers; the title says it in words.",
+    "Where an empty state replaces results as someone types, put it in a live region so the change is announced. Command menu's already is.",
+  ]}
+/>
+
+## Related components
+
+<RelatedComponents names={["Data table", "Command menu", "Filter menu"]} />

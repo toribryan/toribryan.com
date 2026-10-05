@@ -78,6 +78,15 @@ export const NICHE_PARTS: NichePart[] = [
     home: false,
   },
   {
+    name: "empty-state",
+    figma: "710-144",
+    title: "Empty state",
+    shelf: "base",
+    description:
+      "What shows where content would be: a title, why it's empty, and what to do next.",
+    home: false,
+  },
+  {
     name: "map-pin",
     figma: "601-75",
     title: "Map pin",
@@ -158,6 +167,7 @@ const BASE_GROUPS: Record<string, string> = {
   checkbox: "forms",
   "data-table": "display",
   field: "forms",
+  "empty-state": "feedback",
   input: "forms",
   "input-group": "forms",
   kbd: "display",
