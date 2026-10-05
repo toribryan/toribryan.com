@@ -94,6 +94,19 @@ export function Compact() {
   )
 }
 
+export function TextItems() {
+  return (
+    <Phone>
+      <FloatingNav
+        aria-label="Example"
+        items={ITEMS.slice(0, 3).map(({ value, label }) => ({ value, label }))}
+        defaultValue="home"
+        size="sm"
+      />
+    </Phone>
+  )
+}
+
 export function Static() {
   return (
     <FloatingNav

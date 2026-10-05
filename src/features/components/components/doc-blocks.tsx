@@ -18,7 +18,10 @@ import {
 
 import { cn } from "@/lib/utils"
 import { CopyButton } from "@/components/copy-button"
-import { NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
+import {
+  fiboStorybookUrl,
+  NICHE_PARTS,
+} from "@/features/portfolio/data/fibo-niche"
 
 /*
  * The blocks fibo's Storybook docs are written with, ported so those docs
@@ -445,7 +448,7 @@ export function RelatedComponents({ names }: { names: string[] }) {
               </Link>
             ) : (
               <a
-                href={`https://fibo.toribryan.com/?path=/docs/base-components-${slug}--docs`}
+                href={fiboStorybookUrl(slug)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={className}

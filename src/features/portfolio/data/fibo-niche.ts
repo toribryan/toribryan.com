@@ -127,8 +127,38 @@ export function nicheFigmaUrl(name: string) {
   return node ? `${FIGMA_LIBRARY}?node-id=${node}` : undefined
 }
 
-export function nicheStorybookUrl(name: string) {
-  const shelf = NICHE_PARTS.find((part) => part.name === name)?.shelf
-  const tier = shelf === "base" ? "base-components" : "special-components"
-  return `https://fibo.toribryan.com/?path=/docs/${tier}-${name}--docs`
+/*
+ * fibo's sidebar files base parts under their group, so their docs live at
+ * base-components-<group>-<name>; special parts sit straight under their
+ * shelf. The groups are the ones in fibo's components.meta.json, for the base
+ * parts this site links to.
+ */
+const BASE_GROUPS: Record<string, string> = {
+  avatar: "display",
+  badge: "display",
+  button: "actions",
+  checkbox: "forms",
+  "data-table": "display",
+  input: "forms",
+  kbd: "display",
+  menu: "overlays",
+  pagination: "navigation",
+  select: "forms",
+  sheet: "overlays",
+  table: "display",
+  tooltip: "overlays",
+  "typing-indicator": "feedback",
+}
+
+/** The part's docs in fibo's Storybook; a name not on this site counts as a base part. */
+export function fiboStorybookUrl(name: string) {
+  const shelf = NICHE_PARTS.find((part) => part.name === name)?.shelf ?? "base"
+  const group = BASE_GROUPS[name]
+  const path =
+    shelf === "special"
+      ? `special-components-${name}`
+      : group
+        ? `base-components-${group}-${name}`
+        : `base-components-${name}`
+  return `https://fibo.toribryan.com/?path=/docs/${path}--docs`
 }

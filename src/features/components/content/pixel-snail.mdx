@@ -2,7 +2,7 @@
 title: Pixel snail
 description: A one-color pixel snail that crawls on a loop while something loads.
 createdAt: 2026-09-28
-updatedAt: 2026-09-30
+updatedAt: 2026-10-05
 new: true
 ---
 
@@ -22,9 +22,10 @@ dance and turn to watch the pointer.
 npx shadcn@latest add https://fibo.toribryan.com/r/pixel-snail.json
 ```
 
-It installs `PixelSnail`, `PixelSnailSprite` and the `PixelSnailLook` type.
-There's no animation library: every frame is state and a timer, drawn as SVG
-rectangles.
+It installs `PixelSnail`, `PixelSnailSprite` and the `PixelSnailLook` type,
+with `lib/merge-refs.ts`, a small helper that lets a `ref` you pass share the
+element with the one that rests him off screen. There's no animation library:
+every frame is state and a timer, drawn as SVG rectangles.
 
 </ExhibitCode>
 <ExhibitCode label="Usage">
@@ -75,7 +76,7 @@ announce.
 | `ground` | `boolean`                       | `true`      | A dotted line under the snail that shows it moving.                                                                      |
 | `label`  | `string`                        | `"Loading"` | Announced to assistive technology while the snail is shown.                                                              |
 
-It also takes the props of a `div`, except `children`.
+It also takes the props of a `div`, `ref` included, except `children`.
 
 **PixelSnailSprite**
 
@@ -88,7 +89,7 @@ It also takes the props of a `div`, except `children`.
 | `assembleDelay` | `number`                                                      |             | Builds the snail up from coarse blocks after this many milliseconds, instead of showing it at once.                                                                                                          |
 | `onAssemble`    | `(step: { block: number; shown: number } \| "whole") => void` |             | Called as the build-up moves on: with the block size and the share of blocks shown each time more arrive or the blocks split, then with `"whole"` once the art is complete. For syncing sound to the pixels. |
 
-It also takes the props of an SVG `g`, except `children`.
+It also takes the props of an SVG `g`, `ref` included, except `children`.
 
 ```ts
 type PixelSnailLook = { x: -1 | 0 | 1; y: -1 | 0 | 1; facing?: -1 | 1 }
@@ -97,89 +98,11 @@ type PixelSnailLook = { x: -1 | 0 | 1; y: -1 | 0 | 1; facing?: -1 | 1 }
 </ExhibitCode>
 </Exhibit>
 
-## Anatomy
+## Examples
 
-The loader is a status region holding one drawing: the snail, and under him
-the dotted ground. The snail is shell, foot, head and a googly eye on each
-stalk, all in one color. The sprite is the same snail on his own, with no
-region and no ground.
+### Sizes
 
-<Exhibit
-  of="pixel-snail.AnatomyLoader"
-  title="The loader"
-  description="Doubled in size. His whites take the page background, so the pupils read in either theme."
->
-<ExhibitCode label="Structure">
-
-```text
-PixelSnail                 pixel-snail          the status region
-├─ label                   (screen readers only)
-└─ drawing                 (hidden from assistive technology)
-   ├─ snail                shell, foot, head, eyes on stalks
-   └─ ground               (in place)
-
-With travel:
-PixelSnail                 pixel-snail          data-travel
-└─ track
-   ├─ ground               pixel-snail-ground
-   └─ drawing              moves across the track
-
-PixelSnailSprite           pixel-snail-sprite   a <g> for your own SVG
-```
-
-</ExhibitCode>
-<ExhibitCode label="Data attributes">
-
-<DataAttributes
-  rows={[
-    {
-      attribute: 'data-slot="pixel-snail"',
-      element: "The root",
-      when: "Always.",
-    },
-    {
-      attribute: "data-travel",
-      element: "The root",
-      when: (
-        <>
-          <code>travel</code> is on.
-        </>
-      ),
-    },
-    {
-      attribute: 'data-slot="pixel-snail-ground"',
-      element: "The ground",
-      when: (
-        <>
-          <code>travel</code> and <code>ground</code> are both on.
-        </>
-      ),
-    },
-    {
-      attribute: 'data-slot="pixel-snail-sprite"',
-      element: "The sprite's group",
-      when: "Always.",
-    },
-  ]}
-/>
-
-</ExhibitCode>
-</Exhibit>
-
-## Variants and states
-
-Everything he does follows three rules. He lives on a grid: he's drawn in
-whole art pixels and only ever moves by whole art pixels, so he never blurs
-between two. He's timed by hand: each loop is a script of frames and holds,
-deliberately uneven, because an even beat reads as a machine. And he has one
-color: he draws in the text color, so recoloring text recolors him.
-
-### The loader
-
-A crawl cycle has four frames. The head reaches forward first while the eye
-stalks tip ahead, then the shell slides up while the tail holds back, so his
-foot stretches and gathers instead of sliding. Each cycle moves him two art
-pixels.
+`size` sets one art pixel to 2, 3 or 4 screen pixels.
 
 <Exhibit
   of="pixel-snail.Sizes"
@@ -196,6 +119,68 @@ pixels.
 
 </ExhibitCode>
 </Exhibit>
+
+### In an empty panel
+
+With a line saying what's happening and a way out.
+
+<Exhibit
+  of="pixel-snail.LoadingPanel"
+  description="A panel waiting for projects, with a Cancel button."
+>
+<ExhibitCode>
+
+```tsx
+<div className="flex flex-col items-center gap-3 rounded-xl border p-8">
+  <PixelSnail label="Loading your projects" />
+  <p className="text-sm text-muted-foreground">Fetching your projects</p>
+  <Button size="sm" variant="outline">
+    Cancel
+  </Button>
+</div>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### In a drawing of your own
+
+The sprite stands wherever you put him, with his foot on the point.
+
+<Exhibit
+  of="pixel-snail.OnALine"
+  description="Dancing on a dotted line, at one and a half units per art pixel."
+>
+<ExhibitCode>
+
+```tsx
+<svg viewBox="0 0 200 40" className="text-foreground" aria-hidden>
+  <line x1={0} y1={30} x2={200} y2={30} stroke="currentColor" />
+  <PixelSnailSprite transform="translate(100 30)" pixel={1.5} mode="dance" />
+</svg>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### How he moves
+
+Everything he does follows three rules. He lives on a grid: he's drawn in
+whole art pixels and only ever moves by whole art pixels, so he never blurs
+between two. He's timed by hand: each loop is a script of frames and holds,
+deliberately uneven, because an even beat reads as a machine. And he has one
+color: he draws in the text color, so recoloring text recolors him.
+
+He rests while he's off screen. The crawl and the sprite's loops stop until
+he scrolls back into view, even when you pass your own `ref`, and a build-up
+waits out its delay without ticking.
+
+### The crawl
+
+A crawl cycle has four frames. The head reaches forward first while the eye
+stalks tip ahead, then the shell slides up while the tail holds back, so his
+foot stretches and gathers instead of sliding. Each cycle moves him two art
+pixels.
 
 <ExhibitGrid>
 <Exhibit
@@ -346,61 +331,6 @@ round.
 </ExhibitCode>
 </Exhibit>
 
-## Usage
-
-<UsageGuidelines
-  guidelines={[
-    "Use him for waits long enough to notice, where a little character helps: an empty panel filling, an import, a first load.",
-    "Say what's loading, in a line of text beside him and in his label for screen readers, such as Loading your projects.",
-    "Keep him to one per view. He's a character, and a crowd of him stops being charming.",
-    "Use the sprite when he's part of a drawing, such as standing on a line or riding a path.",
-    "Have him look at something only while it has his attention, then let him go back to his loop.",
-  ]}
-/>
-
-### In an empty panel
-
-With a line saying what's happening and a way out.
-
-<Exhibit
-  of="pixel-snail.LoadingPanel"
-  description="A panel waiting for projects, with a Cancel button."
->
-<ExhibitCode>
-
-```tsx
-<div className="flex flex-col items-center gap-3 rounded-xl border p-8">
-  <PixelSnail label="Loading your projects" />
-  <p className="text-sm text-muted-foreground">Fetching your projects</p>
-  <Button size="sm" variant="outline">
-    Cancel
-  </Button>
-</div>
-```
-
-</ExhibitCode>
-</Exhibit>
-
-### In a drawing of your own
-
-The sprite stands wherever you put him, with his foot on the point.
-
-<Exhibit
-  of="pixel-snail.OnALine"
-  description="Dancing on a dotted line, at one and a half units per art pixel."
->
-<ExhibitCode>
-
-```tsx
-<svg viewBox="0 0 200 40" className="text-foreground" aria-hidden>
-  <line x1={0} y1={30} x2={200} y2={30} stroke="currentColor" />
-  <PixelSnailSprite transform="translate(100 30)" pixel={1.5} mode="dance" />
-</svg>
-```
-
-</ExhibitCode>
-</Exhibit>
-
 ### Watching the pointer
 
 The sprite doesn't read the pointer himself: you decide what he looks at and
@@ -435,6 +365,87 @@ const look = {
 
 </ExhibitCode>
 </Exhibit>
+
+## Anatomy
+
+The loader is a status region holding one drawing: the snail, and under him
+the dotted ground. The snail is shell, foot, head and a googly eye on each
+stalk, all in one color. The sprite is the same snail on his own, with no
+region and no ground.
+
+<Exhibit
+  of="pixel-snail.AnatomyLoader"
+  title="The loader"
+  description="Doubled in size. His whites take the page background, so the pupils read in either theme."
+>
+<ExhibitCode label="Structure">
+
+```text
+PixelSnail                 pixel-snail          the status region
+├─ label                   (screen readers only)
+└─ drawing                 (hidden from assistive technology)
+   ├─ snail                shell, foot, head, eyes on stalks
+   └─ ground               (in place)
+
+With travel:
+PixelSnail                 pixel-snail          data-travel
+└─ track
+   ├─ ground               pixel-snail-ground
+   └─ drawing              moves across the track
+
+PixelSnailSprite           pixel-snail-sprite   a <g> for your own SVG
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="pixel-snail"',
+      element: "The root",
+      when: "Always.",
+    },
+    {
+      attribute: "data-travel",
+      element: "The root",
+      when: (
+        <>
+          <code>travel</code> is on.
+        </>
+      ),
+    },
+    {
+      attribute: 'data-slot="pixel-snail-ground"',
+      element: "The ground",
+      when: (
+        <>
+          <code>travel</code> and <code>ground</code> are both on.
+        </>
+      ),
+    },
+    {
+      attribute: 'data-slot="pixel-snail-sprite"',
+      element: "The sprite's group",
+      when: "Always.",
+    },
+  ]}
+/>
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Use him for waits long enough to notice, where a little character helps: an empty panel filling, an import, a first load.",
+    "Say what's loading, in a line of text beside him and in his label for screen readers, such as Loading your projects.",
+    "Keep him to one per view. He's a character, and a crowd of him stops being charming.",
+    "Use the sprite when he's part of a drawing, such as standing on a line or riding a path.",
+    "Have him look at something only while it has his attention, then let him go back to his loop.",
+  ]}
+/>
 
 ## Best practices
 
@@ -474,7 +485,7 @@ matters is what he says and how he moves.
 
 <UsageGuidelines
   guidelines={[
-    "The loader is a status region. Screen readers announce its label, such as Loading your projects, when he appears, and skip the drawing.",
+    "The loader is a status region holding its label, such as Loading your projects, as visually hidden text, since screen readers read a status region's content rather than its name. The drawing is hidden from them.",
     "The sprite is decoration. Hide the drawing he sits in from screen readers, and put anything he says or means somewhere they can reach it.",
     "When someone asks for reduced motion, he holds still in his resting pose: no crawl, travel, rest or dance, and he appears whole with no build-up. He still turns to look, because that only happens in response to the visitor.",
     "He draws in the text color, so check his color against the background like any text.",

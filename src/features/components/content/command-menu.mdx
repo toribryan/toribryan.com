@@ -2,7 +2,7 @@
 title: Command menu
 description: A Cmd+K palette with nested pages, recent commands, ranked search and a preview pane.
 createdAt: 2026-09-30
-updatedAt: 2026-09-30
+updatedAt: 2026-10-05
 new: true
 ---
 
@@ -71,8 +71,12 @@ export function AppCommands({ setTheme }: { setTheme: (t: string) => void }) {
 }
 ```
 
-Every `value` must be unique across the whole menu, nested pages included.
-Render one command menu per page: its shortcut listens on the whole document.
+Every `value` must be unique across the whole menu, nested pages included:
+recents and ranking find commands by it. An item runs its own `onSelect`,
+then the menu's `onSelect` gets the item, and the menu closes.
+
+Render one command menu per page. Its shortcut listens on the whole
+document, so two menus with the same `hotkey` would both open.
 
 </ExhibitCode>
 <ExhibitCode label="Props">
@@ -96,6 +100,7 @@ Render one command menu per page: its shortcut listens on the whole document.
 | `label`          | `string`                                 | `"Command menu"`              | Names the dialog and the search box for assistive technology.                                                                        |
 | `labels`         | `Partial<CommandMenuLabels>`             |                               | Wording the menu writes for itself, for translation: `recent`, `results`, `back`, `home`, `noPreview` and `count`.                   |
 | `hints`          | `boolean`                                | `true`                        | Whether to show the row of keyboard hints under the list.                                                                            |
+| `modal`          | `boolean`                                | `true`                        | `false` opens it without trapping focus, locking the page's scroll or moving focus into it, for a menu inside a card or cover.       |
 | `container`      | `HTMLElement \| ShadowRoot \| RefObject` |                               | Where the dialog portals to. Defaults to the body.                                                                                   |
 | `className`      | `string`                                 |                               | Classes for the trigger.                                                                                                             |
 | `popupClassName` | `string`                                 |                               | Classes for the dialog.                                                                                                              |
@@ -113,6 +118,218 @@ type CommandMenuItem = {
   placeholder?: string // the search hint on that page
   preview?: React.ReactNode // shown in the side pane
 }
+```
+
+</ExhibitCode>
+</Exhibit>
+
+## Examples
+
+### Views
+
+The menu has three views, and a few states within them.
+
+<ExhibitGrid>
+<Exhibit
+  of="command-menu.Home"
+  title="Home"
+  description="Recent commands first, then your groups in order."
+>
+<ExhibitCode>
+
+```tsx
+<CommandMenu groups={groups} storageKey="app-commands" />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="command-menu.Results"
+  title="Search results"
+  description="One ranked list across every page, each row naming where it lives."
+>
+<ExhibitCode>
+
+```tsx
+// Typing is enough: labels and keywords are both searched.
+{ value: "theme", label: "Change theme", keywords: ["appearance", "mode"] }
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="command-menu.PageOpen"
+  title="Page open"
+  description="A back button, a breadcrumb and the page's own hint."
+>
+<ExhibitCode>
+
+```tsx
+{
+  value: "theme",
+  label: "Change theme",
+  placeholder: "Pick a theme…",
+  items: [
+    { value: "theme-light", label: "Light" },
+    { value: "theme-dark", label: "Dark" },
+  ],
+}
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="command-menu.Empty"
+  title="No matches"
+  description="A search with no results says so."
+>
+<ExhibitCode>
+
+```tsx
+<CommandMenu groups={groups} emptyText="No results found" />
+```
+
+</ExhibitCode>
+</Exhibit>
+<Exhibit
+  of="command-menu.NoHints"
+  title="Without hints"
+  description="For apps where people already know the keys."
+>
+<ExhibitCode>
+
+```tsx
+<CommandMenu groups={groups} hints={false} />
+```
+
+</ExhibitCode>
+</Exhibit>
+</ExhibitGrid>
+
+### With a preview
+
+When anything on screen has a preview, the dialog widens and a pane follows
+the highlight. Commands without one show No preview. When the dialog itself
+is narrower than 36rem, the pane hides, so it also stays hidden in a small
+container on a wide screen.
+
+<Exhibit
+  of="command-menu.Preview"
+  title="Preview pane"
+  description="Files show a thumbnail and an excerpt, people their role."
+>
+<ExhibitCode>
+
+```tsx
+{
+  value: "roadmap",
+  label: "Roadmap 2027",
+  icon: <FileTextIcon />,
+  preview: <FilePreview title="Roadmap 2027" edited="2 hours ago" />,
+}
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Rows
+
+Each row can carry an icon, a shortcut and a chevron for a page. Recent
+commands and search results also name where they live, and a disabled row
+fades.
+
+<Exhibit
+  of="command-menu.Rows"
+  title="Row states"
+  description="Highlighted with context, a shortcut, a page, and disabled."
+>
+<ExhibitCode>
+
+```tsx
+;[
+  { value: "new-file", label: "New file", shortcut: ["⌘", "N"] },
+  { value: "theme", label: "Change theme", items: [/* … */] },
+  { value: "archive", label: "Archive", disabled: true },
+]
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### In a header
+
+The usual home: a search field in the app's header, where people look for search.
+
+<Exhibit of="command-menu.InHeader" description="Click the field in the header.">
+<ExhibitCode>
+
+```tsx
+<header className="flex items-center gap-4">
+  <Logo />
+  <nav>…</nav>
+  <CommandMenu groups={groups} className="ml-auto w-52" />
+</header>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Your own trigger
+
+Any button can open it in place of the search field.
+
+<Exhibit of="command-menu.CustomTrigger" description="A ghost button labeled Commands.">
+<ExhibitCode>
+
+```tsx
+<CommandMenu
+  groups={groups}
+  trigger={
+    <Button variant="ghost" size="sm">
+      Commands
+    </Button>
+  }
+/>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Opened from anywhere
+
+With no trigger, the app decides when it opens, from a button, a menu item or
+the shortcut.
+
+<Exhibit of="command-menu.Controlled" description="Open it, run a command, and the page shows which.">
+<ExhibitCode>
+
+```tsx
+const [open, setOpen] = useState(false)
+
+<Button onClick={() => setOpen(true)}>Open commands</Button>
+<CommandMenu
+  groups={groups}
+  trigger={null}
+  open={open}
+  onOpenChange={setOpen}
+  onSelect={(item) => console.log(item.label)}
+/>
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Inside a card
+
+`modal={false}` opens the menu without trapping focus, locking the page's
+scroll or moving focus into it, and opening a page leaves focus where it is.
+Use it for a menu shown inside a card or a cover rather than over the page.
+
+<Exhibit of="command-menu.NonModal" title="Non-modal" description="Open it: focus stays on the field until you click into the menu.">
+<ExhibitCode>
+
+```tsx
+<CommandMenu groups={groups} modal={false} />
 ```
 
 </ExhibitCode>
@@ -203,6 +420,74 @@ CommandMenu
       element: "The dialog and backdrop",
       when: "While opening or closing, for the fade and zoom.",
     },
+    {
+      attribute: 'data-slot="command-menu-backdrop"',
+      element: "The backdrop",
+      when: "While the dialog is open.",
+    },
+    {
+      attribute: 'data-slot="command-menu-search"',
+      element: "The search row",
+      when: "While open.",
+    },
+    {
+      attribute: 'data-slot="command-menu-back"',
+      element: "The back button",
+      when: "On a page.",
+    },
+    {
+      attribute: 'data-slot="command-menu-breadcrumb"',
+      element: "The page's name",
+      when: "On a page.",
+    },
+    {
+      attribute: 'data-slot="command-menu-list"',
+      element: "The list",
+      when: "While open. Hidden when a search matches nothing.",
+    },
+    {
+      attribute: 'data-slot="command-menu-group"',
+      element: "A group",
+      when: "Recent, a group, a page, or Results.",
+    },
+    {
+      attribute: 'data-slot="command-menu-group-label"',
+      element: "A group's heading",
+      when: "One per group.",
+    },
+    {
+      attribute: 'data-slot="command-menu-context"',
+      element: "Where a command lives",
+      when: "On a result or recent command from a page.",
+    },
+    {
+      attribute: 'data-slot="command-menu-shortcut"',
+      element: "A command's keys",
+      when: (
+        <>
+          It has a <code>shortcut</code>.
+        </>
+      ),
+    },
+    {
+      attribute: 'data-slot="command-menu-empty"',
+      element: "The empty message",
+      when: "While open. Shows emptyText when a search matches nothing.",
+    },
+    {
+      attribute: 'data-slot="command-menu-preview"',
+      element: "The preview pane",
+      when: "Any item on screen has a preview.",
+    },
+    {
+      attribute: 'data-slot="command-menu-hints"',
+      element: "The keyboard hints",
+      when: (
+        <>
+          Unless <code>hints</code> is <code>false</code>.
+        </>
+      ),
+    },
   ]}
 />
 
@@ -233,212 +518,23 @@ shortcut and a chevron for a page.
 </ExhibitCode>
 </Exhibit>
 
-## Variants and states
-
-### Views
-
-The menu has three views, and a few states within them.
-
-<ExhibitGrid>
-<Exhibit
-  of="command-menu.Home"
-  title="Home"
-  description="Recent commands first, then your groups in order."
->
-<ExhibitCode>
-
-```tsx
-<CommandMenu groups={groups} storageKey="app-commands" />
-```
-
-</ExhibitCode>
-</Exhibit>
-<Exhibit
-  of="command-menu.Results"
-  title="Search results"
-  description="One ranked list across every page, each row naming where it lives."
->
-<ExhibitCode>
-
-```tsx
-// Typing is enough: labels and keywords are both searched.
-{ value: "theme", label: "Change theme", keywords: ["appearance", "mode"] }
-```
-
-</ExhibitCode>
-</Exhibit>
-<Exhibit
-  of="command-menu.PageOpen"
-  title="Page open"
-  description="A back button, a breadcrumb and the page's own hint."
->
-<ExhibitCode>
-
-```tsx
-{
-  value: "theme",
-  label: "Change theme",
-  placeholder: "Pick a theme…",
-  items: [
-    { value: "theme-light", label: "Light" },
-    { value: "theme-dark", label: "Dark" },
-  ],
-}
-```
-
-</ExhibitCode>
-</Exhibit>
-<Exhibit
-  of="command-menu.Empty"
-  title="No matches"
-  description="A search with no results says so."
->
-<ExhibitCode>
-
-```tsx
-<CommandMenu groups={groups} emptyText="No results found" />
-```
-
-</ExhibitCode>
-</Exhibit>
-<Exhibit
-  of="command-menu.NoHints"
-  title="Without hints"
-  description="For apps where people already know the keys."
->
-<ExhibitCode>
-
-```tsx
-<CommandMenu groups={groups} hints={false} />
-```
-
-</ExhibitCode>
-</Exhibit>
-</ExhibitGrid>
-
-### With a preview
-
-When anything on screen has a preview, the dialog widens and a pane follows
-the highlight. Commands without one show No preview. On small screens the
-pane hides.
-
-<Exhibit
-  of="command-menu.Preview"
-  title="Preview pane"
-  description="Files show a thumbnail and an excerpt, people their role."
->
-<ExhibitCode>
-
-```tsx
-{
-  value: "roadmap",
-  label: "Roadmap 2027",
-  icon: <FileTextIcon />,
-  preview: <FilePreview title="Roadmap 2027" edited="2 hours ago" />,
-}
-```
-
-</ExhibitCode>
-</Exhibit>
-
-### Rows
-
-Each row can carry an icon, a shortcut and a chevron for a page. Recent
-commands and search results also name where they live, and a disabled row
-fades.
-
-<Exhibit
-  of="command-menu.Rows"
-  title="Row states"
-  description="Highlighted with context, a shortcut, a page, and disabled."
->
-<ExhibitCode>
-
-```tsx
-;[
-  { value: "new-file", label: "New file", shortcut: ["⌘", "N"] },
-  { value: "theme", label: "Change theme", items: [/* … */] },
-  { value: "archive", label: "Archive", disabled: true },
-]
-```
-
-</ExhibitCode>
-</Exhibit>
-
-## Usage
+## Guidelines
 
 <UsageGuidelines
   guidelines={[
     "Use it for moving around an app and running actions people would otherwise hunt for in menus.",
-    "Put the commands people use most in the first group, and keep groups to a handful each.",
-    "Make a command a page when it needs a choice before it can run: a theme, a person, a status. Keep pages one or two levels deep.",
-    "Add the words people might type instead: appearance for Change theme, create for New file.",
+    "Start labels with a verb for actions (New file, Change theme) and use the plain name for places and things (Inbox, Roadmap 2027).",
+    "Make an item a page when it needs a choice before it can run: a theme, a person, a status. Keep pages one or two levels deep.",
+    "Add keywords for the words people might type instead: appearance for Change theme, create for New file.",
+    "Give previews to things people pick between by content, such as files and people. Leave them off plain actions.",
     "Don't make it the only way to reach something. It speeds up people who know it's there.",
   ]}
 />
 
-### In a header
-
-The usual home: a search field in the app's header, where people look for search.
-
-<Exhibit of="command-menu.InHeader" description="Click the field in the header.">
-<ExhibitCode>
-
-```tsx
-<header className="flex items-center gap-4">
-  <Logo />
-  <nav>…</nav>
-  <CommandMenu groups={groups} className="ml-auto w-52" />
-</header>
-```
-
-</ExhibitCode>
-</Exhibit>
-
-### Your own trigger
-
-Any button can open it in place of the search field.
-
-<Exhibit of="command-menu.CustomTrigger" description="A ghost button labeled Commands.">
-<ExhibitCode>
-
-```tsx
-<CommandMenu
-  groups={groups}
-  trigger={
-    <Button variant="ghost" size="sm">
-      Commands
-    </Button>
-  }
-/>
-```
-
-</ExhibitCode>
-</Exhibit>
-
-### Opened from anywhere
-
-With no trigger, the app decides when it opens, from a button, a menu item or
-the shortcut.
-
-<Exhibit of="command-menu.Controlled" description="Open it, run a command, and the page shows which.">
-<ExhibitCode>
-
-```tsx
-const [open, setOpen] = useState(false)
-
-<Button onClick={() => setOpen(true)}>Open commands</Button>
-<CommandMenu
-  groups={groups}
-  trigger={null}
-  open={open}
-  onOpenChange={setOpen}
-  onSelect={(item) => console.log(item.label)}
-/>
-```
-
-</ExhibitCode>
-</Exhibit>
+<Tip>
+  A shortcut on an item is only a label. Wire the same keys up in your app, or
+  leave `shortcut` off.
+</Tip>
 
 ## Best practices
 
@@ -482,11 +578,6 @@ const [open, setOpen] = useState(false)
   ]}
 />
 
-<Tip>
-  A shortcut shown on a command is only a label. Make sure the app answers to
-  the same keys, or leave it off.
-</Tip>
-
 ## Accessibility
 
 Everything works from the keyboard, and the keys are the ones people know
@@ -502,17 +593,28 @@ from other palettes.
 
 <UsageGuidelines
   guidelines={[
-    "It's a modal dialog named Command menu. Focus goes to the search field when it opens, stays inside while it's open, and returns to the trigger when it closes.",
-    "A screen reader reads each command as the highlight moves, says which group it's in, and says when a command opens a page.",
-    "On a page, the search field is named after it, and the back button says where it goes.",
-    "A search announces how many results it found, and the preview pane is announced as it changes.",
-    "Every piece of text the menu writes can be translated.",
+    "It's a modal dialog named by label. Focus moves to the search box when it opens, stays inside while it's open, and returns to the trigger when it closes.",
+    <>
+      With <code>modal</code> set to <code>false</code> it doesn't trap or move
+      focus, so keep it for a menu that's part of the page, such as a demo in a
+      card, where people choose to reach into it.
+    </>,
+    "The search box is a combobox that points at the highlighted command with aria-activedescendant, so screen readers read each one as the arrows move.",
+    "On a page, the search box is named after it, such as Command menu, Change theme, and the back button says where it goes. Items that open a page say so.",
+    "Escape steps back one level at a time: it clears the search, then leaves the page, then closes the menu without running anything.",
+    "A search announces how many results it found, and the preview pane is a polite live region.",
+    "The keyboard hints are hidden from screen readers, which announce the combobox's keys themselves.",
+    <>
+      Every piece of text the menu writes can be translated with{" "}
+      <code>labels</code>, alongside <code>placeholder</code>,{" "}
+      <code>emptyText</code> and <code>label</code>.
+    </>,
   ]}
 />
 
 ## Related components
 
-<RelatedComponents names={["Filter menu", "Kbd"]} />
+<RelatedComponents names={["Filter menu", "Kbd", "Avatar"]} />
 
 ## References
 

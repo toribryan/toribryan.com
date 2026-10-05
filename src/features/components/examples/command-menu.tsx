@@ -58,6 +58,10 @@ export function Controlled() {
   )
 }
 
+export function NonModal() {
+  return <Story modal={false} />
+}
+
 /*
  * The exhibits below hold the real menu open in one state, inside a scaled
  * stage, so a doc can show every view side by side. Each opens the menu in
