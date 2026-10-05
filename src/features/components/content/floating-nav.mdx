@@ -2,7 +2,7 @@
 title: Floating nav
 description: A pill of destinations that floats above the bottom of a phone screen and steps aside while you scroll.
 createdAt: 2026-10-01
-updatedAt: 2026-10-01
+updatedAt: 2026-10-05
 new: true
 ---
 
@@ -44,28 +44,28 @@ export function AppNav({ pathname }: { pathname: string }) {
 }
 ```
 
-Give every item a `label`, even when only the current one shows it. It's the
-item's name for screen readers.
+Give every item a `label`, even with `labels="active"`. It's the item's name
+for screen readers, and the label the current item shows.
 
 </ExhibitCode>
 <ExhibitCode label="Props">
 
-| Prop            | Type                                         | Default     | Description                                                                     |
-| --------------- | -------------------------------------------- | ----------- | ------------------------------------------------------------------------------- |
-| `items`         | `FloatingNavItem[]`                          |             | Destinations, left to right. Three to five read best.                           |
-| `value`         | `string`                                     |             | The current item, when controlled.                                              |
-| `defaultValue`  | `string`                                     |             | The current item on first render, when uncontrolled.                            |
-| `onValueChange` | `(value: string, event: MouseEvent) => void` |             | Fires on a press. Call `event.preventDefault()` on a link to route it yourself. |
-| `labels`        | `"active" \| "always"`                       | `"active"`  | Only the current item's label, or every label under its icon.                   |
-| `size`          | `"sm" \| "default"`                          | `"default"` | `sm` gives 36px items and 16px icons instead of 44px and 20px.                  |
-| `position`      | `"fixed" \| "static"`                        | `"fixed"`   | Float at the bottom of the viewport, or sit in the flow.                        |
-| `hideOnScroll`  | `boolean`                                    | `false`     | Slide away while the page scrolls down and back when it scrolls up.             |
+| Prop            | Type                                         | Default     | Description                                                                         |
+| --------------- | -------------------------------------------- | ----------- | ----------------------------------------------------------------------------------- |
+| `items`         | `FloatingNavItem[]`                          |             | Destinations, left to right. Three to five read best.                               |
+| `value`         | `string`                                     |             | The current item, when controlled.                                                  |
+| `defaultValue`  | `string`                                     |             | The current item on first render, when uncontrolled.                                |
+| `onValueChange` | `(value: string, event: MouseEvent) => void` |             | Fires on a press. Call `event.preventDefault()` on a link to route it yourself.     |
+| `labels`        | `"active" \| "always"`                       | `"active"`  | Only the current item's label, or every label under its icon.                       |
+| `size`          | `"sm" \| "default"`                          | `"default"` | `sm` gives 36px items and 16px icons instead of 44px and 20px.                      |
+| `position`      | `"fixed" \| "static"`                        | `"fixed"`   | Float at the bottom of the viewport, or sit in the flow.                            |
+| `hideOnScroll`  | `boolean`                                    | `false`     | Slide away while the page scrolls down, and back when it scrolls up or takes focus. |
 
 ```ts
 type FloatingNavItem = {
   value: string
   label: string
-  icon: React.ReactNode
+  icon?: React.ReactNode // leave out for a text item
   href?: string // renders a link; without it, a button
 }
 ```
@@ -73,105 +73,13 @@ type FloatingNavItem = {
 </ExhibitCode>
 </Exhibit>
 
-## Anatomy
-
-A nav landmark holding a pill. Each item is a link or a button, with an icon,
-a label and, on the current one, the fill behind it.
-
-<Exhibit
-  of="floating-nav.Static"
-  title="The bar"
-  description="In the flow, with Explore current."
->
-<ExhibitCode label="Structure">
-
-```text
-FloatingNav             floating-nav
-└─ list                 floating-nav-list
-   └─ item              floating-nav-item       (one per destination)
-      ├─ indicator                              (the current item only)
-      ├─ icon
-      └─ label
-```
-
-</ExhibitCode>
-<ExhibitCode label="Data attributes">
-
-<DataAttributes
-  rows={[
-    {
-      attribute: 'data-slot="floating-nav"',
-      element: "The root",
-      when: "Always.",
-    },
-    {
-      attribute: "data-current",
-      element: "An item",
-      when: "It is the current destination.",
-    },
-    {
-      attribute: "data-hidden",
-      element: "The root",
-      when: (
-        <>
-          <code>hideOnScroll</code> is on and the page last scrolled down, more
-          than 64px from the top.
-        </>
-      ),
-    },
-    {
-      attribute: "data-size",
-      element: "The root",
-      when: (
-        <>
-          Always. <code>sm</code> or <code>default</code>.
-        </>
-      ),
-    },
-    {
-      attribute: "data-labels",
-      element: "The root",
-      when: (
-        <>
-          Always. <code>active</code> or <code>always</code>.
-        </>
-      ),
-    },
-    {
-      attribute: "data-position",
-      element: "The root",
-      when: (
-        <>
-          Always. <code>fixed</code> or <code>static</code>.
-        </>
-      ),
-    },
-  ]}
-/>
-
-</ExhibitCode>
-</Exhibit>
-
-## Variants and states
+## Examples
 
 <ExhibitGrid>
 <Exhibit
-  of="floating-nav.Compact"
-  title="Compact"
-  description="36px items and 16px icons, the size this site uses."
->
-<ExhibitCode>
-
-```tsx
-<FloatingNav items={items} size="sm" />
-```
-
-</ExhibitCode>
-</Exhibit>
-<Exhibit
   of="floating-nav.AlwaysLabelled"
   title="Labels always shown"
-  description="Every label under its icon, like a tab bar."
+  description="Every label under its icon, like a tab bar. Use it when the icons alone wouldn't say where they go."
 >
 <ExhibitCode>
 
@@ -181,19 +89,57 @@ FloatingNav             floating-nav
 
 </ExhibitCode>
 </Exhibit>
+<Exhibit
+  of="floating-nav.Compact"
+  title="Compact"
+  description="36px items and 16px icons, for a bar that takes less of the screen. It's the size this site uses."
+>
+<ExhibitCode>
+
+```tsx
+<FloatingNav items={items} size="sm" />
+```
+
+</ExhibitCode>
+</Exhibit>
 </ExhibitGrid>
 
-## Usage
+### Text items
 
-<UsageGuidelines
-  guidelines={[
-    "Use it for the three to five places people move between most on a phone. Everything else belongs in a menu.",
-    "Keep labels to one short word. The current label has to fit beside its icon on a 320px screen.",
-    "Turn on hideOnScroll for reading surfaces such as articles and docs. Leave it off where people switch places often.",
-    "Pad the bottom of the page by the bar's height, so the last content can scroll clear of it.",
-    "Hide it at desktop widths, where a sidebar or top bar already does the job.",
+Leave out an item's `icon` and it shows its label as text, always. Use it when
+there are only two or three places and their names say more than icons.
+
+<Exhibit of="floating-nav.TextItems" description="Three places, named rather than drawn.">
+<ExhibitCode>
+
+```tsx
+<FloatingNav
+  size="sm"
+  items={[
+    { value: "home", label: "Home" },
+    { value: "explore", label: "Explore" },
+    { value: "saved", label: "Saved" },
   ]}
 />
+```
+
+</ExhibitCode>
+</Exhibit>
+
+### Static
+
+`position="static"` keeps the bar in the flow, for a toolbar at the foot of a
+card or a preview like this one.
+
+<Exhibit of="floating-nav.Static" description="In the flow, with Explore current.">
+<ExhibitCode>
+
+```tsx
+<FloatingNav items={items} position="static" />
+```
+
+</ExhibitCode>
+</Exhibit>
 
 ### With your router
 
@@ -219,6 +165,117 @@ const router = useRouter()
 </ExhibitCode>
 </Exhibit>
 
+## Anatomy
+
+A nav landmark holding a pill. Each item is a link or a button, with an icon,
+a label and, on the current one, the fill behind it. A text item has no icon.
+
+<Exhibit
+  of="floating-nav.Default"
+  title="The bar"
+  description="Floating over a feed, with Home current."
+>
+<ExhibitCode label="Structure">
+
+```text
+FloatingNav             floating-nav            (the nav landmark)
+└─ list                 floating-nav-list       (the pill; slides out when hidden)
+   └─ item              floating-nav-item       (a link or button per destination)
+      ├─ indicator                              (the current item only)
+      ├─ icon                                   (left out on a text item)
+      └─ label
+```
+
+</ExhibitCode>
+<ExhibitCode label="Data attributes">
+
+<DataAttributes
+  rows={[
+    {
+      attribute: 'data-slot="floating-nav"',
+      element: "The root",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="floating-nav-list"',
+      element: "The pill",
+      when: "Always.",
+    },
+    {
+      attribute: 'data-slot="floating-nav-item"',
+      element: "Each destination",
+      when: "Always.",
+    },
+    {
+      attribute: "data-current",
+      element: "An item",
+      when: "It is the current destination.",
+    },
+    {
+      attribute: "data-hidden",
+      element: "The root",
+      when: (
+        <>
+          <code>hideOnScroll</code> is on and the page last scrolled down, more
+          than 64px from the top. Cleared when it scrolls up or the bar takes
+          focus.
+        </>
+      ),
+    },
+    {
+      attribute: "data-position",
+      element: "The root",
+      when: (
+        <>
+          Always. <code>fixed</code> or <code>static</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-labels",
+      element: "The root",
+      when: (
+        <>
+          Always. <code>active</code> or <code>always</code>.
+        </>
+      ),
+    },
+    {
+      attribute: "data-size",
+      element: "The root",
+      when: (
+        <>
+          Always. <code>sm</code> or <code>default</code>.
+        </>
+      ),
+    },
+  ]}
+/>
+
+Style parts by slot or state, for example with
+`[&_[data-slot=floating-nav-item]]:px-4`.
+
+</ExhibitCode>
+</Exhibit>
+
+## Guidelines
+
+<UsageGuidelines
+  guidelines={[
+    "Use it for the three to five places people move between most on a phone. Everything else belongs in a menu.",
+    "Keep labels to one short word. The current label has to fit beside its icon on a 320px screen.",
+    <>
+      Turn on <code>hideOnScroll</code> for reading surfaces such as articles
+      and docs. Leave it off where people switch places often.
+    </>,
+    <>
+      Pad the bottom of the page by the bar's height, about <code>6rem</code>,
+      so the last content can scroll clear of it.
+    </>,
+    "Hide it at desktop widths, where a sidebar or top bar already does the job.",
+  ]}
+/>
+
 ## Best practices
 
 <ComponentRules
@@ -242,16 +299,24 @@ const router = useRouter()
 Every item is a plain link or button in tab order, so the bar works from the
 keyboard without anything to learn.
 
-| Key                              | Does                           |
-| -------------------------------- | ------------------------------ |
-| <Kbd>Tab</Kbd>                   | Moves between the items        |
-| <Kbd>Space</Kbd> or <Kbd>↵</Kbd> | Goes to the item's destination |
+| Key              | Does                                     |
+| ---------------- | ---------------------------------------- |
+| <Kbd>Tab</Kbd>   | Moves between the items                  |
+| <Kbd>↵</Kbd>     | Goes to the item's destination           |
+| <Kbd>Space</Kbd> | Goes to the destination of a button item |
 
 <UsageGuidelines
   guidelines={[
-    "The root is a nav landmark, named Main unless you pass aria-label. Name it when a page has more than one.",
-    'The current item carries aria-current="page". Hidden labels stay in the DOM, so every item keeps its name.',
-    "Tabbing into a hidden bar brings it back.",
+    <>
+      The root is a <code>nav</code> landmark, named Main unless you pass{" "}
+      <code>aria-label</code>. Name it when a page has more than one.
+    </>,
+    <>
+      The current item carries <code>aria-current="page"</code> when it's a
+      link, or <code>aria-current="true"</code> when it's a button. Hidden
+      labels stay in the DOM, so every item keeps its name.
+    </>,
+    "A hidden bar takes no taps or clicks, so it can't catch one meant for the page beneath. Its items stay in the tab order, and tabbing into it brings it back.",
     'Every item is at least 44px square, or 36px with size="sm", well above the 24px minimum target.',
     "With reduced motion, the indicator and the bar move without animating.",
   ]}
