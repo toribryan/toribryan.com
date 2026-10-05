@@ -9,7 +9,7 @@ import { Button } from "@/components/base/ui/button"
 import { Prose } from "@/components/base/ui/typography"
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
-import { TOCMinimap } from "@/components/toc-minimap"
+import { TOCScrubber } from "@/components/toc-scrubber"
 import type { ComponentEntry } from "@/features/components/data/registry"
 import { COMPONENTS } from "@/features/components/data/registry"
 import type { RegistryDoc } from "@/features/components/data/registry-docs"
@@ -180,9 +180,9 @@ export async function ComponentDocPage({
         )}
 
         <TOCInline className="xl:hidden" items={toc} />
-        {/* Wide screens get the minimap in the right margin; narrower ones,
+        {/* Wide screens get the scrubber in the right margin; narrower ones,
             with no margin to hold it, keep the inline outline. */}
-        <TOCMinimap
+        <TOCScrubber
           items={toc}
           className="fixed top-1/2 right-[calc((100vw-48rem)/4-2.25rem)] z-40 -translate-y-1/2 max-xl:hidden"
         />
