@@ -54,19 +54,26 @@ export function CatalogList() {
   return (
     <div className="flex flex-col">
       {SHELVES.map((shelf) => {
-        // A to Z within the shelf, deprecated parts last so new work starts
-        // elsewhere.
+        // The shelf's own order where it has one, then A to Z, with
+        // deprecated parts last so new work starts elsewhere.
+        const rank = (name: string) => {
+          const index = shelf.order?.indexOf(name) ?? -1
+          return index < 0 ? Infinity : index
+        }
         const parts = CATALOG.filter((part) => part.shelf === shelf.id).sort(
           (a, b) =>
             Number(a.status === "deprecated") -
               Number(b.status === "deprecated") ||
+            rank(a.name) - rank(b.name) ||
             a.title.localeCompare(b.title)
         )
         return (
           <section
             key={shelf.id}
             aria-labelledby={shelf.id}
-            className="screen-line-bottom"
+            // The pixel below the grid keeps the shelf's bottom line from
+            // being hidden under the last row's cards.
+            className="screen-line-bottom pb-px"
           >
             <header className="screen-line-bottom flex flex-col gap-1 p-4">
               <h2
