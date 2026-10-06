@@ -42,9 +42,10 @@ export async function proxy(request: NextRequest) {
 export const config = {
   /**
    * Everything is gated except the login route itself, its form handler, Next's
-   * own build output, the icon set, and the social card. Icons have to stay
-   * public because the browser fetches them *for the login page* — gate them
-   * and the tab shows a broken icon to anyone who hasn't signed in yet.
+   * own build output, Speed Insights' script and beacon under `/_vercel`, the
+   * icon set, and the social card. Icons have to stay public because the
+   * browser fetches them *for the login page* — gate them and the tab shows a
+   * broken icon to anyone who hasn't signed in yet.
    *
    * `og-cover.png` is public for the same reason: a link preview is fetched by
    * iMessage or Slack with no cookie, so a gated card renders as a blank box.
@@ -55,6 +56,6 @@ export const config = {
    * gated too, so the URL list isn't readable from outside.
    */
   matcher: [
-    "/((?!_next/static|_next/image|login|api/login|favicon|apple-touch-icon|android-chrome|maskable-icon|og-cover|manifest\\.webmanifest).*)",
+    "/((?!_next/static|_next/image|_vercel|login|api/login|favicon|apple-touch-icon|android-chrome|maskable-icon|og-cover|manifest\\.webmanifest).*)",
   ],
 }
