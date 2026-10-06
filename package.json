@@ -8,12 +8,14 @@
     "email": "toribryan.design@gmail.com"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run duo:fetch && next dev",
+    "build": "npm run duo:fetch && next build",
     "start": "next start",
     "lint": "eslint . --cache --cache-location .eslintcache",
     "lint:fix": "eslint --fix . --cache --cache-location .eslintcache",
-    "check-types": "tsc --noEmit --pretty",
+    "check-types": "npm run duo:fetch --silent && tsc --noEmit --pretty",
+    "duo:fetch": "node --env-file-if-exists=.env.local --env-file-if-exists=.env.development.local scripts/iphone-duo.mjs fetch",
+    "duo:upload": "node --env-file-if-exists=.env.local --env-file-if-exists=.env.development.local scripts/iphone-duo.mjs upload",
     "sync:bab": "node scripts/sync-bab.mjs",
     "sync:token-flow": "node scripts/sync-token-flow.mjs",
     "format:check": "prettier --check \"**/*.{ts,tsx,md,mdx}\" --cache",
