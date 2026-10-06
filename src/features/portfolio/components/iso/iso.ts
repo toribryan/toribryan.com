@@ -15,18 +15,38 @@ export const P = (x: number, y: number, z: number) => [
   (x - y) * C,
   (x + y) * S - z,
 ]
-const plane = (o: V3, u: V3, v: V3) => {
-  const [ox, oy] = P(...o)
-  const [ux, uy] = P(...u)
-  const [vx, vy] = P(...v)
+/*
+ * A turn about the vertical axis through (cx, cy). Shapes drawn with one keep
+ * their faces: up to 45° from the axes the viewer sees the same three sides.
+ */
+export type Turn = { cx: number; cy: number; cos: number; sin: number }
+export const turn = (cx: number, cy: number, degrees: number): Turn => {
+  const a = (degrees * Math.PI) / 180
+  return { cx, cy, cos: Math.cos(a), sin: Math.sin(a) }
+}
+const spin = (t: Turn | undefined, [x, y, z]: V3): V3 =>
+  t
+    ? [
+        t.cx + (x - t.cx) * t.cos - (y - t.cy) * t.sin,
+        t.cy + (x - t.cx) * t.sin + (y - t.cy) * t.cos,
+        z,
+      ]
+    : [x, y, z]
+const spinAxis = (t: Turn | undefined, [x, y, z]: V3): V3 =>
+  t ? [x * t.cos - y * t.sin, x * t.sin + y * t.cos, z] : [x, y, z]
+
+const plane = (o: V3, u: V3, v: V3, t?: Turn) => {
+  const [ox, oy] = P(...spin(t, o))
+  const [ux, uy] = P(...spinAxis(t, u))
+  const [vx, vy] = P(...spinAxis(t, v))
   return `matrix(${ux} ${uy} ${vx} ${vy} ${ox} ${oy})`
 }
-export const TOP = (x: number, y: number, z: number) =>
-  plane([x, y, z], [1, 0, 0], [0, 1, 0])
-export const FRONT = (x: number, y: number, z: number) =>
-  plane([x, y, z], [1, 0, 0], [0, 0, -1])
-export const SIDE = (x: number, y: number, z: number) =>
-  plane([x, y, z], [0, -1, 0], [0, 0, -1])
+export const TOP = (x: number, y: number, z: number, t?: Turn) =>
+  plane([x, y, z], [1, 0, 0], [0, 1, 0], t)
+export const FRONT = (x: number, y: number, z: number, t?: Turn) =>
+  plane([x, y, z], [1, 0, 0], [0, 0, -1], t)
+export const SIDE = (x: number, y: number, z: number, t?: Turn) =>
+  plane([x, y, z], [0, -1, 0], [0, 0, -1], t)
 
 export const HAIR = "[vector-effect:non-scaling-stroke] [stroke-linejoin:round]"
 /* Structure lines are the muted text color, softened a little toward the page. */
@@ -77,9 +97,12 @@ export function box(
   w: number,
   d: number,
   h: number,
-  r = 0
+  r = 0,
+  t?: Turn
 ) {
-  const pts = outline(x, y, w, d, r)
+  const pts = outline(x, y, w, d, r).map(
+    ([px, py]) => spin(t, [px, py, 0]).slice(0, 2) as Point
+  )
   const sx = pts.map(([px, py]) => px - py)
   const left = sx.indexOf(Math.min(...sx))
   const right = sx.indexOf(Math.max(...sx))
@@ -103,13 +126,14 @@ export function box(
   const wall = [...bottom, ...top]
     .map(([px, py], n) => `${n ? "L" : "M"}${fmt(px)} ${fmt(py)}`)
     .join("")
-  const [ex, ey] = P(x + w, y + d, z)
+  const nearest = pts.reduce((a, b) => (b[0] + b[1] > a[0] + a[1] ? b : a))
+  const [ex, ey] = P(nearest[0], nearest[1], z)
   const edge =
     r < 1 ? `<path class="${FACE}" d="M${fmt(ex)} ${fmt(ey)}v${-h}"/>` : ""
   return (
     `<path class="wall ${FACE}" d="${wall}Z"/>` +
     edge +
-    `<g transform="${TOP(x, y, z + h)}"><rect class="${DECK}" width="${w}" height="${d}" rx="${Math.min(r, w / 2, d / 2)}"/></g>`
+    `<g transform="${TOP(x, y, z + h, t)}"><rect class="${DECK}" width="${w}" height="${d}" rx="${Math.min(r, w / 2, d / 2)}"/></g>`
   )
 }
 
@@ -156,7 +180,8 @@ export function placed(
     r: r * k,
   }
 }
-export const drawBox = (q: Placed) => box(q.x, q.y, q.z, q.w, q.d, q.h, q.r)
+export const drawBox = (q: Placed, t?: Turn) =>
+  box(q.x, q.y, q.z, q.w, q.d, q.h, q.r, t)
 
 /*
  * A bunny ear: a flat leaf, narrow at the base and round at the tip, standing
@@ -167,7 +192,14 @@ const EAR = { u: 15, v: 3.4, z: 20, w: 5.6, h: 17, lean: 10, depth: 1.6 }
 const earPath = (w: number, h: number) =>
   `M${-w * 0.28} 0C${-w * 0.75} ${-h * 0.4} ${-w * 0.6} ${-h} 0 ${-h}C${w * 0.6} ${-h} ${w * 0.75} ${-h * 0.4} ${w * 0.28} 0Z`
 
-function ears(cx: number, cy: number, z: number, f: Point, k: number) {
+function ears(
+  cx: number,
+  cy: number,
+  z: number,
+  f: Point,
+  k: number,
+  turned?: Turn
+) {
   const l: Point = [-f[1], f[0]]
   const toward = f[0] + f[1] > 0
   // Ears stand in the plane across the facing: x = const if the rabbit faces along x.
@@ -182,7 +214,7 @@ function ears(cx: number, cy: number, z: number, f: Point, k: number) {
       cy + (f[1] * u + l[1] * v) * k,
       z + EAR.z * k,
     ]
-    const t = (pt: V3) => (across ? SIDE(...pt) : FRONT(...pt))
+    const t = (pt: V3) => (across ? SIDE(...pt, turned) : FRONT(...pt, turned))
     const tilt = Math.sign(v) * leftward * EAR.lean
     const shape = (u: number, inner: boolean) =>
       `<g transform="${t(at(u))} rotate(${tilt})">
@@ -213,8 +245,10 @@ export function rabbit(
   z: number,
   f: Point,
   k: number,
-  leader: boolean
+  leader: boolean,
+  degrees = 0
 ) {
+  const t = degrees ? turn(cx, cy, degrees) : undefined
   const p = (name: keyof typeof PARTS) => placed(cx, cy, z, f, k, PARTS[name])
   const head = p("head")
   // Facing the viewer: two shiny eyes, a nose and cheeks on the front of the
@@ -223,8 +257,8 @@ export function rabbit(
   const onX = toward === (f[0] !== 0)
   const onFace = (draw: (w: number, h: number) => string) =>
     onX
-      ? `<g transform="${SIDE(head.x + head.w, head.y + head.d, head.z + head.h)}">${draw(head.d, head.h)}</g>`
-      : `<g transform="${FRONT(head.x, head.y + head.d, head.z + head.h)}">${draw(head.w, head.h)}</g>`
+      ? `<g transform="${SIDE(head.x + head.w, head.y + head.d, head.z + head.h, t)}">${draw(head.d, head.h)}</g>`
+      : `<g transform="${FRONT(head.x, head.y + head.d, head.z + head.h, t)}">${draw(head.w, head.h)}</g>`
   const eye = (x: number, y: number) =>
     `<ellipse class="fill-foreground" cx="${x}" cy="${y}" rx="${1.8 * k}" ry="${2.2 * k}"/>` +
     `<circle class="fill-card" cx="${x - 0.6 * k}" cy="${y - 0.8 * k}" r="${0.7 * k}"/>`
@@ -239,15 +273,15 @@ export function rabbit(
       )
     : onFace((w, h) => eye(onX ? w * 0.7 : w * 0.3, h * 0.45))
   const parts = toward
-    ? drawBox(p("tail")) +
-      drawBox(p("body")) +
-      drawBox(p("head")) +
+    ? drawBox(p("tail"), t) +
+      drawBox(p("body"), t) +
+      drawBox(p("head"), t) +
       face +
-      ears(cx, cy, z, f, k)
-    : drawBox(p("head")) +
+      ears(cx, cy, z, f, k, t)
+    : drawBox(p("head"), t) +
       face +
-      ears(cx, cy, z, f, k) +
-      drawBox(p("body")) +
-      drawBox(p("tail"))
+      ears(cx, cy, z, f, k, t) +
+      drawBox(p("body"), t) +
+      drawBox(p("tail"), t)
   return `<g class="${leader ? "[&_:is(rect,.wall)]:stroke-foreground" : ""}">${parts}</g>`
 }
