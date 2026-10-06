@@ -46,8 +46,8 @@ function getProjectsJsonLd(projects: Doc[]): WithContext<CollectionPage> {
 }
 
 export default function Page() {
-  // Every case study, fibo included; the home page leaves fibo out only
-  // because it has a section of its own there.
+  // Every case study, fibo and Rabbit run included; the home page leaves
+  // them out only because each has a section of its own there.
   const projects = getWorkDocs()
 
   return (
