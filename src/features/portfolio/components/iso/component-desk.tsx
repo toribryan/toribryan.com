@@ -25,7 +25,8 @@ import {
  * The component desk: the rabbit beside a working set of design system parts
  * (button with a count badge, switch, checkbox, slider, radio group, tabs,
  * number stepper and a toast trigger) and an inspector monitor that shows the
- * code for whichever part was last used. The rabbit turns to watch each one.
+ * code for whichever part was last used. The rabbit hops and turns 30° each
+ * time a part is used.
  */
 
 const DESK = { w: 580, d: 390, h: 18 }
@@ -56,17 +57,6 @@ type Part =
   | "tabs"
   | "stepper"
   | "toast"
-
-const SPOTS: Record<Part, Point> = {
-  button: [BUTTON.x + BUTTON.w / 2, BUTTON.y + BUTTON.d / 2],
-  switch: [SWITCH.x + SWITCH.w / 2, SWITCH.y + SWITCH.d / 2],
-  checkbox: [CHECK.x + CHECK.w / 2, CHECK.y + CHECK.d / 2],
-  slider: [SLIDER.x + SLIDER.w / 2, SLIDER.y],
-  radio: [RADIO.x + RADIO.s * 1.5 + RADIO.gap, RADIO.y + RADIO.s / 2],
-  tabs: [TABS.x + TABS.w / 2, TABS.y + TABS.d / 2],
-  stepper: [STEPPER.x + 58, STEPPER.y + STEPPER.d / 2],
-  toast: [TOAST.x + TOAST.w / 2, TOAST.y + TOAST.d / 2],
-}
 
 const INK = `fill-muted-foreground ${MONO}`
 const LIT = `fill-foreground ${MONO}`
@@ -255,7 +245,7 @@ export function ComponentDesk({ className }: { className?: string }) {
       count: 3,
       toasts: 0,
       last: "button" as Part,
-      facing: [0, 1] as Point,
+      heading: 90,
     }
 
     const CODE: Record<Part, () => string[]> = {
@@ -300,33 +290,49 @@ export function ComponentDesk({ className }: { className?: string }) {
     }
 
     const rabbitEl = q<SVGGElement>("[data-rabbit]")
-    const drawRabbit = () => {
+    // A heading is drawn as the nearest of the rabbit's four facings plus a
+    // turn of at most 45° from it, the range where its faces stay right.
+    const FACINGS: Point[] = [
+      [1, 0],
+      [0, 1],
+      [-1, 0],
+      [0, -1],
+    ]
+    const drawRabbit = (heading = state.heading) => {
+      const quarter = Math.round(heading / 90)
       rabbitEl.innerHTML = rabbit(
         RABBIT.x,
         RABBIT.y,
         Z,
-        state.facing,
+        FACINGS[((quarter % 4) + 4) % 4],
         RABBIT.k,
-        false
+        false,
+        heading - quarter * 90
       )
     }
-    // The rabbit looks at whatever was touched, keeping its face to the viewer.
-    const look = (part: Part) => {
-      const [px, py] = SPOTS[part]
-      const dx = px - RABBIT.x
-      const dy = py - RABBIT.y
-      state.facing =
-        Math.abs(dx) > Math.abs(dy) * 1.4 && dx > 0 ? [1, 0] : [0, 1]
-      drawRabbit()
-      if (!reduced())
-        rabbitEl.animate(
-          [
-            { transform: "translateY(0)" },
-            { transform: "translateY(-16px)", offset: 0.45 },
-            { transform: "translateY(0)" },
-          ],
-          { duration: 340, easing: "cubic-bezier(.3,0,.4,1)" }
-        )
+    const HOP = 340
+    let spinFrame = 0
+    // Every use of a part: the rabbit hops and turns 30°, turning in the air.
+    const hop = () => {
+      const from = state.heading
+      state.heading += 30
+      cancelAnimationFrame(spinFrame)
+      if (reduced()) return drawRabbit()
+      const start = performance.now()
+      const step = (now: number) => {
+        const p = Math.min(1, (now - start) / HOP)
+        drawRabbit(from + 30 * (1 - (1 - p) ** 3))
+        if (p < 1) spinFrame = requestAnimationFrame(step)
+      }
+      spinFrame = requestAnimationFrame(step)
+      rabbitEl.animate(
+        [
+          { transform: "translateY(0)" },
+          { transform: "translateY(-16px)", offset: 0.45 },
+          { transform: "translateY(0)" },
+        ],
+        { duration: HOP, easing: "cubic-bezier(.3,0,.4,1)" }
+      )
     }
 
     const [tx, ty] = P(SWITCH.travel, 0, 0)
@@ -430,7 +436,7 @@ export function ComponentDesk({ className }: { className?: string }) {
         )
       }
       state.last = part
-      look(part)
+      hop()
       render()
     }
 
@@ -438,7 +444,7 @@ export function ComponentDesk({ className }: { className?: string }) {
       state.value = Math.max(0, Math.min(100, Math.round(v)))
       if (state.last !== "slider" || settle) {
         state.last = "slider"
-        look("slider")
+        hop()
       }
       render()
     }
@@ -518,6 +524,7 @@ export function ComponentDesk({ className }: { className?: string }) {
 
     return () => {
       window.clearTimeout(toastTimer)
+      cancelAnimationFrame(spinFrame)
       svg.removeEventListener("pointerdown", onPointerDown)
       svg.removeEventListener("pointermove", onPointerMove)
       svg.removeEventListener("pointerup", release)
