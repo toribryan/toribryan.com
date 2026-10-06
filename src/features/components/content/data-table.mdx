@@ -141,16 +141,45 @@ The table sorts, searches, filters and pages its own rows from its state.
 <Exhibit
   of="data-table.FacetedFilters"
   title="Faceted filters"
-  description="Each filter menu shows how many rows hold each value under the other filters, so a choice never leads to an empty table."
+  description="One Filter menu covers every filterable column. Each value shows how many rows hold it under the other filters, so a choice never leads to an empty table."
 >
 <ExhibitCode>
 
 ```tsx
 column.accessor("status", { header: "Status", filterFn: "arrHas" })
 
+// Inside the DataTable, so the hooks can reach the table.
+function TableFilterMenu() {
+  const table = useDataTableContext()
+  const status = useDataTableFacets("status")
+  const filters = useSelector(table.atoms.columnFilters, (list) => list)
+  const picked = filters.find((filter) => filter.id === "status")?.value
+
+  return (
+    <FilterMenu
+      fields={[
+        {
+          id: "status",
+          label: "Status",
+          options: status.map(({ value, count }) => ({
+            value: String(value),
+            label: String(value),
+            count,
+          })),
+        },
+      ]}
+      value={{ status: (picked as string[]) ?? [] }}
+      onValueChange={(next) =>
+        table
+          .getColumn("status")
+          ?.setFilterValue(next.status?.length ? next.status : undefined)
+      }
+    />
+  )
+}
+
 <DataTableFilters search={<DataTableSearch aria-label="Search members" />}>
-  <DataTableFacetFilter column="status" />
-  <DataTableFacetFilter column="team" />
+  <TableFilterMenu />
 </DataTableFilters>
 ```
 
