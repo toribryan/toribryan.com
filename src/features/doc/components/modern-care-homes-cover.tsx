@@ -3,7 +3,7 @@
 import Image from "next/image"
 
 import { cn } from "@/lib/utils"
-import { ScaledStage } from "@/features/portfolio/components/components/covers"
+import { ScaledStage } from "@/features/portfolio/components/components/scaled-stage"
 
 import { CoverVideo } from "./cover-video"
 

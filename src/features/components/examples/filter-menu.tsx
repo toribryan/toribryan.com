@@ -10,7 +10,7 @@ import {
   type FilterMenuProps,
   type FilterValue,
 } from "@/components/fibo/filter-menu"
-import { ScaledStage } from "@/features/portfolio/components/components/covers"
+import { ScaledStage } from "@/features/portfolio/components/components/scaled-stage"
 
 import { AnatomyMap, slot, type Callout } from "../components/anatomy-map"
 import { Chips, FIELDS } from "./filter-menu-data"

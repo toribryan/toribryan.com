@@ -10,7 +10,7 @@ import {
   type CommandMenuGroup,
   type CommandMenuProps,
 } from "@/components/fibo/command-menu"
-import { ScaledStage } from "@/features/portfolio/components/components/covers"
+import { ScaledStage } from "@/features/portfolio/components/components/scaled-stage"
 
 import { AnatomyMap, slot, type Callout } from "../components/anatomy-map"
 import { FILES, GROUPS } from "./command-menu-data"
