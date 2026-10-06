@@ -478,7 +478,7 @@ function CommandMenuCover({ active }: CoverProps) {
             // The dialog grows to make room for the pane, which shows once
             // the dialog is wide enough for it and then fades in from the
             // side it opens on.
-            popupClassName="top-10 h-[340px] w-[440px] max-w-none transition-[width] duration-300 ease-out data-preview:w-[600px] data-preview:max-w-none [&_[data-slot=command-menu-preview]]:animate-in [&_[data-slot=command-menu-preview]]:duration-300 [&_[data-slot=command-menu-preview]]:fade-in-0 [&_[data-slot=command-menu-preview]]:slide-in-from-right-2"
+            popupClassName="top-1/2 h-[340px] -translate-y-1/2 w-[440px] max-w-none transition-[width] duration-300 ease-out data-preview:w-[600px] data-preview:max-w-none [&_[data-slot=command-menu-preview]]:animate-in [&_[data-slot=command-menu-preview]]:duration-300 [&_[data-slot=command-menu-preview]]:fade-in-0 [&_[data-slot=command-menu-preview]]:slide-in-from-right-2"
           />
         )}
         <div ref={setLayer} className="absolute inset-0" />
