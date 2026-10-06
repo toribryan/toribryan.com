@@ -140,7 +140,7 @@ export const PREVIEWS: Record<string, ReactNode> = {
       {["AL", "GH", "KJ"].map((initials) => (
         <span
           key={initials}
-          className="flex size-10 items-center justify-center rounded-full bg-muted text-xs ring-2 ring-background"
+          className="flex size-10 items-center justify-center rounded-full border border-border bg-muted text-xs ring-2 ring-cover-plate"
         >
           {initials}
         </span>
