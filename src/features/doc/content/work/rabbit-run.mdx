@@ -15,51 +15,31 @@ skills:
   - "React"
 ---
 
-Steer the lead rabbit to the carrots. Each carrot is a month, and the family behind it grows the way Fibonacci's rabbits do: 1, 1, 2, 3, 5, 8. Run into the edge or the family and the run is over. Reach 34 pairs and you win.
+Steer the lead rabbit to the carrots. Each carrot is a month, and the family behind it grows the way Fibonacci's rabbits do. Reach 34 pairs and you win.
 
 ## The puzzle
 
-In 1202 Fibonacci asked how many pairs of rabbits one pair would become in a year, if every grown pair has a new pair each month and a new pair takes a month to grow up. The answer counts up as 1, 1, 2, 3, 5, 8, 13, 21, 34: each month is the sum of the two before it. Divide any month by the one before and you get closer and closer to φ, the golden ratio, about 1.618.
-
-The game plays that out. The line behind the lead rabbit is always as long as that month's count, and the same ratio runs on the screen at the back of the board.
+In 1202 Fibonacci asked how many pairs one pair of rabbits would become in a year. The answer runs 1, 1, 2, 3, 5, 8, 13, 21, 34, each month the sum of the two before, and each month divided by the last closes in on φ, about 1.618. The game plays that out, with the ratio on the screen at the back of the board.
 
 ## How a run works
 
-You start in month 1 with one rabbit. Each carrot moves the month on, and the line grows to the new count. Month 2 adds nobody, because the puzzle goes 1, 1. After that the jumps get bigger: 13 to 21 is eight new rabbits, and 21 to 34 is thirteen.
+- Each carrot moves the month on, and the line grows to that month's count.
+- New rabbits join at the tail one hop at a time, and the screen warns what the next carrot brings.
+- Rabbits hop faster every month. Easy, medium and hard each keep their own best score.
+- Hitting the edge or the family ends the run. Month 9, 34 pairs, is a win.
 
-New rabbits don't all appear at once. They join at the tail one hop at a time, so the line keeps stretching for several hops after a big carrot. The screen tells you what the next carrot will bring, like "next carrot · +8 rabbits", so you can make room before you eat it.
+## How it's built
 
-Every month the rabbits hop a little faster. Easy starts at 300 milliseconds a hop, medium at 220 and hard at 150, and each speed keeps its own best score in your browser. Month 9 is 34 pairs, a third of the board, and ends the run as a win. By then the screen reads 34 ÷ 21 = 1.6190, within 0.001 of φ.
-
-## The board
-
-The board is 13 by 8 cells. That is exactly the golden rectangle the puzzle builds: squares of 8, 5, 3, 2, 1 and 1, each laid against the long side of the ones before. The squares and the spiral of quarter circles running through them are etched into the floor under the grid.
-
-The floor also keeps a trail. Every tile under a rabbit lights up, and once the tail has left a tile it keeps a little less of its light each hop until it goes dark, so you can see where the family has been.
-
-## How it's drawn
-
-Everything is plain SVG, with no 3D engine. Each point on the board is turned into a screen position with the same isometric angles, 30 degrees off the horizontal. Every face of every object is an ordinary flat shape, a rectangle, a path or a line of text, placed on its plane by one transform. That is how the labels on the keys, the numbers on the screen and the rabbit's face all sit in perspective without any extra math.
-
-A box is its rounded top plus one wall: the half of the top's outline that faces you, dropped by the box's height. Building the sides that way means rounded corners curve straight down into the walls with no seams. There's no depth buffer either. Pieces are sorted by how far back on the board they sit and drawn back to front, so whatever is nearer covers what is behind it.
-
-The rabbit is three boxes for its body, head and tail, built facing one way and turned onto the board whenever it changes direction. Its ears are flat leaf shapes standing upright, leaning a little apart, with their inner ears showing when it faces you. The face is drawn flat on the front of the head: two eyes with a shine, a nose and soft cheeks. Hopping away, it shows one eye on the side of its head.
-
-The scene is redrawn as markup on every hop, outside React, and its colors are the site's own, so it follows the light and dark themes. The same drawing code renders the component desk in the fibo section of my home page.
-
-## Sound
-
-The sounds are synthesized in the browser, so there is nothing to load. Hops tick softly and turns click. Each carrot plays a two-note chime a step higher up a pentatonic scale than the last, and new rabbits pop in higher as the line grows. A crash buzzes down, and a win plays a short fanfare. Like the site's other sounds, they stay quiet if you've asked your device for reduced motion, and the sound key turns them off.
-
-## The card plays itself
-
-On the Projects page the game is its own cover. While the card is on screen, a small player steers for you: before each hop it searches outward from the lead rabbit for the shortest way to the carrot that doesn't run into the family, and if there isn't one it takes any safe hop. When a run ends, it waits a moment and starts again. It makes no sound and stops when you scroll away.
+- The board is 13 by 8, the golden rectangle the puzzle builds, with its squares and spiral etched into the floor.
+- Plain SVG in isometric projection, sorted and drawn back to front, with no 3D engine.
+- Colors come from the site's tokens, so it follows light and dark mode.
+- Sounds are synthesized in the browser and stay quiet under reduced motion.
+- On the Projects page the card plays itself, steering by the shortest safe path to the carrot.
 
 ## Controls
 
-The keys only work once you've clicked the board, so the arrow keys and space still scroll the page until then. The Full screen button plays it on the whole screen.
-
-- Arrow keys or WASD steer, and so does the pad on the board.
+- Click the board first, so the keys don't scroll the page.
+- Arrow keys, WASD or the pad on the board steer.
 - Space starts and pauses.
-- 1, 2 and 3 set easy, medium and hard speed.
-- M, or the sound key, turns the sound effects on and off.
+- 1, 2 and 3 set the speed.
+- M or the sound key toggles sound.
