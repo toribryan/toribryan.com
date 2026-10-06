@@ -1070,10 +1070,7 @@ function RichTextEditorCover({ active }: CoverProps) {
         tools={["heading", "bold", "italic", "bullet", "link"]}
         minHeight={84}
         defaultValue={NOTE_DONE}
-        className={cn(
-          "w-64",
-          active && "border-ring ring-[3px] ring-ring-subtle"
-        )}
+        className="w-64"
       />
     </div>
   )
