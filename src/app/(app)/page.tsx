@@ -15,6 +15,7 @@ import { Hello } from "@/features/portfolio/components/hello"
 import { Overview } from "@/features/portfolio/components/overview"
 import { ProfileHeader } from "@/features/portfolio/components/profile-header"
 import { Projects } from "@/features/portfolio/components/projects"
+import { RabbitRunSection } from "@/features/portfolio/components/rabbit-run"
 import { TechStack } from "@/features/portfolio/components/tech-stack"
 import { USER } from "@/features/portfolio/data/user"
 
@@ -47,6 +48,9 @@ export default function HomePage() {
           <Separator />
 
           <Projects />
+          <Separator />
+
+          <RabbitRunSection />
           <Separator />
 
           <Blog />
