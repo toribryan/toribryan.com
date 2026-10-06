@@ -41,6 +41,8 @@ export default function HomePage() {
           <Separator />
 
           <FiboHero />
+          <Separator />
+
           <Components />
           <Separator />
 
