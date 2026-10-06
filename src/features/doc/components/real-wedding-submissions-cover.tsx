@@ -11,14 +11,15 @@ import { useCoverSteps } from "./use-cover-steps"
 
 /*
  * The cover draws the wizard, not the site, so it keeps Iron Diamond's own
- * ink, warm grays and blush in both of the site's themes.
+ * ink and warm grays in both of the site's themes, on the same gray plate as
+ * the case study's screenshots.
  */
 const INK = "#191717"
 const MUTED = "#6b6b6b"
 const PRIMARY = "#2c2c2c"
 const INPUT = "#d9d9d9"
-const PLATE = "#e9939e"
-const DOTS = "#fbebf0"
+const PLATE = "#d4d4d4"
+const DOTS = "#f5f5f5"
 
 /** The wizard's own pairing: Playfair headings over Urbanist. */
 const playfair = Playfair({ subsets: ["latin"], weight: ["400"] })
