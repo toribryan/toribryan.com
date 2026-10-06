@@ -95,7 +95,7 @@ export const EXPERIENCES: Experience[] = [
         },
         employmentType: "Full-time",
         icon: <DraftingCompassIcon />,
-        description: `- Owned the multi-brand design system and its governance across three products, on a [platform](https://proctorio.com/solutions) serving 8 million test takers.
+        description: `- Owned the multi-brand design system and its governance across three products, on a [platform](https://proctorio.com/solutions) that has proctored 300M+ exams worldwide.
 - Coached designers and mentored juniors through structured critique.
 
 Design system: [RDS v2 overhaul](/work/design-system-overhaul)
