@@ -11,6 +11,7 @@ import {
 
 import { cn } from "@/lib/utils"
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion"
+import { ISO_FIGURES, type IsoFigureName } from "@/components/mdx-iso-figure"
 import arcContracts from "@/features/doc/data/iso/arc-contracts.json"
 import arcNow from "@/features/doc/data/iso/arc-now.json"
 import arcStart from "@/features/doc/data/iso/arc-start.json"
@@ -22,8 +23,6 @@ import badgeText from "@/features/doc/data/iso/badge-text.json"
 import expMcp from "@/features/doc/data/iso/exp-mcp.json"
 import expPrompt from "@/features/doc/data/iso/exp-prompt.json"
 import expVariable from "@/features/doc/data/iso/exp-variable.json"
-import fiboEnforced from "@/features/doc/data/iso/fibo-enforced.json"
-import fiboWritten from "@/features/doc/data/iso/fibo-written.json"
 import stackAgent from "@/features/doc/data/iso/stack-agent.json"
 import stackContext from "@/features/doc/data/iso/stack-context.json"
 import stackGuardrails from "@/features/doc/data/iso/stack-guardrails.json"
@@ -52,8 +51,6 @@ const ART = {
   "exp-mcp": expMcp,
   "exp-prompt": expPrompt,
   "exp-variable": expVariable,
-  "fibo-enforced": fiboEnforced,
-  "fibo-written": fiboWritten,
   "stack-agent": stackAgent,
   "stack-context": stackContext,
   "stack-guardrails": stackGuardrails,
@@ -263,8 +260,9 @@ function Bracket({ className }: { className: string }) {
 }
 
 /**
- * One card in an `<IsoCards>` row: a title, a mono index, and an isometric
- * dot drawing from pixel-studio that builds in when it scrolls into view.
+ * One card in an `<IsoCards>` row: a title, a mono index, and either an
+ * isometric dot drawing from pixel-studio that builds in when it scrolls into
+ * view (`art`) or a working line-art figure (`figure`).
  *
  * Every prop is a string because expression attributes don't survive the MDX
  * pipeline. See the note in `mdx-inbox-regions.tsx`.
@@ -273,18 +271,21 @@ export function IsoCard({
   title,
   index,
   art,
+  figure,
   detail,
   seed = "1",
   field,
 }: {
   title: string
   index?: string
-  art: IsoArt
+  art?: IsoArt
+  figure?: IsoFigureName
   detail?: string
   seed?: string
   /** Set by `IsoCards` so a row shares one dot pitch. */
   field?: Field
 }) {
+  const Figure = figure ? ISO_FIGURES[figure] : null
   return (
     <figure className="flex flex-col gap-4 border border-border p-5">
       <figcaption className="flex items-start justify-between gap-3">
@@ -308,11 +309,17 @@ export function IsoCard({
         <Bracket className="top-0 right-0 border-t border-r" />
         <Bracket className="bottom-0 left-0 border-b border-l" />
         <Bracket className="right-0 bottom-0 border-r border-b" />
-        <IsoCanvas
-          art={art}
-          seed={Number(seed)}
-          field={field ?? fieldFor([art])}
-        />
+        {Figure ? (
+          <Figure />
+        ) : (
+          art && (
+            <IsoCanvas
+              art={art}
+              seed={Number(seed)}
+              field={field ?? fieldFor([art])}
+            />
+          )
+        )}
       </div>
     </figure>
   )
@@ -337,9 +344,10 @@ export function IsoCards({
 }) {
   const cards = Children.toArray(children).filter(
     isValidElement
-  ) as ReactElement<{ art: IsoArt; field?: Field }>[]
+  ) as ReactElement<{ art?: IsoArt; field?: Field }>[]
   if (cards.length === 0) return null
-  const field = fieldFor(cards.map((card) => card.props.art))
+  const arts = cards.flatMap((card) => (card.props.art ? [card.props.art] : []))
+  const field = arts.length ? fieldFor(arts) : undefined
 
   return (
     <div className={cn("not-prose my-8 grid gap-3", COLUMNS[columns])}>
