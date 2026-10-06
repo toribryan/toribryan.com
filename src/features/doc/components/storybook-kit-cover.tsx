@@ -17,7 +17,7 @@ import {
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { ScaledStage } from "@/features/portfolio/components/components/covers"
+import { ScaledStage } from "@/features/portfolio/components/components/scaled-stage"
 
 import { useCoverSteps } from "./use-cover-steps"
 

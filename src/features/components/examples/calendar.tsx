@@ -5,7 +5,7 @@ import { PlusIcon, SearchIcon } from "lucide-react"
 
 import { Button } from "@/components/fibo/button"
 import { Calendar, type CalendarEvent } from "@/components/fibo/calendar"
-import { ScaledStage } from "@/features/portfolio/components/components/covers"
+import { ScaledStage } from "@/features/portfolio/components/components/scaled-stage"
 
 import { AnatomyMap, slot, type Callout } from "../components/anatomy-map"
 

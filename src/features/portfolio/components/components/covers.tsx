@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { ComponentType } from "react"
-import type { Editor } from "@tiptap/react"
+import dynamic from "next/dynamic"
 import {
   BookmarkIcon,
   CalendarIcon,
@@ -85,7 +85,6 @@ import { JumpBar, type JumpBarProps } from "@/components/fibo/jump-bar"
 import { Kbd } from "@/components/fibo/kbd"
 import { MessageList, type ChatMessage } from "@/components/fibo/message-list"
 import { Reactions, type Reaction } from "@/components/fibo/reactions"
-import { RichTextEditor } from "@/components/fibo/rich-text-editor"
 import { StatusDot, type StatusDotStatus } from "@/components/fibo/status-dot"
 import { StickerAvatar } from "@/components/fibo/sticker-avatar"
 import { TokenFlow, type TokenRow } from "@/components/fibo/token-flow"
@@ -97,6 +96,9 @@ import { GROUPS } from "@/features/components/examples/command-menu-data"
 import { useRabbit } from "@/features/components/examples/sticker-avatar-data"
 import { VoiceMemoCover } from "@/features/doc/components/voice-memo-cover"
 
+import { ScaledStage } from "./scaled-stage"
+import { useCycle } from "./use-cycle"
+
 type CoverProps = { active: boolean }
 
 /*
@@ -104,20 +106,6 @@ type CoverProps = { active: boolean }
  * `active`, using only the part's own props and the events a person would
  * send it. Sample data is from fibo's stories.
  */
-
-/** Steps through `0..count-1` every `ms` while `active`, starting over at 0. */
-function useCycle(count: number, ms: number, active: boolean) {
-  const [step, setStep] = useState(0)
-  useEffect(() => {
-    if (!active) return
-    const id = window.setInterval(() => setStep((s) => (s + 1) % count), ms)
-    return () => {
-      window.clearInterval(id)
-      setStep(0)
-    }
-  }, [count, ms, active])
-  return step
-}
 
 /*
  * Runs `act` with the cover's inert lifted, since inert swallows the clicks
@@ -1023,61 +1011,6 @@ function DatePickerCover({ active }: CoverProps) {
   )
 }
 
-const NOTE_HEADING = "Tokens 2.0"
-const NOTE_BOLD = "Ship"
-const NOTE_REST = " the new roles on Friday."
-const NOTE_TYPED = NOTE_HEADING.length + NOTE_BOLD.length + NOTE_REST.length
-const NOTE_DONE = `<h2>${NOTE_HEADING}</h2><p><strong>${NOTE_BOLD}</strong>${NOTE_REST}</p>`
-
-/** The note after `count` characters, with the caret's marks at its end. */
-function noteAt(count: number) {
-  const heading = NOTE_HEADING.slice(0, count)
-  const bold = NOTE_BOLD.slice(0, Math.max(0, count - NOTE_HEADING.length))
-  const rest = NOTE_REST.slice(
-    0,
-    Math.max(0, count - NOTE_HEADING.length - NOTE_BOLD.length)
-  )
-  if (!bold) return `<h2>${heading}</h2>`
-  return `<h2>${heading}</h2><p><strong>${bold}</strong>${rest}</p>`
-}
-
-/**
- * A short release note. While active it's typed a letter at a time, a
- * heading then a bold word, and the toolbar presses Heading and Bold as the
- * caret passes through them; at rest it's the finished note.
- */
-function RichTextEditorCover({ active }: CoverProps) {
-  const step = useCycle(NOTE_TYPED + 16, 90, active)
-  const html = active ? noteAt(step) : NOTE_DONE
-  const frame = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    // Tiptap hangs the editor on its element, and the editor mounts after
-    // the first render, so it's looked up on each step.
-    const editor = frame.current?.querySelector<
-      HTMLElement & { editor?: Editor }
-    >("[data-slot=rich-text-editor-content]")?.editor
-    if (!editor || editor.isDestroyed) return
-    editor
-      .chain()
-      .setContent(html, { emitUpdate: false })
-      .setTextSelection(editor.state.doc.content.size)
-      .run()
-  }, [html])
-
-  return (
-    <div ref={frame} className="flex size-full items-center justify-center">
-      <RichTextEditor
-        label="Release note"
-        tools={["heading", "bold", "italic", "bullet", "link"]}
-        minHeight={84}
-        defaultValue={NOTE_DONE}
-        className="w-64"
-      />
-    </div>
-  )
-}
-
 /**
  * The device from the Voice memo project's card. It plays on its own terms,
  * on hover or focus of the card around it.
@@ -1089,6 +1022,10 @@ function VoiceMemoPartCover() {
     </div>
   )
 }
+
+const RichTextEditorCover = dynamic(() =>
+  import("./rich-text-editor-cover").then((m) => m.RichTextEditorCover)
+)
 
 export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "data-table": DataTableCover,
@@ -1111,64 +1048,4 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   calendar: CalendarCover,
   "date-picker": DatePickerCover,
   "voice-memo": VoiceMemoPartCover,
-}
-
-/**
- * Lays its child out at `width` and scales it to fill the cover's width, so
- * a part draws its full layout rather than its narrow one. Hidden until the
- * cover has been measured.
- */
-export function ScaledStage({
-  width,
-  zoom = false,
-  children,
-}: {
-  width: number
-  /**
-   * Scale with CSS zoom rather than a transform. A transformed stage is
-   * rasterized again at slightly different sub-pixel offsets whenever
-   * something inside it animates, so small icons shimmer; a zoomed one lays
-   * out at the final size and holds still. Popups that measure the page
-   * expect a transform, so the fibo part covers keep it.
-   */
-  zoom?: boolean
-  children: ReactNode
-}) {
-  const frame = useRef<HTMLDivElement>(null)
-  const [coverWidth, setCoverWidth] = useState<number | null>(null)
-  const scale = coverWidth === null ? null : coverWidth / width
-
-  useEffect(() => {
-    const element = frame.current
-    if (!element) return
-    const observer = new ResizeObserver(([entry]) => {
-      setCoverWidth(entry.contentRect.width)
-    })
-    observer.observe(element)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div ref={frame} className="absolute inset-0">
-      <div
-        className={cn(
-          "relative origin-top-left transition-opacity duration-300",
-          scale === null && "opacity-0"
-        )}
-        style={{
-          width,
-          // Zoom scales the layout box itself, so the stage needs only the
-          // cover's height; a transform scales after layout and needs more.
-          ...(zoom
-            ? { height: "100%", zoom: scale ?? 1 }
-            : {
-                height: scale ? `${100 / scale}%` : "100%",
-                transform: `scale(${scale ?? 1})`,
-              }),
-        }}
-      >
-        {children}
-      </div>
-    </div>
-  )
 }

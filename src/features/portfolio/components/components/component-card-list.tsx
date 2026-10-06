@@ -20,7 +20,8 @@ import {
 import { HOME_PARTS, NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
 
 import { PREVIEWS } from "./catalog-previews"
-import { COVERS, ScaledStage } from "./covers"
+import { COVERS } from "./covers"
+import { ScaledStage } from "./scaled-stage"
 
 // Every cover and preview is laid out on a stage this wide, at the plate's
 // 4:3, and scaled to the card, so they share one size on the home page, in

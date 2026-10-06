@@ -3,10 +3,8 @@
 import { useRef, type CSSProperties } from "react"
 
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion"
-import {
-  COVERS,
-  ScaledStage,
-} from "@/features/portfolio/components/components/covers"
+import { COVERS } from "@/features/portfolio/components/components/covers"
+import { ScaledStage } from "@/features/portfolio/components/components/scaled-stage"
 import {
   PixelRabbitSprite,
   type RabbitPose,
@@ -15,7 +13,11 @@ import {
 import { useCoverSteps } from "./use-cover-steps"
 
 /** The parts beside him, as the home page's component cards show them. */
-const SHELF = ["integration-visual", "floating-nav", "chapter-scrubber"] as const
+const SHELF = [
+  "integration-visual",
+  "floating-nav",
+  "chapter-scrubber",
+] as const
 
 /** Each part is laid out roomier than a home page card, then scaled down. */
 const TILE = { width: 240, height: 280 }

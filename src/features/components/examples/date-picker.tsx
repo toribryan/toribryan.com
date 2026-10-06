@@ -12,7 +12,7 @@ import {
   type DateRange,
   type DateRangePreset,
 } from "@/components/fibo/date-picker"
-import { ScaledStage } from "@/features/portfolio/components/components/covers"
+import { ScaledStage } from "@/features/portfolio/components/components/scaled-stage"
 
 const october = new Date(2026, 9, 1)
 
