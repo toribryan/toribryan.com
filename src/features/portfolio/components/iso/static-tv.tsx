@@ -116,7 +116,7 @@ function side() {
     vents += `<rect class="fill-background ${LINE} ${HAIR}" x="24" y="${40 + k * 12}" width="${d - 48}" height="5" rx="2.5"/>`
   return `<g transform="${SIDE(TV.w, TV.d, Z)}">
     ${vents}
-    <text class="${INK}" x="${d - 16}" y="${h - 16}" font-size="7" letter-spacing="2" text-anchor="end">TORI BRYAN</text>
+    <text class="${INK}" x="${d - 16}" y="${h - 16}" font-size="10" letter-spacing="2.5" text-anchor="end">TORI BRYAN</text>
   </g>`
 }
 
