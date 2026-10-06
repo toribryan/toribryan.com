@@ -81,18 +81,17 @@ Drop in a new `.mdx` file with frontmatter and it appears:
 
 ```mdx
 ---
-title: "Proctor Coverage"
-description: "Embedded analytics that turn proctor coverage into evidence."
-image: "/case-studies/proctor-coverage-timeline.svg"
-createdAt: "2025-04-01"
-updatedAt: "2025-04-01"
-company: "Proctorio"
-role: "Lead Product Designer"
-period: "04.2025 – 09.2025"
-skills: ["Figma", "Claude Code", "Azure"]
+title: "Rabbit run"
+description: "A Snake-style game in isometric line art."
+createdAt: "2026-10-05"
+updatedAt: "2026-10-06"
+role: "Designer and engineer"
+type: "Game"
+period: "Q4 2026"
+skills: ["Interaction Design", "SVG", "React"]
 ---
 
-## Context
+## The puzzle
 
 Body copy, tables, images and fenced code all render.
 ```
