@@ -41,15 +41,11 @@ import {
   Side,
   Sides,
 } from "./fibo-blocks"
-import {
-  SlotComposition,
-  SwitchSprawl,
-  TokenRoles,
-  VariantWall,
-} from "./overhaul-diagrams"
+import { SlotComposition, SwitchSprawl, VariantWall } from "./overhaul-diagrams"
 import { RepoViewer } from "./repo-viewer"
 import { ResultFigure } from "./result-figure"
 import { StatusColors } from "./status-colors"
+import { TokenCoins } from "./token-coins"
 import { TokenVisualizer } from "./token-visualizer"
 
 /** Components a doc's MDX can use beyond the shared set. */
@@ -67,7 +63,7 @@ const DOC_COMPONENTS = {
   SlotComposition,
   StatusColors,
   SwitchSprawl,
-  TokenRoles,
+  TokenCoins,
   TokenVisualizer,
   VariantWall,
 }
