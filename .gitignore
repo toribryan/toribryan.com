@@ -42,3 +42,10 @@ pnpm-workspace.yaml
 # career docs, not for publication
 _career/
 
+
+# The iPhone Duo mockup is a paid Framer Marketplace component, so neither its
+# code nor its model goes in this public repo: both live in a private Vercel
+# Blob store. `npm run duo:fetch` writes the module here before dev, build and
+# type checks; `npm run duo:upload` sends .private/iphone-duo up to the store.
+/.private/
+/src/features/doc/components/iphone-duo-mockup.js

@@ -28,6 +28,10 @@ const eslintConfig = defineConfig([
     // here, and this project's rules have nothing useful to say about them.
     "public/prototype/**",
     "public/storybook/**",
+
+    // A Framer Marketplace component ported in as compiled JavaScript; its
+    // hand-written JSX calls trip the hooks rules without being wrong.
+    "src/features/doc/components/iphone-duo-mockup.js",
   ]),
 ])
 
