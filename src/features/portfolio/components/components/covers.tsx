@@ -95,6 +95,7 @@ import {
 } from "@/components/fibo/typing-indicator"
 import { GROUPS } from "@/features/components/examples/command-menu-data"
 import { useRabbit } from "@/features/components/examples/sticker-avatar-data"
+import { VoiceMemoCover } from "@/features/doc/components/voice-memo-cover"
 
 type CoverProps = { active: boolean }
 
@@ -1076,6 +1077,18 @@ function RichTextEditorCover({ active }: CoverProps) {
   )
 }
 
+/**
+ * The device from the Voice memo project's card. It plays on its own terms,
+ * on hover or focus of the card around it.
+ */
+function VoiceMemoPartCover() {
+  return (
+    <div className="@container size-full">
+      <VoiceMemoCover />
+    </div>
+  )
+}
+
 export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "data-table": DataTableCover,
   "chat-composer": ChatComposerCover,
@@ -1096,6 +1109,7 @@ export const COVERS: Record<string, ComponentType<CoverProps>> = {
   "jump-bar": JumpBarCover,
   calendar: CalendarCover,
   "date-picker": DatePickerCover,
+  "voice-memo": VoiceMemoPartCover,
 }
 
 /**

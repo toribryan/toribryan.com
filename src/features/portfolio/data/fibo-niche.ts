@@ -3,8 +3,6 @@ export type NichePart = {
   name: string
   title: string
   description: string
-  /** `false` keeps the part off the home page; it still has a card on /components. */
-  home?: boolean
   /** The part's page in fibo's Figma library, as a node id. Left out until it has one. */
   figma?: string
 }
@@ -30,14 +28,12 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Chapter scrubber",
     description:
       "A rail of marks that swell under the pointer like the Dock, previewing the chapter at the crest.",
-    home: false,
   },
   {
     name: "rich-text-editor",
     title: "Rich text editor",
     description:
       "Formatted writing on Tiptap: headings, marks, lists, quotes and links from a toolbar or Markdown shortcuts, with an optional character limit.",
-    home: false,
   },
   {
     name: "filter-menu",
@@ -65,7 +61,6 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Typing indicator",
     description:
       "Says who's typing in a conversation, naming up to three people.",
-    home: false,
   },
   {
     name: "status-dot",
@@ -73,7 +68,6 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Status dot",
     description:
       "A small mark for whether someone is present, away or offline, told apart by shape.",
-    home: false,
   },
   {
     name: "input-group",
@@ -81,14 +75,12 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Input group",
     description:
       "An input with an icon, text or button beside it, drawn as one field.",
-    home: false,
   },
   {
     name: "date-picker",
     title: "Date picker",
     description:
       "A field that opens a calendar to pick a day, or a range with presets and Apply; a popover on desktop, a drawer on phones.",
-    home: false,
   },
   {
     name: "empty-state",
@@ -96,7 +88,6 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Empty state",
     description:
       "What shows where content would be: a title, why it's empty, and what to do next.",
-    home: false,
   },
   {
     name: "message-list",
@@ -104,7 +95,6 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Message list",
     description:
       "A conversation that groups each person's messages under one heading, with a single tab stop.",
-    home: false,
   },
   {
     name: "jump-bar",
@@ -112,21 +102,18 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Jump bar",
     description:
       "Takes people to unread messages, new messages or the present in a conversation.",
-    home: false,
   },
   {
     name: "calendar",
     title: "Calendar",
     description:
       "A month grid for picking a day or a range, with full keyboard use; pages side by side or scrolls on phones.",
-    home: false,
   },
   {
     name: "reactions",
     figma: "169-18",
     title: "Reactions",
     description: "Lets people respond to content with an emoji in one tap.",
-    home: false,
   },
   {
     name: "sticker-avatar",
@@ -147,7 +134,6 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Integration visual",
     description:
       "A hub and the tools wired into it, with pulses along the routes.",
-    home: false,
   },
   {
     name: "token-flow",
@@ -155,8 +141,17 @@ export const NICHE_PARTS: NichePart[] = [
     title: "Token flow",
     description:
       "Walks a color token from raw value to primitive to semantic role.",
-    home: false,
   },
+]
+
+/** The fibo parts the home page shows, in its order. */
+export const HOME_PARTS = [
+  "data-table",
+  "sticker-avatar",
+  "calendar",
+  "command-menu",
+  "chat-composer",
+  "voice-memo",
 ]
 
 const FIGMA_LIBRARY =

@@ -24,7 +24,7 @@ export function Components() {
         <AnimationsPauseToggle />
       </PanelHeader>
 
-      <ComponentCardList home />
+      <ComponentCardList />
 
       <div className="screen-line-top flex justify-center py-4">
         <Button
