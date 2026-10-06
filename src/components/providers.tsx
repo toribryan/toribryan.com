@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes"
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider as RadixTooltipProvider } from "@/components/ui/tooltip"
 import { TooltipProvider as BaseTooltipProvider } from "@/components/base/ui/tooltip"
+import { ConsoleBunny } from "@/components/console-bunny"
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -31,6 +32,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         </ProgressProvider>
 
         <Toaster position="top-center" />
+        <ConsoleBunny />
       </ThemeProvider>
     </JotaiProvider>
   )
