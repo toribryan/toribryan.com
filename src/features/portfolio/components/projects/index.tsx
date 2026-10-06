@@ -19,8 +19,11 @@ const ID = "projects"
 const SHOWN = 4
 
 export function Projects() {
-  // fibo has its own hero and niche shelf above.
-  const projects = getWorkDocs().filter((doc) => doc.slug !== "fibo")
+  // fibo has its own hero and niche shelf above, and Rabbit run its own
+  // section below; both still have cards on /projects.
+  const projects = getWorkDocs().filter(
+    (doc) => doc.slug !== "fibo" && doc.slug !== "rabbit-run"
+  )
 
   return (
     <Panel id={ID}>
