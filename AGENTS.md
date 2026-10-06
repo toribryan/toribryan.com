@@ -112,7 +112,13 @@ redirects there. `/fibo` is the lore: `FiboHero` with `variant="page"` (an
 `h1`, and buttons out to the Storybook, Figma and GitHub), then
 `fibo-story.tsx`, with the rabbit farm (`fibo-farm.tsx`) that steps through
 Fibonacci's puzzle and the dither plates in `public/images/fibo/`. On the
-home page the hero's buttons go to those two pages instead.
+home page the hero's buttons go to those two pages instead, and in place of
+the golden-rectangle construction and the pixel rabbit it shows the component
+desk (`iso/component-desk.tsx`) beside the copy: the rabbit with working
+design system parts and a monitor that shows the code for the last one used.
+`iso/rabbit-run.tsx` is a Snake-style game on the golden tiling whose family
+grows by Fibonacci. Both draw from `iso/iso.ts`, isometric line art as SVG
+strings, and their keys only work while the scene has focus.
 
 The phone nav is fibo's Floating nav (`src/components/fibo/floating-nav.tsx`,
 installed and documented like the parts above).

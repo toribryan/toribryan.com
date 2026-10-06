@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils"
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion"
 import { ArrowRightIcon } from "@/components/animated-icons/arrow-right-icon"
 import { Button } from "@/components/base/ui/button"
+import { ComponentDesk } from "@/features/portfolio/components/iso/component-desk"
 
 import {
   BaseUIIcon,
@@ -908,7 +909,8 @@ export function FiboHero({
 }: {
   /**
    * `section` is the home page's: an `h2`, linking to the components and the
-   * lore. `page` opens fibo's own page: an `h1`, linking out to the Storybook,
+   * lore, beside the component desk. `page` opens fibo's own page, on the
+   * golden-rectangle construction with fibo the pixel rabbit: an `h1`, linking out to the Storybook,
    * Figma and GitHub.
    */
   variant?: HeroVariant
@@ -916,11 +918,33 @@ export function FiboHero({
   const area = useRef<HTMLElement>(null)
   const seen = useSeen(area)
   useEffect(listenForUnlock, [])
+  if (variant === "section") {
+    return (
+      <section
+        ref={area}
+        data-intro="still"
+        id="fibo"
+        aria-label="fibo"
+        className="screen-line-top screen-line-bottom relative border-x border-line"
+      >
+        <div className="@container relative w-full overflow-hidden pt-10 pb-12">
+          {/* Side by side once the column is wide enough; stacked below that. */}
+          <div className="@2xl:grid @2xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] @2xl:items-center">
+            <Pitch
+              width={340}
+              variant={variant}
+              className="grid-rows-[auto_auto_auto] @2xl:pr-0"
+            />
+            <ComponentDesk className="mt-6 @2xl:mt-0" />
+          </div>
+        </div>
+      </section>
+    )
+  }
   return (
     <section
       ref={area}
-      // On the home page it's there from the start; fibo's own page fades in.
-      data-intro={variant === "section" ? "still" : seen ? "play" : "wait"}
+      data-intro={seen ? "play" : "wait"}
       id="fibo"
       aria-label="fibo"
       className="screen-line-top screen-line-bottom relative border-x border-line"
