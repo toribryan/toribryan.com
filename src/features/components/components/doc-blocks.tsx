@@ -481,7 +481,8 @@ function elementsOf(node: ReactNode) {
  * The docs' Markdown tables, which are API references four columns wide. On
  * a phone that doesn't fit, so each row stacks instead: the first cell leads,
  * and the rest follow under the header they came from, which is read from the
- * table's own head row so any table works.
+ * table's own head row so any table works. It draws its own rules and
+ * spacing, since an exhibit's code pane sits outside the prose styles.
  */
 export function DocTable({ children }: { children?: ReactNode }) {
   const sections = elementsOf(children)
@@ -494,7 +495,7 @@ export function DocTable({ children }: { children?: ReactNode }) {
     : []
 
   return (
-    <table className="max-sm:block max-sm:border-b-0">
+    <table className="my-3 w-full border-collapse text-left text-sm max-sm:block max-sm:border-b-0 sm:border-b sm:border-line [&_code]:box-decoration-clone sm:[&_tbody_tr]:border-t sm:[&_tbody_tr]:border-line [&_td]:align-top sm:[&_td]:px-3 sm:[&_td]:py-2.5 [&_td:first-child]:whitespace-nowrap sm:[&_td:first-child]:pl-0 [&_th]:px-3 [&_th]:py-2 [&_th]:text-xs [&_th]:font-medium [&_th]:text-muted-foreground [&_th:first-child]:pl-0 sm:[&_thead]:border-b sm:[&_thead]:border-line">
       {sections.map((section, index) => {
         if (section.type === "thead") {
           return cloneElement(section, {
