@@ -15,30 +15,30 @@ skills:
   - "React"
 ---
 
-Steer the lead rabbit to the carrots. Each carrot is a month, and the family behind it grows the way Fibonacci's rabbits do. Reach 34 pairs and you win.
+Steer the lead rabbit to the carrots. Each carrot is a month, and the family behind it grows the way Fibonacci's rabbits do. Reach 34 pairs to win.
 
 ## The puzzle
 
-In 1202 Fibonacci asked how many pairs one pair of rabbits would become in a year. The answer runs 1, 1, 2, 3, 5, 8, 13, 21, 34, each month the sum of the two before, and each month divided by the last closes in on φ, about 1.618. The game plays that out, with the ratio on the screen at the back of the board.
+In 1202 Fibonacci asked how many pairs one pair of rabbits would become in a year. The answer runs 1, 1, 2, 3, 5, 8, 13, 21, 34: each month is the sum of the two before it. Divide any month by the one before, and the result closes in on φ, about 1.618. The game plays this out and shows the ratio on the screen at the back of the board.
 
 ## How a run works
 
 - Each carrot moves the month on, and the line grows to that month's count.
-- New rabbits join at the tail one hop at a time, and the screen warns what the next carrot brings.
+- New rabbits join at the tail one hop at a time, and the screen shows how many the next carrot adds.
 - Rabbits hop faster every month. Easy, medium and hard each keep their own best score.
-- Hitting the edge or the family ends the run. Month 9, 34 pairs, is a win.
+- The run ends if you hit the edge or the family. Reaching month 9 wins.
 
 ## How it's built
 
-- The board is 13 by 8, the golden rectangle the puzzle builds, with its squares and spiral etched into the floor.
-- Plain SVG in isometric projection, sorted and drawn back to front, with no 3D engine.
-- Colors come from the site's tokens, so it follows light and dark mode.
-- Sounds are synthesized in the browser and stay quiet under reduced motion.
-- On the Projects page the card plays itself, steering by the shortest safe path to the carrot.
+- The board is 13 by 8 cells, the golden rectangle the sequence builds. Its squares and spiral are etched into the floor.
+- Everything is plain SVG in an isometric view, with no 3D engine. Shapes are drawn back to front, so nearer ones cover those behind.
+- Colors come from the site's tokens, so the game follows light and dark mode.
+- Sounds are synthesized in the browser, and they stay off when your device asks for reduced motion.
+- On the Projects page the card plays itself. It steers along the shortest safe path to each carrot.
 
 ## Controls
 
-- Click the board first, so the keys don't scroll the page.
+- Click the board first. Until you do, the keys scroll the page.
 - Arrow keys, WASD or the pad on the board steer.
 - Space starts and pauses.
 - 1, 2 and 3 set the speed.
