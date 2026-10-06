@@ -65,8 +65,9 @@ export function Exhibit({
         className
       )}
     >
-      {/* Examples that draw the page draw a light gray here, not its beige. */}
-      <div className="flex min-h-40 items-center justify-center overflow-x-auto p-4 [--background:var(--exhibit-surface)] sm:p-6">
+      {/* Examples that draw the page draw a light gray here, not its beige.
+          Data tables draw on the frame's own white plate instead. */}
+      <div className="flex min-h-40 items-center justify-center overflow-x-auto p-4 [--background:var(--exhibit-surface)] sm:p-6 [&_[data-slot=data-table]]:[--background:var(--cover-plate)]">
         <Demo />
       </div>
 
