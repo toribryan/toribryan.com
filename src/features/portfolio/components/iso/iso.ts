@@ -29,9 +29,9 @@ export const SIDE = (x: number, y: number, z: number) =>
   plane([x, y, z], [0, -1, 0], [0, 0, -1])
 
 export const HAIR = "[vector-effect:non-scaling-stroke] [stroke-linejoin:round]"
-/* Structure lines sit halfway between the muted text color and the page. */
+/* Structure lines are the muted text color, softened a little toward the page. */
 export const LINE =
-  "stroke-[color-mix(in_oklab,var(--muted-foreground)_45%,var(--background))]"
+  "stroke-[color-mix(in_oklab,var(--muted-foreground)_72%,var(--background))]"
 export const FACE = `fill-muted ${LINE} ${HAIR}`
 export const DECK = `fill-card ${LINE} ${HAIR}`
 export const DETAIL = `fill-none stroke-border ${HAIR}`
