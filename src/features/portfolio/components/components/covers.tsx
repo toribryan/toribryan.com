@@ -470,6 +470,7 @@ function CommandMenuCover({ active }: CoverProps) {
         {layer && (
           <CommandMenu
             groups={GROUPS}
+            variant="inset"
             open
             modal={false}
             hotkey={null}
