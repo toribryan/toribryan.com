@@ -76,6 +76,11 @@ export const SHELVES: {
   },
 ]
 
+/** A group's name as a card shows it, where fibo's own is too terse. */
+export function groupLabel(group: string) {
+  return group === "Display" ? "Data display" : group
+}
+
 /** The part's docs in fibo's Storybook, where base parts sit under their group. */
 export function fiboStorybookUrl(name: string) {
   const part = CATALOG.find((entry) => entry.name === name)
