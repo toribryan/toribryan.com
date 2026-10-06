@@ -26,6 +26,10 @@ export const MAIN_NAV: NavItem<Route>[] = [
     href: "/projects",
   },
   {
+    title: "Gallery",
+    href: "/gallery",
+  },
+  {
     title: "Components",
     href: "/components",
   },
@@ -42,6 +46,7 @@ export const MOBILE_NAV: NavItem<Route>[] = [
 export const MOBILE_MENU: NavItem<Route>[] = [
   { title: "Home", href: "/" },
   { title: "Projects", href: "/projects" },
+  { title: "Gallery", href: "/gallery" },
   { title: "Components", href: "/components" },
   { title: "Fibo lore", href: "/fibo" },
   { title: "Blog", href: "/latest" },
