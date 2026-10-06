@@ -20,6 +20,7 @@ import {
   TOP,
   type Point,
 } from "./iso"
+import { setSoundEnabled, sfx } from "./sounds"
 
 /*
  * Rabbit run: steer the lead rabbit to carrots on a board etched with the
@@ -246,6 +247,16 @@ function modeKeys() {
   }).join("")
 }
 
+/* The sound key sits at the end of the speed keys' row. */
+function soundKey() {
+  const w = 76
+  const d = 26
+  const x = 70 + MODES.length * (w + 10) + 14
+  const y = BASE.d - d - 14
+  return `<g class="${PRESS}" data-sound role="switch" aria-label="Sound">${box(x, y, BASE.h, w, d, 8, 6)}
+    <g transform="${TOP(x, y, BASE.h + 8)}"><text data-sound-label class="fill-muted-foreground ${MONO}" x="${w / 2}" y="${d / 2 + 3.5}" font-size="9" letter-spacing="1.5" text-anchor="middle">SOUND</text></g></g>`
+}
+
 /* An orange carrot standing in the board, its tip narrowing into the ground. */
 const ORANGE =
   "[&_:is(rect,.wall)]:fill-[#f28a2e] [&_:is(rect,.wall)]:stroke-[#c8621a]"
@@ -291,10 +302,12 @@ const SCENE =
   board() +
   display() +
   pad() +
-  modeKeys()
+  modeKeys() +
+  soundKey()
 
 const BEST_KEY = "rabbit-run-best"
 const MODE_KEY = "rabbit-run-mode"
+const SOUND_KEY = "rabbit-run-sound"
 const KEYS: Record<string, DirName> = {
   ArrowUp: "up",
   ArrowRight: "right",
@@ -342,6 +355,14 @@ export function RabbitRun({
       return `<rect class="fill-foreground transition-opacity duration-200 ease-linear motion-reduce:transition-none" style="opacity:0" x="${i * CELL + 2}" y="${j * CELL + 2}" width="${CELL - 4}" height="${CELL - 4}" rx="3"/>`
     }).join("")
     const tiles = [...floor.children] as SVGRectElement[]
+
+    // The cover's demo plays silently.
+    const sound = demo ? null : sfx
+    let soundOn = true
+    try {
+      soundOn = localStorage.getItem(SOUND_KEY) !== "off"
+    } catch {}
+    setSoundEnabled(soundOn)
 
     let mode: Mode = "medium"
     try {
@@ -452,6 +473,12 @@ export function RabbitRun({
         ${seq}
         <text class="fill-foreground ${MONO}" x="142" y="62" font-size="8.5">${ratio}</text>
         <text class="fill-muted-foreground ${MONO}" x="142" y="73" font-size="7">φ = ${PHI.toFixed(4)} · BEST ${best} · ${mode.toUpperCase()}</text>`
+      const soundKeyEl = svg.querySelector<SVGGElement>("[data-sound]")!
+      CHOSEN.forEach((c) => soundKeyEl.classList.toggle(c, soundOn))
+      soundKeyEl.setAttribute("aria-checked", String(soundOn))
+      svg.querySelector("[data-sound-label]")!.textContent = soundOn
+        ? "SOUND"
+        : "MUTED"
       svg.querySelectorAll<SVGGElement>("[data-mode]").forEach((key) => {
         const on = key.dataset.mode === mode
         CHOSEN.forEach((c) => key.classList.toggle(c, on))
@@ -478,6 +505,16 @@ export function RabbitRun({
       try {
         localStorage.setItem(MODE_KEY, mode)
       } catch {}
+      sound?.click()
+      render()
+    }
+    const toggleSound = () => {
+      soundOn = !soundOn
+      setSoundEnabled(soundOn)
+      try {
+        localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off")
+      } catch {}
+      sound?.click()
       render()
     }
 
@@ -495,6 +532,7 @@ export function RabbitRun({
       state.status = "over"
       state.why = why
       record()
+      sound?.crash()
       render()
       if (!reduced())
         world.animate(
@@ -563,8 +601,10 @@ export function RabbitRun({
         const b = state.family[n]
         if (a.i !== b.i || a.j !== b.j) b.f = [a.i - b.i, a.j - b.j]
       }
-      if (state.grow > 0) state.grow--
-      else state.family.pop()
+      if (state.grow > 0) {
+        state.grow--
+        sound?.pop(state.family.length)
+      } else state.family.pop()
 
       if (next.i === state.carrot.i && next.j === state.carrot.j) {
         state.month++
@@ -572,11 +612,13 @@ export function RabbitRun({
         if (state.month >= GOAL) {
           state.status = "won"
           record()
+          sound?.win()
           lightFloor()
           return render()
         }
+        sound?.carrot(state.month)
         placeCarrot()
-      }
+      } else sound?.hop(state.tick)
       state.tick++
       lightFloor()
       render()
@@ -585,13 +627,16 @@ export function RabbitRun({
 
     const begin = () => {
       if (state.status === "over" || state.status === "won") reset()
+      if (state.status !== "running") sound?.start()
       state.status = "running"
       window.clearTimeout(timer)
       timer = window.setTimeout(step, speed())
       render()
     }
-    const pause = () => {
+    // Clicking away pauses quietly; pausing on purpose makes a sound.
+    const pause = (quiet = false) => {
       if (state.status !== "running") return
+      if (!quiet) sound?.pause()
       state.status = "paused"
       window.clearTimeout(timer)
       render()
@@ -605,7 +650,10 @@ export function RabbitRun({
       const [a, b] = DIRS[name]
       const [c, d] = DIRS[last]
       if (a === -c && b === -d && state.family.length > 1) return
-      if (name !== last && state.queue.length < 2) state.queue.push(name)
+      if (name !== last && state.queue.length < 2) {
+        state.queue.push(name)
+        if (state.status === "running") sound?.turn()
+      }
       if (state.status !== "running" && state.status !== "paused") begin()
     }
 
@@ -617,12 +665,13 @@ export function RabbitRun({
 
     const onClick = (e: MouseEvent) => {
       const p = (e.target as Element).closest<SVGGElement>(
-        "[data-dir], [data-act], [data-mode]"
+        "[data-dir], [data-act], [data-mode], [data-sound]"
       )
       if (!p) return
       bump(p)
       if (p.dataset.dir) steer(p.dataset.dir as DirName)
       else if (p.dataset.mode) choose(p.dataset.mode as Mode)
+      else if (p.hasAttribute("data-sound")) toggleSound()
       else toggle()
     }
     // Keys only steer while the board has focus, so the page still scrolls.
@@ -638,6 +687,10 @@ export function RabbitRun({
         const next = MODES[Number(e.key) - 1]
         bump(svg.querySelector(`[data-mode="${next}"]`))
         choose(next)
+      } else if (e.key.toLowerCase() === "m") {
+        e.preventDefault()
+        bump(svg.querySelector("[data-sound]"))
+        toggleSound()
       } else if (e.key === " " || e.key === "Enter") {
         e.preventDefault()
         if (e.repeat) return
@@ -646,6 +699,7 @@ export function RabbitRun({
       }
     }
     const onPointerDown = () => svg.focus({ preventScroll: true })
+    const onBlur = () => pause(true)
 
     reset()
     render()
@@ -675,14 +729,14 @@ export function RabbitRun({
     svg.addEventListener("click", onClick)
     svg.addEventListener("keydown", onKey)
     svg.addEventListener("pointerdown", onPointerDown)
-    svg.addEventListener("blur", pause)
+    svg.addEventListener("blur", onBlur)
 
     return () => {
       window.clearTimeout(timer)
       svg.removeEventListener("click", onClick)
       svg.removeEventListener("keydown", onKey)
       svg.removeEventListener("pointerdown", onPointerDown)
-      svg.removeEventListener("blur", pause)
+      svg.removeEventListener("blur", onBlur)
     }
   }, [demo])
 
@@ -693,7 +747,7 @@ export function RabbitRun({
         viewBox={VIEWBOX}
         tabIndex={demo ? -1 : 0}
         role={demo ? "img" : "application"}
-        aria-label="Rabbit run. Steer the lead rabbit to carrots with the arrow keys or the pad; each carrot is a month and the family behind it grows by the Fibonacci sequence. Hitting the edge or the family ends the run. Space starts and pauses; 1, 2 and 3 set easy, medium and hard speed."
+        aria-label="Rabbit run. Steer the lead rabbit to carrots with the arrow keys or the pad; each carrot is a month and the family behind it grows by the Fibonacci sequence. Hitting the edge or the family ends the run. Space starts and pauses; 1, 2 and 3 set easy, medium and hard speed; M turns sound on and off."
         className="block h-auto w-full touch-manipulation outline-none select-none focus-visible:[&_[data-act=start]_rect]:stroke-foreground"
       />
     </figure>
