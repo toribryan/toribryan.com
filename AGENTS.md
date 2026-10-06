@@ -78,7 +78,10 @@ too. `src/features/portfolio/data/fibo-niche.ts`
 lists the parts with a page here, which drives the docs; its `HOME_PARTS`
 picks the home page's cards, in order, by fibo name (Voice memo among them,
 whose card opens `/work/voice-memo` and draws the project card's device).
-Cards show the part's fibo group under the title. Each has a doc at `/components/[slug]`, ported from fibo's Storybook:
+Cards show the part's fibo group under the title. Their cover plates carry
+`.fibo-palette` (end of `globals.css`), fibo's own neutral tokens in both
+themes, so covers draw in fibo's grays rather than the site's warm stone;
+keep it in step with fibo's `packages/ui/src/styles/globals.css`. Each has a doc at `/components/[slug]`, ported from fibo's Storybook:
 `src/features/components/content/<slug>.mdx` is the body,
 `examples/<slug>.tsx` holds its live examples (named after the fibo stories
 they port), and `data/registry.tsx` wires the lead preview and links. The
