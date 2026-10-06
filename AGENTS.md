@@ -117,7 +117,10 @@ the golden-rectangle construction and the pixel rabbit it shows the component
 desk (`iso/component-desk.tsx`) beside the copy: the rabbit with working
 design system parts and a monitor that shows the code for the last one used.
 `iso/rabbit-run.tsx` is a Snake-style game on the golden tiling whose family
-grows by Fibonacci. Both draw from `iso/iso.ts`, isometric line art as SVG
+grows by Fibonacci; it has its own home section after Projects
+(`rabbit-run/index.tsx`, so the home Projects list leaves it out like fibo)
+and a project page, `work/rabbit-run.mdx`, whose hero is the game and whose
+card cover is the game playing itself (`demo`). Both draw from `iso/iso.ts`, isometric line art as SVG
 strings, and their keys only work while the scene has focus.
 
 The phone nav is fibo's Floating nav (`src/components/fibo/floating-nav.tsx`,
