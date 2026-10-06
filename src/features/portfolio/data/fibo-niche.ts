@@ -151,7 +151,7 @@ export const HOME_PARTS = [
   "calendar",
   "command-menu",
   "chat-composer",
-  "voice-memo",
+  "typing-indicator",
 ]
 
 const FIGMA_LIBRARY =
