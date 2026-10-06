@@ -33,7 +33,7 @@ export function ComponentPreview({ name }: { name: string }) {
       </TabsList>
       <TabsContent
         value="preview"
-        className="rounded-xl border border-line bg-cover-plate p-4 [--background:var(--exhibit-surface)] sm:p-6"
+        className="rounded-xl border border-line bg-cover-plate p-4 [--background:var(--exhibit-surface)] sm:p-6 [&_[data-slot=data-table]]:[--background:var(--cover-plate)]"
       >
         <entry.Preview />
       </TabsContent>
