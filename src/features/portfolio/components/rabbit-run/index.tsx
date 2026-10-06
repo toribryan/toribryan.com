@@ -10,24 +10,20 @@ import {
 } from "@/features/portfolio/components/panel"
 import { PanelTitleCopy } from "@/features/portfolio/components/panel-title-copy"
 
-import { FullscreenToggle } from "./fullscreen-toggle"
-
 const ID = "rabbit-run"
-const GAME_ID = "rabbit-run-game"
 
 /** The game, playable on the home page, with a way to its project page. */
 export function RabbitRunSection() {
   return (
     <Panel id={ID}>
-      <PanelHeader className="flex items-center justify-between gap-2">
+      <PanelHeader>
         <PanelTitle>
           <a href={`#${ID}`}>Rabbit run</a>
           <PanelTitleCopy id={ID} />
         </PanelTitle>
-        <FullscreenToggle target={GAME_ID} />
       </PanelHeader>
 
-      <RabbitRun id={GAME_ID} className="px-2 py-4" />
+      <RabbitRun className="px-2 py-4" />
 
       <div className="screen-line-top flex justify-center py-4">
         <Button
