@@ -55,17 +55,11 @@ export function CatalogList() {
   return (
     <div className="flex flex-col">
       {SHELVES.map((shelf) => {
-        // The shelf's own order where it has one, then A to Z, with
-        // deprecated parts last so new work starts elsewhere.
-        const rank = (name: string) => {
-          const index = shelf.order?.indexOf(name) ?? -1
-          return index < 0 ? Infinity : index
-        }
+        // A to Z, with deprecated parts last so new work starts elsewhere.
         const parts = CATALOG.filter((part) => part.shelf === shelf.id).sort(
           (a, b) =>
             Number(a.status === "deprecated") -
               Number(b.status === "deprecated") ||
-            rank(a.name) - rank(b.name) ||
             a.title.localeCompare(b.title)
         )
         return (
