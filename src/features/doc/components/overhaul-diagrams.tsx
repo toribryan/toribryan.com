@@ -6,7 +6,6 @@ import { useInView, useReducedMotion } from "motion/react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/fibo/badge"
 import { Button } from "@/components/fibo/button"
-import { TokenFlow, type TokenRow } from "@/components/fibo/token-flow"
 
 import { Plate } from "./fibo-blocks"
 
@@ -186,45 +185,6 @@ export function SwitchSprawl() {
           <p className="mt-1 text-sm text-muted-foreground">possible cards</p>
         </div>
       </div>
-    </Plate>
-  )
-}
-
-const TOKEN_ROWS: TokenRow[] = [
-  {
-    base: "#218358",
-    primitive: "green-700",
-    semantic: "action-primary",
-    dark: { base: "#3DD68C", primitive: "green-400" },
-  },
-  {
-    base: "#FFFFFF",
-    primitive: "neutral-0",
-    semantic: "surface-card",
-    dark: { base: "#171717", primitive: "neutral-900" },
-  },
-  {
-    base: "#B91C1C",
-    primitive: "red-700",
-    semantic: "status-danger",
-    dark: { base: "#F87171", primitive: "red-400" },
-  },
-]
-
-/**
- * The three tiers as fibo's TokenFlow. It follows the site's theme, so
- * switching it shows the values change while the semantic names hold still.
- */
-export function TokenRoles() {
-  return (
-    <Plate
-      caption="The old system had values and primitives, and no roles. Switch the site's theme: the values change, the roles stay."
-      className="p-0 sm:p-0"
-    >
-      <TokenFlow
-        rows={TOKEN_ROWS}
-        className="rounded-none border-0 bg-transparent py-6 [&>div:first-child]:hidden"
-      />
     </Plate>
   )
 }
