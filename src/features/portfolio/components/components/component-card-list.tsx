@@ -13,6 +13,7 @@ import { useAnimationsPaused } from "@/components/animations-pause"
 import {
   CATALOG,
   fiboStorybookUrl,
+  groupLabel,
   SHELVES,
   type CatalogPart,
 } from "@/features/portfolio/data/fibo-catalog"
@@ -98,14 +99,14 @@ export function CatalogList() {
 }
 
 type CardPart = Pick<CatalogPart, "name" | "title"> &
-  Partial<Pick<CatalogPart, "description" | "status">>
+  Partial<Pick<CatalogPart, "group" | "status">>
 
 function CardGrid({
   parts,
   details = false,
 }: {
   parts: CardPart[]
-  /** Shows each part's description and status under its title. */
+  /** Shows each part's status beside its title. */
   details?: boolean
 }) {
   // Blank cells finish the last row, so the grid's line color doesn't show
@@ -233,9 +234,9 @@ function ComponentCard({
             />
           ) : null}
         </h3>
-        {details && part.description ? (
-          <p className="line-clamp-3 text-sm text-muted-foreground max-sm:line-clamp-2">
-            {part.description}
+        {part.group ? (
+          <p className="text-sm text-muted-foreground">
+            {groupLabel(part.group)}
           </p>
         ) : null}
       </div>
