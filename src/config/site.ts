@@ -35,6 +35,7 @@ export const META_THEME_COLORS = {
 export const MENU: NavItem<Route>[] = [
   { title: "Home", href: "/" },
   { title: "Projects", href: "/projects" },
+  { title: "Gallery", href: "/gallery" },
   { title: "Blog", href: "/latest" },
   { title: "Components", href: "/components" },
   { title: "fibo lore", href: "/fibo" },
