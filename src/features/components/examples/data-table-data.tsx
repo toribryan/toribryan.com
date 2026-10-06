@@ -1,10 +1,12 @@
 "use client"
 
 import * as React from "react"
+import { useSelector } from "@tanstack/react-store"
 import { EllipsisIcon, PencilIcon, PlusIcon, Trash2Icon } from "lucide-react"
 
 import { Badge } from "@/components/fibo/badge"
 import { Button } from "@/components/fibo/button"
+import { Count } from "@/components/fibo/count"
 import {
   createDataTableColumnHelper,
   DataTable,
@@ -14,15 +16,17 @@ import {
   DataTableCards,
   DataTableColumns,
   DataTableContent,
-  DataTableFacetFilter,
   DataTableFilters,
   DataTableFooter,
   DataTablePagination,
   DataTableSearch,
   DataTableToolbar,
   useDataTable,
+  useDataTableContext,
+  useDataTableFacets,
   type DataTableOptions,
 } from "@/components/fibo/data-table"
+import { FilterMenu, type FilterValue } from "@/components/fibo/filter-menu"
 import {
   Menu,
   MenuContent,
@@ -271,6 +275,68 @@ export function MembersTable({
   )
 }
 
+const FILTERS = [
+  { id: "status", label: "Status" },
+  { id: "team", label: "Team" },
+  { id: "role", label: "Role" },
+] as const
+
+/**
+ * One Filter menu for the toolbar, in place of a button per column. Each
+ * value shows how many rows hold it under the other filters, so a choice
+ * never leads to an empty table.
+ */
+function MembersFilterMenu() {
+  const table = useDataTableContext()
+  const facets = {
+    status: useDataTableFacets("status"),
+    team: useDataTableFacets("team"),
+    role: useDataTableFacets("role"),
+  }
+  const filters = useSelector(table.atoms.columnFilters, (list) => list)
+  const value: FilterValue = Object.fromEntries(
+    FILTERS.map(({ id }) => {
+      const picked = filters.find((filter) => filter.id === id)?.value
+      return [id, Array.isArray(picked) ? picked.map(String) : []]
+    })
+  )
+  const picked = Object.values(value).flat().length
+  return (
+    <FilterMenu
+      fields={FILTERS.map(({ id, label }) => ({
+        id,
+        label,
+        options: facets[id].map(({ value, count }) => ({
+          value: String(value),
+          label: String(value),
+          count,
+        })),
+      }))}
+      value={value}
+      onValueChange={(next) =>
+        FILTERS.forEach(({ id }) =>
+          table
+            .getColumn(id)
+            ?.setFilterValue(next[id]?.length ? next[id] : undefined)
+        )
+      }
+      triggerLabel={
+        <>
+          Filter
+          {picked ? (
+            <Count
+              value={picked}
+              label={(n) => `, ${n} selected`}
+              className="rounded-sm bg-muted px-1 text-xs"
+            />
+          ) : null}
+        </>
+      }
+      className={picked ? "border-ring" : undefined}
+    />
+  )
+}
+
 export function MembersToolbar({
   children,
 }: {
@@ -287,8 +353,7 @@ export function MembersToolbar({
           />
         }
       >
-        <DataTableFacetFilter column="status" />
-        <DataTableFacetFilter column="team" />
+        <MembersFilterMenu />
       </DataTableFilters>
       <DataTableActions>
         <DataTableColumns />

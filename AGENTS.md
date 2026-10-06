@@ -50,7 +50,7 @@ which Integration visual and Token flow import as
 picker) are fibo's helpers the same way. Rich text editor runs on Tiptap
 (`@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extensions` and the
 `@tiptap/pm` peer, at fibo's versions), fibo's one other named dependency
-besides Data table's TanStack. Three parts carry local changes. `chapter-scrubber.tsx` keeps `preview="none"`,
+besides Data table's TanStack. Four parts carry local changes. `chapter-scrubber.tsx` keeps `preview="none"`,
 which fibo dropped, for a rail with no preview at all; the home page cover
 and its doc use it. `command-menu.tsx` shows its preview pane by the dialog's own width
 (`@xl/command-menu`) rather than the viewport's, and widens for it at any
@@ -67,14 +67,18 @@ its own. The Voice memo project page (`/work/voice-memo`) and its bare
 `/voice-memo` page use all three for the 3D device, in
 `features/doc/components/voice-memo-hero.tsx` (the device itself, which the
 card cover also draws, is in `voice-memo-device.tsx`). It isn't in
-`fibo-niche.ts`, so it has no `/components` doc yet. Put
-these back after reinstalling. `filter-menu.tsx` matches fibo again: its
+`fibo-niche.ts`, so it has no `/components` doc yet. `filter-menu.tsx`
+gives each option an optional `count`, drawn at the end of its row; the
+Data table doc's toolbar (`MembersFilterMenu` in
+`examples/data-table-data.tsx`) uses it with `useDataTableFacets`, one
+Filter menu over Status, Team and Role in place of fibo's per-column
+`DataTableFacetFilter`. Put these back after reinstalling. Filter menu's
 `container` prop and scrolling the list rather than the page, which the
-home page cover needs, are both in fibo now. So does `token-flow.tsx`,
-whose `orientation` prop the Design System Overhaul card cover stacks its
-tiers with, and the scrubber's screen fitting and the command menu's `modal`
-prop, which the home page cover and the command menu doc use, are in fibo
-too. `src/features/portfolio/data/fibo-niche.ts`
+home page cover needs, are in fibo now. `token-flow.tsx` matches fibo
+again: its `orientation` prop, which the Design System Overhaul card cover
+stacks its tiers with, is in fibo, as are the scrubber's screen fitting and
+the command menu's `modal` prop, which the home page cover and the command
+menu doc use. `src/features/portfolio/data/fibo-niche.ts`
 lists the parts with a page here, which drives the docs; its `HOME_PARTS`
 picks the home page's cards, in order, by fibo name. Voice memo's card on
 `/components` opens `/work/voice-memo` and draws the project card's device.

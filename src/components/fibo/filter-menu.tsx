@@ -34,6 +34,8 @@ type FilterOption = {
   value: string
   label: string
   icon?: React.ReactNode
+  /** How many items hold this value, shown at the end of its row. */
+  count?: number
 }
 
 type FilterField = {
@@ -810,6 +812,12 @@ function FilterMenuRow({
           <Highlight text={row.option.label} query={query} />
         )}
       </span>
+      {row.kind === "option" && row.option.count !== undefined ? (
+        <Count
+          value={row.option.count}
+          className="text-xs text-muted-foreground"
+        />
+      ) : null}
       {row.kind === "field" ? (
         <>
           {chosen.length ? (
