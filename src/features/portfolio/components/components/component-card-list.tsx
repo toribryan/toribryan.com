@@ -17,7 +17,7 @@ import {
   SHELVES,
   type CatalogPart,
 } from "@/features/portfolio/data/fibo-catalog"
-import { NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
+import { HOME_PARTS, NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
 
 import { PREVIEWS } from "./catalog-previews"
 import { COVERS, ScaledStage } from "./covers"
@@ -32,20 +32,23 @@ const STAGE = 288
 const PLAYS_ON_HOVER = new Set(["reactions"])
 
 /**
- * fibo's parts as cover cards, two across on phones and three from md up,
- * with the live part standing in for the cover image.
+ * The fibo parts the home page features as cover cards, two across on phones
+ * and three from md up, with the live part standing in for the cover image.
  */
-export function ComponentCardList({
-  home = false,
-}: {
-  /** Only the parts the home page features, rather than every part. */
-  home?: boolean
-}) {
-  const parts = NICHE_PARTS.filter((part) => !home || part.home !== false)
+export function ComponentCardList() {
+  const parts = HOME_PARTS.flatMap((name) =>
+    CATALOG.filter((part) => part.name === name)
+  )
   return <CardGrid parts={parts} />
 }
 
-const HAS_PAGE = new Set(NICHE_PARTS.map((part) => part.name))
+// A part's page on this site: its doc, or the project it was made for.
+const PAGES = new Map<string, Route>([
+  ...NICHE_PARTS.map(
+    (part) => [part.name, `/components/${part.name}` as Route] as const
+  ),
+  ["voice-memo", "/work/voice-memo" as Route],
+])
 
 /**
  * Every fibo part, by fibo's two shelves. Parts with a page here open it;
@@ -159,11 +162,12 @@ function ComponentCard({
     (onHover ? hovered || focused : !paused && inView)
   const Cover = COVERS[part.name]
   const preview = Cover ? null : PREVIEWS[part.name]
-  const onSite = HAS_PAGE.has(part.name)
+  const page = PAGES.get(part.name)
 
   return (
     <div
       ref={card}
+      data-cover-host
       className="relative flex h-full flex-col gap-2 p-2 transition-[background-color] ease-out hover:bg-accent-muted"
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
@@ -187,9 +191,9 @@ function ComponentCard({
 
       <div className="flex flex-col gap-1 p-1 sm:p-2">
         <h3 className="flex items-center gap-2 text-base leading-snug font-medium text-balance sm:text-lg">
-          {onSite ? (
+          {page ? (
             <Link
-              href={`/components/${part.name}` as Route}
+              href={page}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
             >
@@ -221,7 +225,7 @@ function ComponentCard({
               {part.status}
             </span>
           ) : null}
-          {!onSite ? (
+          {!page ? (
             <ArrowUpRightIcon
               aria-hidden
               className="ml-auto size-4 shrink-0 text-muted-foreground"
