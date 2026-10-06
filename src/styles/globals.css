@@ -1109,3 +1109,164 @@
   --backdrop: color-mix(in oklch, var(--color-black) 60%, transparent);
   --glass-edge: color-mix(in oklch, var(--color-white) 15%, transparent);
 }
+
+/* ---------------------------------------------------------------------------
+   fibo's own neutral palette, for the component covers, so a part draws in
+   the grays it ships with rather than this site's warm stone. The mixed
+   roles are declared again here, since a mix resolves where it's declared.
+   --------------------------------------------------------------------------- */
+.fibo-palette {
+  --background: var(--color-white);
+  --foreground: var(--color-neutral-950);
+  --card: var(--color-white);
+  --card-foreground: var(--color-neutral-950);
+  --popover: var(--color-white);
+  --popover-foreground: var(--color-neutral-950);
+  --popover-overlay: color-mix(in oklch, var(--color-white) 85%, transparent);
+  --backdrop: color-mix(in oklch, var(--color-neutral-950) 20%, transparent);
+  --glass: color-mix(in oklch, var(--color-neutral-50) 20%, transparent);
+  --glass-edge: color-mix(in oklch, var(--color-white) 85%, transparent);
+  --glass-lens: color-mix(in oklch, var(--color-neutral-900) 10%, transparent);
+
+  --primary: var(--color-neutral-900);
+  --primary-foreground: var(--color-neutral-50);
+  --primary-hover: color-mix(
+    in oklch,
+    var(--color-neutral-900) 80%,
+    transparent
+  );
+  --primary-subtle: color-mix(
+    in oklch,
+    var(--color-neutral-900) 10%,
+    transparent
+  );
+  --secondary: var(--color-neutral-100);
+  --secondary-foreground: var(--color-neutral-900);
+  --secondary-hover: var(--color-neutral-200);
+  --muted: var(--color-neutral-100);
+  --muted-foreground: var(--color-neutral-500);
+  --accent: var(--color-neutral-100);
+  --accent-foreground: var(--color-neutral-900);
+
+  --destructive: var(--color-red-700);
+  --destructive-foreground: var(--color-neutral-50);
+  --destructive-subtle: color-mix(
+    in oklch,
+    var(--color-red-700) 8%,
+    transparent
+  );
+  --destructive-subtle-hover: color-mix(
+    in oklch,
+    var(--color-red-700) 16%,
+    transparent
+  );
+  --destructive-ring: color-mix(
+    in oklch,
+    var(--color-red-700) 20%,
+    transparent
+  );
+  --success: var(--color-green-700);
+  --success-foreground: var(--color-neutral-50);
+  --success-subtle: color-mix(in oklch, var(--color-green-700) 6%, transparent);
+  --warning: var(--color-amber-700);
+  --warning-foreground: var(--color-neutral-50);
+  --warning-subtle: color-mix(in oklch, var(--color-amber-700) 6%, transparent);
+  --info: var(--color-blue-700);
+  --info-foreground: var(--color-neutral-50);
+  --info-subtle: color-mix(in oklch, var(--color-blue-700) 6%, transparent);
+
+  --border: var(--color-neutral-200);
+  --input: var(--color-neutral-200);
+  --input-subtle: color-mix(
+    in oklch,
+    var(--color-neutral-200) 20%,
+    transparent
+  );
+  --input-subtle-hover: color-mix(
+    in oklch,
+    var(--color-neutral-200) 50%,
+    transparent
+  );
+  --ring: var(--color-neutral-400);
+  --ring-subtle: color-mix(in oklch, var(--color-neutral-400) 50%, transparent);
+}
+
+.dark .fibo-palette {
+  --background: var(--color-neutral-950);
+  --foreground: var(--color-neutral-50);
+  --card: var(--color-neutral-900);
+  --card-foreground: var(--color-neutral-50);
+  --popover: var(--color-neutral-900);
+  --popover-foreground: var(--color-neutral-50);
+  --popover-overlay: color-mix(
+    in oklch,
+    var(--color-neutral-900) 85%,
+    transparent
+  );
+  --backdrop: color-mix(in oklch, var(--color-black) 60%, transparent);
+  --glass: color-mix(in oklch, var(--color-neutral-950) 20%, transparent);
+  --glass-edge: color-mix(in oklch, var(--color-white) 15%, transparent);
+  --glass-lens: color-mix(in oklch, var(--color-white) 10%, transparent);
+
+  --primary: var(--color-neutral-50);
+  --primary-foreground: var(--color-neutral-900);
+  --primary-hover: color-mix(
+    in oklch,
+    var(--color-neutral-50) 80%,
+    transparent
+  );
+  --primary-subtle: color-mix(
+    in oklch,
+    var(--color-neutral-50) 20%,
+    transparent
+  );
+  --secondary: var(--color-neutral-800);
+  --secondary-foreground: var(--color-neutral-50);
+  --secondary-hover: var(--color-neutral-700);
+  --muted: var(--color-neutral-800);
+  --muted-foreground: var(--color-neutral-400);
+  --accent: var(--color-neutral-800);
+  --accent-foreground: var(--color-neutral-50);
+
+  --destructive: var(--color-red-400);
+  --destructive-foreground: var(--color-neutral-950);
+  --destructive-subtle: color-mix(
+    in oklch,
+    var(--color-red-400) 20%,
+    transparent
+  );
+  --destructive-subtle-hover: color-mix(
+    in oklch,
+    var(--color-red-400) 30%,
+    transparent
+  );
+  --destructive-ring: color-mix(
+    in oklch,
+    var(--color-red-400) 40%,
+    transparent
+  );
+  --success: var(--color-green-400);
+  --success-foreground: var(--color-neutral-950);
+  --success-subtle: color-mix(
+    in oklch,
+    var(--color-green-400) 20%,
+    transparent
+  );
+  --warning: var(--color-amber-400);
+  --warning-foreground: var(--color-neutral-950);
+  --warning-subtle: color-mix(
+    in oklch,
+    var(--color-amber-400) 20%,
+    transparent
+  );
+  --info: var(--color-blue-400);
+  --info-foreground: var(--color-neutral-950);
+  --info-subtle: color-mix(in oklch, var(--color-blue-400) 20%, transparent);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --input-subtle: oklch(1 0 0 / 5%);
+  --input-subtle-hover: oklch(1 0 0 / 10%);
+  --ring: var(--color-neutral-500);
+  --ring-subtle: color-mix(in oklch, var(--color-neutral-500) 50%, transparent);
+}

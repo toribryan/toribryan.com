@@ -173,7 +173,7 @@ function ComponentCard({
       onPointerLeave={() => setHovered(false)}
     >
       <div
-        className="relative aspect-4/3 overflow-hidden rounded-xl bg-cover-plate select-none"
+        className="fibo-palette relative aspect-4/3 overflow-hidden rounded-xl bg-cover-plate select-none"
         aria-hidden
         inert
       >
