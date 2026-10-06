@@ -48,23 +48,10 @@ export const SHELVES: {
   id: CatalogShelf
   title: string
   description: string
-  /** Part names in the order the shelf shows them; the rest follow A to Z. */
-  order?: string[]
 }[] = [
   {
     id: "special-components",
     title: "Special components",
-    order: [
-      "voice-memo",
-      "command-menu",
-      "filter-menu",
-      "floating-nav",
-      "integration-visual",
-      "reactions",
-      "sticker-avatar",
-      "token-flow",
-      "chapter-scrubber",
-    ],
     description:
       "Playful parts built for one kind of moment, such as a diagram, a reading rail or a reaction. Some use the motion library, which installs along with them.",
   },
