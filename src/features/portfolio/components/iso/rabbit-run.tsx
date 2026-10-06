@@ -309,7 +309,14 @@ const KEYS: Record<string, DirName> = {
 type Cell = { i: number; j: number; f: Point }
 type Status = "ready" | "running" | "paused" | "over" | "won"
 
-export function RabbitRun({ className }: { className?: string }) {
+export function RabbitRun({
+  demo = false,
+  className,
+}: {
+  /** Plays itself while in view and takes no input, for a card cover. */
+  demo?: boolean
+  className?: string
+}) {
   const svgRef = useRef<SVGSVGElement>(null)
 
   useEffect(() => {
@@ -475,6 +482,7 @@ export function RabbitRun({ className }: { className?: string }) {
     }
 
     const record = () => {
+      if (demo) return
       const pairs = fib(state.month)
       if (pairs <= best) return
       best = pairs
@@ -501,8 +509,42 @@ export function RabbitRun({ className }: { className?: string }) {
         )
     }
 
+    // The demo's player: the shortest way to the carrot around the family,
+    // or any safe hop when there is none.
+    const autoSteer = () => {
+      const head = state.family[0]
+      const body = new Set(
+        state.family.slice(0, -1).map((c) => `${c.i},${c.j}`)
+      )
+      const free = (i: number, j: number) =>
+        i >= 0 && j >= 0 && i < COLS && j < ROWS && !body.has(`${i},${j}`)
+      const from = new Map<string, DirName | null>([
+        [`${head.i},${head.j}`, null],
+      ])
+      const queue: [number, number, DirName | null][] = [[head.i, head.j, null]]
+      while (queue.length) {
+        const [i, j, first] = queue.shift()!
+        if (i === state.carrot.i && j === state.carrot.j) {
+          if (first) state.dir = first
+          return
+        }
+        for (const name of Object.keys(DIRS) as DirName[]) {
+          const [a, b] = DIRS[name]
+          const key = `${i + a},${j + b}`
+          if (!free(i + a, j + b) || from.has(key)) continue
+          from.set(key, first ?? name)
+          queue.push([i + a, j + b, first ?? name])
+        }
+      }
+      const safe = (Object.keys(DIRS) as DirName[]).find((name) =>
+        free(head.i + DIRS[name][0], head.j + DIRS[name][1])
+      )
+      if (safe) state.dir = safe
+    }
+
     const step = () => {
       if (state.status !== "running") return
+      if (demo) autoSteer()
       const next_ = state.queue.shift()
       if (next_) state.dir = next_
       const f = DIRS[state.dir]
@@ -605,13 +647,35 @@ export function RabbitRun({ className }: { className?: string }) {
     }
     const onPointerDown = () => svg.focus({ preventScroll: true })
 
+    reset()
+    render()
+
+    if (demo) {
+      // Runs while on screen, starting over a moment after each run ends.
+      let restart = 0
+      const watch = new MutationObserver(() => {
+        if (state.status !== "over" && state.status !== "won") return
+        window.clearTimeout(restart)
+        restart = window.setTimeout(begin, 1400)
+      })
+      watch.observe(screen, { childList: true })
+      const seen = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && !reduced()) begin()
+        else pause()
+      })
+      seen.observe(svg)
+      return () => {
+        window.clearTimeout(timer)
+        window.clearTimeout(restart)
+        watch.disconnect()
+        seen.disconnect()
+      }
+    }
+
     svg.addEventListener("click", onClick)
     svg.addEventListener("keydown", onKey)
     svg.addEventListener("pointerdown", onPointerDown)
     svg.addEventListener("blur", pause)
-
-    reset()
-    render()
 
     return () => {
       window.clearTimeout(timer)
@@ -620,15 +684,15 @@ export function RabbitRun({ className }: { className?: string }) {
       svg.removeEventListener("pointerdown", onPointerDown)
       svg.removeEventListener("blur", pause)
     }
-  }, [])
+  }, [demo])
 
   return (
     <figure className={cn("m-0", className)}>
       <svg
         ref={svgRef}
         viewBox={VIEWBOX}
-        tabIndex={0}
-        role="application"
+        tabIndex={demo ? -1 : 0}
+        role={demo ? "img" : "application"}
         aria-label="Rabbit run. Steer the lead rabbit to carrots with the arrow keys or the pad; each carrot is a month and the family behind it grows by the Fibonacci sequence. Hitting the edge or the family ends the run. Space starts and pauses; 1, 2 and 3 set easy, medium and hard speed."
         className="block h-auto w-full touch-manipulation outline-none select-none focus-visible:[&_[data-act=start]_rect]:stroke-foreground"
       />

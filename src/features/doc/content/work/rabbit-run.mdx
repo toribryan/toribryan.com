@@ -1,0 +1,30 @@
+---
+title: "Rabbit run"
+description: "A Snake-style game in isometric line art: steer a rabbit to carrots while its family grows by the Fibonacci sequence and the ratio closes in on φ."
+claim: "Fibonacci's rabbit puzzle as a game you can play."
+hideLead: true
+new: true
+createdAt: "2026-10-05"
+updatedAt: "2026-10-05"
+role: "Designer and engineer"
+type: "Game"
+period: "Q4 2026"
+skills:
+  - "Interaction Design"
+  - "SVG"
+  - "React"
+---
+
+Steer the lead rabbit to the carrots. Each carrot is a month, and the family behind it grows the way Fibonacci's rabbits do: 1, 1, 2, 3, 5, 8. Run into the edge or the family and the run is over. Reach 34 pairs and you win.
+
+The board is 13 by 8 cells, the golden tiling of the squares 1, 1, 2, 3, 5 and 8, with its spiral etched underneath. The screen behind it divides each month's pairs by the month before, and the ratio closes in on φ as you play. The floor lights up under the family and fades once the tail has passed.
+
+## How it's drawn
+
+Everything is plain SVG, with no 3D engine. Each face is a flat shape placed on its plane by one matrix, so rounded corners, text and the rabbit's face land in perspective without any extra math. The same drawing code renders the component desk in the fibo section of my home page.
+
+## Controls
+
+- Arrow keys or WASD steer, and so does the pad on the board.
+- Space starts and pauses.
+- 1, 2 and 3 set easy, medium and hard speed. Each speed keeps its own best.
