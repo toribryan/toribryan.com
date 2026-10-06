@@ -15,6 +15,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     // - https://base-ui.com/react/overview/quick-start#portals
     // - https://base-ui.com/react/overview/quick-start#ios-26-safari
     <div className="group/layout relative isolate">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 dither-field"
+        aria-hidden
+      />
       <HomeBanner />
       <SiteHeader />
       <main className="max-w-screen overflow-x-clip px-2">{children}</main>

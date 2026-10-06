@@ -281,6 +281,35 @@
   }
 }
 
+/*
+ * The site's cloud dither, behind every page in the app layout: a 1-bit tile
+ * of dots used as a mask, so the dots take the theme's ink. It fades to a
+ * third under the 3xl content column so text over it stays crisp; a narrow
+ * screen is all column. The column's border lines get a clear strip on both
+ * sides, so no dots sit against them.
+ */
+@utility dither-field {
+  background-color: color-mix(in oklab, var(--foreground) 15%, transparent);
+  mask-image:
+    url("/images/dither.png"),
+    linear-gradient(
+      to right,
+      #000 calc(50% - 27rem),
+      transparent calc(50% - 24.5rem),
+      transparent calc(50% - 23.5rem),
+      rgb(0 0 0 / 0.35) calc(50% - 22rem),
+      rgb(0 0 0 / 0.35) calc(50% + 22rem),
+      transparent calc(50% + 23.5rem),
+      transparent calc(50% + 24.5rem),
+      #000 calc(50% + 27rem)
+    );
+  mask-size:
+    960px 960px,
+    100% 100%;
+  mask-repeat: repeat, no-repeat;
+  mask-composite: intersect;
+}
+
 @utility screen-line-top-none {
   @apply before:content-none;
 }
