@@ -1,5 +1,6 @@
 import type { ComponentType } from "react"
 
+import { IphoneDuoProjectHero } from "./iphone-duo-hero"
 import { RabbitRunProjectHero } from "./rabbit-run-cover"
 import { VoiceMemoProjectHero } from "./voice-memo-hero"
 
@@ -9,6 +10,7 @@ import { VoiceMemoProjectHero } from "./voice-memo-hero"
  * about it. The live cover still shows on the doc's card.
  */
 export const DOC_HEROES: Record<string, ComponentType> = {
+  "iphone-duo": IphoneDuoProjectHero,
   "rabbit-run": RabbitRunProjectHero,
   "voice-memo": VoiceMemoProjectHero,
 }
