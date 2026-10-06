@@ -281,10 +281,10 @@ export function StaticTv({ className }: { className?: string }) {
       if (roll) roll.playbackRate = 1 + level * 6
       picture.setAttribute(
         "transform",
-        level ? `translate(${rand(20 * level)} ${rand(6 * level)})` : ""
+        level ? `translate(${rand(6 * level)} ${rand(1.5 * level)})` : ""
       )
       let bands = ""
-      for (let k = 0; k < Math.round(level * 6); k++)
+      for (let k = 0; k < Math.round(level * 4); k++)
         bands += `<rect class="${k % 2 ? "fill-foreground" : "fill-background"}" opacity="${0.4 + Math.random() * 0.5}" x="${rand(30)}" y="${Math.random() * GLASS.h}" width="${GLASS.w + 30}" height="${2 + Math.random() * 7}"/>`
       tear.innerHTML = bands
     }
