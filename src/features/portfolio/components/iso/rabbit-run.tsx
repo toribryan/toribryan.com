@@ -324,10 +324,13 @@ type Status = "ready" | "running" | "paused" | "over" | "won"
 
 export function RabbitRun({
   demo = false,
+  id,
   className,
 }: {
   /** Plays itself while in view and takes no input, for a card cover. */
   demo?: boolean
+  /** Names the game for controls outside it, like a full screen button. */
+  id?: string
   className?: string
 }) {
   const svgRef = useRef<SVGSVGElement>(null)
@@ -741,14 +744,22 @@ export function RabbitRun({
   }, [demo])
 
   return (
-    <figure className={cn("m-0", className)}>
+    <figure
+      id={id}
+      className={cn(
+        "m-0",
+        "[&:fullscreen]:flex [&:fullscreen]:items-center [&:fullscreen]:justify-center [&:fullscreen]:bg-background [&:fullscreen]:p-6",
+        "data-full:fixed data-full:inset-0 data-full:z-50 data-full:flex data-full:items-center data-full:justify-center data-full:bg-background data-full:p-4",
+        className
+      )}
+    >
       <svg
         ref={svgRef}
         viewBox={VIEWBOX}
         tabIndex={demo ? -1 : 0}
         role={demo ? "img" : "application"}
         aria-label="Rabbit run. Steer the lead rabbit to carrots with the arrow keys or the pad; each carrot is a month and the family behind it grows by the Fibonacci sequence. Hitting the edge or the family ends the run. Space starts and pauses; 1, 2 and 3 set easy, medium and hard speed; M turns sound on and off."
-        className="block h-auto w-full touch-manipulation outline-none select-none focus-visible:[&_[data-act=start]_rect]:stroke-foreground"
+        className="block h-auto w-full touch-manipulation outline-none select-none in-data-full:h-full in-data-full:w-auto in-data-full:max-w-full focus-visible:[&_[data-act=start]_rect]:stroke-foreground [:fullscreen>&]:h-full [:fullscreen>&]:w-auto [:fullscreen>&]:max-w-full"
       />
     </figure>
   )
