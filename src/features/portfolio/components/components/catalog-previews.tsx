@@ -174,11 +174,39 @@ export const PREVIEWS: Record<string, ReactNode> = {
     </div>
   ),
   sheet: (
-    <div className="relative h-28 w-44 overflow-hidden rounded-md border border-border bg-muted">
-      <div className="absolute inset-y-0 right-0 flex w-24 flex-col gap-1.5 border-l border-border bg-background p-2">
-        <span className="h-2 w-12 rounded-full bg-foreground" />
+    <div className="relative h-44 w-64 overflow-hidden rounded-lg border border-border bg-background shadow-sm">
+      <div className="flex flex-col gap-2 p-3">
         <span className="h-2 w-16 rounded-full bg-border" />
-        <span className="mt-auto h-5 rounded-sm bg-primary" />
+        {[0, 1, 2].map((row) => (
+          <span key={row} className="flex items-center gap-2">
+            <span className="size-5 rounded-full bg-muted" />
+            <span className="h-1.5 w-20 rounded-full bg-muted" />
+          </span>
+        ))}
+      </div>
+      <div className="absolute inset-0 bg-backdrop" />
+      <div className="absolute inset-y-0 right-0 flex w-36 flex-col gap-2.5 border-l border-border bg-background p-3 shadow-lg">
+        <span className="flex items-start justify-between">
+          <span className="flex flex-col gap-0.5">
+            <span className="text-xs font-medium">Edit profile</span>
+            <span className="text-[9px] text-muted-foreground">
+              Saved when you&apos;re done.
+            </span>
+          </span>
+          <XIcon className="size-3 text-muted-foreground" />
+        </span>
+        {["Name", "Email"].map((label) => (
+          <span key={label} className="flex flex-col gap-1">
+            <span className="text-[9px] font-medium">{label}</span>
+            <span className="h-5 rounded-sm border border-input bg-input-subtle" />
+          </span>
+        ))}
+        <span className="mt-auto flex justify-end gap-1.5">
+          <Button size="xs" variant="outline">
+            Cancel
+          </Button>
+          <Button size="xs">Save</Button>
+        </span>
       </div>
     </div>
   ),
