@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { MaximizeIcon, MinimizeIcon } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
 
 /*
@@ -11,7 +12,13 @@ import { Button } from "@/components/base/ui/button"
  * an element full screen (iPhone Safari), the element fills the window
  * instead, through its `data-full` styles, and Esc brings it back.
  */
-export function FullscreenToggle({ target }: { target: string }) {
+export function FullscreenToggle({
+  target,
+  className,
+}: {
+  target: string
+  className?: string
+}) {
   const [full, setFull] = useState(false)
 
   useEffect(() => {
@@ -56,14 +63,14 @@ export function FullscreenToggle({ target }: { target: string }) {
 
   return (
     <Button
-      size="icon-sm"
-      variant="ghost"
-      className="text-muted-foreground"
-      aria-label={full ? "Exit full screen" : "Play full screen"}
+      size="sm"
+      variant="outline"
+      className={cn("gap-2 pr-3 pl-2.5", className)}
       aria-pressed={full}
       onClick={toggle}
     >
       {full ? <MinimizeIcon /> : <MaximizeIcon />}
+      {full ? "Exit full screen" : "Full screen"}
     </Button>
   )
 }
