@@ -28,12 +28,12 @@ const EVENTS: CalendarEvent[] = [
 ]
 
 /*
- * The renderer's two screen textures are 1536 by 1080 for the inner display
- * and 768 by 1117 for the cover. The inner one is laid out 1100 CSS pixels
+ * The renderer's two screen textures are 3072 by 2160 for the inner display
+ * and 1536 by 2234 for the cover. The inner one is laid out 1100 CSS pixels
  * wide, past the month view's widest breakpoint, so its events show as cards
  * with the agenda beside them; the cover at a phone's width.
  */
-const TEXTURE = { inner: 1536, cover: 768 }
+const TEXTURE = { inner: 3072, cover: 1536 }
 const INNER = { width: 1100, height: (1100 * 1080) / 1536 }
 const COVER = { width: 384, height: (384 * 1117) / 768 }
 
