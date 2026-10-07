@@ -19,7 +19,6 @@ export const USER: User = {
   jobTitle: "Design Engineer",
   /** Shown under the name in the hero; broader than the job title. */
   discipline: "Product Designer",
-  availability: "Open to work",
   jobs: [
     {
       title: "Staff Product Designer",
