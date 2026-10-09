@@ -9,7 +9,7 @@ import { useAnimationsPaused } from "@/components/animations-pause"
 type Themed = { light: string; dark: string }
 
 /** A pair of images, one shown in each of the site's themes. */
-function ThemedImage({
+export function ThemedImage({
   src,
   className,
   width,
