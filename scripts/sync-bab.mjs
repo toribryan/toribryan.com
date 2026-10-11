@@ -6,10 +6,6 @@
  *   public/prototype/bab/    the Integrity Console clickthrough (static, no build)
  *   public/storybook/bab/    the design system's Storybook (built here)
  *
- * Why copy rather than deploy separately: `src/middleware.ts` gates everything
- * under `public/` behind SITE_PASSWORD. Serving these from the portfolio puts
- * them behind that same gate; a standalone Vercel project would not be.
- *
  * Usage:
  *   node scripts/sync-bab.mjs [--repo <path>] [--skip-build]
  *

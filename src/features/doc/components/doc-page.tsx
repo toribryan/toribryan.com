@@ -271,7 +271,7 @@ export async function DocPage({
               height={630}
               quality={100}
               priority
-              // The optimizer can't reach gated images — see doc-card.tsx.
+              // Covers are sized at export time — see doc-card.tsx.
               unoptimized
             />
             {m.imageCredit && (
