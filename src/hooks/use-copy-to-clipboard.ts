@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useTiks } from "@rexa-developer/tiks/react"
 import { useWebHaptics } from "web-haptics/react"
 
@@ -19,6 +19,8 @@ export function useCopyToClipboard({
 }: UseCopyToClipboardOptions = {}) {
   const [state, setState] = useState<CopyState>("idle")
   const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => () => clearTimeout(resetTimeoutRef.current ?? undefined), [])
 
   const { trigger: haptic } = useWebHaptics()
   const { success: tiksSuccess, error: tiksError } = useTiks()
