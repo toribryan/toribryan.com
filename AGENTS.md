@@ -207,6 +207,13 @@ hiring managers. Where it disagrees with this file, this file wins: fibo's
 parts keep their own icons and tokens, the template attribution stays, and
 existing routes, nav labels and analytics events don't change without asking.
 
+## Commits
+
+Commit as Tori Bryan (`130193729+toribryan@users.noreply.github.com`): set
+`git config user.name` and `user.email` before the first commit. No
+`Co-Authored-By`, `Claude-Session` or "Generated with" lines in commits, squash
+merges or pull requests.
+
 ## Known gaps
 
 - No `/work` index route — cards link straight to `/work/[slug]`.
