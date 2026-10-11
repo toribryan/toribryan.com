@@ -710,15 +710,20 @@ export function RabbitRun({
     if (demo) {
       // Runs while on screen, starting over a moment after each run ends.
       let restart = 0
+      let visible = false
       const watch = new MutationObserver(() => {
         if (state.status !== "over" && state.status !== "won") return
         window.clearTimeout(restart)
-        restart = window.setTimeout(begin, 1400)
+        restart = window.setTimeout(() => visible && begin(), 1400)
       })
       watch.observe(screen, { childList: true })
       const seen = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting && !reduced()) begin()
-        else pause()
+        visible = entry.isIntersecting
+        if (visible && !reduced()) begin()
+        else {
+          window.clearTimeout(restart)
+          pause()
+        }
       })
       seen.observe(svg)
       return () => {

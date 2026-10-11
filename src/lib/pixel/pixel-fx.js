@@ -558,7 +558,8 @@ export function ditherField(canvas, field, opts = {}) {
   canvas.addEventListener("pointercancel", onCancel);
   canvas.addEventListener("pointerleave", onLeave);
   document.addEventListener("pointerdown", onOutside);
-  photo?.addEventListener?.("load", () => { dirty = true; });
+  const onPhotoLoad = () => { dirty = true; };
+  photo?.addEventListener?.("load", onPhotoLoad);
 
   const ro = typeof ResizeObserver === "function"
     ? new ResizeObserver(() => { layout(); dirty = true; schedule(); })
@@ -619,5 +620,6 @@ export function ditherField(canvas, field, opts = {}) {
     canvas.removeEventListener("pointercancel", onCancel);
     canvas.removeEventListener("pointerleave", onLeave);
     document.removeEventListener("pointerdown", onOutside);
+    photo?.removeEventListener?.("load", onPhotoLoad);
   };
 }

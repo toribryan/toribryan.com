@@ -4,7 +4,7 @@ import { get } from "@vercel/blob"
  * The iPhone Duo mockup's model and still fallbacks. They're a paid Framer
  * Marketplace component's assets, kept in the site's private Blob store
  * rather than in public/, and streamed from here to the page that draws
- * them, behind the same password gate as the rest of the site.
+ * them.
  */
 const FILES: Record<string, string> = {
   "iphone-duo.glb": "model/gltf-binary",
