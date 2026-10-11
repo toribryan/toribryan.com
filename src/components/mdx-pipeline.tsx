@@ -80,7 +80,9 @@ export function Stage({
     <>
       <IconTile className="size-10">{mark ? STAGE_MARKS[mark] : null}</IconTile>
 
-      <div className="leading-snug font-medium text-surface-foreground">{label}</div>
+      <div className="leading-snug font-medium text-surface-foreground">
+        {label}
+      </div>
 
       {detail && <div className="text-xs text-muted-foreground">{detail}</div>}
     </>
