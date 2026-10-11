@@ -196,6 +196,17 @@ Import alias is `@/*` → `./src/*`.
 - Analytics events are a closed enum in `src/lib/events.ts`; add the name there
   before calling `trackEvent`.
 
+## Taste
+
+`design-taste-frontend` (`.claude/skills/`, from
+[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill), MIT,
+installed with `npx skills add Leonxlnx/taste-skill -s design-taste-frontend
+-a claude-code`; `skills-lock.json` pins it, and `npx skills update` refreshes
+it) is the design brief for new sections and pages. Read it as a portfolio for
+hiring managers. Where it disagrees with this file, this file wins: fibo's
+parts keep their own icons and tokens, the template attribution stays, and
+existing routes, nav labels and analytics events don't change without asking.
+
 ## Known gaps
 
 - No `/work` index route — cards link straight to `/work/[slug]`.
