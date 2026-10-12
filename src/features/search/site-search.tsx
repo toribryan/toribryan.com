@@ -44,7 +44,15 @@ import {
   type CommandMenuGroup,
   type CommandMenuItem,
 } from "@/components/fibo/command-menu"
-import { DocCoverPlate } from "@/features/doc/components/doc-cover-plate"
+import {
+  careerStage,
+  PAGE_COVERS,
+  RoleCover,
+} from "@/features/covers/iso-covers"
+import {
+  CoverPlate,
+  DocCoverPlate,
+} from "@/features/doc/components/doc-cover-plate"
 import { PartCoverPlate } from "@/features/portfolio/components/components/component-card-list"
 import { FigmaIcon } from "@/features/portfolio/components/fibo-hero/brand-icons"
 import { SOCIAL_ICONS } from "@/features/portfolio/components/social-link-icons"
@@ -183,18 +191,31 @@ export function SiteSearch({
       icon: ReactNode,
       about: string,
       keywords: string[] = []
-    ): CommandMenuItem => ({
-      value,
-      label,
-      icon,
-      keywords,
-      onSelect: href.startsWith("/#") ? home(href.slice(2)) : go(href),
-      preview: (
-        <Preview image={ogStill(href)} title={label}>
-          {about}
-        </Preview>
-      ),
-    })
+    ): CommandMenuItem => {
+      const Cover = PAGE_COVERS[value]
+      return {
+        value,
+        label,
+        icon,
+        keywords,
+        onSelect: href.startsWith("/#") ? home(href.slice(2)) : go(href),
+        preview: (
+          <Preview
+            cover={
+              Cover ? (
+                <CoverPlate>
+                  <Cover loop />
+                </CoverPlate>
+              ) : undefined
+            }
+            image={ogStill(href)}
+            title={label}
+          >
+            {about}
+          </Preview>
+        ),
+      }
+    }
 
     const doc = (d: SearchDoc): CommandMenuItem => ({
       value: `${d.kind}:${d.href}`,
@@ -311,11 +332,11 @@ export function SiteSearch({
           ),
           page(
             "awards",
-            "Awards",
+            "Achievements",
             "/#awards",
             <AwardIcon />,
-            "Recognition for my work.",
-            ["honors"]
+            "Headline results from my work, and what drove them.",
+            ["awards", "honors", "results", "impact"]
           ),
           page(
             "certifications",
@@ -341,6 +362,11 @@ export function SiteSearch({
               onSelect: home(`role-${role.id}`),
               preview: (
                 <Preview
+                  cover={
+                    <CoverPlate>
+                      <RoleCover stage={careerStage(role.id)} loop />
+                    </CoverPlate>
+                  }
                   title={`${role.title}, ${company.companyName}`}
                   meta={`${role.employmentPeriod.start} – ${role.employmentPeriod.end ?? "Present"}`}
                 >
