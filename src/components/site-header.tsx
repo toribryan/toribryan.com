@@ -2,10 +2,7 @@ import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
 
-import { MAIN_NAV } from "@/config/site"
-import { Separator } from "@/components/base/ui/separator"
 import { HeaderLead } from "@/components/header-lead"
-import { NavDesktop } from "@/components/nav-desktop"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { USER } from "@/features/portfolio/data/user"
 
@@ -35,17 +32,7 @@ export function SiteHeader() {
 
         <div className="flex-1" />
 
-        <NavDesktop items={MAIN_NAV} />
-
-        <div className="flex items-center">
-          {MAIN_NAV.length > 0 && (
-            <Separator
-              orientation="vertical"
-              className="mr-2 max-sm:hidden data-vertical:h-5 data-vertical:self-center"
-            />
-          )}
-          <ThemeToggle />
-        </div>
+        <ThemeToggle />
       </div>
     </header>
   )

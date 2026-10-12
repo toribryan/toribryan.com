@@ -55,7 +55,9 @@ which fibo dropped, for a rail with no preview at all; the home page cover
 and its doc use it. `command-menu.tsx` shows its preview pane by the dialog's own width
 (`@xl/command-menu`) rather than the viewport's, and widens for it at any
 viewport (`data-preview:max-w-3xl`, where fibo has `sm:`), so the pane stays in the
-scaled cover on a phone. `voice-memo.tsx` has a `device` prop that puts
+scaled cover on a phone. It also gives each item an optional `context`, shown at
+the row's end in place of its group's name, which the site search uses for each
+role's years. `voice-memo.tsx` has a `device` prop that puts
 any element inside its record button in place of the flat drawing, and a
 `panelClassName` for placing the transcript, and an `onCopy` callback,
 and its copy and download buttons carry words ("Copy", "Download .md")
@@ -132,15 +134,25 @@ and a project page, `work/rabbit-run.mdx`, whose hero is the game and whose
 card cover is the game playing itself (`demo`). Both draw from `iso/iso.ts`, isometric line art as SVG
 strings, and their keys only work while the scene has focus.
 
-The phone nav is fibo's Floating nav (`src/components/fibo/floating-nav.tsx`,
-installed and documented like the parts above).
-The site uses its compact `size="sm"`; the file matches the registry as is.
-`nav-mobile-bar.tsx` shows `MOBILE_NAV` from `config/site.ts` in it as words
-(items with no icon), with a round menu button beside it (`nav-mobile.tsx`)
-listing every page in `MOBILE_MENU`; the two hide together on scroll. Below `sm` it replaces the header's
-links, so `ScrollToTop` only shows from `sm` up. If `shadcn add` stops on
-pnpm's ignored-build warning before writing the file, copy `files[0].content`
-from the item's JSON into `src/components/fibo/` instead.
+The site's navigation on every screen is the dock (`components/site-dock.tsx`):
+one floating split button at the bottom, hidden while the page scrolls down.
+Search opens the site search (`features/search/site-search.tsx`), fibo's
+Command menu in its inset variant, also on Cmd+K or Ctrl+K except on the
+command menu's own doc page, whose demo keeps the key. Menu opens shadcn's
+Base UI Drawer (`components/ui/drawer.tsx`, with base-nova's classes written in)
+listing `MENU` from `config/site.ts`, the home page's sections and contact
+links. The header holds only the avatar and the theme toggle. The layout reads
+case studies and posts once through `features/search/search-docs.ts`, so only
+their titles, links and descriptions reach the browser. Search results and the
+menu reach a home page section or role through its hash (`role-<id>` for a
+role); `hooks/use-hash-target.ts` lets the role open itself and scroll into
+view, opening Show more first when it sits behind it.
+
+fibo's Floating nav (`src/components/fibo/floating-nav.tsx`) is still
+installed and documented like the parts above, though the site no longer uses
+it for navigation. If `shadcn add` stops on pnpm's ignored-build warning
+before writing a file, copy `files[0].content` from the item's JSON into
+`src/components/fibo/` instead.
 
 `src/components/ui/token-flow.tsx`, the site's own copy, still backs the
 archived review deck; `.21st/token-flow.tsx` is generated from it by `npm run

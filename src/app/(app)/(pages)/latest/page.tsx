@@ -8,7 +8,6 @@ import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { absoluteUrl } from "@/lib/utils"
 import {
   PageHeading,
-  PageHeadingDescription,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
@@ -17,6 +16,7 @@ import { getLatestPosts } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
 
 const title = "Blog"
+// Search results and the page's JSON-LD only; the page itself shows no lead.
 const description = "Projects, creative retros, and notes from the work"
 
 export const metadata: Metadata = {
@@ -94,7 +94,6 @@ export default function Page() {
         <PageHeading className="pt-5">
           <PageHeadingTagline>Blog</PageHeadingTagline>
           <PageHeadingTitle>Pivot Notes and Creative Retros</PageHeadingTitle>
-          <PageHeadingDescription>{description}</PageHeadingDescription>
         </PageHeading>
 
         <DocList docs={posts} basePath="/latest" emptyMessage="No posts yet." />

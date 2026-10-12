@@ -67,23 +67,22 @@ export default function Page() {
           <ArrowUpRightIcon data-icon="inline-end" />
         </Button>
         <Button
-          size="sm"
+          size="icon-sm"
           variant="outline"
+          aria-label="Figma"
           nativeButton={false}
           render={<Link href="/fibo/figma" />}
         >
-          <FigmaIcon data-icon="inline-start" />
-          Figma
+          <FigmaIcon />
         </Button>
         <Button
-          size="sm"
+          size="icon-sm"
           variant="outline"
+          aria-label="GitHub (opens in a new tab)"
           nativeButton={false}
           render={<a href={FIBO.github} target="_blank" rel="noreferrer" />}
         >
-          <GithubIcon data-icon="inline-start" />
-          GitHub
-          <ArrowUpRightIcon data-icon="inline-end" />
+          <GithubIcon />
         </Button>
       </div>
 

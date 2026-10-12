@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic"
 
-import { NavMobileBar } from "@/components/nav-mobile-bar"
+import { SiteDock } from "@/components/site-dock"
 import { SiteFooterCad } from "@/components/site-footer-cad"
 import { SiteHeader } from "@/components/site-header"
 import { HomeBanner } from "@/features/portfolio/components/home-banner"
+import { getSearchDocs } from "@/features/search/search-docs"
 
 const ScrollToTop = dynamic(() =>
   import("@/components/scroll-to-top").then((mod) => mod.ScrollToTop)
@@ -31,7 +32,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <div className="bg-background pb-[env(safe-area-inset-bottom,0)]" />
       </div>
       <ScrollToTop />
-      <NavMobileBar />
+      <SiteDock docs={getSearchDocs()} />
     </div>
   )
 }

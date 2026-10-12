@@ -36,6 +36,8 @@ type CommandMenuItem = {
   placeholder?: string
   /** Shown in the side pane while the item is highlighted. */
   preview?: React.ReactNode
+  /** Short text at the row's end, such as dates, in place of its group's name. */
+  context?: string
 }
 
 type CommandMenuGroup = {
@@ -346,7 +348,10 @@ function CommandMenu({
         .map(({ entry }) => ({
           key: `result:${entry.item.value}`,
           entry,
-          context: trailOf(entry) ?? (page ? undefined : entry.group),
+          context:
+            entry.item.context ??
+            trailOf(entry) ??
+            (page ? undefined : entry.group),
         }))
       return rows.length ? [{ label: text.results, items: rows }] : []
     }
@@ -371,7 +376,7 @@ function CommandMenu({
           .map((entry) => ({
             key: `recent:${entry.item.value}`,
             entry,
-            context: trailOf(entry),
+            context: entry.item.context ?? trailOf(entry),
           }))
       : []
     return [
@@ -380,6 +385,7 @@ function CommandMenu({
         label: group.label,
         items: group.items.map((item) => ({
           key: `${group.label}:${item.value}`,
+          context: item.context,
           entry: byValue.get(item.value) ?? {
             item,
             group: group.label,

@@ -31,35 +31,14 @@ export const META_THEME_COLORS = {
   dark: "#0f0f0f",
 }
 
-export const MAIN_NAV: NavItem<Route>[] = [
-  {
-    title: "Blog",
-    href: "/latest",
-  },
-  {
-    title: "Projects",
-    href: "/projects",
-  },
-  {
-    title: "Components",
-    href: "/components",
-  },
-]
-
-/** The floating nav's destinations on phones, written out. */
-export const MOBILE_NAV: NavItem<Route>[] = [
-  { title: "Home", href: "/" },
-  { title: "Components", href: "/components" },
-  { title: "Blog", href: "/latest" },
-]
-
-/** Every page, in the menu beside the floating nav. */
-export const MOBILE_MENU: NavItem<Route>[] = [
+/** Every page, in the menu drawer the dock opens. */
+export const MENU: NavItem<Route>[] = [
   { title: "Home", href: "/" },
   { title: "Projects", href: "/projects" },
-  { title: "Components", href: "/components" },
-  { title: "Fibo lore", href: "/fibo" },
   { title: "Blog", href: "/latest" },
+  { title: "Components", href: "/components" },
+  { title: "fibo lore", href: "/fibo" },
+  { title: "Recommendations", href: "/recommendations" },
 ]
 
 export const UTM_PARAMS = {
