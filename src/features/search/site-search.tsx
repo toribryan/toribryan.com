@@ -144,12 +144,14 @@ function Preview({
       {cover ??
         (image ? (
           // Covers are already sized at export time, like the cards'.
-          <img
-            src={image}
-            alt=""
-            className="aspect-1200/630 w-full rounded-md object-cover inset-ring-1 inset-ring-black/10"
-            loading="lazy"
-          />
+          <CoverPlate>
+            <img
+              src={image}
+              alt=""
+              className="size-full object-cover"
+              loading="lazy"
+            />
+          </CoverPlate>
         ) : null)}
       <div className="flex flex-col gap-1">
         <p className="font-medium text-balance text-foreground">{title}</p>
