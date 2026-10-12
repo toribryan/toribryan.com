@@ -9,18 +9,28 @@ import {
   AwardIcon,
   BadgeCheckIcon,
   BookOpenIcon,
+  BotIcon,
   BoxIcon,
   BriefcaseIcon,
+  Building2Icon,
   CopyIcon,
   FileTextIcon,
+  FolderIcon,
+  FolderKanbanIcon,
+  Gamepad2Icon,
   GraduationCapIcon,
+  HeartIcon,
   HomeIcon,
   LayersIcon,
+  LayoutGridIcon,
+  LibraryIcon,
+  MicIcon,
   MonitorIcon,
   MoonIcon,
   PaletteIcon,
   QuoteIcon,
   RabbitIcon,
+  SmartphoneIcon,
   SunIcon,
 } from "lucide-react"
 import { useTheme } from "next-themes"
@@ -42,6 +52,21 @@ import {
 import { NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
 import { SOCIAL } from "@/features/portfolio/data/social-links"
 import { USER } from "@/features/portfolio/data/user"
+
+// One mark per project, so results tell apart at a glance. A new project
+// without one here falls back to a folder.
+const PROJECT_ICONS: Record<string, ReactNode> = {
+  "/work/design-system-overhaul": <LayoutGridIcon />,
+  "/work/voice-memo": <MicIcon />,
+  "/fibo": <RabbitIcon />,
+  "/work/modern-care-homes": <Building2Icon />,
+  "/work/agentic-design-system": <BotIcon />,
+  "/work/folder-art": <FolderIcon />,
+  "/work/real-wedding-submissions": <HeartIcon />,
+  "/work/storybook-kit": <LibraryIcon />,
+  "/work/iphone-duo": <SmartphoneIcon />,
+  "/work/rabbit-run": <Gamepad2Icon />,
+}
 
 // The first two bullets of a role's description, as plain text.
 function firstLines(markdown?: string) {
@@ -155,7 +180,12 @@ export function SiteSearch({
     const doc = (d: SearchDoc): CommandMenuItem => ({
       value: `${d.kind}:${d.href}`,
       label: d.title,
-      icon: d.kind === "work" ? <BriefcaseIcon /> : <FileTextIcon />,
+      icon:
+        d.kind === "work" ? (
+          (PROJECT_ICONS[d.href] ?? <FolderKanbanIcon />)
+        ) : (
+          <FileTextIcon />
+        ),
       keywords: d.keywords,
       onSelect: go(d.href),
       preview: (

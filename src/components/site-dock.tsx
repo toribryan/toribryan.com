@@ -222,7 +222,7 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                           href={item.href}
                           aria-current={current ? "page" : undefined}
                           onClick={() => setMenuOpen(false)}
-                          className="flex h-11 items-center gap-3 rounded-lg px-3 font-sans text-lg font-medium outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-accent [&_svg]:size-5 [&_svg]:text-muted-foreground"
+                          className="flex h-11 items-center gap-3 rounded-lg px-3 font-sans text-lg font-normal outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-accent [&_svg]:size-5 [&_svg]:text-muted-foreground"
                         >
                           {PAGE_ICONS[item.href]}
                           <span className="flex-1">{item.title}</span>
