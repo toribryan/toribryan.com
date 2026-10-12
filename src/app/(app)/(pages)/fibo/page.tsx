@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 
 import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { Components } from "@/features/portfolio/components/components"
 import { FiboHero } from "@/features/portfolio/components/fibo-hero"
 import { FiboStory } from "@/features/portfolio/components/fibo-story"
 
@@ -34,6 +35,9 @@ export default function Page() {
       <FiboHero variant="page" />
       <div className="stripe-divider h-8 w-full" />
       <FiboStory />
+      {/* The parts themselves, so the story ends somewhere to go next. */}
+      <div className="stripe-divider h-8 w-full" />
+      <Components />
       <div className="h-4" />
     </>
   )
