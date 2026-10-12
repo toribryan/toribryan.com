@@ -1,14 +1,22 @@
+import type { Route } from "next"
+
 import type { Recommendation } from "@/features/portfolio/types/recommendations"
 
 /**
  * The recommendations on LinkedIn, newest first. Text is verbatim, typos and
  * all; trim the quote, don't reword it.
  */
+const DESIGN_SYSTEM_OVERHAUL: Recommendation["project"] = {
+  title: "Design System Overhaul",
+  href: "/work/design-system-overhaul" as Route,
+}
+
 export const RECOMMENDATIONS: Recommendation[] = [
   {
     name: "Jeff Beene",
     role: "Creative Dev",
     relationship: "Same team",
+    project: DESIGN_SYSTEM_OVERHAUL,
     date: "2026-09",
     quote:
       "Tori is one of those people who makes a team noticeably better just by being a part of it.",
@@ -18,6 +26,7 @@ export const RECOMMENDATIONS: Recommendation[] = [
     name: "Filip Erak",
     role: "Software Developer",
     relationship: "Same team",
+    project: DESIGN_SYSTEM_OVERHAUL,
     date: "2026-09",
     quote:
       "What stood out most was how well she understood the way developers think and work.",

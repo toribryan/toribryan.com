@@ -1,8 +1,14 @@
 "use client"
 
+import Link from "next/link"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 import { format } from "date-fns"
-import { ArrowUpRightIcon, Maximize2Icon, XIcon } from "lucide-react"
+import {
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+  Maximize2Icon,
+  XIcon,
+} from "lucide-react"
 
 import type { Recommendation } from "@/features/portfolio/types/recommendations"
 
@@ -20,7 +26,8 @@ export function RecommendationCard({
   /** LinkedIn's page of recommendations, for reading the original. */
   linkedin: string
 }) {
-  const { name, role, relationship, date, quote, text } = recommendation
+  const { name, role, relationship, project, date, quote, text } =
+    recommendation
   const number = String(index + 1).padStart(2, "0")
   const month = format(new Date(`${date}-01T00:00:00`), "MMM yyyy")
 
@@ -28,7 +35,10 @@ export function RecommendationCard({
     <DialogPrimitive.Root>
       <DialogPrimitive.Trigger className="group flex h-full w-full flex-col gap-5 p-4 text-left outline-none hover:bg-accent/50 focus-visible:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset">
         <span className="flex items-center justify-between font-mono text-xs text-muted-foreground">
-          <span>{number}</span>
+          <span className="truncate">
+            {number}
+            {project && <> · {project.title}</>}
+          </span>
           <span className="flex items-center gap-1.5 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 max-sm:opacity-100">
             Read in full
             <Maximize2Icon aria-hidden className="size-3" />
@@ -54,6 +64,21 @@ export function RecommendationCard({
               <XIcon className="size-4" />
             </DialogPrimitive.Close>
           </header>
+
+          {project && (
+            <Link
+              href={project.href}
+              className="flex items-center justify-between gap-3 border-b border-line px-5 py-3 text-sm text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+            >
+              <span>
+                Partnered with me on{" "}
+                <span className="font-medium text-foreground">
+                  {project.title}
+                </span>
+              </span>
+              <ArrowRightIcon className="size-4 shrink-0" />
+            </Link>
+          )}
 
           <blockquote
             cite={linkedin}

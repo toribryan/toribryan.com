@@ -1,8 +1,12 @@
+import type { Route } from "next"
+
 export type Recommendation = {
   name: string
   role: string
   /** How they worked with Tori, as LinkedIn records it. */
   relationship: "Same team" | "Different teams"
+  /** The project they partnered with Tori on, when there's a case study for it. */
+  project?: { title: string; href: Route }
   /** Month given, as `YYYY-MM`. */
   date: string
   /** A verbatim excerpt from the full recommendation, set off within it on the page. */
