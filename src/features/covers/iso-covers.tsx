@@ -535,6 +535,26 @@ const fileMark = (src: string): Glyph =>
     )
   }
 const AdobeMark = fileMark("/Adobe.svg")
+
+/** An Adobe app's two-letter mark, as its icon sets it. */
+const appMark = (letters: string): Glyph =>
+  function AppMark(props) {
+    return (
+      <svg viewBox="0 0 24 24" {...props}>
+        <text
+          className="font-sans"
+          x="12"
+          y="17"
+          fontSize="14"
+          fontWeight="600"
+          textAnchor="middle"
+        >
+          {letters}
+        </text>
+      </svg>
+    )
+  }
+const ADOBE_APPS = ["Ps", "Ai", "Pr", "Ae"].map(appMark)
 const UserTestingMark = fileMark("/UserTesting.svg")
 function FigmaMcpMark(props: ComponentProps<"svg">) {
   return (
@@ -566,7 +586,7 @@ type Setup = {
 }
 
 const SETUPS = {
-  intern: { width: 200, screens: ["work"], tower: "mini" },
+  intern: { width: 200, screens: [ADOBE_APPS], tower: "mini" },
   multimedia: {
     width: 224,
     screens: ["work", "ui"],
