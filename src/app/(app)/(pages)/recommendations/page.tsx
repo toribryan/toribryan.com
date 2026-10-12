@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { format } from "date-fns"
 
 import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
@@ -11,6 +10,8 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
+import { RecommendationCard } from "@/features/portfolio/components/recommendations/recommendation-card"
+import { TweetWall } from "@/features/portfolio/components/recommendations/tweet-wall"
 import {
   recommendationId,
   RECOMMENDATIONS,
@@ -18,8 +19,7 @@ import {
 import { SOCIAL } from "@/features/portfolio/data/social-links"
 
 const title = "Recommendations"
-const description =
-  "What the people I've worked with wrote about me on LinkedIn, in full."
+const description = "What people have said about my work, on X and on LinkedIn."
 
 export const metadata: Metadata = {
   title,
@@ -44,64 +44,59 @@ export default function Page() {
       />
 
       <PageHeading>
-        <PageHeadingTagline>LinkedIn</PageHeadingTagline>
+        <PageHeadingTagline>Kind words</PageHeadingTagline>
         <PageHeadingTitle>{title}</PageHeadingTitle>
         <PageHeadingDescription>{description}</PageHeadingDescription>
       </PageHeading>
 
-      <div className="screen-line-bottom px-4 pb-4">
-        <Button
-          className="gap-1.5"
-          variant="outline"
-          size="sm"
-          nativeButton={false}
-          render={
-            <a
-              href={`${SOCIAL.linkedin.href}details/recommendations/`}
-              target="_blank"
-              rel="noopener noreferrer"
-            />
-          }
-        >
-          View on LinkedIn
-          <ArrowUpRightIcon />
-        </Button>
-      </div>
+      <section aria-labelledby="on-x" className="screen-line-bottom">
+        <h2 id="on-x" className="sr-only">
+          On X
+        </h2>
+        <TweetWall />
+      </section>
 
-      <ol className="flex flex-col">
-        {RECOMMENDATIONS.map(({ name, role, date, quote, text, profile }) => (
-          <li
-            key={name}
-            id={recommendationId(name)}
-            className="screen-line-bottom scroll-mt-[calc(var(--header-height)+1rem)] p-4"
+      <section aria-labelledby="on-linkedin">
+        <header className="screen-line-bottom flex items-center justify-between gap-4 p-4">
+          <h2 id="on-linkedin" className="font-heading text-2xl/9 font-medium">
+            From LinkedIn
+          </h2>
+          <Button
+            className="gap-1.5"
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={
+              <a
+                href={LINKEDIN_RECOMMENDATIONS}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
           >
-            <p className="flex flex-wrap items-baseline gap-x-2">
-              {profile ? (
-                <a
-                  href={profile}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium underline-offset-2 hover:underline"
-                >
-                  {name}
-                </a>
-              ) : (
-                <span className="font-medium">{name}</span>
-              )}
-              <span className="text-sm text-muted-foreground">{role}</span>
-              <time
-                className="ml-auto font-mono text-xs text-muted-foreground"
-                dateTime={date}
-              >
-                {format(new Date(`${date}-01T00:00:00`), "MMM yyyy")}
-              </time>
-            </p>
-            <blockquote className="mt-2 text-pretty whitespace-pre-line text-muted-foreground">
-              {text ?? quote}
-            </blockquote>
-          </li>
-        ))}
-      </ol>
+            View on LinkedIn
+            <ArrowUpRightIcon />
+          </Button>
+        </header>
+
+        <ol className="grid sm:grid-cols-2">
+          {RECOMMENDATIONS.map((recommendation, index) => (
+            <li
+              key={recommendation.name}
+              id={recommendationId(recommendation.name)}
+              className="screen-line-bottom scroll-mt-[calc(var(--header-height)+1rem)] sm:odd:border-r sm:odd:border-line"
+            >
+              <RecommendationCard
+                recommendation={recommendation}
+                index={index}
+                linkedin={LINKEDIN_RECOMMENDATIONS}
+              />
+            </li>
+          ))}
+        </ol>
+      </section>
     </>
   )
 }
+
+const LINKEDIN_RECOMMENDATIONS = `${SOCIAL.linkedin.href}details/recommendations/`
