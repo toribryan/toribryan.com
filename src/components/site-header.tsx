@@ -2,7 +2,10 @@ import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
 
+import { Separator } from "@/components/base/ui/separator"
 import { HeaderLead } from "@/components/header-lead"
+import { HeaderNav } from "@/components/header-nav"
+import { HeaderSearch } from "@/components/header-search"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { USER } from "@/features/portfolio/data/user"
 
@@ -31,6 +34,20 @@ export function SiteHeader() {
         </HeaderLead>
 
         <div className="flex-1" />
+
+        {/* Phones use the dock at the bottom instead. */}
+        <div className="flex items-center gap-4 max-sm:hidden">
+          <HeaderNav className="gap-4" />
+          <Separator
+            orientation="vertical"
+            className="data-vertical:h-5 data-vertical:self-center"
+          />
+          <HeaderSearch />
+          <Separator
+            orientation="vertical"
+            className="data-vertical:h-5 data-vertical:self-center"
+          />
+        </div>
 
         <ThemeToggle />
       </div>

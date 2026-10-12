@@ -134,14 +134,19 @@ and a project page, `work/rabbit-run.mdx`, whose hero is the game and whose
 card cover is the game playing itself (`demo`). Both draw from `iso/iso.ts`, isometric line art as SVG
 strings, and their keys only work while the scene has focus.
 
-The site's navigation on every screen is the dock (`components/site-dock.tsx`):
+On phones the site's navigation is the dock (`components/site-dock.tsx`):
 one floating split button at the bottom, hidden while the page scrolls down.
+From `sm` up the dock hides and the header holds the pages (`header-nav.tsx`,
+Projects, Blog and Components from `MENU`) and a search button
+(`header-search.tsx`). Both open the same search through
+`siteSearchOpenAtom` (`features/search/search-open.ts`); the search itself is
+rendered by the dock at every size.
 Search opens the site search (`features/search/site-search.tsx`), fibo's
 Command menu in its inset variant, also on Cmd+K or Ctrl+K except on the
 command menu's own doc page, whose demo keeps the key. Menu opens shadcn's
 Base UI Drawer (`components/ui/drawer.tsx`, with base-nova's classes written in)
 listing `MENU` from `config/site.ts`, the home page's sections and contact
-links. The header holds only the avatar and the theme toggle. The layout reads
+links. The layout reads
 case studies and posts once through `features/search/search-docs.ts`, so only
 their titles, links and descriptions reach the browser. Search results and the
 menu reach a home page section or role through its hash (`role-<id>` for a

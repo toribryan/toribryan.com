@@ -1,7 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useState, type ComponentProps } from "react"
 import dynamic from "next/dynamic"
+import { BookOpenIcon, MinusIcon, PlusIcon, RotateCcwIcon } from "lucide-react"
+
+import { Button } from "@/components/fibo/button"
+import { Slider } from "@/components/fibo/slider"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/fibo/tooltip"
 
 import { DuoScreenCapture, type DuoScreenImages } from "./iphone-duo-screens"
 
@@ -45,8 +54,113 @@ export function IphoneDuoProjectHero() {
           surface="color-mix(in oklab, var(--foreground) 4%, transparent)"
           loadingColor="var(--muted-foreground)"
           padding="16px 16px 0"
+          renderControls={(controls: DuoControlsState) => (
+            <DuoControls {...controls} />
+          )}
         />
       </div>
     </div>
+  )
+}
+
+type DuoControlsState = {
+  ready: boolean
+  fold: number
+  scrub: (fold: number) => void
+  toggleFold: () => void
+  foldAction: string
+  open: boolean
+  zoomIn: () => void
+  zoomOut: () => void
+  canZoomIn: boolean
+  canZoomOut: boolean
+  resetView: () => void
+}
+
+/**
+ * The mockup's controls drawn with fibo's parts: zoom, fold and reset in one
+ * tray, and the fold angle on a Slider whose control is a full 40px tall, so a
+ * thumb can catch it.
+ */
+function DuoControls({
+  ready,
+  fold,
+  scrub,
+  toggleFold,
+  foldAction,
+  open,
+  zoomIn,
+  zoomOut,
+  canZoomIn,
+  canZoomOut,
+  resetView,
+}: DuoControlsState) {
+  return (
+    <div className="flex w-full flex-col items-center gap-2 px-4">
+      <div className="flex items-center gap-0.5 rounded-full border border-border bg-background p-1">
+        <DuoControl
+          label="Zoom out"
+          disabled={!ready || !canZoomOut}
+          onClick={zoomOut}
+        >
+          <MinusIcon />
+        </DuoControl>
+        <DuoControl
+          label="Zoom in"
+          disabled={!ready || !canZoomIn}
+          onClick={zoomIn}
+        >
+          <PlusIcon />
+        </DuoControl>
+        <DuoControl
+          label={foldAction}
+          disabled={!ready}
+          aria-expanded={open}
+          onClick={toggleFold}
+        >
+          <BookOpenIcon />
+        </DuoControl>
+        <DuoControl label="Reset view" disabled={!ready} onClick={resetView}>
+          <RotateCcwIcon />
+        </DuoControl>
+      </div>
+
+      <div className="flex w-full max-w-xs items-center gap-3 text-xs text-muted-foreground">
+        <span aria-hidden>Shut</span>
+        <Slider
+          className="[&_[data-slot=slider-control]]:h-10 [&_[data-slot=slider-thumb]]:size-5"
+          aria-label="Fold angle"
+          min={0}
+          max={100}
+          step={0.1}
+          value={fold * 100}
+          disabled={!ready}
+          onValueChange={(value) => scrub((value as number) / 100)}
+        />
+        <span aria-hidden>Open</span>
+      </div>
+    </div>
+  )
+}
+
+function DuoControl({
+  label,
+  ...props
+}: ComponentProps<typeof Button> & { label: string }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-lg"
+            aria-label={label}
+            {...props}
+          />
+        }
+      />
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
   )
 }

@@ -15,8 +15,8 @@ import { PanelTitleCopy } from "@/features/portfolio/components/panel-title-copy
 
 const ID = "projects"
 
-/** Cards on the home page: two rows of the two-column grid. The rest are on /projects. */
-const SHOWN = 4
+/** Cards on the home page: three rows of the two-column grid. The rest are on /projects. */
+const SHOWN = 6
 
 export function Projects() {
   // fibo has its own hero and niche shelf above, and Rabbit run its own
