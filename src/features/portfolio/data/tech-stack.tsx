@@ -13,10 +13,13 @@ import type { TechStack } from "../types/tech-stack"
  * carry.
  */
 export const TECH_STACK: TechStack[] = [
+  { key: "usertesting", categories: ["Research"] },
+  { key: "mobbin", categories: ["Research"] },
+  { key: "loom", categories: ["Research"] },
+  { key: "posthog", categories: ["Research"] },
+
   { key: "figma", categories: ["Design"] },
-  { key: "framer", categories: ["Web"] },
   { key: "adobe", categories: ["Design"] },
-  { key: "webflow", categories: ["Web"] },
 
   { key: "claude-code", categories: ["Prototyping"] },
   { key: "cursor", categories: ["Prototyping"] },
@@ -26,9 +29,8 @@ export const TECH_STACK: TechStack[] = [
   { key: "shadcn-ui", categories: ["Engineering"] },
   { key: "storybook", categories: ["Engineering"] },
 
-  { key: "usertesting", categories: ["Research"] },
-  { key: "loom", categories: ["Research"] },
-  { key: "posthog", categories: ["Research"] },
+  { key: "framer", categories: ["Web"] },
+  { key: "webflow", categories: ["Web"] },
 
   { key: "github", categories: ["Workflow"] },
   { key: "webstorm", categories: ["Workflow"] },

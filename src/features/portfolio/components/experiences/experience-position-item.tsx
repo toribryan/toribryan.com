@@ -4,10 +4,7 @@ import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { IconTile } from "@/components/ui/icon-tile"
 import { Tag } from "@/components/ui/tag"
-import {
-  Collapsible,
-  CollapsibleChevronsUpDownIcon,
-} from "@/components/base/collapsible-animated"
+import { CollapsibleChevronsUpDownIcon } from "@/components/base/collapsible-animated"
 import {
   CollapsibleContent,
   CollapsibleTrigger,
@@ -15,6 +12,8 @@ import {
 import { Separator } from "@/components/base/ui/separator"
 import { Markdown } from "@/components/markdown"
 import type { ExperiencePosition } from "@/features/portfolio/types/experiences"
+
+import { RevealCollapsible } from "./reveal-collapsible"
 
 export function ExperiencePositionItem({
   position,
@@ -26,8 +25,9 @@ export function ExperiencePositionItem({
   const duration = formatDuration(start, end)
 
   return (
-    <Collapsible
-      className="group/experience-position relative"
+    <RevealCollapsible
+      anchor={`role-${position.id}`}
+      className="group/experience-position relative scroll-mt-[calc(var(--header-height)+1rem)]"
       defaultOpen={position.isExpanded}
       disabled={!position.description}
     >
@@ -116,7 +116,7 @@ export function ExperiencePositionItem({
           ))}
         </ul>
       )}
-    </Collapsible>
+    </RevealCollapsible>
   )
 }
 
