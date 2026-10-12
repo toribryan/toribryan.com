@@ -1,7 +1,7 @@
 ---
 title: "Folder art"
-description: "Sixteen macOS folder icons. Eight in fibo's design language, numbered along the Fibonacci sequence, and eight closer to the loud, colourful board that started it."
-claim: "Sixteen folder icons, half in fibo's language and half off the board."
+description: "Sixteen macOS folder icons, numbered along the Fibonacci sequence. Ink and paper, golden cuts and a pixel rabbit, shuffled in with the loud colour of the board that started it."
+claim: "Sixteen folder icons, ink and paper shuffled in with colour."
 image: "/images/folder-art/cover.png"
 hideLead: true
 new: true
@@ -16,57 +16,18 @@ skills:
   - "React"
 ---
 
-Sixteen folders for your Mac. The first eight are drawn in fibo's language. The second eight are closer to the board that started it. Hover one to see what's tucked behind the front. Each name downloads the 1024px PNG.
-
-## Where it started
-
-I saved a Folder Art board on Pinterest, curated by @vambooster, and couldn't stop thinking about it. Quilted triangles, a floral checker collage, a terminal that says hello world, a heat map glow. Loud colour everywhere. I loved it, and I wanted my own set.
-
-But fibo has no brand hue. Colour only shows up as light in a photograph. So the challenge was taking a board full of colour and redrawing every idea in ink and paper, without losing what made each one fun.
-
-## The fibo set
-
-The folders are numbered along the sequence, so there are two No. 1s. That's on purpose.
-
-- **No. 1, Paper.** fibo peeks over the front of a folder ruled with the golden cuts. He perks up when you hover.
-- **No. 1, Ink.** The black folder. On dark grounds fibo turns solid with his inner lines cut in. The other rabbit from the 1202 pair waits behind the front.
-- **No. 2, Tiling.** The quilt, recut as the Fibonacci squares: 8, 5, 3, 2, 1, 1. Half-square triangles and a checker, plus a dither that fades along the diagonal.
-- **No. 3, Seeds.** The floral collage became a seed head. 610 square seeds, each turned 137.5° from the last.
-- **No. 5, Sunflower.** The sunflower plate from the fibo page, cropped so its colour window lands on the front. This is the one place real colour gets in.
-- **No. 8, Window.** The heat map's glow, done the fibo way. The painted rabbit plate, where the light thins the dither out to paper.
-- **No. 13, Terminal.** The hello world folder, in a pixel font. It prints the sequence and waits for the next number.
-- **No. 21, Glyphs.** The checker pattern, redrawn with fibo's five texture glyphs. 34 by 21 cells, with a big rabbit standing in the light.
-
-Two folders on the board were other artists' characters, a little bunny face and a cat-eared head. I left those alone and gave the spots to fibo.
-
-## Off the board
-
-After the fibo set I still wanted the colour. So the second eight drop fibo's rules and go straight back to the board. Same folder body, no limits on hue.
-
-- **Quilt.** Primary red, yellow and blue blocks with a checker, a sunburst and print grain.
-- **Garden.** Pink flowers behind a yellow pixel checker that runs in diamond bands.
-- **Heat.** Blurred orange, magenta and blue, a rounded star in neon outline and a little sun.
-- **Hello.** Green phosphor on black, with a glow and scanlines. It says hello, world!! and means it.
-- **Paw.** A black cat's paw reaching in from above, toe beans out. It reaches further when you hover.
-- **Felt.** Grey felt with stitching and a sleepy face. It wakes up when you hover.
-- **Bondi.** See-through teal plastic, so you can see the paper inside.
-- **Tufted.** Black quilted leather with buttons.
-
-I didn't copy anything off the board directly. Each one is my own take on a mood I liked.
-
-## How it's built
-
-- Every folder is one React component drawing plain SVG on a 1024 canvas, the size macOS asks for.
-- The body is a golden rectangle. It's 832 wide, the front is 514 tall, and the tab takes the short side of the cut, 318.
-- Sizes come off the sequence wherever I could manage it. The rabbit is drawn 13 pixels to the pixel, and margins run 21, 34, 55 and 89.
-- The grain, felt, fur and glow are SVG filters, so the textures scale with the folder instead of being pasted in as images.
-- The PNGs are rendered from the same components the page draws, so the downloads and the site can't drift apart.
-
-## Using them
-
-1. Download a PNG, or grab all sixteen with the button above.
-2. Open the PNG in Preview and copy it with Command C.
-3. Select a folder in Finder and open Get Info with Command I.
-4. Click the little folder icon at the top of the panel and paste with Command V.
-
-To go back to the default, click that icon again and press Delete.
+- No. 1, Bondi
+- No. 1, Window
+- No. 2, Hello
+- No. 3, Ink
+- No. 5, Garden
+- No. 8, Quilt
+- No. 13, Tiling
+- No. 21, Tufted
+- No. 34, Felt
+- No. 55, Paper
+- No. 89, Seeds
+- No. 144, Heat
+- No. 233, Terminal
+- No. 377, Glyphs
+- No. 610, Sunflower

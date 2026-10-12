@@ -606,12 +606,12 @@ const tufted: Art = {
 /* -------------------------------------------------------------------------- */
 
 export const BOARD_FOLDERS: FolderEntry[] = [
-  { slug: "quilt", no: 1, title: "Quilt", art: quilt },
-  { slug: "garden", no: 2, title: "Garden", art: garden },
-  { slug: "heat", no: 3, title: "Heat", art: heat },
-  { slug: "hello", no: 4, title: "Hello", art: hello },
-  { slug: "paw", no: 5, title: "Paw", art: paw },
-  { slug: "felt", no: 6, title: "Felt", art: felt },
-  { slug: "bondi", no: 7, title: "Bondi", art: bondi },
-  { slug: "tufted", no: 8, title: "Tufted", art: tufted },
+  { slug: "quilt", title: "Quilt", art: quilt },
+  { slug: "garden", title: "Garden", art: garden },
+  { slug: "heat", title: "Heat", art: heat },
+  { slug: "hello", title: "Hello", art: hello },
+  { slug: "paw", title: "Paw", art: paw },
+  { slug: "felt", title: "Felt", art: felt },
+  { slug: "bondi", title: "Bondi", art: bondi },
+  { slug: "tufted", title: "Tufted", art: tufted },
 ]

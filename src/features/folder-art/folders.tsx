@@ -215,8 +215,6 @@ export type Art = {
 
 export type FolderEntry = {
   slug: string
-  /** Its place in the sequence. */
-  no: number
   title: string
   art: Art
 }
@@ -655,49 +653,41 @@ const glyphs: Art = {
 export const FOLDERS: FolderEntry[] = [
   {
     slug: "paper",
-    no: 1,
     title: "Paper",
     art: paper,
   },
   {
     slug: "ink",
-    no: 1,
     title: "Ink",
     art: ink,
   },
   {
     slug: "tiling",
-    no: 2,
     title: "Tiling",
     art: tiling,
   },
   {
     slug: "seeds",
-    no: 3,
     title: "Seeds",
     art: seeds,
   },
   {
     slug: "sunflower",
-    no: 5,
     title: "Sunflower",
     art: sunflower,
   },
   {
     slug: "window",
-    no: 8,
     title: "Window",
     art: windowArt,
   },
   {
     slug: "terminal",
-    no: 13,
     title: "Terminal",
     art: terminal,
   },
   {
     slug: "glyphs",
-    no: 21,
     title: "Glyphs",
     art: glyphs,
   },

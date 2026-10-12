@@ -9,12 +9,42 @@ import { Folder, FOLDERS, type FolderEntry } from "./folders"
 
 const DOWNLOADS = "/images/folder-art"
 
-const SETS: { title: string; folders: FolderEntry[]; numbered: boolean }[] = [
-  { title: "fibo", folders: FOLDERS, numbered: true },
-  { title: "Off the board", folders: BOARD_FOLDERS, numbered: false },
+const ALL = [...FOLDERS, ...BOARD_FOLDERS]
+const bySlug = (slug: string) => ALL.find((f) => f.slug === slug)!
+
+// Shuffled once, so the colour and the ink-and-paper folders sit mixed
+// together. Each takes its number from its place along the sequence.
+const FIBO_ORDER = [
+  "bondi",
+  "window",
+  "hello",
+  "ink",
+  "garden",
+  "quilt",
+  "tiling",
+  "tufted",
+  "felt",
+  "paper",
+  "seeds",
+  "heat",
+  "terminal",
+  "glyphs",
+  "sunflower",
 ]
 
-const ALL = [...FOLDERS, ...BOARD_FOLDERS]
+const SEQUENCE = FIBO_ORDER.reduce<number[]>(
+  (seq, _, i) => [...seq, i < 2 ? 1 : seq[i - 1]! + seq[i - 2]!],
+  []
+)
+
+const SETS: { title: string; folders: FolderEntry[]; numbered: boolean }[] = [
+  { title: "fibo", folders: FIBO_ORDER.map(bySlug), numbered: true },
+  {
+    title: "Off the board",
+    folders: ALL.filter((f) => !FIBO_ORDER.includes(f.slug)),
+    numbered: false,
+  },
+]
 
 /**
  * Both sets, each folder with its 1024px PNG. The link is what takes focus,
@@ -29,7 +59,7 @@ export function FolderArtGallery() {
             {set.title}
           </h2>
           <ul className="grid w-full grid-cols-2 gap-x-2 gap-y-4 pt-2 sm:grid-cols-4">
-            {set.folders.map((entry) => (
+            {set.folders.map((entry, i) => (
               <li
                 key={entry.slug}
                 className="group/folder flex flex-col items-center gap-1"
@@ -42,7 +72,7 @@ export function FolderArtGallery() {
                 />
                 {set.numbered && (
                   <p className="font-mono text-xs text-muted-foreground tabular-nums">
-                    No. {entry.no}
+                    No. {SEQUENCE[i]}
                   </p>
                 )}
                 <a
@@ -84,7 +114,7 @@ export function FolderArtCover() {
   return (
     <div className="absolute inset-0 flex items-center justify-center">
       {COVER.map((slug) => {
-        const entry = ALL.find((f) => f.slug === slug)!
+        const entry = bySlug(slug)
         return (
           <Folder
             key={slug}
