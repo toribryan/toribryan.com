@@ -74,7 +74,7 @@ export function CatalogList() {
             // being hidden under the last row's cards.
             className="screen-line-bottom pb-px"
           >
-            <header className="screen-line-bottom flex flex-col gap-1 p-4">
+            <header className="screen-line-bottom p-4">
               <h2
                 id={shelf.id}
                 className="font-heading text-2xl/9 font-medium text-balance"
@@ -84,9 +84,6 @@ export function CatalogList() {
                   ({parts.length})
                 </sup>
               </h2>
-              <p className="text-balance text-muted-foreground">
-                {shelf.description}
-              </p>
             </header>
             <CardGrid parts={parts} details />
           </section>

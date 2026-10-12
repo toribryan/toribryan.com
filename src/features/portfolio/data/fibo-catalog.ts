@@ -47,19 +47,14 @@ export const CATALOG: CatalogPart[] = Object.entries(
 export const SHELVES: {
   id: CatalogShelf
   title: string
-  description: string
 }[] = [
   {
     id: "special-components",
     title: "Special components",
-    description:
-      "Playful parts built for one kind of moment, such as a diagram, a reading rail or a reaction. Some use the motion library, which installs along with them.",
   },
   {
     id: "base-components",
     title: "Base components",
-    description:
-      "The parts most interfaces need. They depend on nothing beyond Base UI, class-variance-authority and lucide-react.",
   },
 ]
 
