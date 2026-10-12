@@ -1186,6 +1186,16 @@
   }
 }
 
+/*
+ * iOS zooms the page into any focused field set under 16px, which pushed the
+ * site search half off screen on a phone. Its search box stays at 16px there.
+ */
+@media (max-width: 639px) {
+  .site-search input {
+    font-size: 16px;
+  }
+}
+
 .fibo-palette {
   --background: var(--color-white);
   --foreground: var(--color-neutral-950);

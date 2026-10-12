@@ -6,12 +6,16 @@ import { usePathname, useRouter } from "next/navigation"
 import { copyToClipboardWithEvent } from "@/utils/copy"
 import { decodeEmail } from "@/utils/string"
 import {
+  AwardIcon,
+  BadgeCheckIcon,
   BookOpenIcon,
   BoxIcon,
   BriefcaseIcon,
   CopyIcon,
   FileTextIcon,
+  GraduationCapIcon,
   HomeIcon,
+  LayersIcon,
   MonitorIcon,
   MoonIcon,
   PaletteIcon,
@@ -37,6 +41,7 @@ import {
 } from "@/components/fibo/command-menu"
 import { FigmaIcon } from "@/features/portfolio/components/fibo-hero/brand-icons"
 import { SOCIAL_ICONS } from "@/features/portfolio/components/social-link-icons"
+import { EXPERIENCES } from "@/features/portfolio/data/experiences"
 import {
   CATALOG,
   fiboStorybookUrl,
@@ -44,6 +49,17 @@ import {
 import { NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
 import { SOCIAL } from "@/features/portfolio/data/social-links"
 import { USER } from "@/features/portfolio/data/user"
+
+// The first two bullets of a role's description, as plain text.
+function firstLines(markdown?: string) {
+  return (markdown ?? "")
+    .split("\n")
+    .slice(0, 2)
+    .map((line) =>
+      line.replace(/^-\s*/, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    )
+    .join(" ")
+}
 
 /** What the header hands over about each case study and post. */
 export type SearchDoc = {
@@ -198,6 +214,74 @@ export function SiteSearch({ docs }: { docs: SearchDoc[] }) {
             <QuoteIcon />,
             "What people I've worked with say about working with me.",
             ["testimonials", "references"]
+          ),
+        ],
+      },
+      {
+        label: "About me",
+        items: [
+          page(
+            "experience",
+            "Experience",
+            "/#experience",
+            <BriefcaseIcon />,
+            "Every role I've held, from design intern to staff product designer, with what I shipped in each.",
+            ["work history", "jobs", "resume", "career"]
+          ),
+          page(
+            "education",
+            "Education",
+            "/#education",
+            <GraduationCapIcon />,
+            "Where I studied.",
+            ["school", "degree"]
+          ),
+          page(
+            "stack",
+            "Tech stack",
+            "/#stack",
+            <LayersIcon />,
+            "The tools I design and build with.",
+            ["tools", "software", "skills"]
+          ),
+          page(
+            "awards",
+            "Awards",
+            "/#awards",
+            <AwardIcon />,
+            "Recognition for my work.",
+            ["honors"]
+          ),
+          page(
+            "certifications",
+            "Certifications",
+            "/#certs",
+            <BadgeCheckIcon />,
+            "Courses and certificates I've completed.",
+            ["certs", "courses"]
+          ),
+          ...EXPERIENCES.flatMap((company) =>
+            company.positions.map((role): CommandMenuItem => ({
+              value: `role:${role.id}`,
+              label: `${role.title}, ${company.companyName}`,
+              icon: <BriefcaseIcon />,
+              keywords: [
+                "experience",
+                "work history",
+                "resume",
+                company.companyName,
+                ...(role.skills ?? []),
+              ],
+              onSelect: go("/#experience"),
+              preview: (
+                <Preview
+                  title={`${role.title}, ${company.companyName}`}
+                  meta={`${role.employmentPeriod.start} – ${role.employmentPeriod.end ?? "Present"}`}
+                >
+                  {firstLines(role.description)}
+                </Preview>
+              ),
+            }))
           ),
         ],
       },
@@ -360,7 +444,9 @@ export function SiteSearch({ docs }: { docs: SearchDoc[] }) {
         trigger={null}
         // fibo's own neutrals: the site's dark theme uses one gray for the
         // popover, the muted shell and the highlight, so none of them show.
-        popupClassName="fibo-palette"
+        // On a phone the dialog sits near the top, short enough to stay above
+        // the keyboard, and drops the key hints a touch screen can't use.
+        popupClassName="site-search fibo-palette max-sm:top-[calc(env(safe-area-inset-top,0px)+0.75rem)] max-sm:h-[min(26rem,52svh)] max-sm:w-[calc(100vw-1.5rem)] max-sm:[&_[data-slot=command-menu-hints]]:hidden"
         label="Search the site"
         placeholder="Search projects, posts and components…"
         emptyText="Nothing matches that yet"
