@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState, type ReactNode } from "react"
+import { useMemo, type ReactNode } from "react"
 import type { Route } from "next"
 import { usePathname, useRouter } from "next/navigation"
 import { copyToClipboardWithEvent } from "@/utils/copy"
@@ -21,20 +21,12 @@ import {
   PaletteIcon,
   QuoteIcon,
   RabbitIcon,
-  SearchIcon,
   SunIcon,
 } from "lucide-react"
 import { useTheme } from "next-themes"
 
 import { trackEvent } from "@/lib/events"
 import { revealHash } from "@/hooks/use-hash-target"
-import { Button } from "@/components/ui/button"
-import { Kbd } from "@/components/ui/kbd"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/base/ui/tooltip"
 import {
   CommandMenu,
   type CommandMenuGroup,
@@ -119,13 +111,21 @@ function Preview({
 
 /**
  * Search for the whole site: pages, case studies, posts and every fibo part,
- * plus theme and contact actions. Opens from the header or with Cmd+K.
+ * plus theme and contact actions. Opens from the dock or with Cmd+K.
  */
-export function SiteSearch({ docs }: { docs: SearchDoc[] }) {
+export function SiteSearch({
+  docs,
+  open,
+  onOpenChange,
+}: {
+  docs: SearchDoc[]
+  /** Whether the menu is open; the dock's search button sets it. */
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const router = useRouter()
   const pathname = usePathname()
   const { setTheme } = useTheme()
-  const [open, setOpen] = useState(false)
 
   const groups = useMemo<CommandMenuGroup[]>(() => {
     const go = (href: string) => () => router.push(href as Route)
@@ -419,59 +419,29 @@ export function SiteSearch({ docs }: { docs: SearchDoc[] }) {
     ]
   }, [docs, router, setTheme, pathname])
 
-  // The menu's trigger slot takes a bare button, so the tooltip wraps a
-  // button of its own and the menu opens from state.
   return (
-    <>
-      <Tooltip>
-        <TooltipTrigger
-          render={
-            <Button
-              className="relative touch-manipulation border-none"
-              variant="ghost"
-              size="icon-sm"
-              aria-label="Search"
-              aria-haspopup="dialog"
-              onClick={() => setOpen(true)}
-            >
-              <span
-                className="absolute size-12 pointer-fine:hidden"
-                aria-hidden
-              />
-              <SearchIcon aria-hidden />
-            </Button>
-          }
-        />
-        <TooltipContent className="pr-2 pl-3">
-          <div className="flex items-center gap-3">
-            Search
-            <Kbd>⌘K</Kbd>
-          </div>
-        </TooltipContent>
-      </Tooltip>
-      <CommandMenu
-        groups={groups}
-        variant="inset"
-        open={open}
-        onOpenChange={setOpen}
-        trigger={null}
-        // fibo's own neutrals: the site's dark theme uses one gray for the
-        // popover, the muted shell and the highlight, so none of them show.
-        // On a phone the dialog sits near the top, short enough to stay above
-        // the keyboard, and drops the key hints a touch screen can't use.
-        popupClassName="site-search fibo-palette max-sm:top-[calc(env(safe-area-inset-top,0px)+0.75rem)] max-sm:h-[min(26rem,52svh)] max-sm:w-[calc(100vw-1.5rem)] max-sm:[&_[data-slot=command-menu-hints]]:hidden"
-        label="Search the site"
-        placeholder="Search projects, posts and components…"
-        emptyText="Nothing matches that yet"
-        storageKey="site-search-recent"
-        hotkey={pathname === OWN_HOTKEY_PAGE ? null : "k"}
-        onSelect={(item) =>
-          trackEvent({
-            name: "site_search_select",
-            properties: { item: item.value },
-          })
-        }
-      />
-    </>
+    <CommandMenu
+      groups={groups}
+      variant="inset"
+      open={open}
+      onOpenChange={onOpenChange}
+      trigger={null}
+      // fibo's own neutrals: the site's dark theme uses one gray for the
+      // popover, the muted shell and the highlight, so none of them show.
+      // On a phone the dialog sits near the top, short enough to stay above
+      // the keyboard, and drops the key hints a touch screen can't use.
+      popupClassName="site-search fibo-palette max-sm:top-[calc(env(safe-area-inset-top,0px)+0.75rem)] max-sm:h-[min(26rem,52svh)] max-sm:w-[calc(100vw-1.5rem)] max-sm:[&_[data-slot=command-menu-hints]]:hidden"
+      label="Search the site"
+      placeholder="Search projects, posts and components…"
+      emptyText="Nothing matches that yet"
+      storageKey="site-search-recent"
+      hotkey={pathname === OWN_HOTKEY_PAGE ? null : "k"}
+      onSelect={(item) =>
+        trackEvent({
+          name: "site_search_select",
+          properties: { item: item.value },
+        })
+      }
+    />
   )
 }
