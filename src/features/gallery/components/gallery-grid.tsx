@@ -3,6 +3,7 @@
 import { useState } from "react"
 import type { Route } from "next"
 import Link from "next/link"
+import { Dialog } from "@base-ui/react/dialog"
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -13,13 +14,6 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog"
 
 import { galleryKey, type GalleryItem } from "../data/gallery"
 import { GalleryIso, isLiveIso } from "./gallery-iso"
@@ -90,89 +84,98 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
         ))}
       </ul>
 
-      <Dialog
+      <Dialog.Root
         open={current !== null}
         onOpenChange={(next) => !next && setOpen(null)}
       >
-        <DialogContent
-          showCloseButton={false}
-          className="gap-3 p-3 sm:max-w-5xl"
-          onKeyDown={(event) => {
-            // A playable scene keeps its own arrow keys.
-            if ((event.target as Element).closest("[role=application]")) return
-            if (event.key === "ArrowRight") step(1)
-            if (event.key === "ArrowLeft") step(-1)
-          }}
-        >
-          {current && (
-            <>
-              <DialogTitle className="sr-only">{current.alt}</DialogTitle>
-              <DialogDescription className="sr-only">
-                Use the arrow keys to see the next or previous piece.
-              </DialogDescription>
-              {current.kind === "iso" ? (
-                <div
-                  key={current.piece}
-                  className="mx-auto w-full max-w-2xl overflow-y-auto"
-                >
-                  <GalleryIso piece={current.piece} full />
-                </div>
-              ) : (
-                // Sized from the piece's ratio, so the frame holds its shape before it loads.
-                <div
-                  className="mx-auto max-w-full"
-                  style={{
-                    aspectRatio: `${current.width} / ${current.height}`,
-                    width: `min(100%, calc(80svh * ${current.width / current.height}))`,
-                  }}
-                >
-                  <GalleryMedia
-                    key={current.src}
-                    item={current}
-                    sizes="(min-width: 1024px) 1000px, 100vw"
-                    eager
-                    className="size-full rounded-lg"
-                  />
-                </div>
-              )}
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label="Previous"
-                  onClick={() => step(-1)}
-                >
-                  <ArrowLeftIcon />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label="Next"
-                  onClick={() => step(1)}
-                >
-                  <ArrowRightIcon />
-                </Button>
-                <span className="flex-1" />
-                {current.href && (
-                  <Button variant="ghost" size="icon-sm" asChild>
-                    <Link
-                      href={current.href as Route}
-                      aria-label="Open the project"
-                    >
-                      <ArrowUpRightIcon />
-                    </Link>
-                  </Button>
+        <Dialog.Portal>
+          <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/20 transition-opacity duration-100 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:bg-black/40" />
+          <Dialog.Popup
+            className="fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-3 rounded-2xl bg-background p-3 text-sm shadow-lg ring-1 ring-foreground/10 transition-[opacity,scale] duration-100 outline-none data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 sm:max-w-5xl dark:ring-foreground/20"
+            onKeyDown={(event) => {
+              // A playable scene keeps its own arrow keys.
+              if ((event.target as Element).closest("[role=application]"))
+                return
+              if (event.key === "ArrowRight") step(1)
+              if (event.key === "ArrowLeft") step(-1)
+            }}
+          >
+            {current && (
+              <>
+                <Dialog.Title className="sr-only">{current.alt}</Dialog.Title>
+                <Dialog.Description className="sr-only">
+                  Use the arrow keys to see the next or previous piece.
+                </Dialog.Description>
+                {current.kind === "iso" ? (
+                  <div
+                    key={current.piece}
+                    className="mx-auto w-full max-w-2xl overflow-y-auto"
+                  >
+                    <GalleryIso piece={current.piece} full />
+                  </div>
+                ) : (
+                  // Sized from the piece's ratio, so the frame holds its shape before it loads.
+                  <div
+                    className="mx-auto max-w-full"
+                    style={{
+                      aspectRatio: `${current.width} / ${current.height}`,
+                      width: `min(100%, calc(80svh * ${current.width / current.height}))`,
+                    }}
+                  >
+                    <GalleryMedia
+                      key={current.src}
+                      item={current}
+                      sizes="(min-width: 1024px) 1000px, 100vw"
+                      eager
+                      className="size-full rounded-lg"
+                    />
+                  </div>
                 )}
-                <DialogClose asChild>
-                  <Button variant="ghost" size="icon-sm" aria-label="Close">
-                    <XIcon />
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label="Previous"
+                    onClick={() => step(-1)}
+                  >
+                    <ArrowLeftIcon />
                   </Button>
-                </DialogClose>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label="Next"
+                    onClick={() => step(1)}
+                  >
+                    <ArrowRightIcon />
+                  </Button>
+                  <span className="flex-1" />
+                  {current.href && (
+                    <Button variant="ghost" size="icon-sm" asChild>
+                      <Link
+                        href={current.href as Route}
+                        aria-label="Open the project"
+                      >
+                        <ArrowUpRightIcon />
+                      </Link>
+                    </Button>
+                  )}
+                  <Dialog.Close
+                    render={
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        aria-label="Close"
+                      />
+                    }
+                  >
+                    <XIcon />
+                  </Dialog.Close>
+                </div>
+              </>
+            )}
+          </Dialog.Popup>
+        </Dialog.Portal>
+      </Dialog.Root>
     </>
   )
 }
