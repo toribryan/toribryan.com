@@ -23,7 +23,12 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/latest" },
-  openGraph: { url: "/latest", type: "website", images: [SITE_INFO.ogImage] },
+  openGraph: {
+    url: "/latest",
+    type: "website",
+    images: [SITE_INFO.ogImage],
+    videos: [SITE_INFO.ogVideo],
+  },
 }
 
 function getBlogJsonLd(posts: Doc[]): WithContext<Blog> {

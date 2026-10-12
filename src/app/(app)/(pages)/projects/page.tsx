@@ -24,7 +24,12 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/projects" },
-  openGraph: { url: "/projects", type: "website", images: [SITE_INFO.ogImage] },
+  openGraph: {
+    url: "/projects",
+    type: "website",
+    images: [SITE_INFO.ogImage],
+    videos: [SITE_INFO.ogVideo],
+  },
 }
 
 function getProjectsJsonLd(projects: Doc[]): WithContext<CollectionPage> {

@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     url: "/fibo/figma",
     type: "website",
     images: [SITE_INFO.ogImage],
+    videos: [SITE_INFO.ogVideo],
   },
 }
 

@@ -13,7 +13,12 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/fibo" },
-  openGraph: { url: "/fibo", type: "website", images: [SITE_INFO.ogImage] },
+  openGraph: {
+    url: "/fibo",
+    type: "website",
+    images: [SITE_INFO.ogImage],
+    videos: [SITE_INFO.ogVideo],
+  },
 }
 
 export default function Page() {

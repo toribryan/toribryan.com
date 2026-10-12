@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     url: "/recommendations",
     type: "website",
     images: [SITE_INFO.ogImage],
+    videos: [SITE_INFO.ogVideo],
   },
 }
 
