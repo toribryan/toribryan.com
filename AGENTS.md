@@ -55,7 +55,9 @@ which fibo dropped, for a rail with no preview at all; the home page cover
 and its doc use it. `command-menu.tsx` shows its preview pane by the dialog's own width
 (`@xl/command-menu`) rather than the viewport's, and widens for it at any
 viewport (`data-preview:max-w-3xl`, where fibo has `sm:`), so the pane stays in the
-scaled cover on a phone. `voice-memo.tsx` has a `device` prop that puts
+scaled cover on a phone. It also gives each item an optional `context`, shown at
+the row's end in place of its group's name, which the site search uses for each
+role's years. `voice-memo.tsx` has a `device` prop that puts
 any element inside its record button in place of the flat drawing, and a
 `panelClassName` for placing the transcript, and an `onCopy` callback,
 and its copy and download buttons carry words ("Copy", "Download .md")

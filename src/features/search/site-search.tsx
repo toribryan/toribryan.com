@@ -27,6 +27,7 @@ import {
 import { useTheme } from "next-themes"
 
 import { trackEvent } from "@/lib/events"
+import { revealHash } from "@/hooks/use-hash-target"
 import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
 import {
@@ -59,6 +60,13 @@ function firstLines(markdown?: string) {
       line.replace(/^-\s*/, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
     )
     .join(" ")
+}
+
+// A role's span in years, such as 2023–2026, or 2026–now while ongoing.
+function years({ start, end }: { start: string; end?: string }) {
+  const from = start.slice(-4)
+  const to = end ? end.slice(-4) : "now"
+  return from === to ? from : `${from}–${to}`
 }
 
 /** What the header hands over about each case study and post. */
@@ -121,6 +129,10 @@ export function SiteSearch({ docs }: { docs: SearchDoc[] }) {
 
   const groups = useMemo<CommandMenuGroup[]>(() => {
     const go = (href: string) => () => router.push(href as Route)
+    // A section or role on the home page. Already there, the hash changes in
+    // place so the section can open and scroll to itself.
+    const home = (id: string) => () =>
+      pathname === "/" ? revealHash(id) : router.push(`/#${id}` as Route)
     const away = (href: string) => () =>
       window.open(href, "_blank", "noopener,noreferrer")
 
@@ -136,7 +148,7 @@ export function SiteSearch({ docs }: { docs: SearchDoc[] }) {
       label,
       icon,
       keywords,
-      onSelect: go(href),
+      onSelect: href.startsWith("/#") ? home(href.slice(2)) : go(href),
       preview: <Preview title={label}>{about}</Preview>,
     })
 
@@ -272,7 +284,8 @@ export function SiteSearch({ docs }: { docs: SearchDoc[] }) {
                 company.companyName,
                 ...(role.skills ?? []),
               ],
-              onSelect: go("/#experience"),
+              context: years(role.employmentPeriod),
+              onSelect: home(`role-${role.id}`),
               preview: (
                 <Preview
                   title={`${role.title}, ${company.companyName}`}
@@ -404,7 +417,7 @@ export function SiteSearch({ docs }: { docs: SearchDoc[] }) {
         ],
       },
     ]
-  }, [docs, router, setTheme])
+  }, [docs, router, setTheme, pathname])
 
   // The menu's trigger slot takes a bare button, so the tooltip wraps a
   // button of its own and the menu opens from state.
