@@ -194,14 +194,14 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                 </Button>
               }
             />
-            <DrawerContent className="sm:mx-auto sm:max-w-xl">
+            <DrawerContent className="mb-[max(--spacing(2),env(safe-area-inset-bottom))] border [--drawer-bleed-background:transparent] [--drawer-inset:--spacing(2)] data-[swipe-direction=down]:rounded-3xl sm:mx-auto sm:max-w-xl">
               {/* The home page's grid: rails at the column's edges, a line
                   across the sheet between sections. */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-4 top-3 bottom-0 border-x border-line"
-              />
-              <div className="flex min-h-0 flex-1 flex-col">
+              <div className="relative flex min-h-0 flex-1 flex-col">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-4 inset-y-0 border-x border-line"
+                />
                 <DrawerHeader className="flex-row items-center gap-3 border-b border-line px-7 pt-6 pb-3 text-left">
                   {}
                   <img
@@ -219,7 +219,7 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                   </div>
                 </DrawerHeader>
 
-                <div className="flex min-h-0 flex-col overflow-y-auto pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
+                <div className="flex min-h-0 flex-col overflow-y-auto pb-4">
                   <ul className="flex flex-col border-b border-line px-5 py-1.5">
                     {MENU.map((item) => {
                       const current = isCurrent(pathname, item.href)
