@@ -2,7 +2,11 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { cn } from "@/lib/utils"
-import { DocCoverPlate } from "@/features/doc/components/doc-cover-plate"
+import { PAGE_COVERS } from "@/features/covers/iso-covers"
+import {
+  CoverPlate,
+  DocCoverPlate,
+} from "@/features/doc/components/doc-cover-plate"
 import { getOgFrames } from "@/features/og/frames"
 import { LivePartCover } from "@/features/og/live-part-cover"
 
@@ -47,7 +51,15 @@ export default async function OgFrame({
 
   const frame = frames.find((f) => f.route === `/${route.join("/")}`)
   if (!frame) notFound()
+  const Page = frame.page ? PAGE_COVERS[frame.page] : undefined
   const covers = [
+    ...(Page
+      ? [
+          <CoverPlate key="page" className="rounded-xl">
+            <Page loop />
+          </CoverPlate>,
+        ]
+      : []),
     ...(frame.docs ?? []).map((doc) => (
       <DocCoverPlate
         key={doc.slug}

@@ -2,7 +2,6 @@ import { COMPONENTS } from "@/features/components/data/registry"
 import { getRegistryDocs } from "@/features/components/data/registry-docs"
 import { getLatestPosts, getWorkDocs } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
-import { HOME_PARTS } from "@/features/portfolio/data/fibo-niche"
 
 /** One route's social preview: what it says and which covers it draws. */
 export type OgFrame = {
@@ -11,6 +10,8 @@ export type OgFrame = {
   title: string
   docs?: { slug: string; image?: string }[]
   parts?: string[]
+  /** A page's own cover, by its key in `PAGE_COVERS`. */
+  page?: string
 }
 
 const cover = (doc: Doc) => ({ slug: doc.slug, image: doc.metadata.image })
@@ -24,25 +25,37 @@ export function getOgFrames(): OgFrame[] {
       route: "/components",
       kicker: "fibo",
       title: "Components",
-      parts: HOME_PARTS.slice(0, 4),
+      page: "components",
     },
     {
       route: "/projects",
       kicker: "Portfolio",
       title: "Projects",
-      docs: work.slice(0, 4).map(cover),
+      page: "projects",
     },
     {
       route: "/latest",
       kicker: "Writing",
       title: "Blog",
-      docs: posts.slice(0, 4).map(cover),
+      page: "blog",
     },
     {
       route: "/fibo",
       kicker: "fibo",
       title: "The story of fibo",
-      docs: [{ slug: "fibo" }],
+      page: "fibo",
+    },
+    {
+      route: "/fibo/figma",
+      kicker: "fibo",
+      title: "fibo in Figma",
+      page: "figma",
+    },
+    {
+      route: "/recommendations",
+      kicker: "Kind words",
+      title: "Recommendations",
+      page: "recommendations",
     },
     ...work.map((doc) => ({
       route: `/work/${doc.slug}`,
