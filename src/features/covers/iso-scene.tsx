@@ -100,10 +100,11 @@ export function IsoScene({
     <div
       data-loop={loop || undefined}
       className={cn(
-        "iso-cover flex size-full items-center justify-center",
+        "iso-cover relative isolate flex size-full items-center justify-center",
         className
       )}
     >
+      <div className="absolute inset-0 -z-10 dither-tile" aria-hidden />
       <svg
         viewBox={frame(bounds, pad)}
         className={cn(

@@ -68,7 +68,7 @@ export function PostCover({
     <div
       data-loop={loop || undefined}
       className={cn(
-        "post-cover flex size-full items-center justify-center",
+        "post-cover relative isolate flex size-full items-center justify-center",
         className
       )}
     >
@@ -96,6 +96,7 @@ export function PostCover({
           }
         }
       `}</style>
+      <div className="absolute inset-0 -z-10 dither-tile" aria-hidden />
       <svg
         viewBox={VIEW.join(" ")}
         className="h-[72%] w-auto overflow-visible"
