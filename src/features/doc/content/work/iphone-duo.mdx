@@ -16,7 +16,7 @@ skills:
   - "React"
 ---
 
-Fold the phone and watch the screen. Open, the inner display has room for the whole month, each event a card in its day, with the picked day's agenda beside the grid. Shut, the cover display shows the same October the way fibo's Calendar lays it out on a phone: a dot under each busy day, and the agenda below.
+Fold the phone and watch the screen. Open, the inner display has room for the whole month, each event a card in its day, with the picked day's agenda beside the grid. Shut, the cover display shows the same October the way fibo's [Calendar](/components/calendar) lays it out on a phone: a dot under each busy day, and the agenda below.
 
 The phone is Matthias Ölschlegel's [iPhone Duo Mockup](https://www.framer.com/marketplace/components/iphone-duo-mockup/), bought on the Framer Marketplace and ported out of Framer.
 
@@ -25,3 +25,7 @@ The phone is Matthias Ölschlegel's [iPhone Duo Mockup](https://www.framer.com/m
 - The device is a rigged 3D model drawn by the mockup's own WebGL renderer, with a fold animation baked into the model and a spring that keeps its speed when you reverse it mid-fold.
 - The screens are two images. The real Calendar is laid out off screen at each display's width and drawn into them, again whenever the theme changes. Its month view answers to its own width rather than the window's, so the same component gives the cards on the wide display and the dots on the narrow one.
 - The renderer blurs and darkens whatever is on the folding half as it turns away, so the calendar bends with the glass rather than sitting on top of it.
+
+## The components
+
+<ComponentCards names="calendar date-picker" />

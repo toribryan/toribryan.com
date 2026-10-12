@@ -27,6 +27,7 @@ import {
   WORK_CATEGORY,
 } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
+import { ComponentCards } from "@/features/portfolio/components/components/component-card-list"
 
 import { DOC_COVERS } from "./doc-covers"
 import { DOC_HEROES } from "./doc-heroes"
@@ -50,6 +51,7 @@ import { TokenVisualizer } from "./token-visualizer"
 
 /** Components a doc's MDX can use beyond the shared set. */
 const DOC_COMPONENTS = {
+  ComponentCards,
   Item,
   Numbered,
   Phase,

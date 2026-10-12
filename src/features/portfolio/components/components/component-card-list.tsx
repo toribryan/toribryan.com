@@ -43,6 +43,26 @@ export function ComponentCardList() {
   return <CardGrid parts={parts} />
 }
 
+/**
+ * A row of fibo parts, two across, for a doc's MDX to point at the parts it
+ * uses. `names` is fibo names separated by spaces, since a doc's MDX takes no
+ * JS expressions.
+ */
+export function ComponentCards({ names }: { names: string }) {
+  const parts = names
+    .split(/\s+/)
+    .flatMap((name) => CATALOG.filter((part) => part.name === name))
+  return (
+    <ul className="not-prose my-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line">
+      {parts.map((part) => (
+        <li key={part.name} className="bg-background">
+          <ComponentCard part={part} details={false} />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 // A part's page on this site: its doc, or the project it was made for.
 const PAGES = new Map<string, Route>([
   ...NICHE_PARTS.map(
