@@ -192,15 +192,11 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                 </Button>
               }
             />
-            <DrawerContent className="mb-[max(--spacing(2),env(safe-area-inset-bottom))] border [--drawer-bleed-background:transparent] [--drawer-inset:--spacing(2)] data-[swipe-direction=down]:rounded-3xl sm:mx-auto sm:max-w-xl">
-              {/* The home page's grid: rails at the column's edges, a line
-                  across the sheet between sections. */}
-              <div className="relative flex min-h-0 flex-1 flex-col">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-4 inset-y-0 border-x border-line"
-                />
-                <DrawerHeader className="flex-row items-center gap-3 border-b border-line px-7 pt-6 pb-3 text-left">
+            <DrawerContent className="fibo-palette mb-[max(--spacing(2),env(safe-area-inset-bottom))] border bg-muted p-1.5 pt-0 [--drawer-bleed-background:transparent] [--drawer-inset:--spacing(2)] data-[swipe-direction=down]:rounded-3xl sm:mx-auto sm:max-w-xl">
+              {/* Search's inset look: a muted shell holding the header and
+                  links, with the pages in a card raised above it. */}
+              <div className="flex min-h-0 flex-1 flex-col">
+                <DrawerHeader className="flex-row items-center gap-3 px-3 pt-3 pb-3 text-left">
                   {}
                   <img
                     src={USER.headerAvatar}
@@ -217,8 +213,8 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                   </div>
                 </DrawerHeader>
 
-                <div className="flex min-h-0 flex-col overflow-y-auto pb-4">
-                  <ul className="flex flex-col border-b border-line px-5 py-1.5">
+                <div className="flex min-h-0 flex-col overflow-y-auto pb-2">
+                  <ul className="flex flex-col rounded-[1.125rem] border bg-popover p-1.5 shadow-xs">
                     {MENU.map((item) => {
                       const current = isCurrent(pathname, item.href)
                       return (
@@ -227,7 +223,7 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                             href={item.href}
                             aria-current={current ? "page" : undefined}
                             onClick={() => setMenuOpen(false)}
-                            className="flex h-11 items-center gap-3 rounded-lg px-2 font-sans text-lg font-normal outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-accent [&_svg]:size-5 [&_svg]:text-muted-foreground"
+                            className="flex h-11 items-center gap-3 rounded-xl px-3 font-sans text-lg font-normal outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-accent [&_svg]:size-5 [&_svg]:text-muted-foreground"
                           >
                             {PAGE_ICONS[item.href]}
                             <span className="flex-1">{item.title}</span>
@@ -240,11 +236,11 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
 
                   <section
                     aria-labelledby="menu-about"
-                    className="flex flex-col gap-2 border-b border-line px-5 py-4"
+                    className="flex flex-col gap-2 px-3 pt-4 pb-1"
                   >
                     <h2
                       id="menu-about"
-                      className="px-2 font-mono text-xs tracking-wide text-muted-foreground uppercase"
+                      className="font-mono text-xs tracking-wide text-muted-foreground uppercase"
                     >
                       About me
                     </h2>
@@ -266,11 +262,11 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
 
                   <section
                     aria-labelledby="menu-connect"
-                    className="flex flex-col gap-2 px-5 py-4"
+                    className="flex flex-col gap-2 px-3 pt-3 pb-1"
                   >
                     <h2
                       id="menu-connect"
-                      className="px-2 font-mono text-xs tracking-wide text-muted-foreground uppercase"
+                      className="font-mono text-xs tracking-wide text-muted-foreground uppercase"
                     >
                       Get in touch
                     </h2>
