@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import type { Route } from "next"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -73,11 +73,13 @@ const ABOUT = [
   { id: "certs", title: "Certifications", icon: <BadgeCheckIcon /> },
 ]
 
-const SOCIALS = (["linkedin", "github", "x"] as const).map((name) => ({
-  name,
-  ...SOCIAL[name],
-  icon: SOCIAL_ICONS[name],
-}))
+const SOCIALS = (["linkedin", "github", "x", "twentyFirstDev"] as const).map(
+  (name) => ({
+    name,
+    ...SOCIAL[name],
+    icon: SOCIAL_ICONS[name],
+  })
+)
 
 function isCurrent(pathname: string, href: string) {
   return href === "/"
@@ -100,6 +102,11 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [copied, setCopied] = useState(false)
+  // iOS only raises the keyboard for a field focused inside the tap itself,
+  // and the search field doesn't exist until the dialog opens. So the tap
+  // focuses this stand-in, and the keyboard stays up as focus moves on.
+  const keyboard = useRef<HTMLInputElement>(null)
+  const opening = useRef(false)
 
   useMotionValueEvent(scrollY, "change", (y) => {
     const delta = y - (scrollY.getPrevious() ?? 0)
@@ -150,6 +157,8 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
             aria-haspopup="dialog"
             onClick={() => {
               haptic()
+              opening.current = true
+              keyboard.current?.focus({ preventScroll: true })
               setSearchOpen(true)
             }}
           >
@@ -194,7 +203,7 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                   className="size-10 shrink-0"
                 />
                 <div className="flex flex-col items-start text-left">
-                  <DrawerTitle className="font-sans leading-tight">
+                  <DrawerTitle className="font-sans text-lg leading-tight">
                     {USER.displayName}
                   </DrawerTitle>
                   <DrawerDescription className="leading-tight">
@@ -289,7 +298,12 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                         }
                       >
                         {social.icon}
-                        {social.title}
+                        {/* X's mark already says its name. */}
+                        {social.name === "x" ? (
+                          <span className="sr-only">{social.title}</span>
+                        ) : (
+                          social.title
+                        )}
                         <ArrowUpRightIcon className="text-muted-foreground" />
                       </BaseButton>
                     ))}
@@ -301,6 +315,18 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
         </nav>
       </motion.div>
 
+      <input
+        ref={keyboard}
+        aria-hidden
+        tabIndex={-1}
+        // The dialog hands focus back here as it closes; let it go, or the
+        // keyboard would come straight back up.
+        onFocus={(event) => {
+          if (opening.current) opening.current = false
+          else event.currentTarget.blur()
+        }}
+        className="pointer-events-none fixed top-3 left-1/2 size-px text-base opacity-0"
+      />
       <SiteSearch docs={docs} open={searchOpen} onOpenChange={setSearchOpen} />
     </>
   )
