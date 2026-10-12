@@ -41,10 +41,7 @@ export function FolderArtGallery() {
   return (
     <div className="flex w-full flex-col items-center gap-4">
       <section className="w-full px-2 pt-4">
-        <h2 className="px-2 font-mono text-xs tracking-wide text-muted-foreground uppercase">
-          fibo
-        </h2>
-        <ul className="grid w-full grid-cols-2 gap-x-2 gap-y-4 pt-2 sm:grid-cols-4">
+        <ul className="grid w-full grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-4">
           {SET.map((entry, i) => (
             <li
               key={entry.slug}
