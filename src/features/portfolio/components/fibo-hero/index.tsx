@@ -672,7 +672,7 @@ function Pitch({
       style={{ "--u": `calc(100cqw * ${LATTICE} / ${width})` } as CSSProperties}
     >
       <div className="flex flex-col justify-end">
-        <Heading className="fibo-tile m-0 mb-[max(0.75rem,1.2cqw)] text-[clamp(3.5rem,11cqw,5rem)] leading-none font-medium text-foreground">
+        <Heading className="fibo-tile m-0 mb-[max(0.75rem,1.2cqw)] font-heading text-[clamp(3.5rem,11cqw,5rem)] leading-none font-medium text-foreground">
           fibo
         </Heading>
         <p
