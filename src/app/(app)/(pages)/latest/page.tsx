@@ -3,6 +3,7 @@ import Image from "next/image"
 import type { Blog, WithContext } from "schema-dts"
 
 import { JSON_LD_ID } from "@/config/json-ld"
+import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { absoluteUrl } from "@/lib/utils"
 import {
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/latest" },
-  openGraph: { url: "/latest", type: "website" },
+  openGraph: { url: "/latest", type: "website", images: [SITE_INFO.ogImage] },
 }
 
 function getBlogJsonLd(posts: Doc[]): WithContext<Blog> {

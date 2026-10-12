@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { format } from "date-fns"
 
+import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { ArrowUpRightIcon } from "@/components/animated-icons/arrow-up-right-icon"
 import { Button } from "@/components/base/ui/button"
@@ -24,7 +25,11 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/recommendations" },
-  openGraph: { url: "/recommendations", type: "website" },
+  openGraph: {
+    url: "/recommendations",
+    type: "website",
+    images: [SITE_INFO.ogImage],
+  },
 }
 
 export default function Page() {

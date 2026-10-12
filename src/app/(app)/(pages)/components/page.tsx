@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
+import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { ArrowUpRightIcon } from "@/components/animated-icons/arrow-up-right-icon"
 import { AnimationsPauseToggle } from "@/components/animations-pause"
@@ -28,7 +29,11 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/components" },
-  openGraph: { url: "/components", type: "website" },
+  openGraph: {
+    url: "/components",
+    type: "website",
+    images: [SITE_INFO.ogImage],
+  },
 }
 
 export default function Page() {
