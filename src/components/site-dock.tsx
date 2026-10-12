@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { copyToClipboardWithEvent } from "@/utils/copy"
 import { decodeEmail } from "@/utils/string"
+import { useAtom } from "jotai"
 import {
   ArrowUpRightIcon,
   AwardIcon,
@@ -45,6 +46,7 @@ import { haptic } from "@/registry/lib/haptic"
 import { SOCIAL_ICONS } from "@/features/portfolio/components/social-link-icons"
 import { SOCIAL } from "@/features/portfolio/data/social-links"
 import { USER } from "@/features/portfolio/data/user"
+import { siteSearchOpenAtom } from "@/features/search/search-open"
 import { SiteSearch, type SearchDoc } from "@/features/search/site-search"
 
 // Past this distance from the top, scrolling down tucks the dock away. Small
@@ -84,10 +86,12 @@ function isCurrent(pathname: string, href: string) {
 }
 
 /**
- * The site's navigation on every screen: one floating split button at the
- * bottom. Search opens the command menu; the menu button opens a drawer with
- * every page, the home page's sections and ways to get in touch. The dock
- * steps aside while the page scrolls down and comes back on the way up.
+ * The site's navigation on phones: one floating split button at the bottom.
+ * Search opens the command menu; the menu button opens a drawer with every
+ * page, the home page's sections and ways to get in touch. The dock steps
+ * aside while the page scrolls down and comes back on the way up. From sm up
+ * the header holds the pages and search instead, but the search itself still
+ * lives here, so Cmd+K works at every size.
  */
 export function SiteDock({ docs }: { docs: SearchDoc[] }) {
   const pathname = usePathname()
@@ -95,7 +99,7 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
   const reduceMotion = useReducedMotion()
   const { scrollY } = useScroll()
   const [hidden, setHidden] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useAtom(siteSearchOpenAtom)
   const [menuOpen, setMenuOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   // iOS only raises the keyboard for a field focused inside the tap itself,
@@ -141,7 +145,7 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
         }
         // Tabbing into a hidden dock brings it back.
         onFocus={() => setHidden(false)}
-        className="pointer-events-none fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+1rem)] z-50 flex justify-center px-4"
+        className="pointer-events-none fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+1rem)] z-50 flex justify-center px-4 sm:hidden"
       >
         <nav
           aria-label="Site"
