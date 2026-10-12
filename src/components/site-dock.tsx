@@ -194,121 +194,129 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                 </Button>
               }
             />
-            <DrawerContent className="sm:mx-auto sm:max-w-xl">
-              <DrawerHeader className="flex-row items-center gap-3 pb-2 text-left">
-                {}
-                <img
-                  src={USER.headerAvatar}
-                  alt=""
-                  className="size-10 shrink-0"
+            <DrawerContent className="mb-[max(--spacing(2),env(safe-area-inset-bottom))] border [--drawer-bleed-background:transparent] [--drawer-inset:--spacing(2)] data-[swipe-direction=down]:rounded-3xl sm:mx-auto sm:max-w-xl">
+              {/* The home page's grid: rails at the column's edges, a line
+                  across the sheet between sections. */}
+              <div className="relative flex min-h-0 flex-1 flex-col">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-4 inset-y-0 border-x border-line"
                 />
-                <div className="flex flex-col items-start text-left">
-                  <DrawerTitle className="font-sans text-lg leading-tight">
-                    {USER.displayName}
-                  </DrawerTitle>
-                  <DrawerDescription className="leading-tight">
-                    {USER.discipline}
-                  </DrawerDescription>
-                </div>
-              </DrawerHeader>
-
-              <div className="flex min-h-0 flex-col gap-5 overflow-y-auto px-4 pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
-                <ul className="flex flex-col">
-                  {MENU.map((item) => {
-                    const current = isCurrent(pathname, item.href)
-                    return (
-                      <li key={item.href}>
-                        <Link
-                          href={item.href}
-                          aria-current={current ? "page" : undefined}
-                          onClick={() => setMenuOpen(false)}
-                          className="flex h-11 items-center gap-3 rounded-lg px-3 font-sans text-lg font-normal outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-accent [&_svg]:size-5 [&_svg]:text-muted-foreground"
-                        >
-                          {PAGE_ICONS[item.href]}
-                          <span className="flex-1">{item.title}</span>
-                          <ChevronRightIcon aria-hidden className="size-4!" />
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-
-                <section
-                  aria-labelledby="menu-about"
-                  className="flex flex-col gap-2"
-                >
-                  <h2
-                    id="menu-about"
-                    className="px-3 font-mono text-xs tracking-wide text-muted-foreground uppercase"
-                  >
-                    About me
-                  </h2>
-                  <div className="flex flex-wrap gap-2 px-1">
-                    {ABOUT.map((item) => (
-                      <Button
-                        key={item.id}
-                        variant="outline"
-                        size="sm"
-                        className="gap-1.5 rounded-full"
-                        onClick={() => goHome(item.id)}
-                      >
-                        {item.icon}
-                        {item.title}
-                      </Button>
-                    ))}
+                <DrawerHeader className="flex-row items-center gap-3 border-b border-line px-7 pt-6 pb-3 text-left">
+                  {}
+                  <img
+                    src={USER.headerAvatar}
+                    alt=""
+                    className="size-10 shrink-0"
+                  />
+                  <div className="flex flex-col items-start text-left">
+                    <DrawerTitle className="font-sans text-lg leading-tight">
+                      {USER.displayName}
+                    </DrawerTitle>
+                    <DrawerDescription className="leading-tight">
+                      {USER.discipline}
+                    </DrawerDescription>
                   </div>
-                </section>
+                </DrawerHeader>
 
-                <section
-                  aria-labelledby="menu-connect"
-                  className="flex flex-col gap-2"
-                >
-                  <h2
-                    id="menu-connect"
-                    className="px-3 font-mono text-xs tracking-wide text-muted-foreground uppercase"
+                <div className="flex min-h-0 flex-col overflow-y-auto pb-4">
+                  <ul className="flex flex-col border-b border-line px-5 py-1.5">
+                    {MENU.map((item) => {
+                      const current = isCurrent(pathname, item.href)
+                      return (
+                        <li key={item.href}>
+                          <Link
+                            href={item.href}
+                            aria-current={current ? "page" : undefined}
+                            onClick={() => setMenuOpen(false)}
+                            className="flex h-11 items-center gap-3 rounded-lg px-2 font-sans text-lg font-normal outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-accent [&_svg]:size-5 [&_svg]:text-muted-foreground"
+                          >
+                            {PAGE_ICONS[item.href]}
+                            <span className="flex-1">{item.title}</span>
+                            <ChevronRightIcon aria-hidden className="size-4!" />
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+
+                  <section
+                    aria-labelledby="menu-about"
+                    className="flex flex-col gap-2 border-b border-line px-5 py-4"
                   >
-                    Get in touch
-                  </h2>
-                  <div className="flex flex-wrap gap-2 px-1">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className={cn(
-                        "gap-1.5 rounded-full",
-                        copied && "text-success"
-                      )}
-                      onClick={copyEmail}
+                    <h2
+                      id="menu-about"
+                      className="px-2 font-mono text-xs tracking-wide text-muted-foreground uppercase"
                     >
-                      <CopyIcon />
-                      {copied ? "Email copied" : "Copy email"}
-                    </Button>
-                    {SOCIALS.map((social) => (
-                      <BaseButton
-                        key={social.name}
+                      About me
+                    </h2>
+                    <div className="flex flex-wrap gap-2">
+                      {ABOUT.map((item) => (
+                        <Button
+                          key={item.id}
+                          variant="outline"
+                          size="sm"
+                          className="gap-1.5 rounded-full"
+                          onClick={() => goHome(item.id)}
+                        >
+                          {item.icon}
+                          {item.title}
+                        </Button>
+                      ))}
+                    </div>
+                  </section>
+
+                  <section
+                    aria-labelledby="menu-connect"
+                    className="flex flex-col gap-2 px-5 py-4"
+                  >
+                    <h2
+                      id="menu-connect"
+                      className="px-2 font-mono text-xs tracking-wide text-muted-foreground uppercase"
+                    >
+                      Get in touch
+                    </h2>
+                    <div className="flex flex-wrap gap-2">
+                      <Button
                         variant="outline"
                         size="sm"
-                        className="gap-1.5 rounded-full"
-                        nativeButton={false}
-                        render={
-                          <a
-                            href={social.href}
-                            target="_blank"
-                            rel="noopener"
-                          />
-                        }
-                      >
-                        {social.icon}
-                        {/* X's mark already says its name. */}
-                        {social.name === "x" ? (
-                          <span className="sr-only">{social.title}</span>
-                        ) : (
-                          social.title
+                        className={cn(
+                          "gap-1.5 rounded-full",
+                          copied && "text-success"
                         )}
-                        <ArrowUpRightIcon className="text-muted-foreground" />
-                      </BaseButton>
-                    ))}
-                  </div>
-                </section>
+                        onClick={copyEmail}
+                      >
+                        <CopyIcon />
+                        {copied ? "Email copied" : "Copy email"}
+                      </Button>
+                      {SOCIALS.map((social) => (
+                        <BaseButton
+                          key={social.name}
+                          variant="outline"
+                          size="sm"
+                          className="gap-1.5 rounded-full"
+                          nativeButton={false}
+                          render={
+                            <a
+                              href={social.href}
+                              target="_blank"
+                              rel="noopener"
+                            />
+                          }
+                        >
+                          {social.icon}
+                          {/* X's mark already says its name. */}
+                          {social.name === "x" ? (
+                            <span className="sr-only">{social.title}</span>
+                          ) : (
+                            social.title
+                          )}
+                          <ArrowUpRightIcon className="text-muted-foreground" />
+                        </BaseButton>
+                      ))}
+                    </div>
+                  </section>
+                </div>
               </div>
             </DrawerContent>
           </Drawer>
