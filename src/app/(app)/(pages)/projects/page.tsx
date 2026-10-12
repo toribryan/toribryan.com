@@ -8,7 +8,6 @@ import { absoluteUrl } from "@/lib/utils"
 import { AnimationsPauseToggle } from "@/components/animations-pause"
 import {
   PageHeading,
-  PageHeadingDescription,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
@@ -17,6 +16,7 @@ import { getWorkDocs } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
 
 const title = "Projects"
+// Search results and the page's JSON-LD only; the page itself shows no lead.
 const description =
   "Case studies from product and design systems work: the problem, the decisions, and what shipped."
 
@@ -72,7 +72,6 @@ export default function Page() {
           <PageHeadingTitle className="pr-14">Projects</PageHeadingTitle>
           <AnimationsPauseToggle className="absolute top-1/2 right-3 -translate-y-1/2" />
         </div>
-        <PageHeadingDescription>{description}</PageHeadingDescription>
       </PageHeading>
 
       <div className="px-2 pb-4">
