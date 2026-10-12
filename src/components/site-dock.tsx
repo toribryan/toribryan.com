@@ -12,7 +12,6 @@ import {
   BookOpenIcon,
   BoxIcon,
   BriefcaseIcon,
-  ChevronRightIcon,
   CopyIcon,
   GraduationCapIcon,
   HomeIcon,
@@ -41,7 +40,6 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { Kbd } from "@/components/ui/kbd"
-import { Button as BaseButton } from "@/components/base/ui/button"
 import { Separator } from "@/components/base/ui/separator"
 import { haptic } from "@/registry/lib/haptic"
 import { SOCIAL_ICONS } from "@/features/portfolio/components/social-link-icons"
@@ -192,126 +190,88 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                 </Button>
               }
             />
-            <DrawerContent className="fibo-palette mb-[max(--spacing(2),env(safe-area-inset-bottom))] border bg-muted p-1.5 pt-0 [--drawer-bleed-background:transparent] [--drawer-inset:--spacing(2)] data-[swipe-direction=down]:rounded-3xl sm:mx-auto sm:max-w-xl">
-              {/* Search's inset look: a muted shell holding the header and
-                  links, with the pages in a card raised above it. */}
-              <div className="flex min-h-0 flex-1 flex-col">
-                <DrawerHeader className="flex-row items-center gap-3 px-3 pt-3 pb-3 text-left">
-                  {}
-                  <img
-                    src={USER.headerAvatar}
-                    alt=""
-                    className="size-10 shrink-0"
-                  />
-                  <div className="flex flex-col items-start text-left">
-                    <DrawerTitle className="font-sans text-lg leading-tight">
-                      {USER.displayName}
-                    </DrawerTitle>
-                    <DrawerDescription className="leading-tight">
-                      {USER.discipline}
-                    </DrawerDescription>
-                  </div>
-                </DrawerHeader>
-
-                <div className="flex min-h-0 flex-col overflow-y-auto pb-2">
-                  <ul className="flex flex-col rounded-[1.125rem] border bg-popover p-1.5 shadow-xs">
-                    {MENU.map((item) => {
-                      const current = isCurrent(pathname, item.href)
-                      return (
-                        <li key={item.href}>
-                          <Link
-                            href={item.href}
-                            aria-current={current ? "page" : undefined}
-                            onClick={() => setMenuOpen(false)}
-                            className="flex h-11 items-center gap-3 rounded-xl px-3 font-sans text-lg font-normal outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-accent [&_svg]:size-5 [&_svg]:text-muted-foreground"
-                          >
-                            {PAGE_ICONS[item.href]}
-                            <span className="flex-1">{item.title}</span>
-                            <ChevronRightIcon aria-hidden className="size-4!" />
-                          </Link>
-                        </li>
-                      )
-                    })}
-                  </ul>
-
-                  <section
-                    aria-labelledby="menu-about"
-                    className="flex flex-col gap-2 px-3 pt-4 pb-1"
-                  >
-                    <h2
-                      id="menu-about"
-                      className="font-mono text-xs tracking-wide text-muted-foreground uppercase"
-                    >
-                      About me
-                    </h2>
-                    <div className="flex flex-wrap gap-2">
-                      {ABOUT.map((item) => (
-                        <Button
-                          key={item.id}
-                          variant="outline"
-                          size="sm"
-                          className="gap-1.5 rounded-full"
-                          onClick={() => goHome(item.id)}
-                        >
-                          {item.icon}
-                          {item.title}
-                        </Button>
-                      ))}
-                    </div>
-                  </section>
-
-                  <section
-                    aria-labelledby="menu-connect"
-                    className="flex flex-col gap-2 px-3 pt-3 pb-1"
-                  >
-                    <h2
-                      id="menu-connect"
-                      className="font-mono text-xs tracking-wide text-muted-foreground uppercase"
-                    >
-                      Get in touch
-                    </h2>
-                    <div className="flex flex-wrap gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className={cn(
-                          "gap-1.5 rounded-full",
-                          copied && "text-success"
-                        )}
-                        onClick={copyEmail}
-                      >
-                        <CopyIcon />
-                        {copied ? "Email copied" : "Copy email"}
-                      </Button>
-                      {SOCIALS.map((social) => (
-                        <BaseButton
-                          key={social.name}
-                          variant="outline"
-                          size="sm"
-                          className="gap-1.5 rounded-full"
-                          nativeButton={false}
-                          render={
-                            <a
-                              href={social.href}
-                              target="_blank"
-                              rel="noopener"
-                            />
-                          }
-                        >
-                          {social.icon}
-                          {/* X's mark already says its name. */}
-                          {social.name === "x" ? (
-                            <span className="sr-only">{social.title}</span>
-                          ) : (
-                            social.title
-                          )}
-                          <ArrowUpRightIcon className="text-muted-foreground" />
-                        </BaseButton>
-                      ))}
-                    </div>
-                  </section>
+            <DrawerContent className="fibo-palette mb-[max(--spacing(2),env(safe-area-inset-bottom))] border bg-muted p-1 pt-0 [--drawer-bleed-background:transparent] [--drawer-inset:--spacing(2)] data-[swipe-direction=down]:rounded-2xl sm:mx-auto sm:max-w-xl">
+              {/* Search's inset look, at its sizes: a muted shell holding the
+                  header, and the groups in a card raised above it. */}
+              <DrawerHeader className="flex-row items-center gap-2.5 px-3 pt-1 pb-2.5 text-left">
+                {}
+                <img
+                  src={USER.headerAvatar}
+                  alt=""
+                  className="size-8 shrink-0"
+                />
+                <div className="flex flex-col items-start text-left">
+                  <DrawerTitle className="font-sans text-sm leading-tight font-medium">
+                    {USER.displayName}
+                  </DrawerTitle>
+                  <DrawerDescription className="text-xs leading-tight">
+                    {USER.discipline}
+                  </DrawerDescription>
                 </div>
+              </DrawerHeader>
+
+              <div className="min-h-0 overflow-y-auto rounded-xl border bg-popover p-2 shadow-xs">
+                <MenuGroup label="Pages">
+                  {MENU.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        aria-current={
+                          isCurrent(pathname, item.href) ? "page" : undefined
+                        }
+                        onClick={() => setMenuOpen(false)}
+                        className={MENU_ROW}
+                      >
+                        {PAGE_ICONS[item.href]}
+                        {item.title}
+                      </Link>
+                    </li>
+                  ))}
+                </MenuGroup>
+
+                <MenuGroup label="About me">
+                  {ABOUT.map((item) => (
+                    <li key={item.id}>
+                      <button
+                        type="button"
+                        className={MENU_ROW}
+                        onClick={() => goHome(item.id)}
+                      >
+                        {item.icon}
+                        {item.title}
+                      </button>
+                    </li>
+                  ))}
+                </MenuGroup>
+
+                <MenuGroup label="Get in touch">
+                  <li>
+                    <button
+                      type="button"
+                      className={cn(MENU_ROW, copied && "text-success")}
+                      onClick={copyEmail}
+                    >
+                      <CopyIcon />
+                      {copied ? "Email copied" : "Copy email"}
+                    </button>
+                  </li>
+                  {SOCIALS.map((social) => (
+                    <li key={social.name}>
+                      <a
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener"
+                        className={MENU_ROW}
+                      >
+                        {social.icon}
+                        <span className="flex-1">{social.title}</span>
+                        <ArrowUpRightIcon />
+                      </a>
+                    </li>
+                  ))}
+                </MenuGroup>
               </div>
+              <div className="h-1 shrink-0" />
             </DrawerContent>
           </Drawer>
         </nav>
@@ -331,5 +291,26 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
       />
       <SiteSearch docs={docs} open={searchOpen} onOpenChange={setSearchOpen} />
     </>
+  )
+}
+
+/** A row at the command menu's size, so the menu and search read as one. */
+const MENU_ROW =
+  "flex h-9 w-full items-center gap-2 rounded-md px-2 text-left text-sm outline-none hover:bg-accent focus-visible:bg-accent aria-[current=page]:bg-accent [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+
+function MenuGroup({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) {
+  return (
+    <section className="not-first:mt-2">
+      <h2 className="px-2 pt-1 pb-1.5 text-xs text-muted-foreground">
+        {label}
+      </h2>
+      <ul>{children}</ul>
+    </section>
   )
 }
