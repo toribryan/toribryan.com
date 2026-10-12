@@ -33,8 +33,10 @@ import {
   SmartphoneIcon,
   SunIcon,
 } from "lucide-react"
+import { useReducedMotion } from "motion/react"
 import { useTheme } from "next-themes"
 
+import OG_ROUTES from "@/config/og-routes.json"
 import { trackEvent } from "@/lib/events"
 import { revealHash } from "@/hooks/use-hash-target"
 import {
@@ -42,6 +44,16 @@ import {
   type CommandMenuGroup,
   type CommandMenuItem,
 } from "@/components/fibo/command-menu"
+import {
+  careerStage,
+  PAGE_COVERS,
+  RoleCover,
+} from "@/features/covers/iso-covers"
+import {
+  CoverPlate,
+  DocCoverPlate,
+} from "@/features/doc/components/doc-cover-plate"
+import { PartCoverPlate } from "@/features/portfolio/components/components/component-card-list"
 import { FigmaIcon } from "@/features/portfolio/components/fibo-hero/brand-icons"
 import { SOCIAL_ICONS } from "@/features/portfolio/components/social-link-icons"
 import { EXPERIENCES } from "@/features/portfolio/data/experiences"
@@ -79,6 +91,12 @@ function firstLines(markdown?: string) {
     .join(" ")
 }
 
+// A role's start, such as 06.2021 or 2022, as a month count for sorting.
+function monthOf(date: string) {
+  const [month, year] = date.includes(".") ? date.split(".") : ["1", date]
+  return Number(year) * 12 + Number(month)
+}
+
 // A role's span in years, such as 2023–2026, or 2026–now while ongoing.
 function years({ start, end }: { start: string; end?: string }) {
   const from = start.slice(-4)
@@ -88,6 +106,7 @@ function years({ start, end }: { start: string; end?: string }) {
 
 /** What the header hands over about each case study and post. */
 export type SearchDoc = {
+  slug: string
   href: string
   title: string
   description: string
@@ -98,15 +117,23 @@ export type SearchDoc = {
   keywords: string[]
 }
 
+// A page's social preview still, once `npm run og` has made one.
+function ogStill(href: string) {
+  return (OG_ROUTES as string[]).includes(href) ? `/og${href}.png` : undefined
+}
+
 // The command menu's own lead example listens for Cmd+K on its doc page.
 const OWN_HOTKEY_PAGE = "/components/command-menu"
 
 function Preview({
+  cover,
   image,
   title,
   meta,
   children,
 }: {
+  /** A cover plate, drawn in place of the image. */
+  cover?: ReactNode
   image?: string
   title: string
   meta?: string
@@ -114,15 +141,18 @@ function Preview({
 }) {
   return (
     <div className="flex flex-col gap-3">
-      {image ? (
-        // Covers are already sized at export time, like the cards'.
-        <img
-          src={image}
-          alt=""
-          className="aspect-1200/630 w-full rounded-md object-cover inset-ring-1 inset-ring-black/10"
-          loading="lazy"
-        />
-      ) : null}
+      {cover ??
+        (image ? (
+          // Covers are already sized at export time, like the cards'.
+          <CoverPlate>
+            <img
+              src={image}
+              alt=""
+              className="size-full object-cover"
+              loading="lazy"
+            />
+          </CoverPlate>
+        ) : null)}
       <div className="flex flex-col gap-1">
         <p className="font-medium text-balance text-foreground">{title}</p>
         {meta ? (
@@ -151,6 +181,7 @@ export function SiteSearch({
   const router = useRouter()
   const pathname = usePathname()
   const { setTheme } = useTheme()
+  const reduceMotion = useReducedMotion()
 
   const groups = useMemo<CommandMenuGroup[]>(() => {
     const go = (href: string) => () => router.push(href as Route)
@@ -168,14 +199,31 @@ export function SiteSearch({
       icon: ReactNode,
       about: string,
       keywords: string[] = []
-    ): CommandMenuItem => ({
-      value,
-      label,
-      icon,
-      keywords,
-      onSelect: href.startsWith("/#") ? home(href.slice(2)) : go(href),
-      preview: <Preview title={label}>{about}</Preview>,
-    })
+    ): CommandMenuItem => {
+      const Cover = PAGE_COVERS[value]
+      return {
+        value,
+        label,
+        icon,
+        keywords,
+        onSelect: href.startsWith("/#") ? home(href.slice(2)) : go(href),
+        preview: (
+          <Preview
+            cover={
+              Cover ? (
+                <CoverPlate>
+                  <Cover loop />
+                </CoverPlate>
+              ) : undefined
+            }
+            image={ogStill(href)}
+            title={label}
+          >
+            {about}
+          </Preview>
+        ),
+      }
+    }
 
     const doc = (d: SearchDoc): CommandMenuItem => ({
       value: `${d.kind}:${d.href}`,
@@ -189,7 +237,11 @@ export function SiteSearch({
       keywords: d.keywords,
       onSelect: go(d.href),
       preview: (
-        <Preview image={d.image} title={d.title} meta={d.period}>
+        <Preview
+          cover={<DocCoverPlate slug={d.slug} image={d.image} />}
+          title={d.title}
+          meta={d.period}
+        >
           {d.description}
         </Preview>
       ),
@@ -288,11 +340,11 @@ export function SiteSearch({
           ),
           page(
             "awards",
-            "Awards",
+            "Achievements",
             "/#awards",
             <AwardIcon />,
-            "Recognition for my work.",
-            ["honors"]
+            "Headline results from my work, and what drove them.",
+            ["awards", "honors", "results", "impact"]
           ),
           page(
             "certifications",
@@ -303,7 +355,14 @@ export function SiteSearch({
             ["certs", "courses"]
           ),
           ...EXPERIENCES.flatMap((company) =>
-            company.positions.map((role): CommandMenuItem => ({
+            company.positions.map((role) => ({ company, role }))
+          )
+            .sort(
+              (a, b) =>
+                monthOf(a.role.employmentPeriod.start) -
+                monthOf(b.role.employmentPeriod.start)
+            )
+            .map(({ company, role }): CommandMenuItem => ({
               value: `role:${role.id}`,
               label: `${role.title}, ${company.companyName}`,
               icon: <BriefcaseIcon />,
@@ -318,14 +377,18 @@ export function SiteSearch({
               onSelect: home(`role-${role.id}`),
               preview: (
                 <Preview
+                  cover={
+                    <CoverPlate>
+                      <RoleCover stage={careerStage(role.id)} loop />
+                    </CoverPlate>
+                  }
                   title={`${role.title}, ${company.companyName}`}
                   meta={`${role.employmentPeriod.start} – ${role.employmentPeriod.end ?? "Present"}`}
                 >
                   {firstLines(role.description)}
                 </Preview>
               ),
-            }))
-          ),
+            })),
         ],
       },
       {
@@ -349,6 +412,13 @@ export function SiteSearch({
               : away(fiboStorybookUrl(part.name)),
             preview: (
               <Preview
+                cover={
+                  <PartCoverPlate
+                    name={part.name}
+                    active={!reduceMotion}
+                    className="rounded-md"
+                  />
+                }
                 title={part.title}
                 meta={
                   pages.has(part.name)
@@ -447,7 +517,7 @@ export function SiteSearch({
         ],
       },
     ]
-  }, [docs, router, setTheme, pathname])
+  }, [docs, router, setTheme, pathname, reduceMotion])
 
   return (
     <CommandMenu

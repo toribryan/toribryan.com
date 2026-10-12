@@ -435,6 +435,26 @@ export function LoomIcon(props: IconProps) {
   )
 }
 
+export function GhosttyIcon(props: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      {...props}
+    >
+      <path
+        fill="none"
+        d="M4 21V10a8 8 0 0 1 16 0v11l-2.7-2-2.6 2-2.7-2-2.6 2-2.7-2Z"
+      />
+      <path fill="none" d="m8.5 9.5 2.5 2-2.5 2M13 13.5h3" />
+    </svg>
+  )
+}
+
 export function WebStormIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden {...props}>

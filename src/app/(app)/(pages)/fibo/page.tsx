@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
-import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { routePreview } from "@/lib/og"
 import { Components } from "@/features/portfolio/components/components"
 import { FiboHero } from "@/features/portfolio/components/fibo-hero"
 import { FiboStory } from "@/features/portfolio/components/fibo-story"
@@ -17,8 +17,11 @@ export const metadata: Metadata = {
   openGraph: {
     url: "/fibo",
     type: "website",
-    images: [SITE_INFO.ogImage],
-    videos: [SITE_INFO.ogVideo],
+    ...routePreview("/fibo", title),
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: routePreview("/fibo", title).images,
   },
 }
 

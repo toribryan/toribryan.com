@@ -1,4 +1,4 @@
-import { NextJsIcon, ShadcnIcon } from "@/components/icons"
+import { GhosttyIcon, NextJsIcon, ShadcnIcon } from "@/components/icons"
 
 export type BrandLinkEntry = {
   label: string
@@ -81,5 +81,10 @@ export const BRAND_LINKS: Record<string, BrandLinkEntry> = {
     label: "WebStorm",
     href: "https://www.jetbrains.com/webstorm",
     icon: <BrandMark src="/webstorm.svg" />,
+  },
+  ghostty: {
+    label: "Ghostty",
+    href: "https://ghostty.org",
+    icon: <GhosttyIcon />,
   },
 }

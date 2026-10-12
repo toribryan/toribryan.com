@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
-import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { routePreview } from "@/lib/og"
 import { ArrowUpRightIcon } from "@/components/animated-icons/arrow-up-right-icon"
 import { Button } from "@/components/base/ui/button"
 import {
@@ -28,8 +28,11 @@ export const metadata: Metadata = {
   openGraph: {
     url: "/recommendations",
     type: "website",
-    images: [SITE_INFO.ogImage],
-    videos: [SITE_INFO.ogVideo],
+    ...routePreview("/recommendations", title),
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: routePreview("/recommendations", title).images,
   },
 }
 

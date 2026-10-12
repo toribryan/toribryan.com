@@ -153,6 +153,16 @@ menu reach a home page section or role through its hash (`role-<id>` for a
 role); `hooks/use-hash-target.ts` lets the role open itself and scroll into
 view, opening Show more first when it sits behind it.
 
+Search previews and social previews draw the same covers as the cards. Pages, home sections and roles without a card draw an iso cover from `features/covers/iso-covers.tsx` (`PAGE_COVERS`, keyed by search entry; `RoleCover` changes its screen by `careerStage`), built on `iso-scene.tsx` and the `.iso-anim` keyframes at the end of `globals.css`. Otherwise:
+`DocCoverPlate` (`features/doc/components/doc-cover-plate.tsx`) for projects
+and posts, `PartCoverPlate` (in `component-card-list.tsx`) for fibo parts.
+Each route's social card is a 1200x630 page under `/og-frame`
+(`features/og/frames.ts` lists them; a post with no art draws `PostCover`, the blog's iso page, like its card). `npm run
+og` captures each into `public/og/<route>.png` and `.mp4` (Messages plays the
+MP4) and writes `config/og-routes.json`, which `routePreview` in `lib/og.ts`
+reads for each page's metadata. Run it against `npm run build && npm start` and
+commit the output whenever a cover, title or project changes.
+
 fibo's Floating nav (`src/components/fibo/floating-nav.tsx`) is still
 installed and documented like the parts above, though the site no longer uses
 it for navigation. If `shadcn add` stops on pnpm's ignored-build warning

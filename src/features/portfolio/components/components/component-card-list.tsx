@@ -33,6 +33,44 @@ const STAGE = 288
 const PLAYS_ON_HOVER = new Set(["reactions"])
 
 /**
+ * A part's cover plate: its live cover, or its still preview for a part
+ * without one. Shared by the cards, the site search and the social frames.
+ */
+export function PartCoverPlate({
+  name,
+  active,
+  className,
+}: {
+  name: string
+  active: boolean
+  className?: string
+}) {
+  const Cover = COVERS[name]
+  const preview = Cover ? null : PREVIEWS[name]
+  return (
+    <div
+      className={cn(
+        "fibo-palette relative aspect-4/3 overflow-hidden rounded-xl bg-cover-plate select-none",
+        className
+      )}
+      aria-hidden
+      inert
+    >
+      <ScaledStage width={STAGE}>
+        {Cover ? (
+          <Cover active={active} />
+        ) : preview ? (
+          <div className="flex size-full items-center justify-center">
+            {preview}
+          </div>
+        ) : null}
+      </ScaledStage>
+      <div className="pointer-events-none absolute inset-0 rounded-xl inset-ring-1 inset-ring-black/15 dark:inset-ring-white/15" />
+    </div>
+  )
+}
+
+/**
  * The fibo parts the home page features as cover cards, two across on phones
  * and three from md up, with the live part standing in for the cover image.
  */
@@ -178,8 +216,6 @@ function ComponentCard({
     !reduceMotion &&
     visible &&
     (onHover ? hovered || focused : !paused && inView)
-  const Cover = COVERS[part.name]
-  const preview = Cover ? null : PREVIEWS[part.name]
   const page = PAGES.get(part.name)
 
   return (
@@ -190,22 +226,7 @@ function ComponentCard({
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
     >
-      <div
-        className="fibo-palette relative aspect-4/3 overflow-hidden rounded-xl bg-cover-plate select-none"
-        aria-hidden
-        inert
-      >
-        <ScaledStage width={STAGE}>
-          {Cover ? (
-            <Cover active={active} />
-          ) : preview ? (
-            <div className="flex size-full items-center justify-center">
-              {preview}
-            </div>
-          ) : null}
-        </ScaledStage>
-        <div className="pointer-events-none absolute inset-0 rounded-xl inset-ring-1 inset-ring-black/15 dark:inset-ring-white/15" />
-      </div>
+      <PartCoverPlate name={part.name} active={active} />
 
       <div className="flex flex-col gap-1 p-1 sm:p-2">
         <h3 className="flex items-center gap-2 text-base leading-snug font-medium text-balance sm:text-lg">

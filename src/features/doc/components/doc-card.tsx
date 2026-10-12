@@ -9,6 +9,7 @@ import type { Doc } from "@/features/doc/types/document"
 
 import { CoverVideo } from "./cover-video"
 import { DOC_COVERS } from "./doc-covers"
+import { PostCover } from "./post-cover"
 
 type HeadingTypes = "h2" | "h3" | "h4"
 
@@ -73,12 +74,10 @@ export function DocCard({
           />
         ) : (
           <div
-            className="flex aspect-1200/630 items-center justify-center rounded-(--image-radius) bg-surface px-6"
+            className="aspect-1200/630 overflow-hidden rounded-(--image-radius) bg-cover-plate"
             aria-hidden
           >
-            <span className="line-clamp-2 text-center font-mono text-sm text-muted-foreground">
-              {title}
-            </span>
+            <PostCover />
           </div>
         )}
         {!Cover && image && video && (

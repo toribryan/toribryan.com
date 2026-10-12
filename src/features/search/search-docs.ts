@@ -9,6 +9,7 @@ function toSearchDoc(doc: Doc, kind: "work" | "latest"): SearchDoc {
   const m = doc.metadata
   const base = kind === "work" ? "/work" : "/latest"
   return {
+    slug: doc.slug,
     href: m.href ?? `${base}/${doc.slug}`,
     title: m.title,
     description: m.claim ?? m.description,
