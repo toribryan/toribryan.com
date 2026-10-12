@@ -8,6 +8,7 @@ type EventName =
   | "toc_inline_item_click"
   | "resume_menu_action"
   | "component_page_action"
+  | "site_search_select"
 
 export type Event = {
   name: EventName

@@ -1,0 +1,378 @@
+"use client"
+
+import { useMemo, useState, type ReactNode } from "react"
+import type { Route } from "next"
+import { usePathname, useRouter } from "next/navigation"
+import { copyToClipboardWithEvent } from "@/utils/copy"
+import { decodeEmail } from "@/utils/string"
+import {
+  BookOpenIcon,
+  BoxIcon,
+  BriefcaseIcon,
+  CopyIcon,
+  FileTextIcon,
+  HomeIcon,
+  MonitorIcon,
+  MoonIcon,
+  PaletteIcon,
+  QuoteIcon,
+  RabbitIcon,
+  SearchIcon,
+  SunIcon,
+} from "lucide-react"
+import { useTheme } from "next-themes"
+
+import { trackEvent } from "@/lib/events"
+import { Button } from "@/components/ui/button"
+import { Kbd } from "@/components/ui/kbd"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/base/ui/tooltip"
+import {
+  CommandMenu,
+  type CommandMenuGroup,
+  type CommandMenuItem,
+} from "@/components/fibo/command-menu"
+import { FigmaIcon } from "@/features/portfolio/components/fibo-hero/brand-icons"
+import { SOCIAL_ICONS } from "@/features/portfolio/components/social-link-icons"
+import {
+  CATALOG,
+  fiboStorybookUrl,
+} from "@/features/portfolio/data/fibo-catalog"
+import { NICHE_PARTS } from "@/features/portfolio/data/fibo-niche"
+import { SOCIAL } from "@/features/portfolio/data/social-links"
+import { USER } from "@/features/portfolio/data/user"
+
+/** What the header hands over about each case study and post. */
+export type SearchDoc = {
+  href: string
+  title: string
+  description: string
+  /** `work` or `latest`. */
+  kind: string
+  image?: string
+  period?: string
+  keywords: string[]
+}
+
+// The command menu's own lead example listens for Cmd+K on its doc page.
+const OWN_HOTKEY_PAGE = "/components/command-menu"
+
+function Preview({
+  image,
+  title,
+  meta,
+  children,
+}: {
+  image?: string
+  title: string
+  meta?: string
+  children: ReactNode
+}) {
+  return (
+    <div className="flex flex-col gap-3">
+      {image ? (
+        // Covers are already sized at export time, like the cards'.
+        <img
+          src={image}
+          alt=""
+          className="aspect-1200/630 w-full rounded-md object-cover inset-ring-1 inset-ring-black/10"
+          loading="lazy"
+        />
+      ) : null}
+      <div className="flex flex-col gap-1">
+        <p className="font-medium text-balance text-foreground">{title}</p>
+        {meta ? (
+          <p className="font-mono text-xs text-muted-foreground">{meta}</p>
+        ) : null}
+      </div>
+      <p className="text-pretty text-muted-foreground">{children}</p>
+    </div>
+  )
+}
+
+/**
+ * Search for the whole site: pages, case studies, posts and every fibo part,
+ * plus theme and contact actions. Opens from the header or with Cmd+K.
+ */
+export function SiteSearch({ docs }: { docs: SearchDoc[] }) {
+  const router = useRouter()
+  const pathname = usePathname()
+  const { setTheme } = useTheme()
+  const [open, setOpen] = useState(false)
+
+  const groups = useMemo<CommandMenuGroup[]>(() => {
+    const go = (href: string) => () => router.push(href as Route)
+    const away = (href: string) => () =>
+      window.open(href, "_blank", "noopener,noreferrer")
+
+    const page = (
+      value: string,
+      label: string,
+      href: string,
+      icon: ReactNode,
+      about: string,
+      keywords: string[] = []
+    ): CommandMenuItem => ({
+      value,
+      label,
+      icon,
+      keywords,
+      onSelect: go(href),
+      preview: <Preview title={label}>{about}</Preview>,
+    })
+
+    const doc = (d: SearchDoc): CommandMenuItem => ({
+      value: `${d.kind}:${d.href}`,
+      label: d.title,
+      icon: d.kind === "work" ? <BriefcaseIcon /> : <FileTextIcon />,
+      keywords: d.keywords,
+      onSelect: go(d.href),
+      preview: (
+        <Preview image={d.image} title={d.title} meta={d.period}>
+          {d.description}
+        </Preview>
+      ),
+    })
+
+    const pages = new Set(NICHE_PARTS.map((part) => part.name))
+    const email = decodeEmail(USER.emailB64)
+
+    return [
+      {
+        label: "Pages",
+        items: [
+          page(
+            "home",
+            "Home",
+            "/",
+            <HomeIcon />,
+            "Who I am, what I'm working on, and the newest projects."
+          ),
+          page(
+            "projects",
+            "Projects",
+            "/projects",
+            <BriefcaseIcon />,
+            "Every case study, from design systems to shipped product.",
+            ["work", "case studies", "portfolio"]
+          ),
+          page(
+            "blog",
+            "Blog",
+            "/latest",
+            <BookOpenIcon />,
+            "Posts on tools, process and the things I'm building.",
+            ["latest", "posts", "writing"]
+          ),
+          page(
+            "components",
+            "Components",
+            "/components",
+            <BoxIcon />,
+            "Every part in fibo, base and special, each installable with one shadcn command.",
+            ["fibo", "design system", "ui"]
+          ),
+          page(
+            "fibo",
+            "fibo lore",
+            "/fibo",
+            <RabbitIcon />,
+            "The story behind fibo: a pixel rabbit, and the puzzle that started the Fibonacci sequence.",
+            ["rabbit", "fibonacci", "design system"]
+          ),
+          page(
+            "figma",
+            "fibo in Figma",
+            "/fibo/figma",
+            <FigmaIcon />,
+            "fibo's Figma library: variables, components and how they map to code.",
+            ["figma", "library"]
+          ),
+          page(
+            "recommendations",
+            "Recommendations",
+            "/recommendations",
+            <QuoteIcon />,
+            "What people I've worked with say about working with me.",
+            ["testimonials", "references"]
+          ),
+        ],
+      },
+      {
+        label: "Projects",
+        items: docs.filter((d) => d.kind === "work").map(doc),
+      },
+      {
+        label: "Blog",
+        items: docs.filter((d) => d.kind === "latest").map(doc),
+      },
+      {
+        label: "Components",
+        items: CATALOG.filter((part) => part.status !== "deprecated").map(
+          (part): CommandMenuItem => ({
+            value: `part:${part.name}`,
+            label: part.title,
+            icon: <BoxIcon />,
+            keywords: [part.group, part.shelf.replace("-", " "), "fibo"],
+            onSelect: pages.has(part.name)
+              ? go(`/components/${part.name}`)
+              : away(fiboStorybookUrl(part.name)),
+            preview: (
+              <Preview
+                title={part.title}
+                meta={
+                  pages.has(part.name)
+                    ? part.group
+                    : `${part.group} · opens Storybook`
+                }
+              >
+                {part.description}
+              </Preview>
+            ),
+          })
+        ),
+      },
+      {
+        label: "Actions",
+        items: [
+          {
+            value: "theme",
+            label: "Change theme",
+            icon: <PaletteIcon />,
+            keywords: ["dark", "light", "mode"],
+            placeholder: "Pick a theme…",
+            preview: (
+              <Preview title="Change theme">
+                Light, dark, or whatever your system is set to. D toggles
+                between light and dark from anywhere.
+              </Preview>
+            ),
+            items: [
+              {
+                value: "theme-light",
+                label: "Light",
+                icon: <SunIcon />,
+                onSelect: () => setTheme("light"),
+              },
+              {
+                value: "theme-dark",
+                label: "Dark",
+                icon: <MoonIcon />,
+                onSelect: () => setTheme("dark"),
+              },
+              {
+                value: "theme-system",
+                label: "System",
+                icon: <MonitorIcon />,
+                onSelect: () => setTheme("system"),
+              },
+            ],
+          },
+          {
+            value: "copy-email",
+            label: "Copy email",
+            icon: <CopyIcon />,
+            keywords: ["contact", "mail", "hire"],
+            onSelect: () =>
+              void copyToClipboardWithEvent(email, {
+                name: "copy_email",
+                properties: { source: "search" },
+              }),
+            preview: <Preview title="Copy email">{email}</Preview>,
+          },
+          {
+            value: "linkedin",
+            label: "LinkedIn",
+            icon: SOCIAL_ICONS.linkedin,
+            keywords: ["contact", "social"],
+            onSelect: away(SOCIAL.linkedin.href),
+            preview: (
+              <Preview title="LinkedIn">
+                Opens my LinkedIn profile in a new tab.
+              </Preview>
+            ),
+          },
+          {
+            value: "github",
+            label: "GitHub",
+            icon: SOCIAL_ICONS.github,
+            keywords: ["code", "repos", "social"],
+            onSelect: away(SOCIAL.github.href),
+            preview: (
+              <Preview title="GitHub">
+                Opens my GitHub in a new tab, fibo and this site included.
+              </Preview>
+            ),
+          },
+          {
+            value: "x",
+            label: "X",
+            icon: SOCIAL_ICONS.x,
+            keywords: ["twitter", "social"],
+            onSelect: away(SOCIAL.x.href),
+            preview: (
+              <Preview title="X">Opens my X profile in a new tab.</Preview>
+            ),
+          },
+        ],
+      },
+    ]
+  }, [docs, router, setTheme])
+
+  // The menu's trigger slot takes a bare button, so the tooltip wraps a
+  // button of its own and the menu opens from state.
+  return (
+    <>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              className="relative touch-manipulation border-none"
+              variant="ghost"
+              size="icon-sm"
+              aria-label="Search"
+              aria-haspopup="dialog"
+              onClick={() => setOpen(true)}
+            >
+              <span
+                className="absolute size-12 pointer-fine:hidden"
+                aria-hidden
+              />
+              <SearchIcon aria-hidden />
+            </Button>
+          }
+        />
+        <TooltipContent className="pr-2 pl-3">
+          <div className="flex items-center gap-3">
+            Search
+            <Kbd>⌘K</Kbd>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+      <CommandMenu
+        groups={groups}
+        variant="inset"
+        open={open}
+        onOpenChange={setOpen}
+        trigger={null}
+        // fibo's own neutrals: the site's dark theme uses one gray for the
+        // popover, the muted shell and the highlight, so none of them show.
+        popupClassName="fibo-palette"
+        label="Search the site"
+        placeholder="Search projects, posts and components…"
+        emptyText="Nothing matches that yet"
+        storageKey="site-search-recent"
+        hotkey={pathname === OWN_HOTKEY_PAGE ? null : "k"}
+        onSelect={(item) =>
+          trackEvent({
+            name: "site_search_select",
+            properties: { item: item.value },
+          })
+        }
+      />
+    </>
+  )
+}
