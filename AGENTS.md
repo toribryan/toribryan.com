@@ -153,7 +153,7 @@ menu reach a home page section or role through its hash (`role-<id>` for a
 role); `hooks/use-hash-target.ts` lets the role open itself and scroll into
 view, opening Show more first when it sits behind it.
 
-Search previews and social previews draw the same covers as the cards:
+Search previews and social previews draw the same covers as the cards. Pages, home sections and roles without a card draw an iso cover from `features/covers/iso-covers.tsx` (`PAGE_COVERS`, keyed by search entry; `RoleCover` changes its screen by `careerStage`), built on `iso-scene.tsx` and the `.iso-anim` keyframes at the end of `globals.css`. Otherwise:
 `DocCoverPlate` (`features/doc/components/doc-cover-plate.tsx`) for projects
 and posts, `PartCoverPlate` (in `component-card-list.tsx`) for fibo parts.
 Each route's social card is a 1200x630 page under `/og-frame`

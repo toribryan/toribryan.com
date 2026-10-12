@@ -1,5 +1,6 @@
 import type { ComponentType } from "react"
 
+import { PortfolioPostCover } from "@/features/covers/iso-covers"
 import { FolderArtCover } from "@/features/folder-art/folder-art-gallery"
 
 import { AgenticDesignSystemCover } from "./agentic-design-system-cover"
@@ -21,6 +22,7 @@ export const DOC_COVERS: Record<string, ComponentType<{ loop?: boolean }>> = {
   fibo: FiboCover,
   "folder-art": FolderArtCover,
   "modern-care-homes": ModernCareHomesCover,
+  "portfolio-website": PortfolioPostCover,
   "rabbit-run": RabbitRunCover,
   "real-wedding-submissions": RealWeddingSubmissionsCardCover,
   "storybook-kit": StorybookKitCover,
