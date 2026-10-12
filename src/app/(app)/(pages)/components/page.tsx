@@ -33,6 +33,7 @@ export const metadata: Metadata = {
     url: "/components",
     type: "website",
     images: [SITE_INFO.ogImage],
+    videos: [SITE_INFO.ogVideo],
   },
 }
 

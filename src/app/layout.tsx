@@ -75,6 +75,7 @@ export const metadata: Metadata = {
         alt: `${USER.displayName} – ${USER.jobTitle}`,
       },
     ],
+    videos: [SITE_INFO.ogVideo],
   },
   twitter: {
     card: "summary_large_image",
