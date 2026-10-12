@@ -1,5 +1,7 @@
 import type { ComponentType } from "react"
 
+import { FolderArtGallery } from "@/features/folder-art/folder-art-gallery"
+
 import { IphoneDuoProjectHero } from "./iphone-duo-hero"
 import { RabbitRunProjectHero } from "./rabbit-run-cover"
 import { VoiceMemoProjectHero } from "./voice-memo-hero"
@@ -11,6 +13,7 @@ import { VoiceMemoProjectHero } from "./voice-memo-hero"
  */
 export const DOC_HEROES: Record<string, ComponentType> = {
   "iphone-duo": IphoneDuoProjectHero,
+  "folder-art": FolderArtGallery,
   "rabbit-run": RabbitRunProjectHero,
   "voice-memo": VoiceMemoProjectHero,
 }
