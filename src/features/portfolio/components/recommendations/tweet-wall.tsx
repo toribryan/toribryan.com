@@ -2,123 +2,122 @@ import { BadgeCheckIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { SOCIAL_ICONS } from "@/features/portfolio/components/social-link-icons"
-import { TWEETS, type Tweet } from "@/features/portfolio/data/tweets"
+import { SOCIAL } from "@/features/portfolio/data/social-links"
+import {
+  TWEETS,
+  type QuotedPost,
+  type Tweet,
+} from "@/features/portfolio/data/tweets"
+import { USER } from "@/features/portfolio/data/user"
 
-/** The posts as staggered cards on the page's grid, each one marked at its corner. */
+/** The posts as X draws them: who, then what, with a quoted post inside. */
 export function TweetWall() {
   return (
-    <div className="grid gap-10 px-8 pt-10 pb-12 sm:grid-cols-2 sm:gap-8 sm:pb-20">
-      {TWEETS.map((tweet, index) => (
-        <TweetFigure
-          key={tweet.handle}
-          tweet={tweet}
-          className={cn(index % 2 === 1 && "sm:translate-y-8")}
-        />
+    <div className="grid items-start gap-4 p-4 sm:grid-cols-2">
+      {TWEETS.map((tweet) => (
+        <Post key={tweet.handle} tweet={tweet} />
       ))}
     </div>
   )
 }
 
-function TweetFigure({
-  tweet,
-  className,
-}: {
-  tweet: Tweet
-  className?: string
-}) {
+function Post({ tweet }: { tweet: Tweet }) {
   const profile = `https://x.com/${tweet.handle}`
   // A post that's only an emoji or two reads as a reaction, so it's drawn big.
   const reaction = [...tweet.text].length <= 3
 
   return (
-    <figure
-      className={cn(
-        "relative flex flex-col justify-between gap-6 bg-background p-6",
-        className
-      )}
-    >
-      <div aria-hidden className="absolute -inset-y-3 -left-px w-px bg-line" />
-      <div aria-hidden className="absolute -inset-y-3 -right-px w-px bg-line" />
-      <div aria-hidden className="absolute -inset-x-3 -top-px h-px bg-line" />
-      <div
-        aria-hidden
-        className="absolute -inset-x-3 -bottom-px h-px bg-line"
-      />
-      <Crosshair />
+    <figure className="relative flex flex-col gap-4 rounded-xl border bg-card p-5 text-card-foreground shadow-xs">
+      <figcaption className="flex items-center gap-3 pr-8">
+        <a
+          href={profile}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex min-w-0 items-center gap-3"
+        >
+          <img src={tweet.avatar} alt="" className="size-11 rounded-full" />
+          <span className="flex min-w-0 flex-col">
+            <cite className="flex items-center gap-1 font-semibold not-italic group-hover:underline">
+              {tweet.name}
+              {tweet.verified && (
+                <BadgeCheckIcon
+                  aria-label="Verified"
+                  className="size-4 shrink-0 fill-info text-card"
+                />
+              )}
+            </cite>
+            <span className="text-sm text-muted-foreground">
+              @{tweet.handle}
+            </span>
+          </span>
+        </a>
+      </figcaption>
 
       <a
         href={profile}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${tweet.name} on X`}
-        className="absolute top-5 right-5 text-muted-foreground transition-colors hover:text-foreground [&_svg]:size-4"
+        className="absolute top-5 right-5 text-foreground transition-opacity hover:opacity-70 [&_svg]:size-4"
       >
         {SOCIAL_ICONS.x}
       </a>
 
-      <blockquote>
+      <blockquote className="flex flex-col gap-3">
+        {tweet.replyingTo && (
+          <p className="text-sm text-muted-foreground">
+            Replying to{" "}
+            <a
+              href={`https://x.com/${tweet.replyingTo}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-info hover:underline"
+            >
+              @{tweet.replyingTo}
+            </a>
+          </p>
+        )}
         <p
           className={cn(
             "text-pretty",
-            reaction ? "text-5xl leading-none" : "text-base/relaxed"
+            reaction ? "text-4xl leading-none" : "text-base/relaxed"
           )}
         >
           {tweet.text}
         </p>
+        {tweet.quoting && <Quoted post={tweet.quoting} />}
       </blockquote>
-
-      <figcaption className="flex flex-col gap-3">
-        <a
-          href={tweet.context.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-fit font-mono text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
-        >
-          {tweet.context.label}
-        </a>
-        <a
-          href={profile}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex w-fit items-center gap-3"
-        >
-          <img
-            src={tweet.avatar}
-            alt=""
-            className="size-10 rounded-full ring-2 ring-border ring-offset-2 ring-offset-background transition-shadow group-hover:ring-muted-foreground"
-          />
-          <span className="flex flex-col">
-            <cite className="flex items-center gap-1 text-sm font-medium not-italic">
-              {tweet.name}
-              {tweet.verified && (
-                <BadgeCheckIcon
-                  aria-label="Verified"
-                  className="size-3.5 text-info"
-                />
-              )}
-            </cite>
-            <span className="text-xs text-muted-foreground">
-              @{tweet.handle}
-            </span>
-          </span>
-        </a>
-      </figcaption>
     </figure>
   )
 }
 
-function Crosshair() {
+/** The quoted post, Tori's own, nested the way X nests it. */
+function Quoted({ post }: { post: QuotedPost }) {
+  const { handle, href } = SOCIAL.x
+
   return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      className="pointer-events-none absolute top-0 left-0 z-1 size-3.5 -translate-x-[calc(50%+0.5px)] -translate-y-[calc(50%+0.5px)] text-muted-foreground"
-    >
-      <path d="M5 12h14" />
-      <path d="M12 5v14" />
-    </svg>
+    <div className="flex flex-col gap-1.5 rounded-xl border p-3 text-sm">
+      <p className="flex min-w-0 items-center gap-1.5">
+        <img src={USER.headerAvatar} alt="" className="size-5 rounded-full" />
+        <span className="font-semibold">{USER.displayName}</span>
+        <span className="truncate text-muted-foreground">
+          <a href={href} target="_blank" rel="noopener noreferrer">
+            @{handle}
+          </a>{" "}
+          · {post.date}
+        </span>
+      </p>
+      <p className="text-pretty">
+        {post.text}{" "}
+        <a
+          href={post.link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-info hover:underline"
+        >
+          {post.link.label}
+        </a>
+      </p>
+    </div>
   )
 }

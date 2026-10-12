@@ -7,8 +7,19 @@ export type Tweet = {
   verified?: boolean
   /** The post, verbatim. */
   text: string
-  /** What the post answers: a quote or a reply, and where that lives. */
-  context: { label: string; href: string }
+  /** The handle it replies to, shown above the text the way X does. */
+  replyingTo?: string
+  /** The post it quotes, drawn inside it. */
+  quoting?: QuotedPost
+}
+
+export type QuotedPost = {
+  /** Shown as `M/D/YY`, the way X does. */
+  date: string
+  /** The text before its link. */
+  text: string
+  /** The link at its end, as X shortens it. */
+  link: { label: string; href: string }
 }
 
 const TOKEN_FLOW = "https://21st.dev/@iamtoribryan/components/token-flow"
@@ -21,14 +32,18 @@ export const TWEETS: Tweet[] = [
     avatar: "/images/recommendations/shadcnspace.png",
     verified: true,
     text: "Love seeing the Integration Card inspire something completely new a theme aware token visualizer for design systems.",
-    context: { label: "Quoting my Token flow post", href: TOKEN_FLOW },
+    quoting: {
+      date: "9/17/26",
+      text: 'Built a theme-aware token visualizer for my design system case studies, inspired by @ShadcnSpace "Integration Card" 😁',
+      link: { label: "21st.dev/@iamtoribryan/…", href: TOKEN_FLOW },
+    },
   },
   {
     name: "void.",
     handle: "voidyaps",
     avatar: "/images/recommendations/voidyaps.png",
     verified: true,
+    replyingTo: "iamtoribryan",
     text: "🤯",
-    context: { label: "Replying to my Token flow post", href: TOKEN_FLOW },
   },
 ]
