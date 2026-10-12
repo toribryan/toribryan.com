@@ -16,7 +16,7 @@ export const USER: User = {
   address: "Arizona, United States",
   emailB64: "dG9yaWJyeWFuLmRlc2lnbkBnbWFpbC5jb20=", // toribryan.design@gmail.com
   website: "https://toribryan.com",
-  jobTitle: "Design Engineer",
+  jobTitle: "Product Designer",
   /** Shown under the name in the hero; broader than the job title. */
   discipline: "Product Designer",
   jobs: [
@@ -45,7 +45,7 @@ export const USER: User = {
    * The 1200x630 social card, not a photo: it is what renders when the link is
    * texted or pasted into Slack.
    */
-  ogImage: "/og-tori-bryan.png",
+  ogImage: "/og-tori-bryan-left.png",
   keywords: [
     "tori bryan",
     "toribryan",

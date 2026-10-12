@@ -3,10 +3,25 @@ import type { Route } from "next"
 import type { NavItem } from "@/types/nav"
 import { USER } from "@/features/portfolio/data/user"
 
+const SITE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://www.toribryan.com"
+
 export const SITE_INFO = {
   name: USER.displayName,
-  url: process.env.NEXT_PUBLIC_APP_URL || "https://www.toribryan.com",
+  url: SITE_URL,
   ogImage: USER.ogImage,
+  /**
+   * The social card's animated version. Messages on iPhone and Mac download a
+   * direct MP4 named here and play it in the link bubble; everywhere else
+   * falls back to `ogImage`. Messages caps preview assets at 10 MB. Absolute,
+   * because Next resolves `metadataBase` for images but not for videos.
+   */
+  ogVideo: {
+    url: `${SITE_URL}/og-tori-bryan-left.mp4`,
+    secureUrl: `${SITE_URL}/og-tori-bryan-left.mp4`,
+    type: "video/mp4",
+    width: 1200,
+    height: 630,
+  },
   description: USER.bio,
   keywords: USER.keywords,
 }
