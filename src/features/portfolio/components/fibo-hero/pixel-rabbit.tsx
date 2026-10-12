@@ -621,7 +621,7 @@ function PixelRabbitSprite({
   )
 }
 
-export { compose, invert, PixelRabbitSprite, Runs }
+export { compose, PixelRabbitSprite, Runs }
 export type {
   Grid as RabbitGrid,
   Pose as RabbitPose,

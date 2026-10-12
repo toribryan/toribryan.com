@@ -13,12 +13,11 @@ const ALL = [...FOLDERS, ...BOARD_FOLDERS]
 const bySlug = (slug: string) => ALL.find((f) => f.slug === slug)!
 
 // Shuffled once, so the colour and the ink-and-paper folders sit mixed
-// together. Each takes its number from its place along the sequence.
+// together.
 const FIBO_ORDER = [
   "bondi",
   "window",
   "hello",
-  "ink",
   "garden",
   "quilt",
   "tiling",
@@ -31,11 +30,6 @@ const FIBO_ORDER = [
   "glyphs",
   "sunflower",
 ]
-
-const SEQUENCE = FIBO_ORDER.reduce<number[]>(
-  (seq, _, i) => [...seq, i < 2 ? 1 : seq[i - 1]! + seq[i - 2]!],
-  []
-)
 
 const SET = FIBO_ORDER.map(bySlug)
 
@@ -63,7 +57,7 @@ export function FolderArtGallery() {
                 className="w-full transition-transform duration-300 ease-out group-hover/folder:-translate-y-1 motion-reduce:transition-none"
               />
               <p className="font-mono text-xs text-muted-foreground tabular-nums">
-                No. {SEQUENCE[i]}
+                No. {i + 1}
               </p>
               <a
                 className="inline-flex items-center gap-1.5 rounded-md px-1.5 py-0.5 text-sm font-medium outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"

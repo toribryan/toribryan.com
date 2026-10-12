@@ -5,7 +5,6 @@ import type { CSSProperties, ReactNode } from "react"
 import { cn } from "@/lib/utils"
 import {
   compose,
-  invert,
   Runs,
   type RabbitGrid,
 } from "@/features/portfolio/components/fibo-hero/pixel-rabbit"
@@ -296,59 +295,6 @@ const paper: Art = {
       </>
     )
   },
-}
-
-/* -------------------------------------------------------------------------- */
-/* No. 1 · Ink                                                                */
-/* -------------------------------------------------------------------------- */
-
-const INVERTED = invert(RESTING)
-const BASELINE = BOTTOM - 89
-
-const ink: Art = {
-  back: N[800],
-  front: N[900],
-  rim: N[700],
-  // The other half of the pair in Fibonacci's puzzle, who only comes up on hover.
-  lift: 144,
-  peek: (
-    <Rabbit
-      x={X0 + 89}
-      y={FRONT_TOP + 10 - 16}
-      pixel={8}
-      grid={PERKED}
-      line={INK}
-      fill={PAPER}
-    />
-  ),
-  frontArt: () => (
-    <>
-      <line
-        x1={X0 + 55}
-        y1={BASELINE + 1.5}
-        x2={X1 - 55}
-        y2={BASELINE + 1.5}
-        stroke={N[600]}
-        strokeWidth={3}
-        strokeDasharray="13 8"
-      />
-      <Rabbit
-        x={X0 + W / 1.618 + (W - W / 1.618 - 260) / 2}
-        y={BASELINE - 23 * 13}
-        pixel={13}
-        grid={INVERTED}
-        line={N[900]}
-        fill={PAPER}
-      />
-      <PixelText
-        text="1202"
-        x={X0 + 55}
-        y={BASELINE - 34 - 56}
-        pixel={8}
-        fill={N[500]}
-      />
-    </>
-  ),
 }
 
 /* -------------------------------------------------------------------------- */
@@ -651,11 +597,6 @@ export const FOLDERS: FolderEntry[] = [
     slug: "paper",
     title: "Paper",
     art: paper,
-  },
-  {
-    slug: "ink",
-    title: "Ink",
-    art: ink,
   },
   {
     slug: "tiling",
