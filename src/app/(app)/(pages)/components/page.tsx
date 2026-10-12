@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
-import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { routePreview } from "@/lib/og"
 import { ArrowUpRightIcon } from "@/components/animated-icons/arrow-up-right-icon"
 import { AnimationsPauseToggle } from "@/components/animations-pause"
 import { Button } from "@/components/base/ui/button"
@@ -32,8 +32,11 @@ export const metadata: Metadata = {
   openGraph: {
     url: "/components",
     type: "website",
-    images: [SITE_INFO.ogImage],
-    videos: [SITE_INFO.ogVideo],
+    ...routePreview("/components", title),
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: routePreview("/components", title).images,
   },
 }
 

@@ -3,8 +3,8 @@ import Image from "next/image"
 import type { Blog, WithContext } from "schema-dts"
 
 import { JSON_LD_ID } from "@/config/json-ld"
-import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { routePreview } from "@/lib/og"
 import { absoluteUrl } from "@/lib/utils"
 import {
   PageHeading,
@@ -26,8 +26,11 @@ export const metadata: Metadata = {
   openGraph: {
     url: "/latest",
     type: "website",
-    images: [SITE_INFO.ogImage],
-    videos: [SITE_INFO.ogVideo],
+    ...routePreview("/latest", title),
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: routePreview("/latest", title).images,
   },
 }
 

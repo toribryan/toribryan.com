@@ -5,6 +5,7 @@ import type { CreativeWork, WithContext } from "schema-dts"
 import { JSON_LD_ID } from "@/config/json-ld"
 import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { routePreview } from "@/lib/og"
 import { absoluteUrl } from "@/lib/utils"
 import { DocEnterSound } from "@/features/doc/components/doc-enter-sound"
 import { DocPage } from "@/features/doc/components/doc-page"
@@ -36,6 +37,7 @@ export async function generateMetadata({
 
   const { title, description, image, createdAt, updatedAt } = doc.metadata
   const url = `/work/${doc.slug}`
+  const preview = routePreview(url, title, image ?? SITE_INFO.ogImage)
 
   return {
     title,
@@ -50,11 +52,10 @@ export async function generateMetadata({
       locale: "en_US",
       // Metadata from a parent segment is replaced rather than merged, so
       // without a fallback here a doc with no cover of its own would render a
-      // card with no image at all. Dimensions are left off because the covers
-      // are not all 1200x630 and a wrong hint is worse than none.
-      images: [{ url: image ?? SITE_INFO.ogImage, alt: title }],
+      // card with no image at all.
+      ...preview,
     },
-    twitter: { images: [image ?? SITE_INFO.ogImage] },
+    twitter: { card: "summary_large_image", images: preview.images },
   }
 }
 

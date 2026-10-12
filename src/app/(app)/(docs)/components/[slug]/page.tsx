@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { routePreview } from "@/lib/og"
 import { ComponentDocPage } from "@/features/components/components/component-doc-page"
 import { COMPONENTS } from "@/features/components/data/registry"
 import {
@@ -30,7 +31,15 @@ export async function generateMetadata({
     title: doc.metadata.title,
     description: doc.metadata.description,
     alternates: { canonical: url },
-    openGraph: { url, type: "article" },
+    openGraph: {
+      url,
+      type: "article",
+      ...routePreview(url, doc.metadata.title),
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: routePreview(url, doc.metadata.title).images,
+    },
   }
 }
 

@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import type { CollectionPage, WithContext } from "schema-dts"
 
 import { JSON_LD_ID } from "@/config/json-ld"
-import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { routePreview } from "@/lib/og"
 import { absoluteUrl } from "@/lib/utils"
 import { AnimationsPauseToggle } from "@/components/animations-pause"
 import {
@@ -27,8 +27,11 @@ export const metadata: Metadata = {
   openGraph: {
     url: "/projects",
     type: "website",
-    images: [SITE_INFO.ogImage],
-    videos: [SITE_INFO.ogVideo],
+    ...routePreview("/projects", title),
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: routePreview("/projects", title).images,
   },
 }
 
