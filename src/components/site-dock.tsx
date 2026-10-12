@@ -193,9 +193,13 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                   alt=""
                   className="size-10 shrink-0"
                 />
-                <div className="flex flex-col items-start gap-0.5 text-left">
-                  <DrawerTitle>{USER.displayName}</DrawerTitle>
-                  <DrawerDescription>{USER.discipline}</DrawerDescription>
+                <div className="flex flex-col items-start text-left">
+                  <DrawerTitle className="font-sans leading-tight">
+                    {USER.displayName}
+                  </DrawerTitle>
+                  <DrawerDescription className="leading-tight">
+                    {USER.discipline}
+                  </DrawerDescription>
                 </div>
               </DrawerHeader>
 
@@ -209,7 +213,7 @@ export function SiteDock({ docs }: { docs: SearchDoc[] }) {
                           href={item.href}
                           aria-current={current ? "page" : undefined}
                           onClick={() => setMenuOpen(false)}
-                          className="flex h-11 items-center gap-3 rounded-lg px-3 font-heading text-lg font-medium outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-accent [&_svg]:size-5 [&_svg]:text-muted-foreground"
+                          className="flex h-11 items-center gap-3 rounded-lg px-3 font-sans text-lg font-medium outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-accent [&_svg]:size-5 [&_svg]:text-muted-foreground"
                         >
                           {PAGE_ICONS[item.href]}
                           <span className="flex-1">{item.title}</span>
