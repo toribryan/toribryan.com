@@ -9,7 +9,6 @@ import { decodeEmail } from "@/utils/string"
 import {
   ArrowUpRightIcon,
   AwardIcon,
-  BadgeCheckIcon,
   BookOpenIcon,
   BoxIcon,
   BriefcaseIcon,
@@ -69,8 +68,7 @@ const ABOUT = [
   { id: "experience", title: "Experience", icon: <BriefcaseIcon /> },
   { id: "education", title: "Education", icon: <GraduationCapIcon /> },
   { id: "stack", title: "Tech stack", icon: <LayersIcon /> },
-  { id: "awards", title: "Awards", icon: <AwardIcon /> },
-  { id: "certs", title: "Certifications", icon: <BadgeCheckIcon /> },
+  { id: "awards", title: "Achievements", icon: <AwardIcon /> },
 ]
 
 const SOCIALS = (["linkedin", "github", "x", "twentyFirstDev"] as const).map(
