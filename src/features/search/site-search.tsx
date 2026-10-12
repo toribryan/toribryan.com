@@ -33,8 +33,10 @@ import {
   SmartphoneIcon,
   SunIcon,
 } from "lucide-react"
+import { useReducedMotion } from "motion/react"
 import { useTheme } from "next-themes"
 
+import OG_ROUTES from "@/config/og-routes.json"
 import { trackEvent } from "@/lib/events"
 import { revealHash } from "@/hooks/use-hash-target"
 import {
@@ -42,6 +44,8 @@ import {
   type CommandMenuGroup,
   type CommandMenuItem,
 } from "@/components/fibo/command-menu"
+import { DocCoverPlate } from "@/features/doc/components/doc-cover-plate"
+import { PartCoverPlate } from "@/features/portfolio/components/components/component-card-list"
 import { FigmaIcon } from "@/features/portfolio/components/fibo-hero/brand-icons"
 import { SOCIAL_ICONS } from "@/features/portfolio/components/social-link-icons"
 import { EXPERIENCES } from "@/features/portfolio/data/experiences"
@@ -88,6 +92,7 @@ function years({ start, end }: { start: string; end?: string }) {
 
 /** What the header hands over about each case study and post. */
 export type SearchDoc = {
+  slug: string
   href: string
   title: string
   description: string
@@ -98,15 +103,23 @@ export type SearchDoc = {
   keywords: string[]
 }
 
+// A page's social preview still, once `npm run og` has made one.
+function ogStill(href: string) {
+  return (OG_ROUTES as string[]).includes(href) ? `/og${href}.png` : undefined
+}
+
 // The command menu's own lead example listens for Cmd+K on its doc page.
 const OWN_HOTKEY_PAGE = "/components/command-menu"
 
 function Preview({
+  cover,
   image,
   title,
   meta,
   children,
 }: {
+  /** A cover plate, drawn in place of the image. */
+  cover?: ReactNode
   image?: string
   title: string
   meta?: string
@@ -114,15 +127,16 @@ function Preview({
 }) {
   return (
     <div className="flex flex-col gap-3">
-      {image ? (
-        // Covers are already sized at export time, like the cards'.
-        <img
-          src={image}
-          alt=""
-          className="aspect-1200/630 w-full rounded-md object-cover inset-ring-1 inset-ring-black/10"
-          loading="lazy"
-        />
-      ) : null}
+      {cover ??
+        (image ? (
+          // Covers are already sized at export time, like the cards'.
+          <img
+            src={image}
+            alt=""
+            className="aspect-1200/630 w-full rounded-md object-cover inset-ring-1 inset-ring-black/10"
+            loading="lazy"
+          />
+        ) : null)}
       <div className="flex flex-col gap-1">
         <p className="font-medium text-balance text-foreground">{title}</p>
         {meta ? (
@@ -151,6 +165,7 @@ export function SiteSearch({
   const router = useRouter()
   const pathname = usePathname()
   const { setTheme } = useTheme()
+  const reduceMotion = useReducedMotion()
 
   const groups = useMemo<CommandMenuGroup[]>(() => {
     const go = (href: string) => () => router.push(href as Route)
@@ -174,7 +189,11 @@ export function SiteSearch({
       icon,
       keywords,
       onSelect: href.startsWith("/#") ? home(href.slice(2)) : go(href),
-      preview: <Preview title={label}>{about}</Preview>,
+      preview: (
+        <Preview image={ogStill(href)} title={label}>
+          {about}
+        </Preview>
+      ),
     })
 
     const doc = (d: SearchDoc): CommandMenuItem => ({
@@ -189,7 +208,11 @@ export function SiteSearch({
       keywords: d.keywords,
       onSelect: go(d.href),
       preview: (
-        <Preview image={d.image} title={d.title} meta={d.period}>
+        <Preview
+          cover={<DocCoverPlate slug={d.slug} image={d.image} />}
+          title={d.title}
+          meta={d.period}
+        >
           {d.description}
         </Preview>
       ),
@@ -349,6 +372,13 @@ export function SiteSearch({
               : away(fiboStorybookUrl(part.name)),
             preview: (
               <Preview
+                cover={
+                  <PartCoverPlate
+                    name={part.name}
+                    active={!reduceMotion}
+                    className="rounded-md"
+                  />
+                }
                 title={part.title}
                 meta={
                   pages.has(part.name)
@@ -447,7 +477,7 @@ export function SiteSearch({
         ],
       },
     ]
-  }, [docs, router, setTheme, pathname])
+  }, [docs, router, setTheme, pathname, reduceMotion])
 
   return (
     <CommandMenu
