@@ -1,7 +1,7 @@
 ---
 title: "Folder art"
-description: "Eight macOS folder icons in fibo's design language, numbered along the Fibonacci sequence. Ink and paper, golden cuts, dither and one pixel rabbit."
-claim: "A set of folder icons drawn in fibo's design language."
+description: "Sixteen macOS folder icons. Eight in fibo's design language, numbered along the Fibonacci sequence, and eight closer to the loud, colourful board that started it."
+claim: "Sixteen folder icons, half in fibo's language and half off the board."
 image: "/images/folder-art/cover.png"
 hideLead: true
 new: true
@@ -16,7 +16,7 @@ skills:
   - "React"
 ---
 
-Eight folders for your Mac, drawn in the same language as fibo. Hover one to see what's tucked behind the front. Each name downloads the 1024px PNG.
+Sixteen folders for your Mac. The first eight are drawn in fibo's language. The second eight are closer to the board that started it. Hover one to see what's tucked behind the front. Each name downloads the 1024px PNG.
 
 ## Where it started
 
@@ -24,7 +24,7 @@ I saved a Folder Art board on Pinterest, curated by @vambooster, and couldn't st
 
 But fibo has no brand hue. Colour only shows up as light in a photograph. So the challenge was taking a board full of colour and redrawing every idea in ink and paper, without losing what made each one fun.
 
-## The set
+## The fibo set
 
 The folders are numbered along the sequence, so there are two No. 1s. That's on purpose.
 
@@ -39,16 +39,32 @@ The folders are numbered along the sequence, so there are two No. 1s. That's on 
 
 Two folders on the board were other artists' characters, a little bunny face and a cat-eared head. I left those alone and gave the spots to fibo.
 
+## Off the board
+
+After the fibo set I still wanted the colour. So the second eight drop fibo's rules and go straight back to the board. Same folder body, no limits on hue.
+
+- **Quilt.** Primary red, yellow and blue blocks with a checker, a sunburst and print grain.
+- **Garden.** Pink flowers behind a yellow pixel checker that runs in diamond bands.
+- **Heat.** Blurred orange, magenta and blue, a rounded star in neon outline and a little sun.
+- **Hello.** Green phosphor on black, with a glow and scanlines. It says hello, world!! and means it.
+- **Paw.** A black cat's paw reaching in from above, toe beans out. It reaches further when you hover.
+- **Felt.** Grey felt with stitching and a sleepy face. It wakes up when you hover.
+- **Bondi.** See-through teal plastic, so you can see the paper inside.
+- **Tufted.** Black quilted leather with buttons.
+
+I didn't copy anything off the board directly. Each one is my own take on a mood I liked.
+
 ## How it's built
 
 - Every folder is one React component drawing plain SVG on a 1024 canvas, the size macOS asks for.
 - The body is a golden rectangle. It's 832 wide, the front is 514 tall, and the tab takes the short side of the cut, 318.
 - Sizes come off the sequence wherever I could manage it. The rabbit is drawn 13 pixels to the pixel, and margins run 21, 34, 55 and 89.
+- The grain, felt, fur and glow are SVG filters, so the textures scale with the folder instead of being pasted in as images.
 - The PNGs are rendered from the same components the page draws, so the downloads and the site can't drift apart.
 
 ## Using them
 
-1. Download a PNG, or grab all eight with the button above.
+1. Download a PNG, or grab all sixteen with the button above.
 2. Open the PNG in Preview and copy it with Command C.
 3. Select a folder in Finder and open Get Info with Command I.
 4. Click the little folder icon at the top of the panel and paste with Command V.

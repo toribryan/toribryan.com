@@ -24,7 +24,7 @@ import { textCells } from "./pixel-font"
 
 const INK = "#0a0a0a"
 const PAPER = "#f3f3f1"
-const N = {
+export const N = {
   100: "#f5f5f5",
   200: "#e5e5e5",
   300: "#d4d4d4",
@@ -36,15 +36,15 @@ const N = {
   900: "#171717",
 }
 
-const X0 = 96
-const X1 = 928
-const W = X1 - X0
+export const X0 = 96
+export const X1 = 928
+export const W = X1 - X0
 const TAB = 318
 const TAB_TOP = 196
 const BACK_TOP = 244
-const FRONT_TOP = 314
-const BOTTOM = 828
-const FRONT_H = BOTTOM - FRONT_TOP
+export const FRONT_TOP = 314
+export const BOTTOM = 828
+export const FRONT_H = BOTTOM - FRONT_TOP
 const R = 40
 
 const BACK_PATH = [
@@ -131,7 +131,7 @@ function Rabbit({
 }
 
 /** A line of pixel type, each cell `pixel` wide. */
-function PixelText({
+export function PixelText({
   text,
   x,
   y,
@@ -160,7 +160,7 @@ function PixelText({
 }
 
 // A loose sheet tucked behind the front, lifted into view on hover.
-function Sheet({ fill = N[100], line = N[300] }) {
+export function Sheet({ fill = N[100], line = N[300] }) {
   return (
     <g>
       <rect
@@ -187,15 +187,24 @@ function Sheet({ fill = N[100], line = N[300] }) {
   )
 }
 
-type Art = {
-  back: string
-  front: string
+type Fill = string | ((id: string) => string)
+
+export type Art = {
+  /** A colour, or a function of the folder's id for a fill from its defs. */
+  back: Fill
+  front: Fill
+  /** Below 1 for a see-through front, so the peek shows behind it. */
+  frontOpacity?: number
   /** A lighter line along the top of the front, where light catches its edge. */
   rim: string
   /** Sits between back and front and rises on hover. */
   peek?: ReactNode
   /** How far the peek rises, in canvas units. */
   lift?: number
+  /** Drawn over the front, unclipped, and lowered on hover. */
+  over?: (id: string) => ReactNode
+  /** How far the over layer drops on hover. */
+  overDrop?: number
   /** Drawn on the back panel, clipped to it. */
   backArt?: ReactNode
   /** Drawn on the front panel, clipped to it. */
@@ -487,9 +496,12 @@ function plate(src: string, cropX: number, cropY: number) {
   }
 }
 
+// Half-size copies of the fibo plates. Browsers sample an SVG image without
+// averaging, so the full plates' 1px gutters alias away to paper at icon
+// sizes. The PNG export swaps the full plates back in.
 const PLATES = {
-  sunflower: "/images/fibo/sunflower-dither.webp",
-  bunny: "/images/fibo/bunny-dither.webp",
+  sunflower: "/images/folder-art/plate-sunflower.webp",
+  bunny: "/images/folder-art/plate-bunny.webp",
 }
 
 const sunflower: Art = {
@@ -691,6 +703,9 @@ export const FOLDERS: FolderEntry[] = [
   },
 ]
 
+const paint = (fill: Fill, id: string) =>
+  typeof fill === "function" ? fill(id) : fill
+
 /**
  * One folder as a standalone SVG. `id` keeps its defs apart from any other
  * copy on the page. Hover and focus on an ancestor `group/folder` or
@@ -745,7 +760,7 @@ export function Folder({
       </defs>
 
       <g filter={`url(#${id}-shadow)`}>
-        <path d={BACK_PATH} fill={art.back} />
+        <path d={BACK_PATH} fill={paint(art.back, id)} />
         {art.backArt && <g clipPath={`url(#${id}-back)`}>{art.backArt}</g>}
       </g>
 
@@ -765,7 +780,8 @@ export function Folder({
           width={W}
           height={FRONT_H}
           rx={R}
-          fill={art.front}
+          fill={paint(art.front, id)}
+          fillOpacity={art.frontOpacity}
         />
         {art.frontArt && (
           <g clipPath={`url(#${id}-front)`}>{art.frontArt(id)}</g>
@@ -777,6 +793,15 @@ export function Folder({
           strokeLinecap="round"
         />
       </g>
+
+      {art.over && (
+        <g
+          className="folder-peek"
+          style={{ "--lift": `${art.overDrop ?? 21}px` } as CSSProperties}
+        >
+          {art.over(id)}
+        </g>
+      )}
     </svg>
   )
 }
