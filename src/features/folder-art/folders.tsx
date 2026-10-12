@@ -201,10 +201,6 @@ export type Art = {
   peek?: ReactNode
   /** How far the peek rises, in canvas units. */
   lift?: number
-  /** Drawn over the front, unclipped, and lowered on hover. */
-  over?: (id: string) => ReactNode
-  /** How far the over layer drops on hover. */
-  overDrop?: number
   /** Drawn on the back panel, clipped to it. */
   backArt?: ReactNode
   /** Drawn on the front panel, clipped to it. */
@@ -783,15 +779,6 @@ export function Folder({
           strokeLinecap="round"
         />
       </g>
-
-      {art.over && (
-        <g
-          className="folder-peek"
-          style={{ "--lift": `${art.overDrop ?? 21}px` } as CSSProperties}
-        >
-          {art.over(id)}
-        </g>
-      )}
     </svg>
   )
 }

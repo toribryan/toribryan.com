@@ -1,7 +1,7 @@
 ---
 title: "Folder art"
-description: "Sixteen macOS folder icons, numbered along the Fibonacci sequence. Ink and paper, golden cuts and a pixel rabbit, shuffled in with the loud colour of the board that started it."
-claim: "Sixteen folder icons, ink and paper shuffled in with colour."
+description: "Fifteen macOS folder icons, numbered along the Fibonacci sequence. Ink and paper, golden cuts and a pixel rabbit, shuffled in with the loud colour of the board that started it."
+claim: "Fifteen folder icons, ink and paper shuffled in with colour."
 image: "/images/folder-art/cover.png"
 hideLead: true
 new: true
@@ -31,3 +31,11 @@ skills:
 - No. 233, Terminal
 - No. 377, Glyphs
 - No. 610, Sunflower
+
+## How it's built
+
+- Every folder is one React component drawing plain SVG on a 1024 canvas, the size macOS asks for.
+- The body is a golden rectangle. It's 832 wide, the front is 514 tall, and the tab takes the short side of the cut, 318.
+- Sizes come off the sequence wherever I could manage it. The rabbit is drawn 13 pixels to the pixel, and margins run 21, 34, 55 and 89.
+- The grain, felt and glow are SVG filters, so the textures scale with the folder instead of being pasted in as images.
+- The PNGs are rendered from the same components the page draws, so the downloads and the site can't drift apart.

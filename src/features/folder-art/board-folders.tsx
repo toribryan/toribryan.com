@@ -17,8 +17,8 @@ import {
 
 /*
  * The second set, closer to the board that started this: loud colour, print
- * grain, materials and a little face or two. Same folder body as the fibo
- * set, none of its rules.
+ * grain, materials and a little face. Same folder body as the fibo set,
+ * none of its rules.
  */
 
 const CX = X0 + W / 2
@@ -391,57 +391,6 @@ const hello: Art = {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Paw                                                                        */
-/* -------------------------------------------------------------------------- */
-
-const BEAN = "#f3a5b9"
-
-const paw: Art = {
-  back: "#141414",
-  front: "#f2efe9",
-  rim: "#ffffff",
-  overDrop: 34,
-  defs: (id) => (
-    <>
-      {grainFilter(id, 0.7, 2)}
-      <filter
-        id={`${id}-fur`}
-        filterUnits="userSpaceOnUse"
-        x={0}
-        y={-200}
-        width={1024}
-        height={900}
-      >
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency={0.55}
-          numOctaves={3}
-          seed={4}
-        />
-        <feDisplacementMap in="SourceGraphic" scale={26} />
-      </filter>
-    </>
-  ),
-  frontArt: (id) => <Grain id={id} opacity={0.12} />,
-  // A cat's paw reaching in from above, beans out.
-  over: (id) => (
-    <g transform="rotate(-16 660 470)">
-      <g fill="#111" filter={`url(#${id}-fur)`}>
-        <rect x={585} y={-260} width={150} height={700} rx={75} />
-        <ellipse cx={660} cy={470} rx={112} ry={100} />
-      </g>
-      <g fill={BEAN}>
-        <ellipse cx={660} cy={462} rx={46} ry={36} />
-        <ellipse cx={598} cy={514} rx={18} ry={22} />
-        <ellipse cx={638} cy={536} rx={18} ry={22} />
-        <ellipse cx={682} cy={536} rx={18} ry={22} />
-        <ellipse cx={722} cy={514} rx={18} ry={22} />
-      </g>
-    </g>
-  ),
-}
-
-/* -------------------------------------------------------------------------- */
 /* Felt                                                                       */
 /* -------------------------------------------------------------------------- */
 
@@ -610,7 +559,6 @@ export const BOARD_FOLDERS: FolderEntry[] = [
   { slug: "garden", title: "Garden", art: garden },
   { slug: "heat", title: "Heat", art: heat },
   { slug: "hello", title: "Hello", art: hello },
-  { slug: "paw", title: "Paw", art: paw },
   { slug: "felt", title: "Felt", art: felt },
   { slug: "bondi", title: "Bondi", art: bondi },
   { slug: "tufted", title: "Tufted", art: tufted },
