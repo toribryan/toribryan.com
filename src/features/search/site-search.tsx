@@ -91,6 +91,12 @@ function firstLines(markdown?: string) {
     .join(" ")
 }
 
+// A role's start, such as 06.2021 or 2022, as a month count for sorting.
+function monthOf(date: string) {
+  const [month, year] = date.includes(".") ? date.split(".") : ["1", date]
+  return Number(year) * 12 + Number(month)
+}
+
 // A role's span in years, such as 2023–2026, or 2026–now while ongoing.
 function years({ start, end }: { start: string; end?: string }) {
   const from = start.slice(-4)
@@ -347,7 +353,14 @@ export function SiteSearch({
             ["certs", "courses"]
           ),
           ...EXPERIENCES.flatMap((company) =>
-            company.positions.map((role): CommandMenuItem => ({
+            company.positions.map((role) => ({ company, role }))
+          )
+            .sort(
+              (a, b) =>
+                monthOf(a.role.employmentPeriod.start) -
+                monthOf(b.role.employmentPeriod.start)
+            )
+            .map(({ company, role }): CommandMenuItem => ({
               value: `role:${role.id}`,
               label: `${role.title}, ${company.companyName}`,
               icon: <BriefcaseIcon />,
@@ -373,8 +386,7 @@ export function SiteSearch({
                   {firstLines(role.description)}
                 </Preview>
               ),
-            }))
-          ),
+            })),
         ],
       },
       {
