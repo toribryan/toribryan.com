@@ -45,7 +45,7 @@ export const USER: User = {
    * The 1200x630 social card, not a photo: it is what renders when the link is
    * texted or pasted into Slack.
    */
-  ogImage: "/og-cover.png",
+  ogImage: "/og-tori-bryan.png",
   keywords: [
     "tori bryan",
     "toribryan",

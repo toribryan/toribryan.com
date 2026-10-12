@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import type { CollectionPage, WithContext } from "schema-dts"
 
 import { JSON_LD_ID } from "@/config/json-ld"
+import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { absoluteUrl } from "@/lib/utils"
 import { AnimationsPauseToggle } from "@/components/animations-pause"
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/projects" },
-  openGraph: { url: "/projects", type: "website" },
+  openGraph: { url: "/projects", type: "website", images: [SITE_INFO.ogImage] },
 }
 
 function getProjectsJsonLd(projects: Doc[]): WithContext<CollectionPage> {

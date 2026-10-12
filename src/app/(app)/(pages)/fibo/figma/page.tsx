@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import { SITE_INFO } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { ArrowUpRightIcon } from "@/components/animated-icons/arrow-up-right-icon"
 import { Button } from "@/components/base/ui/button"
@@ -20,7 +21,11 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/fibo/figma" },
-  openGraph: { url: "/fibo/figma", type: "website" },
+  openGraph: {
+    url: "/fibo/figma",
+    type: "website",
+    images: [SITE_INFO.ogImage],
+  },
 }
 
 export default function Page() {
