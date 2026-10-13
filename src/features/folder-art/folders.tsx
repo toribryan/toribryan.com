@@ -591,6 +591,168 @@ const glyphs: Art = {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Print · a rabbit pressed in by a thumb                                     */
+/* -------------------------------------------------------------------------- */
+
+// Ridges sit 13 apart and run 5 wide, so paper and ink alternate the way a
+// real print does at this size.
+const RIDGE = 13
+const PRINT_CORE = { x: 470, y: 696 }
+const LOOPS = 15
+
+/** Slow, smooth drift, so the ridges read as skin and not as a lathe. */
+const drift = (x: number, y: number) =>
+  2.6 * Math.sin(x * 0.031 + y * 0.017) + 1.8 * Math.sin(x * 0.011 - y * 0.023)
+
+const fmt = (n: number) => n.toFixed(1)
+
+/** One ridge of the loop: up one leg, over the top and down the other. */
+function loopPoints(k: number) {
+  const w = 6 + k * RIDGE
+  const h = 18 + k * RIDGE * 1.18
+  const { x: cx, y: cy } = PRINT_CORE
+  const left: [number, number][] = []
+  const right: [number, number][] = []
+  // Legs splay a little as they run off the bottom of the pad.
+  for (let y = BOTTOM; y > cy; y -= 12) {
+    const splay = (y - cy) * 0.22
+    left.push([cx - w - splay, y])
+    right.unshift([cx + w + splay, y])
+  }
+  const arc: [number, number][] = []
+  for (let t = Math.PI; t >= 0; t -= Math.PI / 40) {
+    arc.push([cx + Math.cos(t) * w, cy - Math.sin(t) * h])
+  }
+  return [...left, ...arc, ...right]
+}
+
+const toPath = (points: [number, number][]) =>
+  `M${points.map(([x, y]) => `${fmt(x)} ${fmt(y + drift(x, y))}`).join(" L")}`
+
+const PRINT_LOOPS = [
+  ...Array.from({ length: LOOPS }, (_, k) => toPath(loopPoints(k))),
+  // Inside the innermost loop the ridges fan down off the core, a side
+  // ridge joining once the gap is wide enough to hold it.
+  ...[-1, 0, 1].map((j) => {
+    const points: [number, number][] = []
+    const from = PRINT_CORE.y + (j === 0 ? 22 : 66)
+    for (let y = from; y <= BOTTOM; y += 12) {
+      const half = 6 + (y - PRINT_CORE.y) * 0.22
+      points.push([PRINT_CORE.x + (j * half) / 2, y])
+    }
+    return toPath(points)
+  }),
+]
+
+/** Above the loop the ridges run across, bowing over its crown. */
+const PRINT_SWEEPS = Array.from(
+  { length: Math.ceil((BOTTOM - FRONT_TOP) / RIDGE) },
+  (_, i) => {
+    const y = FRONT_TOP + 8 + i * RIDGE
+    const points: [number, number][] = []
+    for (let x = 300; x <= 720; x += 12) {
+      const dx = (x - PRINT_CORE.x) / 220
+      const bow = -22 * Math.exp(-dx * dx)
+      points.push([x, y + bow + (x - 300) * -0.05])
+    }
+    return toPath(points)
+  }
+)
+
+/** The outermost ridge, closed off, so the sweeps can stay out of the loop. */
+const LOOP_BOUND = `${toPath(loopPoints(LOOPS - 0.5))} Z`
+
+/** The rabbit's outline, sitting with its back to us and its face turned right. */
+function PrintRabbit() {
+  return (
+    <>
+      <ellipse cx={478} cy={700} rx={146} ry={118} />
+      <ellipse cx={510} cy={600} rx={112} ry={96} />
+      <ellipse cx={562} cy={520} rx={92} ry={74} />
+      <ellipse
+        cx={526}
+        cy={420}
+        rx={27}
+        ry={78}
+        transform="rotate(-14 526 420)"
+      />
+      <ellipse
+        cx={590}
+        cy={414}
+        rx={26}
+        ry={82}
+        transform="rotate(12 590 414)"
+      />
+    </>
+  )
+}
+
+const print: Art = {
+  back: N[800],
+  front: INK,
+  rim: N[700],
+  peek: <Sheet fill={N[200]} line={N[400]} />,
+  defs: (id) => (
+    <>
+      <clipPath id={`${id}-rabbit`}>
+        <PrintRabbit />
+      </clipPath>
+      {/* The loop owns the body; the sweeping ridges stay out of it. */}
+      <mask id={`${id}-sweeps`} maskUnits="userSpaceOnUse">
+        <rect x={0} y={0} width={1024} height={1024} fill="#fff" />
+        <path d={LOOP_BOUND} fill="#000" />
+      </mask>
+    </>
+  ),
+  frontArt: (id) => (
+    <>
+      <g
+        clipPath={`url(#${id}-rabbit)`}
+        fill="none"
+        stroke={PAPER}
+        strokeWidth={5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <g mask={`url(#${id}-sweeps)`}>
+          {PRINT_SWEEPS.map((d, i) => (
+            <path key={i} d={d} />
+          ))}
+        </g>
+        {PRINT_LOOPS.map((d, i) => (
+          <path key={i} d={d} />
+        ))}
+      </g>
+      {/* The eye, a gap in the ridges with a bead of ink in it. */}
+      <circle
+        cx={600}
+        cy={506}
+        r={13}
+        fill={INK}
+        stroke={PAPER}
+        strokeWidth={4}
+      />
+      <circle cx={602} cy={504} r={3} fill={PAPER} />
+      {/* The tail, the one soft thing in the print. */}
+      <g fill={PAPER}>
+        <circle cx={612} cy={782} r={21} />
+        {Array.from({ length: 13 }, (_, i) => {
+          const a = (i / 13) * Math.PI * 2
+          return (
+            <circle
+              key={i}
+              cx={612 + Math.cos(a) * 21}
+              cy={782 + Math.sin(a) * 21}
+              r={5}
+            />
+          )
+        })}
+      </g>
+    </>
+  ),
+}
+
+/* -------------------------------------------------------------------------- */
 
 export const FOLDERS: FolderEntry[] = [
   {
@@ -627,6 +789,11 @@ export const FOLDERS: FolderEntry[] = [
     slug: "glyphs",
     title: "Glyphs",
     art: glyphs,
+  },
+  {
+    slug: "print",
+    title: "Print",
+    art: print,
   },
 ]
 
