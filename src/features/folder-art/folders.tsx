@@ -614,9 +614,10 @@ function loopPoints(k: number) {
   const { x: cx, y: cy } = PRINT_CORE
   const left: [number, number][] = []
   const right: [number, number][] = []
-  // Legs splay a little as they run off the bottom of the pad.
+  // Legs splay as they run off the bottom of the pad, the outer ones most,
+  // so the core stays one tight hairpin and the ridges keep their spacing.
   for (let y = BOTTOM; y > cy; y -= 12) {
-    const splay = (y - cy) * 0.22
+    const splay = (y - cy) * 0.22 * (k / LOOPS)
     left.push([cx - w - splay, y])
     right.unshift([cx + w + splay, y])
   }
@@ -630,20 +631,9 @@ function loopPoints(k: number) {
 const toPath = (points: [number, number][]) =>
   `M${points.map(([x, y]) => `${fmt(x)} ${fmt(y + drift(x, y))}`).join(" L")}`
 
-const PRINT_LOOPS = [
-  ...Array.from({ length: LOOPS }, (_, k) => toPath(loopPoints(k))),
-  // Inside the innermost loop the ridges fan down off the core, a side
-  // ridge joining once the gap is wide enough to hold it.
-  ...[-1, 0, 1].map((j) => {
-    const points: [number, number][] = []
-    const from = PRINT_CORE.y + (j === 0 ? 22 : 66)
-    for (let y = from; y <= BOTTOM; y += 12) {
-      const half = 6 + (y - PRINT_CORE.y) * 0.22
-      points.push([PRINT_CORE.x + (j * half) / 2, y])
-    }
-    return toPath(points)
-  }),
-]
+const PRINT_LOOPS = Array.from({ length: LOOPS }, (_, k) =>
+  toPath(loopPoints(k))
+)
 
 /** Above the loop the ridges run across, bowing over its crown. */
 const PRINT_SWEEPS = Array.from(
