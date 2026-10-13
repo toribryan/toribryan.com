@@ -598,6 +598,7 @@ const glyphs: Art = {
 // real print does at this size.
 const RIDGE = 13
 const PRINT_CORE = { x: 470, y: 696 }
+const EYE = { x: 598, y: 504, r: 28 }
 const LOOPS = 15
 
 /** Slow, smooth drift, so the ridges read as skin and not as a lathe. */
@@ -697,6 +698,25 @@ const print: Art = {
       <clipPath id={`${id}-rabbit`}>
         <PrintRabbit />
       </clipPath>
+      <radialGradient id={`${id}-eye-white`} cx="0.42" cy="0.38" r="0.7">
+        <stop offset="0" stopColor="#ffffff" />
+        <stop offset="0.7" stopColor={N[100]} />
+        <stop offset="1" stopColor={N[300]} />
+      </radialGradient>
+      {/* The dome's edge, darkening where the plastic curves away. */}
+      <radialGradient id={`${id}-eye-dome`} cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0.72" stopColor="#000" stopOpacity={0} />
+        <stop offset="1" stopColor="#000" stopOpacity={0.28} />
+      </radialGradient>
+      <filter
+        id={`${id}-eye-shadow`}
+        x="-50%"
+        y="-50%"
+        width="200%"
+        height="200%"
+      >
+        <feGaussianBlur stdDeviation="5" />
+      </filter>
       {/* The loop owns the body; the sweeping ridges stay out of it. */}
       <mask id={`${id}-sweeps`} maskUnits="userSpaceOnUse">
         <rect x={0} y={0} width={1024} height={1024} fill="#fff" />
@@ -723,16 +743,51 @@ const print: Art = {
           <path key={i} d={d} />
         ))}
       </g>
-      {/* The eye, a gap in the ridges with a bead of ink in it. */}
-      <circle
-        cx={600}
-        cy={506}
-        r={13}
-        fill={INK}
-        stroke={PAPER}
-        strokeWidth={4}
-      />
-      <circle cx={602} cy={504} r={3} fill={PAPER} />
+      {/* A googly eye: a clear dome over a loose pupil that settles low,
+          and swings when the folder is hovered. */}
+      <g>
+        <circle
+          cx={EYE.x + 2}
+          cy={EYE.y + 7}
+          r={EYE.r}
+          fill="#000"
+          opacity={0.55}
+          filter={`url(#${id}-eye-shadow)`}
+        />
+        <circle
+          cx={EYE.x}
+          cy={EYE.y}
+          r={EYE.r}
+          fill={`url(#${id}-eye-white)`}
+        />
+        <g className="googly-pupil">
+          <circle cx={EYE.x - 3} cy={EYE.y + 10} r={15} fill={INK} />
+        </g>
+        <circle
+          cx={EYE.x}
+          cy={EYE.y}
+          r={EYE.r}
+          fill={`url(#${id}-eye-dome)`}
+          stroke={N[400]}
+          strokeWidth={2}
+        />
+        <ellipse
+          cx={EYE.x - 11}
+          cy={EYE.y - 13}
+          rx={9}
+          ry={5}
+          transform={`rotate(-35 ${EYE.x - 11} ${EYE.y - 13})`}
+          fill="#fff"
+          opacity={0.95}
+        />
+        <circle
+          cx={EYE.x + 12}
+          cy={EYE.y + 14}
+          r={2.5}
+          fill="#fff"
+          opacity={0.7}
+        />
+      </g>
       {/* The tail, the one soft thing in the print. */}
       <g fill={PAPER}>
         <circle cx={612} cy={782} r={21} />
