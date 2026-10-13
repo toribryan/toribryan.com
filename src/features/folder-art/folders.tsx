@@ -790,14 +790,14 @@ const print: Art = {
       </g>
       {/* The tail, the one soft thing in the print. */}
       <g fill={PAPER}>
-        <circle cx={612} cy={782} r={21} />
+        <circle cx={338} cy={770} r={21} />
         {Array.from({ length: 13 }, (_, i) => {
           const a = (i / 13) * Math.PI * 2
           return (
             <circle
               key={i}
-              cx={612 + Math.cos(a) * 21}
-              cy={782 + Math.sin(a) * 21}
+              cx={338 + Math.cos(a) * 21}
+              cy={770 + Math.sin(a) * 21}
               r={5}
             />
           )
