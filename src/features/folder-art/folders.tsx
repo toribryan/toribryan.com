@@ -599,6 +599,8 @@ const glyphs: Art = {
 const RIDGE = 13
 const PRINT_CORE = { x: 470, y: 696 }
 const EYE = { x: 598, y: 504, r: 28 }
+// The tail sits over the bottom of the loop, where the rabbit sits down.
+const TAIL = { x: 476, y: 772, r: 26 }
 const LOOPS = 15
 
 /** Slow, smooth drift, so the ridges read as skin and not as a lathe. */
@@ -778,17 +780,19 @@ const print: Art = {
           opacity={0.7}
         />
       </g>
-      {/* The tail, the one soft thing in the print. */}
+      {/* The tail, the one soft thing in the print, with a ring of ink
+          around it so it stands off the ridges. */}
+      <circle cx={TAIL.x} cy={TAIL.y} r={TAIL.r + 13} fill={INK} />
       <g fill={PAPER}>
-        <circle cx={338} cy={770} r={21} />
+        <circle cx={TAIL.x} cy={TAIL.y} r={TAIL.r} />
         {Array.from({ length: 13 }, (_, i) => {
           const a = (i / 13) * Math.PI * 2
           return (
             <circle
               key={i}
-              cx={338 + Math.cos(a) * 21}
-              cy={770 + Math.sin(a) * 21}
-              r={5}
+              cx={TAIL.x + Math.cos(a) * TAIL.r}
+              cy={TAIL.y + Math.sin(a) * TAIL.r}
+              r={6}
             />
           )
         })}
