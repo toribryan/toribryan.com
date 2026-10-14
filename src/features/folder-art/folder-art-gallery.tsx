@@ -85,7 +85,7 @@ export function FolderArtGallery() {
   )
 }
 
-const COVER = ["paper", "quilt", "hello", "heat"]
+const COVER = ["print", "quilt", "hello", "heat"]
 
 /**
  * Four folders from both sets on the project card. Hovering the card lifts
