@@ -802,6 +802,90 @@ const print: Art = {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Buff · the buff bunny, as text art                                         */
+/* -------------------------------------------------------------------------- */
+
+// The old text-art meme, set run by run. Each run is pinned to a start and a
+// width, so the drawing holds together whichever Japanese font the system
+// has: [left, right, baseline, text], on a 435 by 495 grid.
+const BUFF_RUNS: [number, number, number, string][] = [
+  [168, 266, 178, "(\\＿/)"],
+  [164, 272, 233, "(•ㅅ•)"],
+  [64, 114, 292, "＿"],
+  [114, 150, 292, "ノ"],
+  [184, 202, 292, "ヽ"],
+  [232, 306, 292, "ノ＼"],
+  [328, 388, 292, "＿"],
+  [32, 48, 347, "/"],
+  [98, 328, 347, "`/⌒Y⌒ Y"],
+  [392, 412, 347, "ヽ"],
+  [22, 38, 402, "("],
+  [94, 248, 402, "(三ヽ人"],
+  [298, 318, 402, "/"],
+  [420, 432, 402, "|"],
+  [24, 36, 457, "|"],
+  [84, 182, 457, "ﾉ⌒＼"],
+  [204, 296, 412, "￣"],
+  [308, 332, 457, "ヽ"],
+  [406, 436, 457, "ノ"],
+  [32, 52, 515, "ヽ"],
+  [62, 206, 515, "＿＿＿"],
+  [206, 238, 515, "＞"],
+  [246, 264, 515, "､"],
+  [268, 382, 515, "＿＿＿"],
+  [392, 412, 515, "/"],
+  [140, 316, 573, "|(王ﾉ〈"],
+  [358, 456, 573, "(\\＿/)"],
+  [122, 334, 630, "/ﾐ`ー―彡\\"],
+  [354, 462, 630, "(•ㅅ•)"],
+]
+const BUFF_SCALE = 0.96
+const buffX = (x: number) => 512 + (x - 242) * BUFF_SCALE
+const buffY = (y: number) =>
+  FRONT_TOP + (FRONT_H - 500 * BUFF_SCALE) / 2 + (y - 138) * BUFF_SCALE
+// Fonts leave gaps between ＿ and ￣, so those runs are drawn as one rule,
+// a little below the baseline or at the given height, in the type's weight.
+const isRule = (text: string) => /^[＿￣]+$/.test(text)
+
+const buff: Art = {
+  back: N[300],
+  front: PAPER,
+  rim: "#ffffff",
+  peek: <Sheet />,
+  frontArt: () => (
+    <g
+      fill={INK}
+      fontFamily="'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, 'Noto Sans CJK JP', 'Noto Sans JP', 'WenQuanYi Zen Hei', sans-serif"
+      fontSize={48 * BUFF_SCALE}
+    >
+      {BUFF_RUNS.map(([x0, x1, y, text], i) =>
+        isRule(text) ? (
+          <line
+            key={i}
+            x1={buffX(x0)}
+            x2={buffX(x1)}
+            y1={buffY(y + (text[0] === "＿" ? 4 : 0))}
+            y2={buffY(y + (text[0] === "＿" ? 4 : 0))}
+            stroke={INK}
+            strokeWidth={3.4}
+          />
+        ) : (
+          <text
+            key={i}
+            x={buffX(x0)}
+            y={buffY(y)}
+            textLength={(x1 - x0) * BUFF_SCALE}
+            lengthAdjust="spacingAndGlyphs"
+          >
+            {text}
+          </text>
+        )
+      )}
+    </g>
+  ),
+}
+
+/* -------------------------------------------------------------------------- */
 
 export const FOLDERS: FolderEntry[] = [
   {
@@ -843,6 +927,11 @@ export const FOLDERS: FolderEntry[] = [
     slug: "print",
     title: "Print",
     art: print,
+  },
+  {
+    slug: "buff",
+    title: "Buff",
+    art: buff,
   },
 ]
 

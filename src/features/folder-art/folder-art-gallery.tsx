@@ -30,6 +30,7 @@ const FIBO_ORDER = [
   "glyphs",
   "sunflower",
   "print",
+  "buff",
 ]
 
 const SET = FIBO_ORDER.map(bySlug)
