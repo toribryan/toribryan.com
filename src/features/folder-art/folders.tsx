@@ -3,11 +3,6 @@
 import type { CSSProperties, ReactNode } from "react"
 
 import { cn } from "@/lib/utils"
-import {
-  compose,
-  Runs,
-  type RabbitGrid,
-} from "@/features/portfolio/components/fibo-hero/pixel-rabbit"
 
 import { textCells } from "./pixel-font"
 
@@ -98,37 +93,6 @@ function dither(
   return marks
 }
 
-/** fibo at a whole-number scale, his top left corner at x, y. */
-function Rabbit({
-  x,
-  y,
-  pixel,
-  grid,
-  line,
-  fill,
-}: {
-  x: number
-  y: number
-  pixel: number
-  grid: RabbitGrid
-  line: string
-  fill: string
-}) {
-  return (
-    <g
-      transform={`translate(${x} ${y}) scale(${pixel})`}
-      shapeRendering="crispEdges"
-    >
-      <g fill={fill}>
-        <Runs grid={grid} value={2} />
-      </g>
-      <g fill={line}>
-        <Runs grid={grid} value={1} />
-      </g>
-    </g>
-  )
-}
-
 /** A line of pixel type, each cell `pixel` wide. */
 export function PixelText({
   text,
@@ -212,89 +176,6 @@ export type FolderEntry = {
   slug: string
   title: string
   art: Art
-}
-
-const RESTING = compose({})
-const PERKED = compose({ ears: "perk", mouth: 1 })
-
-/* -------------------------------------------------------------------------- */
-/* No. 1 · Paper                                                              */
-/* -------------------------------------------------------------------------- */
-
-const paper: Art = {
-  back: N[300],
-  front: PAPER,
-  rim: "#ffffff",
-  lift: 21,
-  peek: (
-    <>
-      <g className="folder-rest">
-        <Rabbit
-          x={560}
-          y={60}
-          pixel={13}
-          grid={RESTING}
-          line={INK}
-          fill={PAPER}
-        />
-      </g>
-      <g className="folder-hover">
-        <Rabbit
-          x={560}
-          y={60}
-          pixel={13}
-          grid={PERKED}
-          line={INK}
-          fill={PAPER}
-        />
-      </g>
-    </>
-  ),
-  defs: (id) => (
-    <pattern
-      id={`${id}-dots`}
-      x={X0}
-      y={FRONT_TOP}
-      width={34}
-      height={34}
-      patternUnits="userSpaceOnUse"
-    >
-      <rect x={16} y={16} width={3} height={3} fill={N[300]} />
-    </pattern>
-  ),
-  frontArt: (id) => {
-    const cutX = X0 + W / 1.618
-    const cutY = FRONT_TOP + FRONT_H / 1.618
-    return (
-      <>
-        <rect
-          x={X0}
-          y={FRONT_TOP}
-          width={W}
-          height={FRONT_H}
-          fill={`url(#${id}-dots)`}
-        />
-        <g stroke={N[400]} strokeWidth={2} fill="none">
-          <line x1={cutX} y1={FRONT_TOP} x2={cutX} y2={BOTTOM} />
-          <line x1={cutX} y1={cutY} x2={X1} y2={cutY} />
-          <line
-            x1={X0}
-            y1={BOTTOM}
-            x2={X1}
-            y2={FRONT_TOP}
-            strokeDasharray="8 8"
-          />
-          <line
-            x1={cutX}
-            y1={FRONT_TOP}
-            x2={X1}
-            y2={cutY}
-            strokeDasharray="8 8"
-          />
-        </g>
-      </>
-    )
-  },
 }
 
 /* -------------------------------------------------------------------------- */
@@ -505,88 +386,6 @@ const terminal: Art = {
         fill={PAPER}
       />
     </>
-  ),
-}
-
-/* -------------------------------------------------------------------------- */
-/* No. 21 · Glyphs                                                            */
-/* -------------------------------------------------------------------------- */
-
-// 34 by 21 cells of 24: two numbers off the sequence, centred on the front.
-const CELL = 24
-const COLS = 34
-const ROWS = 21
-const GX = X0 + (W - COLS * CELL) / 2
-const GY = FRONT_TOP + (FRONT_H - ROWS * CELL) / 2
-const GHOST_COL = 13
-const GHOST_ROW = 1
-
-const hash = (x: number, y: number) =>
-  (((x * 73856093) ^ (y * 19349663)) >>> 0) % 1000
-
-// Dense at the edges, thinning toward the light behind the rabbit, whose
-// lines come through solid and whose body clears to dots.
-function glyphDensity(col: number, row: number) {
-  const g = RESTING[row - GHOST_ROW + 3]?.[col - GHOST_COL]
-  if (g === 1) return 0.97
-  if (g === 2) return 0.1
-  const dx = (col - (GHOST_COL + 8)) / COLS
-  const dy = (row - ROWS / 2) / ROWS
-  const d = Math.hypot(dx * 1.4, dy)
-  return Math.min(
-    1,
-    Math.max(0, d * 1.6 - 0.3 + (hash(col, row) / 1000 - 0.5) * 0.3)
-  )
-}
-
-// The five glyphs of fibo's pixel texture, lightest last.
-function Glyph({ x, y, d }: { x: number; y: number; d: number }) {
-  const c = CELL - 2
-  if (d > 0.8) return <rect x={x} y={y} width={c} height={c} />
-  if (d > 0.6)
-    return (
-      <>
-        <path
-          d={`M${x} ${y}h${c}v${c}h-${c}Z M${x + 5} ${y + 5}v${c - 10}h${c - 10}v-${c - 10}Z`}
-          fillRule="evenodd"
-        />
-        <rect x={x + c / 2 - 2} y={y + c / 2 - 2} width={4} height={4} />
-      </>
-    )
-  if (d > 0.4)
-    return (
-      <path
-        d={`M${x} ${y}h${c}v${c}h-${c}Z M${x + 5} ${y + 5}v${c - 10}h${c - 10}v-${c - 10}Z`}
-        fillRule="evenodd"
-      />
-    )
-  if (d > 0.2)
-    return <rect x={x + c / 2 - 4} y={y + c / 2 - 4} width={8} height={8} />
-  if (d > 0.05)
-    return <rect x={x + c / 2 - 1.5} y={y + c / 2 - 1.5} width={3} height={3} />
-  return null
-}
-
-const glyphs: Art = {
-  back: N[200],
-  front: PAPER,
-  rim: "#ffffff",
-  peek: <Sheet />,
-  frontArt: () => (
-    <g fill={INK} shapeRendering="crispEdges">
-      {Array.from({ length: COLS * ROWS }, (_, k) => {
-        const col = k % COLS
-        const row = Math.floor(k / COLS)
-        return (
-          <Glyph
-            key={k}
-            x={GX + col * CELL + 1}
-            y={GY + row * CELL + 1}
-            d={glyphDensity(col, row)}
-          />
-        )
-      })}
-    </g>
   ),
 }
 
@@ -889,11 +688,6 @@ const buff: Art = {
 
 export const FOLDERS: FolderEntry[] = [
   {
-    slug: "paper",
-    title: "Paper",
-    art: paper,
-  },
-  {
     slug: "tiling",
     title: "Tiling",
     art: tiling,
@@ -917,11 +711,6 @@ export const FOLDERS: FolderEntry[] = [
     slug: "terminal",
     title: "Terminal",
     art: terminal,
-  },
-  {
-    slug: "glyphs",
-    title: "Glyphs",
-    art: glyphs,
   },
   {
     slug: "print",
