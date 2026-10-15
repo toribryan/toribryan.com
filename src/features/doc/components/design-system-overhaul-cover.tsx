@@ -5,6 +5,7 @@ import { useReducedMotion } from "motion/react"
 
 import { cn } from "@/lib/utils"
 import { ScaledStage } from "@/features/portfolio/components/components/scaled-stage"
+import { ProctorioLogo } from "@/features/review/components/proctorio-logo"
 
 import { useCoverSteps } from "./use-cover-steps"
 
@@ -257,6 +258,8 @@ export function DesignSystemOverhaulCover({
       <ScaledStage width={480} zoom>
         <div className="flex h-full items-center gap-7 pr-7 pl-9">
           <div className="flex w-[138px] shrink-0 flex-col">
+            {/* Whose library it was. Quiet, so the count stays the headline. */}
+            <ProctorioLogo className="mb-4 h-[22px] w-auto self-start text-muted-foreground" />
             <p className="font-mono text-[8.5px] tracking-[0.14em] text-muted-foreground uppercase">
               Card variants
             </p>
