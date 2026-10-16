@@ -243,24 +243,30 @@ export function BrowserShot({
   )
 }
 
-/** A phone screen recording in mobile Safari, for MDX. */
+/** A phone screen recording or still in mobile Safari, for MDX. */
 export function PhoneShot({
   src,
+  alt = "",
   width = 240,
 }: {
   src: string
+  alt?: string
   width?: number
 }) {
   return (
     <SafariPhone width={width}>
-      <video
-        className="block w-full"
-        src={src}
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
+      {src.endsWith(".mp4") ? (
+        <video
+          className="block w-full"
+          src={src}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+      ) : (
+        <img className="block w-full" src={src} alt={alt} loading="lazy" />
+      )}
     </SafariPhone>
   )
 }
