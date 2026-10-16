@@ -29,6 +29,12 @@ import {
 import type { Doc } from "@/features/doc/types/document"
 import { ComponentCards } from "@/features/portfolio/components/components/component-card-list"
 
+import { ActivationCareGrid } from "./activation-care-grid"
+import { ActivationFindHome } from "./activation-find-home"
+import { ActivationFlow } from "./activation-flow"
+import { ActivationMockups } from "./activation-mockups"
+import { BrowserCycle } from "./browser-cycle"
+import { BrowserShot, PhoneShot } from "./browser-frame"
 import { DOC_COVERS } from "./doc-covers"
 import { DOC_HEROES } from "./doc-heroes"
 import {
@@ -46,16 +52,24 @@ import { SlotComposition, SwitchSprawl, VariantWall } from "./overhaul-diagrams"
 import { RepoViewer } from "./repo-viewer"
 import { ResultFigure } from "./result-figure"
 import { StatusColors } from "./status-colors"
+import { StepTab, StepTabs } from "./step-tabs"
 import { TokenCoins } from "./token-coins"
 import { TokenVisualizer } from "./token-visualizer"
 
 /** Components a doc's MDX can use beyond the shared set. */
 const DOC_COMPONENTS = {
+  ActivationFindHome,
+  ActivationCareGrid,
+  ActivationFlow,
+  ActivationMockups,
+  BrowserCycle,
+  BrowserShot,
   ComponentCards,
   Item,
   Numbered,
   Phase,
   Phases,
+  PhoneShot,
   Plate,
   Principle,
   Principles,
@@ -64,6 +78,8 @@ const DOC_COMPONENTS = {
   Sides,
   SlotComposition,
   StatusColors,
+  StepTab,
+  StepTabs,
   SwitchSprawl,
   TokenCoins,
   TokenVisualizer,
