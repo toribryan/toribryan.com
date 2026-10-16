@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Dialog } from "@base-ui/react/dialog"
-import { PlayIcon, XIcon } from "lucide-react"
+import { XIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { VideoPlayer } from "@/components/video-player"
@@ -12,12 +12,10 @@ function FullView({
   src,
   poster,
   label,
-  loop = true,
 }: {
   src: string
   poster?: string
   label: string
-  loop?: boolean
 }) {
   return (
     <Dialog.Portal>
@@ -37,7 +35,6 @@ function FullView({
             src={src}
             poster={poster}
             label={label}
-            loop={loop}
             className="max-h-full max-w-full rounded-lg bg-white"
             videoClassName="max-h-[calc(100dvh-6rem)] w-auto max-w-full md:max-h-[calc(100dvh-8rem)]"
           />
@@ -100,66 +97,6 @@ export function Video({
           playsInline
         />
       )}
-
-      {caption && (
-        <figcaption className="mt-3 text-sm text-pretty text-muted-foreground">
-          {caption}
-        </figcaption>
-      )}
-    </figure>
-  )
-}
-
-/**
- * A still of a longer clip with a play button. Nothing loads until it's
- * clicked, and then the clip plays full size with the action bar.
- */
-export function WatchVideo({
-  src,
-  poster,
-  label,
-  duration,
-  caption,
-}: {
-  src: string
-  poster: string
-  label: string
-  /** Shown on the thumbnail, e.g. "0:34". */
-  duration?: string
-  caption?: React.ReactNode
-}) {
-  return (
-    <figure className="not-prose my-8">
-      <Dialog.Root>
-        <Dialog.Trigger
-          className="group/watch relative block w-full overflow-hidden rounded-xl text-left inset-ring-1 inset-ring-black/15 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none dark:inset-ring-white/15"
-          aria-label={`Watch ${label}`}
-        >
-          <img
-            className="block w-full transition-[scale,filter] duration-300 ease-out group-hover/watch:scale-[1.015] group-hover/watch:brightness-95"
-            src={poster}
-            alt=""
-            loading="lazy"
-          />
-          <span className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent" />
-          <span className="absolute inset-0 grid place-items-center">
-            <span className="flex size-16 items-center justify-center rounded-full bg-white/95 text-black shadow-lg transition-transform duration-200 ease-out group-hover/watch:scale-105 sm:size-20">
-              <PlayIcon className="ml-1 size-6 fill-current sm:size-7" />
-            </span>
-          </span>
-          <span className="absolute right-4 bottom-4 left-4 flex items-end justify-between gap-3 text-white">
-            <span className="text-sm font-medium text-balance sm:text-base">
-              {label}
-            </span>
-            {duration && (
-              <span className="shrink-0 rounded-full bg-black/60 px-2 py-0.5 font-mono text-xs tabular-nums backdrop-blur-sm">
-                {duration}
-              </span>
-            )}
-          </span>
-        </Dialog.Trigger>
-        <FullView src={src} poster={poster} label={label} loop={false} />
-      </Dialog.Root>
 
       {caption && (
         <figcaption className="mt-3 text-sm text-pretty text-muted-foreground">

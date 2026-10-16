@@ -51,7 +51,7 @@ import { StoryEmbed } from "./mdx-story-embed"
 import { Tech } from "./mdx-tech"
 import { TimeSavedChart } from "./mdx-time-saved"
 import { ToolLabel } from "./mdx-tool-label"
-import { Video, WatchVideo } from "./mdx-video"
+import { Video } from "./mdx-video"
 import { WhoStepDemo } from "./mdx-who-step-demo"
 
 const components: MDXRemoteProps["components"] = {
@@ -104,7 +104,6 @@ const components: MDXRemoteProps["components"] = {
   ToolLabel,
   VendorCreditDemo,
   Video,
-  WatchVideo,
   WhoStepDemo,
 
   AtomicDesign,
