@@ -280,6 +280,59 @@ medication, a piggy bank for money management. Here they are on their own.
   </div>
 </Plate>
 
+## After it's live
+
+Once the team approves a home, the owner keeps it current in the Manage
+dashboard, the editor new owners used to land in on day one. Spencer built
+the dashboard; I redesigned the two pages owners come back to most, so they
+read like the flow that came before them.
+
+### Care, in the same eight groups
+
+The care step and the dashboard share one taxonomy. Care is grouped by the
+same eight axes, and in the dashboard each axis opens in its own dialog, a
+bottom drawer on a phone. Saving one axis replaces only that axis's
+answers, so two people editing different parts of a home don't overwrite
+each other.
+
+<BrowserShot
+  src="/case-studies/home-activation/manage/care-edit.webp"
+  alt="The Manage dashboard's Care page with the ADL Support dialog open: six services, each with a one-line definition, Bathing and Dressing checked"
+  caption="Each axis edits on its own, with every service defined in plain words."
+/>
+
+<Plate
+  background="none"
+  caption="On a phone the same editor opens as a drawer from the bottom."
+>
+  <div className="flex justify-center py-2">
+    <PhoneShot
+      src="/case-studies/home-activation/manage/phone-care-edit.webp"
+      alt="The ADL Support editor as a bottom drawer on a phone, with Save and Cancel stacked at the bottom"
+    />
+  </div>
+</Plate>
+
+### Availability families can trust
+
+Open rooms are what families act on, so the Availability page leads with
+how fresh they are. A badge reads when the owner last confirmed them, rooms
+sit in one table with their details as chips, and several can be updated or
+removed at once. With no rooms, the page shows an example room and says
+plainly that the home stays unavailable until one is added.
+
+<BrowserShot
+  src="/case-studies/home-activation/manage/availability.webp"
+  alt="The Availability page: a Last confirmed 3 days ago badge, and a rooms table with East, West and Garden Room, their details as chips, and Available or Unavailable status"
+  caption="Rooms in one table, with when they were last confirmed up top."
+/>
+
+<BrowserShot
+  src="/case-studies/home-activation/manage/availability-empty.webp"
+  alt="The Availability empty state: Add your first room, an example Garden Room card, an Add button, and a note that the home is unavailable until rooms are added"
+  caption="The empty state shows what a room looks like before there is one."
+/>
+
 ## How I built it
 
 I designed this in code rather than in Figma. The flow and its illustrations
