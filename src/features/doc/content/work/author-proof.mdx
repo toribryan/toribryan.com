@@ -1,6 +1,5 @@
 ---
-title: "Author Proof"
-archived: true
+title: "AuthorProof"
 description: "An LMS-integrated integrity tool that verifies authorship through personalized comprehension quizzes generated from each student's own submission."
 claim: "Plagiarism checkers read the document. This one asks the student about the paper they turned in."
 image: "/cover-authorproof.webp"
@@ -8,7 +7,7 @@ video: "/images/review/authorproof-cover.webm"
 imageCredit: "Cover image © Proctorio, from the AuthorProof product page and video at proctorio.com. Used with credit."
 imageCreditUrl: "https://proctorio.com/solutions/origin"
 createdAt: "2026-04-01"
-updatedAt: "2026-09-28"
+updatedAt: "2026-10-16"
 company: "Proctorio"
 role: "Staff Product Designer, end to end"
 period: "Q2 2026"
@@ -17,19 +16,20 @@ liveLabel: "Visit product page"
 skills:
   - "End-to-end Product Design"
   - "Prototyping"
+  - "Systems Thinking"
   - "Accessibility"
   - "Figma"
   - "Claude Code"
-outcome: "An MVP that puts the quiz seconds after submission and the result where instructors already grade, with the score shown as confidence rather than a verdict. Prototypes in HTML, CSS, and vanilla JS served as the spec, built toward a 95% quiz completion rate and fewer than 5% false positives."
+outcome: "A production-ready MVP in four to six weeks that put the result beside the submission, shown as a score with confidence, and a pilot with about 5 institutions in spring 2026. The embedded flow I pitched, with the quiz seconds after upload, became the product's long-term direction. Prototypes in HTML, CSS, and vanilla JS served as the spec."
 results:
-  - value: "95%"
-    label: "Goal for quiz completion among test takers"
-  - value: "<5%"
-    label: "Goal for the false-positive rate"
-  - value: "Seconds"
-    label: "From submission to quiz, instead of about ten minutes"
+  - value: "~5"
+    label: "Institutions in the spring 2026 pilot"
+  - value: "4 to 6 wks"
+    label: "From brief to production-ready MVP"
   - value: "0"
     label: "Steps added to the instructor's grading workflow"
+  - value: "Seconds"
+    label: "From upload to quiz in the adopted long-term flow, down from about ten minutes"
 ---
 
 <Phases>
@@ -120,8 +120,7 @@ against what the platform could do.
   </Item>
 </Numbered>
 
-Each one changed where the product should live, not how a screen looked, so the
-answer was a different flow rather than four workarounds.
+Each one was about where the product lived, so the fix was a different flow.
 
 ## A smaller flow that kept the promise
 
@@ -148,11 +147,11 @@ uploads their essay and the quiz appears seconds later.
 </Side>
 </Sides>
 
-The longer vision went on the roadmap instead of being dropped, and Proctorio
-later adopted it as the product's long-term direction, with the briefed idea
-shipping first as the proof of concept.
+Proctorio shipped the briefed architecture first, as the fastest way to put a
+working product in front of pilot instructors, and adopted the embedded flow as
+the product's long-term direction.
 
-## Confidence, not verdict
+## Built for a conversation
 
 The result had to support a conversation between an instructor and a student,
 never judge the student on its own.
@@ -164,7 +163,7 @@ never judge the student on its own.
   </Principle>
   <Principle title="Show what was asked">
     Every question sits beside the words that prompted it and the assessment of
-    the answer.
+    the answer, so instructors can check the AI's reasoning for themselves.
   </Principle>
   <Principle title="Never color alone">
     The host platform colors the badge the opposite way from the score, so the
@@ -176,9 +175,8 @@ never judge the student on its own.
 
 I led design end to end, from concept to a production-ready MVP in four to six
 weeks. I designed the quiz settings, the report card, the results and the
-student emails, and built the front end for all of it in HTML, CSS and vanilla
-JavaScript on our design system. Engineering got working prototypes instead of
-a document about them.
+student emails, and built working prototypes of all of it in HTML, CSS and
+vanilla JavaScript on our design system. Engineering built from the prototypes.
 
 <Plate
   background="grid"
@@ -200,8 +198,9 @@ a document about them.
   />
 </Plate>
 
-The goals for the first semester: 95% of test takers finish their quiz, and
-fewer than 5% of results are false positives.
+AuthorProof went to a pilot with about 5 institutions in spring 2026. The goals
+for that first semester: 95% of test takers finish their quiz, and fewer than 5%
+of results are false positives.
 
 ## What I'd do next
 
