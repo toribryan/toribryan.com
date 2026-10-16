@@ -183,16 +183,19 @@ export function SafariPhone({
   children,
   width,
   className,
+  style,
 }: {
   children: React.ReactNode
   width: number
   className?: string
+  style?: React.CSSProperties
 }) {
   return (
     <PhoneMockupCard
       variant="white"
       className={className}
       style={{
+        ...style,
         width,
         fontSize: width / 15,
         ["--phone-w" as string]: `${width}px`,
