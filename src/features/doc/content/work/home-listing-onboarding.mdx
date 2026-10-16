@@ -243,9 +243,40 @@ success screen that says what happens next and offers one next action.
 
 ## An illustration system
 
+I wanted setting up a listing to feel delightful, not like paperwork. The
+illustrations carry that: each one moves as the owner answers, so every
+checkbox and every room gets a small reward on screen.
+
 The figures are one isometric system, drawn as SVG components in the
 codebase and animated in CSS, so each one reads the form's state directly.
 Nothing is a static export.
+
+### From a skill to a brand
+
+I started the figures with
+[iso-figure](https://github.com/MrBongoC/ai-iso-skill), a skill that has
+Claude draw isometric line art as plain SVG. It gave me a base where the
+angles, line weights and proportions already agreed. From there I designed
+on top of it in Figma to make it friendly and on brand: bolder outlines,
+fuller color from Modern Care's palette, and a yard with room for every
+amenity an owner can pick.
+
+<Sides>
+  <Side label="Starting point" title="Drawn by the skill">
+    <img
+      src="/case-studies/home-activation/iso-amenities-start.webp"
+      alt="A sparse isometric amenities scene in thin line art: a house, a router, a tree, a washer, a TV, a bed, a table and a car on a gray plate"
+      className="block w-full"
+    />
+  </Side>
+  <Side label="Final" title="Designed in Figma, shipped as SVG">
+    <img
+      src="/case-studies/home-activation/iso-amenities-yard-all.webp"
+      alt="The shipped amenities yard with every amenity on: a patio umbrella, a putting green, a hot tub with a rubber duck, a sofa, a library shelf, a gym, a washer, a router and screens, in bold outlines and brand colors"
+      className="block w-full"
+    />
+  </Side>
+</Sides>
 
 <Video
   src="/case-studies/home-activation/care-yard-tour.mp4"
