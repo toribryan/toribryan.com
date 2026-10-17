@@ -97,9 +97,11 @@ function PhoneScreen({
   showDynamicIsland: boolean
 }>) {
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-black">
+    // Corners in px, not rem: covers shrink the phone with CSS zoom, and
+    // Safari leaves rem unzoomed, so a small phone kept its full-size corners.
+    <div className="relative h-full w-full overflow-hidden rounded-[40px] bg-black">
       {/* Screen — thin ~4px bezel on all sides */}
-      <div className="absolute inset-[3.5px] overflow-hidden rounded-[2.3rem] bg-white">
+      <div className="absolute inset-[3.5px] overflow-hidden rounded-[36.8px] bg-white">
         <div className="relative h-full w-full">{children}</div>
 
         {showDynamicIsland ? (
@@ -143,7 +145,7 @@ export const PhoneMockupCard = forwardRef<HTMLDivElement, PhoneMockupCardProps>(
     const isCropped = ratio < 1
 
     const phoneFrameClassName = cn(
-      "relative w-[256px] rounded-[2.6rem] p-[2px]",
+      "relative w-[256px] rounded-[41.6px] p-[2px]",
       frame.frame
     )
 
