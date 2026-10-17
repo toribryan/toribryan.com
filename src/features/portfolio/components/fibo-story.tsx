@@ -1,6 +1,11 @@
 import type { ReactNode } from "react"
 
 import {
+  AnnotatedText,
+  AnnotatedTextChip,
+  type AnnotatedTextVariant,
+} from "@/components/fibo/annotated-text"
+import {
   Panel,
   PanelContent,
   PanelHeader,
@@ -56,6 +61,21 @@ function Plate({ name }: { name: keyof typeof PLATES }) {
   )
 }
 
+/** A hand-drawn mark in fibo's own ink, drawn in as it scrolls into view. */
+function Mark({
+  variant,
+  children,
+}: {
+  variant: AnnotatedTextVariant
+  children: ReactNode
+}) {
+  return (
+    <AnnotatedText variant={variant} animate>
+      {children}
+    </AnnotatedText>
+  )
+}
+
 function Chapter({
   title,
   aside,
@@ -98,14 +118,16 @@ export function FiboStory() {
 
       <Chapter aside={<Plate name="bunny" />}>
         <p>
-          For the past year I&apos;ve been studying the history of the golden
-          ratio, and whether it still holds up today as a blueprint for
-          proportional design. I wanted fibo&apos;s branding to tie in with my
-          personal brand, so I made what I&apos;ve learned its anchor.
+          For the past year I&apos;ve been studying the history of the{" "}
+          <Mark variant="wavy">golden ratio</Mark>, and whether it still holds
+          up today as a blueprint for proportional design. I wanted fibo&apos;s
+          branding to tie in with my personal brand, so I made what I&apos;ve
+          learned its anchor.
         </p>
         <p>
-          That&apos;s where fibo, my pixel bunny mascot, comes in. Learn more
-          about his lore below.
+          That&apos;s where fibo, my{" "}
+          <AnnotatedTextChip icon="🐇">pixel bunny mascot</AnnotatedTextChip>,
+          comes in. Learn more about his lore below.
         </p>
       </Chapter>
 
@@ -113,10 +135,12 @@ export function FiboStory() {
         <p>
           fibo is named after Leonardo of Pisa, the Italian mathematician better
           known as Fibonacci. The nickname came centuries after him, short for{" "}
-          <em>filius Bonacci</em>, &ldquo;son of Bonacci.&rdquo; He grew up
-          partly in North Africa, where his father worked as a merchant
-          official, and there he learned the Hindu-Arabic numerals that traders
-          were already using.
+          <Mark variant="underline">
+            <em>filius Bonacci</em>
+          </Mark>
+          , &ldquo;son of Bonacci.&rdquo; He grew up partly in North Africa,
+          where his father worked as a merchant official, and there he learned
+          the Hindu-Arabic numerals that traders were already using.
         </p>
         <p>
           In 1202 he published <em>Liber Abaci</em>, the &ldquo;Book of
@@ -124,7 +148,10 @@ export function FiboStory() {
           over Roman ones. Among its worked problems is a thought experiment
           about rabbits. Start with one newborn pair. Each pair takes a month to
           grow up, then has a new pair every month after that, and none of them
-          ever die. How many pairs are there after a year?
+          ever die.{" "}
+          <Mark variant="highlight">
+            How many pairs are there after a year?
+          </Mark>
         </p>
         <p>
           The answer grows into a famous sequence of numbers. Mathematicians in
@@ -142,11 +169,14 @@ export function FiboStory() {
       <Chapter title="The sequence">
         <ul>
           <li>Start with 1 and 1.</li>
-          <li>Add the last two numbers to get the next one.</li>
+          <li>
+            <Mark variant="underline">Add the last two numbers</Mark> to get the
+            next one.
+          </li>
           <li>1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, and on forever.</li>
           <li>
             Divide any number by the one before it and you get closer and closer
-            to 1.618, the golden ratio, φ.
+            to <Mark variant="circle">1.618</Mark>, the golden ratio, φ.
           </li>
         </ul>
       </Chapter>
@@ -159,27 +189,13 @@ export function FiboStory() {
           The golden ratio comes from nature. It&apos;s nature&apos;s own
           algorithm, and I&apos;m using it to build something mechanical. While
           making fibo I found an accidental contrast at the center of the
-          project: organic and mechanical, two opposites in one place.
+          project: <Mark variant="bracket">organic and mechanical</Mark>, two
+          opposites in one place.
         </p>
         <p>
           That&apos;s why the rabbit is pixel art. He&apos;s an animal, a part
-          of nature, rebuilt out of pixels.
+          of nature, <Mark variant="box">rebuilt out of pixels</Mark>.
         </p>
-      </Chapter>
-
-      <Chapter title="Where to find him">
-        <ul>
-          <li>
-            In the hero above, fibo builds himself up pixel by pixel, idles and
-            hops, and watches your pointer. Poke him and he flinches. Click too
-            fast and he hides behind his ears.
-          </li>
-          <li>The hero is a golden rectangle, cut on 0.618.</li>
-          <li>
-            fibo never draws a spiral. Spirals only appear where nature made
-            them, in photographs.
-          </li>
-        </ul>
       </Chapter>
     </Panel>
   )

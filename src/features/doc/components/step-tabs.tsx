@@ -75,6 +75,43 @@ export function StepTabs({ children }: { children: ReactNode }) {
     }
   }
 
+  // A finger already swipes the chip row; a mouse drags it the same way. A
+  // drag that moved swallows the click it ends with, so it doesn't pick a step.
+  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null)
+  const dragged = useRef(false)
+
+  function onPointerDown(event: React.PointerEvent<HTMLDivElement>) {
+    const row = event.currentTarget
+    dragged.current = false
+    if (event.pointerType !== "mouse" || event.button !== 0) return
+    if (row.scrollWidth <= row.clientWidth) return
+    drag.current = { x: event.clientX, left: row.scrollLeft, moved: false }
+  }
+
+  function onPointerMove(event: React.PointerEvent<HTMLDivElement>) {
+    const state = drag.current
+    if (!state) return
+    const row = event.currentTarget
+    const dx = event.clientX - state.x
+    if (!state.moved && Math.abs(dx) > 4) {
+      state.moved = true
+      dragged.current = true
+      row.setPointerCapture(event.pointerId)
+    }
+    if (state.moved) row.scrollLeft = state.left - dx
+  }
+
+  function onPointerUp() {
+    drag.current = null
+  }
+
+  function onClickCapture(event: React.MouseEvent) {
+    if (!dragged.current) return
+    dragged.current = false
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
   function onKeyDown(event: React.KeyboardEvent) {
     const moves: Record<string, number> = {
       ArrowDown: active + 1,
@@ -96,7 +133,12 @@ export function StepTabs({ children }: { children: ReactNode }) {
         aria-label="Steps"
         aria-orientation="vertical"
         onKeyDown={onKeyDown}
-        className="no-scrollbar flex gap-1.5 overflow-x-auto border-b border-line p-2 max-sm:[mask-image:linear-gradient(to_right,black_calc(100%-24px),transparent)] sm:flex-col sm:gap-0 sm:overflow-visible sm:border-r sm:border-b-0 sm:py-3"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        onClickCapture={onClickCapture}
+        className="no-scrollbar flex gap-1.5 overflow-x-auto overscroll-x-contain border-b border-line p-2 select-none max-sm:cursor-grab max-sm:active:cursor-grabbing max-sm:[mask-image:linear-gradient(to_right,black_calc(100%-24px),transparent)] sm:flex-col sm:gap-0 sm:overflow-visible sm:border-r sm:border-b-0 sm:py-3"
       >
         {steps.map((step, index) => {
           const current = index === active

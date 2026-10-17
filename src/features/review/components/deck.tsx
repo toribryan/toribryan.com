@@ -240,7 +240,7 @@ export function Deck({
         <div className="relative isolate mx-auto flex h-full max-w-4xl flex-col border-x border-line [--stage-top:calc(var(--header-height)+4rem)]">
           <header className="screen-line-bottom z-20 flex h-(--header-height) shrink-0 items-center justify-between gap-4 px-4">
             <Button
-              className="h-7 gap-2 border-none px-0 tracking-wider text-muted-foreground hover:text-foreground hover:no-underline"
+              className="h-7 gap-2 border-none px-0 text-foreground/70 hover:text-foreground hover:no-underline"
               variant="link"
               size="sm"
               nativeButton={false}
