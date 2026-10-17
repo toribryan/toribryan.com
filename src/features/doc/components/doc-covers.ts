@@ -6,6 +6,7 @@ import { FolderArtCover } from "@/features/folder-art/folder-art-gallery"
 import { AgenticDesignSystemCover } from "./agentic-design-system-cover"
 import { DesignSystemOverhaulCover } from "./design-system-overhaul-cover"
 import { FiboCover } from "./fibo-cover"
+import { HomeListingOnboardingCover } from "./home-listing-onboarding-cover"
 import { ModernCareHomesCover } from "./modern-care-homes-cover"
 import { RabbitRunCover } from "./rabbit-run-cover"
 import { RealWeddingSubmissionsCardCover } from "./real-wedding-submissions-cover"
@@ -21,6 +22,7 @@ export const DOC_COVERS: Record<string, ComponentType<{ loop?: boolean }>> = {
   "design-system-overhaul": DesignSystemOverhaulCover,
   fibo: FiboCover,
   "folder-art": FolderArtCover,
+  "home-listing-onboarding": HomeListingOnboardingCover,
   "modern-care-homes": ModernCareHomesCover,
   "portfolio-website": PortfolioPostCover,
   "rabbit-run": RabbitRunCover,

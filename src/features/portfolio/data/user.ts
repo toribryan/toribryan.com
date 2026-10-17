@@ -11,7 +11,7 @@ export const USER: User = {
   // pronouns: "",
   // Feeds the site meta description (see config/site.ts), so it needs to read
   // as a description of the work. The header's lines live in headerLines.
-  bio: "Product Designer specializing in design systems. Five years building products, component libraries, and the tooling that connects design to production code.",
+  bio: "Product Designer specializing in design systems. Five years building B2B and B2B2C products, component libraries, and the tooling that connects design to production code.",
   headerLines: ["Designing: Products + Systems", "Medium: Code + Canvas"],
   address: "Arizona, United States",
   emailB64: "dG9yaWJyeWFuLmRlc2lnbkBnbWFpbC5jb20=", // toribryan.design@gmail.com
@@ -27,9 +27,9 @@ export const USER: User = {
       experienceId: "proctorio",
     },
   ],
-  about: `- I’m a Product Designer who specializes in design systems and ships the front end I design.
-- Five years building B2B products, component libraries, and the tooling that connects design to production code.
-- Always exploring new tools and ways to create. Currently learning the drums, and studying the history of the golden ratio and its relevance to design today.
+  about: `- I’m a Product Designer who uses a <mark data-variant="wavy">design systems approach</mark> to crafting interfaces.
+- Five years building B2B and B2B2C products, component libraries, and the tooling that connects design to <mark data-variant="bracket">production code</mark>.
+- Always exploring new tools and ways to create. Currently learning the <mark data-icon="🥁">drums</mark>, and studying the history of the <mark data-icon="🐚">golden ratio</mark> and its relevance to design today.
 `,
   avatar: "/images/about/photo-1.jpg",
   headerAvatar: "/images/header/avatar.svg",

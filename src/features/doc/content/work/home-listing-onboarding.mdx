@@ -1,0 +1,347 @@
+---
+title: "Home Listing Onboarding"
+description: "A guided flow that takes a care home owner from their state license to a listing ready for review, one short step at a time. I designed it and built the front end."
+claim: "Owners start from a license the state already issued, and each step draws their home as they describe it."
+image: "/cover-home-activation.webp"
+video: "/cover-home-activation.mp4"
+createdAt: "2026-10-13"
+updatedAt: "2026-10-16"
+order: 2
+new: true
+company: "Modern Care Homes"
+role: "Design Engineer"
+team: "With Spencer Grzincich, Software Engineer"
+period: "Q4 2026"
+status: "Shipped"
+problem: "A new owner only got in when an admin invited them from their license. They landed in the full listing editor with a checklist, couldn't save a draft without three gallery photos, and publishing put the home straight in front of families with nobody checking it first."
+task: "Give owners a way to claim their own home and get it to a listing worth publishing, without starting in the full editor, and give the Modern Care team a look at every home before families do."
+process: "Designed and built in code, one step at a time, with each step in Storybook at desktop and phone widths. Spencer's care taxonomy set the structure of the care step, and the flow ships behind a feature flag."
+# QUESTION: outcome. Has it reached owners yet? Any owners onboarded, time to submit, drop-off by step, or a reaction from the team? Leave this out rather than guess.
+leadMark: "one short step at a time"
+results:
+  - value: "7"
+    label: "Short steps from a license to a submitted listing"
+    mark: "circle"
+  - value: "8"
+    label: "Care axes, each with its own illustrated plot"
+    mark: "underline"
+  - value: "60fps"
+    was: "23"
+    label: "Care camera while it pans"
+    mark: "highlight"
+skills:
+  - "Product Design"
+  - "Design Engineering"
+  - "Illustration"
+  - "Motion"
+  - "React"
+  - "TypeScript"
+  - "SVG"
+  - "Activation Flow"
+---
+
+## The problem
+
+Modern Care Homes lists residential assisted living homes in Arizona. Every
+one of them already holds a state license, so the owner and the address are
+on record before the owner ever visits the site.
+
+The first version used that, but only from the admin side. An admin invited
+the owner from their license, and the owner landed in the full Manage Home
+editor with a checklist of everything a listing needs. Nothing would save
+without three gallery photos, and the publish button put the home live
+<AnnotatedText variant="highlight" animate>right away</AnnotatedText>.
+
+{/* QUESTION: what did you see or hear that made this a priority? Owner feedback, stalled drafts, the team's own time spent onboarding? One concrete sentence here makes the problem real. */}
+
+## The design solution
+
+<Numbered>
+  <Item title="Start from the license.">
+    Owners search for their own home. Picking it fills in the name, address,
+    care type and capacity from the state record, so the first question is just
+    "is this you?" Progress is underway before they type anything, which is the
+    whole point of momentum.
+  </Item>
+  <Item title="One topic per screen, saved as they go.">
+    Seven short steps in three phases, each saved on its own. Photos and care
+    are no longer required for a draft, so an owner can stop at any point and
+    pick up later. Progressive disclosure does the rest: each screen asks only
+    what its step needs.
+  </Item>
+  <Item title="Draw the home as it's described.">
+    Every step has an isometric illustration that reacts to the form. Long
+    checklists turn into <AnnotatedText variant="wavy" tone="info" animate>a yard that fills up</AnnotatedText>, which shows progress better than
+    a counter does. It borrows the reward of a game's progress loop without the
+    points and badges.
+  </Item>
+  <Item title="Review before families see it.">
+    The last step submits the home to the Modern Care team instead of publishing
+    it, and emails them a link to check it. That step is
+    <AnnotatedText variant="underline" animate>friction on purpose</AnnotatedText>,
+    the one place a slower path protects families.
+  </Item>
+  <Item title="Readable for everyone.">
+    Welcome text stays at 16px or larger, the illustration pins above the form
+    on phones, and on touch screens a tap never moves the page.
+  </Item>
+</Numbered>
+
+## Step by step
+
+<StepTabs>
+<StepTab label="Find your home">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-find-your-home.webp" alt="Find your home: a welcome, an isometric house with a map pin, and a search for the licensed home’s address" />
+</StepTab>
+<StepTab label="Welcome">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-welcome.webp" alt="Welcome: Let’s get Sunrise Gardens in front of families, with the three phases ahead" />
+</StepTab>
+<StepTab label="Confirm">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-confirm.webp" alt="Confirm: Is this your home? Name, address, care type, capacity and license from the Arizona record" />
+</StepTab>
+<StepTab label="Photos">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-photos-complete.webp" alt="Photos: a cover photo and a living area in named slots, above All photos" />
+</StepTab>
+<StepTab label="Amenities">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/mock/phone-amenities.mp4" alt="Amenities: checking items adds each one to the isometric yard above the list" />
+</StepTab>
+<StepTab label="About">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-about.webp" alt="About: a pre-written draft with bracketed gaps to fill, under a writing desk" />
+</StepTab>
+<StepTab label="Care">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-care.webp" alt="Care: the camera close on the bathing plot, above the ADL Support checklist" />
+</StepTab>
+<StepTab label="Rooms">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/mock/phone-rooms.mp4" alt="Rooms: adding rooms and who shares them, one row per room" />
+</StepTab>
+<StepTab label="Price">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/mock/phone-price.mp4" alt="Price: setting a starting monthly price beside what similar homes nearby charge" />
+</StepTab>
+<StepTab label="Review">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-review.webp" alt="Review: the listing as families will see it, with a summary of every step" />
+</StepTab>
+<StepTab label="Submitted">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-submitted.webp" alt="Submitted: Sunrise Gardens is submitted for review" />
+</StepTab>
+</StepTabs>
+
+## How it got here
+
+The illustrations started as a way to make a long form feel shorter, and
+changed a lot once I could click through them.
+
+### The yard started as an empty lot
+
+The first amenities stage was a blank grid of plots waiting to be filled.
+The next version filled them, but in black outlines with flat color, and the
+objects floated with no sense of a place. The shipped yard keeps the line
+work but lightens it, brings in Modern Care's palette, gives each object its
+own detail and an animation when it lands, and arranges them like a real
+backyard.
+
+<CompareWipe
+  width="1920"
+  height="1200"
+  before="/case-studies/home-activation/early/amenities-v1.webp | /case-studies/home-activation/early/amenities-v2.webp"
+  beforeLabel="First pass | Second pass"
+  beforeAlt="Early amenities step: an empty isometric grid of dashed plots beside the checklist | Second amenities version: outlined isometric objects, a house, router, washer, TV and car, scattered on a gray slab"
+  after="/case-studies/home-activation/desk-amenities.webp"
+  afterLabel="Shipped"
+  afterAlt="Shipped amenities step: a detailed yard with a garden, patio umbrella, walking path and wifi router"
+  caption="Drag to compare. Pick a pass on the left: the empty lot, then the outlined objects, against the yard that shipped."
+/>
+
+### The book became a desk
+
+The About step first opened on a blank editor with tips above it and a book
+being written in. The desk replaced the book, the
+letter on it fills in as the owner types, and the tips moved into the draft
+itself as bracketed prompts, so the owner edits instead of <AnnotatedText variant="wavy" tone="info" animate>starting from nothing</AnnotatedText>.
+
+<CompareWipe
+  width="1920"
+  height="1200"
+  before="/case-studies/home-activation/early/about-v1.webp"
+  beforeLabel="First pass"
+  beforeAlt="Early About step: tips listed above a rich text editor, beside an open book with a pen"
+  after="/case-studies/home-activation/early/about-final.webp"
+  afterLabel="Shipped"
+  afterAlt="Shipped About step: a pre-written draft with bracketed prompts, beside a writing desk with a letter, lamp and mug"
+  caption="Drag to compare. Tips above a blank editor and a book, against a draft to edit and the writing desk."
+/>
+
+### The care yard got a camera
+
+Early on, the whole care yard sat above the checklist at once, and on a
+phone each object was small. Splitting care into one plot per axis, and adding a camera that
+moves in close to the axis being edited, made every tap visible.
+
+<Plate
+  background="none"
+  caption="Left, the first pass on a phone: the whole yard at once. Right, shipped: the camera close on the axis being edited."
+>
+  <div className="flex justify-center gap-6 py-2">
+    <PhoneShot src="/case-studies/home-activation/early/care-v1-phone.mp4" />
+    <PhoneShot
+      src="/case-studies/home-activation/phone-care.webp"
+      alt="The shipped care step on a phone: the camera close on the bathing plot, above the ADL Support checklist with Bathing and Dressing checked"
+    />
+  </div>
+</Plate>
+
+{/* QUESTION: in your words, why did each of these change? What did you notice in the first passes that made you redo them? */}
+
+## An illustration system
+
+I wanted setting up a listing to feel
+<AnnotatedText variant="circle" animate>delightful</AnnotatedText>, not like
+paperwork. The
+illustrations carry that: each one moves as the owner answers, so every
+checkbox and every room gets a <AnnotatedText variant="wavy" tone="info" animate>small reward</AnnotatedText> on screen.
+
+The figures are one isometric system, drawn as SVG components in the
+codebase and animated in CSS, so each one reads the form's state directly.
+Nothing is a static export.
+
+### From a skill to a brand
+
+I started the figures with
+[iso-figure](https://github.com/MrBongoC/ai-iso-skill), a skill that has
+Claude draw isometric line art as plain SVG. It gave me a base where the
+angles, line weights and proportions already agreed. From there I designed
+on top of it in Figma to make it friendly and on brand: fuller color from
+Modern Care's palette, softer shapes, and a yard with room for every amenity
+an owner can pick.
+
+<CompareWipe
+  frame="plain"
+  width="1280"
+  height="851"
+  before="/case-studies/home-activation/iso-amenities-start.webp"
+  beforeLabel="Drawn by the skill"
+  beforeAlt="A sparse isometric amenities scene in thin line art: a house, a router, a tree, a washer, a TV, a bed, a table and a car on a gray plate"
+  after="/case-studies/home-activation/iso-amenities-yard-hairline.webp"
+  afterLabel="Designed in Figma, shipped as SVG"
+  afterAlt="The shipped amenities yard with every amenity on: a patio umbrella, a putting green, a hot tub with a rubber duck, a sofa, a library shelf, a gym, a washer, a router and screens, in clean outlines and brand colors"
+  caption="Drag to compare the skill's starting point with the yard I designed on top of it."
+/>
+
+<Video
+  src="/case-studies/home-activation/care-yard-tour.mp4"
+  label="The care yard camera"
+  caption="The camera pulling back from one plot to the whole yard."
+/>
+
+### Every care attribute
+
+The yard draws 48 care services, each with its own object, chosen so it
+reads at a glance: a <CareChip figure="bathing">rubber duck</CareChip> for
+bathing, a <CareChip figure="medication">pill organizer</CareChip> for
+medication, a <CareChip figure="money">piggy bank</CareChip> for
+money management.
+
+<Video
+  src="/case-studies/home-activation/care-yard-build.mp4"
+  poster="/case-studies/home-activation/care-yard-build-poster.webp"
+  label="The care yard, built one service at a time"
+  caption="Each axis from empty, every service added in turn as an owner would pick it."
+/>
+
+Here they are on their own.
+
+<ActivationCareGrid />
+
+<Plate background="none">
+  <div className="grid grid-cols-2 items-center gap-6 bg-white p-4 sm:grid-cols-3">
+    <img
+      src="/case-studies/home-activation/iso-amenities-yard-all.webp"
+      alt="The amenities yard with every amenity switched on"
+      className="col-span-2 block w-full sm:col-span-1"
+    />
+    <img
+      src="/case-studies/home-activation/iso-writing-desk.webp"
+      alt="A writing desk with a letter, a lamp and a mug"
+      className="block w-full"
+    />
+    <img
+      src="/case-studies/home-activation/iso-register.webp"
+      alt="A cash register showing $4,800"
+      className="block w-full"
+    />
+  </div>
+</Plate>
+
+## After it's live
+
+Once the team approves a home, the owner keeps it current in the Manage
+dashboard, the editor new owners used to land in on day one. Spencer built
+the dashboard; I redesigned the two pages owners come back to most, so they
+read like the flow that came before them.
+
+### Care, in the same eight groups
+
+The care step and the dashboard share one taxonomy. Care is grouped by the
+same eight axes, and in the dashboard each axis opens in its own dialog, a
+bottom drawer on a phone. Saving one axis replaces only that axis's
+answers, so two people editing different parts of a home don't overwrite
+each other.
+
+<BrowserShot
+  src="/case-studies/home-activation/manage/care-edit.webp"
+  alt="The Manage dashboard's Care page with the ADL Support dialog open: six services, each with a one-line definition, Bathing and Dressing checked"
+  caption="Each axis edits on its own, with every service defined in plain words."
+/>
+
+<Plate
+  background="none"
+  caption="On a phone the same editor opens as a drawer from the bottom."
+>
+  <div className="flex justify-center py-2">
+    <PhoneShot
+      src="/case-studies/home-activation/manage/phone-care-edit.webp"
+      alt="The ADL Support editor as a bottom drawer on a phone, with Save and Cancel stacked at the bottom"
+    />
+  </div>
+</Plate>
+
+### Availability families can trust
+
+Open rooms are what families act on, so the Availability page leads with
+how fresh they are. A badge reads when the owner last confirmed them, rooms
+sit in one table with their details as chips, and several can be updated or
+removed at once. With no rooms, the page shows an example room and says
+plainly that the home stays unavailable until one is added.
+
+<BrowserShot
+  src="/case-studies/home-activation/manage/availability.webp"
+  alt="The Availability page: a Last confirmed 3 days ago badge, and a rooms table with East, West and Garden Room, their details as chips, and Available or Unavailable status"
+  caption="Rooms in one table, with when they were last confirmed up top."
+/>
+
+<BrowserShot
+  src="/case-studies/home-activation/manage/availability-empty.webp"
+  alt="The Availability empty state: Add your first room, an example Garden Room card, an Add button, and a note that the home is unavailable until rooms are added"
+  caption="The empty state shows what a room looks like before there is one."
+/>
+
+## How I built it
+
+I designed this in code rather than in Figma. The flow and its illustrations
+were new, and the questions that mattered, like how a yard fills up, how a
+camera pans and how a step feels on a phone, only had answers once they moved.
+
+- **Storybook first.** Every step has stories at desktop and phone widths, including the awkward states: an empty price, a shared room with no gender set, a review with something missing.
+- **Smooth motion.** The care camera panned at 23fps. Moving the transform onto the SVG's own box brought it to 60.
+- **Built on the shared system.** The steps use the product's design system components, with one new pattern: a double-bordered panel that frames every block of content in the flow.
+- **Tested where it counts.** Submitting is covered for an incomplete draft, a non-owner and a home that's already been submitted.
+
+{/* QUESTION: anything to add about working with Spencer? Who decided on submit-for-review, and how was the claim flow agreed? */}
+
+## Where it stands
+
+The flow is complete and running behind the `home-onboarding` feature flag
+while the pull request is in review. Before it opens to owners I want to
+check touch behavior on a real phone, and then measure time to submit and
+where owners stop, step by step. The next piece I'd design is the email that
+says a home is live: it should show owners their listing as families see it,
+so coming back feels like picking up where they left off.
