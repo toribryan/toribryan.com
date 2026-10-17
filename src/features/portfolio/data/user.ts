@@ -29,7 +29,7 @@ export const USER: User = {
   ],
   about: `- I’m a Product Designer who uses a <mark data-variant="wavy">design systems approach</mark> to crafting interfaces.
 - Five years building B2B and B2B2C products, component libraries, and the tooling that connects design to <mark data-variant="bracket">production code</mark>.
-- Always exploring new tools and ways to create. Currently learning the <mark data-icon="🥁">drums</mark>, and studying the history of the <mark data-icon="🐚">golden ratio</mark> and its relevance to design today.
+- Always exploring new tools and ways to create. I custom-built my own <mark data-icon="🖥️">PC</mark> by hand, and I’m currently learning the <mark data-icon="🥁">drums</mark> and studying the history of the <mark data-icon="🐚">golden ratio</mark> and its relevance to design today.
 `,
   avatar: "/images/about/photo-1.jpg",
   headerAvatar: "/images/header/avatar.svg",

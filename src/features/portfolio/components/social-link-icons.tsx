@@ -1,6 +1,7 @@
 import {
   GitHubIcon,
   LinkedInIcon,
+  NotionIcon,
   TwentyFirstDevIcon,
   XIcon,
 } from "@/components/icons"
@@ -16,4 +17,5 @@ export const SOCIAL_ICONS: Record<SocialName, React.JSX.Element> = {
   x: <XIcon />,
   github: <GitHubIcon />,
   twentyFirstDev: <TwentyFirstDevIcon />,
+  notion: <NotionIcon />,
 }
