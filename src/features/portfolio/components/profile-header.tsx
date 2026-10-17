@@ -1,5 +1,6 @@
 import Image from "next/image"
 
+import { TextScramble } from "@/components/ui/text-scramble"
 import { USER } from "@/features/portfolio/data/user"
 
 import { SocialLinks } from "./social-links"
@@ -8,7 +9,7 @@ import { VerifiedIcon } from "./verified-icon"
 /** Avatar, name, and role: the first block under the site header. */
 export function ProfileHeader() {
   return (
-    <div className="relative border-x border-line">
+    <div className="screen-line-top relative border-x border-line">
       {/* The screen-wide bottom line. Elsewhere two panels' lines overlap at
           each seam, so it's layered twice to match. */}
       <div className="pointer-events-none absolute bottom-0 left-[-100vw] z-11 h-px w-[200vw] bg-line bg-[linear-gradient(var(--color-line),var(--color-line))]" />
@@ -30,15 +31,17 @@ export function ProfileHeader() {
 
         <div>
           <div className="flex items-center gap-2 py-1.5 pl-4">
-            <h1 className="translate-y-0.5 font-heading text-[1.625rem]/8 font-medium tracking-normal">
+            <h1 className="translate-y-0.5 font-heading text-[2rem]/9 font-medium tracking-normal">
               {USER.displayName}
             </h1>
-            <VerifiedIcon className="size-4.5 select-none" aria-hidden />
+            <VerifiedIcon className="size-5 select-none" aria-hidden />
           </div>
 
-          <div className="flex flex-col gap-0.5 border-t border-line py-1.5 pl-4 font-mono text-xs text-balance text-muted-foreground sm:text-sm">
-            {USER.headerLines.map((line) => (
-              <p key={line}>{line}</p>
+          <div className="flex flex-col gap-0.5 border-t border-line py-1.5 pl-4 font-sans text-sm font-normal text-balance text-muted-foreground sm:text-[0.9375rem]">
+            {USER.headerLines.map((line, index) => (
+              <TextScramble key={line} delay={0.2 + index * 0.3}>
+                {line}
+              </TextScramble>
             ))}
           </div>
 
