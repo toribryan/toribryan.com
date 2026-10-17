@@ -1,3 +1,7 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+
 import { cn } from "@/lib/utils"
 import { PhoneMockupCard } from "@/components/mockups/phone-mockup-card"
 
@@ -291,5 +295,43 @@ export function PhoneShot({
     )
   }
 
-  return <SafariPhone width={Number(width)}>{media}</SafariPhone>
+  return <FitPhone width={Number(width)}>{media}</FitPhone>
+}
+
+/**
+ * A Safari phone laid out at `width` and zoomed down when its row is
+ * narrower, so the corners, island and status bar shrink with it. Squeezed
+ * by flex instead, the frame kept its full-size corners and clipped the time.
+ */
+function FitPhone({
+  width,
+  children,
+}: {
+  width: number
+  children: React.ReactNode
+}) {
+  const box = useRef<HTMLDivElement>(null)
+  const [scale, setScale] = useState<number | null>(null)
+
+  useEffect(() => {
+    const element = box.current
+    if (!element) return
+    const observer = new ResizeObserver(([entry]) => {
+      setScale(Math.min(1, entry.contentRect.width / width))
+    })
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [width])
+
+  return (
+    <div ref={box} className="min-w-0" style={{ width, maxWidth: "100%" }}>
+      <SafariPhone
+        width={width}
+        className={cn(scale === null && "opacity-0")}
+        style={{ zoom: scale ?? 1 }}
+      >
+        {children}
+      </SafariPhone>
+    </div>
+  )
 }
