@@ -70,7 +70,7 @@ without three gallery photos, and the publish button put the home live
   </Item>
   <Item title="Draw the home as it's described.">
     Every step has an isometric illustration that reacts to the form. Long
-    checklists turn into a yard that fills up, which shows progress better than
+    checklists turn into <AnnotatedText variant="wavy" tone="info" animate>a yard that fills up</AnnotatedText>, which shows progress better than
     a counter does. It borrows the reward of a game's progress loop without the
     points and badges.
   </Item>
@@ -86,9 +86,43 @@ without three gallery photos, and the publish button put the home live
   </Item>
 </Numbered>
 
-## The flow
+## Step by step
 
-<ActivationFlow />
+<StepTabs>
+<StepTab label="Find your home">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-find-your-home.webp" alt="Find your home: a welcome, an isometric house with a map pin, and a search for the licensed home’s address" />
+</StepTab>
+<StepTab label="Welcome">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-welcome.webp" alt="Welcome: Let’s get Sunrise Gardens in front of families, with the three phases ahead" />
+</StepTab>
+<StepTab label="Confirm">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-confirm.webp" alt="Confirm: Is this your home? Name, address, care type, capacity and license from the Arizona record" />
+</StepTab>
+<StepTab label="Photos">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-photos-complete.webp" alt="Photos: a cover photo and a living area in named slots, above All photos" />
+</StepTab>
+<StepTab label="Amenities">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/mock/phone-amenities.mp4" alt="Amenities: checking items adds each one to the isometric yard above the list" />
+</StepTab>
+<StepTab label="About">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-about.webp" alt="About: a pre-written draft with bracketed gaps to fill, under a writing desk" />
+</StepTab>
+<StepTab label="Care">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-care.webp" alt="Care: the camera close on the bathing plot, above the ADL Support checklist" />
+</StepTab>
+<StepTab label="Rooms">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/mock/phone-rooms.mp4" alt="Rooms: adding rooms and who shares them, one row per room" />
+</StepTab>
+<StepTab label="Price">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/mock/phone-price.mp4" alt="Price: setting a starting monthly price beside what similar homes nearby charge" />
+</StepTab>
+<StepTab label="Review">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-review.webp" alt="Review: the listing as families will see it, with a summary of every step" />
+</StepTab>
+<StepTab label="Submitted">
+<PhoneShot frame="screen" width="280" src="/case-studies/home-activation/phone-submitted.webp" alt="Submitted: Sunrise Gardens is submitted for review" />
+</StepTab>
+</StepTabs>
 
 ## How it got here
 
@@ -121,8 +155,7 @@ backyard.
 The About step first opened on a blank editor with tips above it and a book
 being written in. The desk replaced the book, the
 letter on it fills in as the owner types, and the tips moved into the draft
-itself as bracketed prompts, so the owner edits instead of starting from
-nothing.
+itself as bracketed prompts, so the owner edits instead of <AnnotatedText variant="wavy" tone="info" animate>starting from nothing</AnnotatedText>.
 
 <CompareWipe
   width="1920"
@@ -157,100 +190,13 @@ moves in close to the axis being edited, made every tap visible.
 
 {/* QUESTION: in your words, why did each of these change? What did you notice in the first passes that made you redo them? */}
 
-## Step by step
-
-<StepTabs>
-<StepTab label="Find your home">
-
-Owners search their license by name or address. Picking a match builds the
-draft and records the claim, then the welcome screen lays out the three
-phases ahead and the confirm step shows what the state already knows.
-
-<ActivationFindHome />
-
-</StepTab>
-<StepTab label="Photos">
-
-Three named slots, cover first, since the cover is what families see in
-search. Each empty slot is an empty state that says what good looks like, and a
-photo drops into the slot that was clicked.
-
-<BrowserCycle
-  srcs="/case-studies/home-activation/step/photos-empty.webp, /case-studies/home-activation/step/photos-complete.webp"
-  width="1550"
-  height="969"
-  alt="The photos step, empty with three labeled slots for outside, living area and a bedroom, then filled with a cover photo and two interiors"
-  caption="Empty, then filled. Each slot names the photo it wants."
-/>
-
-</StepTab>
-<StepTab label="Amenities">
-
-Each amenity adds its own object to the yard: a grill, a garden bed, a
-putting green, a router with its wifi rings.
-
-<BrowserShot src="/case-studies/home-activation/step/amenities-yard.mp4" />
-
-</StepTab>
-<StepTab label="About">
-
-A blank text box is the hardest field in any form, so this one starts as a
-draft written from what the owner has already entered, with bracketed gaps
-to fill. It's a setup default the owner edits, never a
-<AnnotatedText variant="strike" animate>blank page</AnnotatedText>. Next
-waits until the brackets are gone, and the letter on the desk fills in as
-they type.
-
-<BrowserShot src="/case-studies/home-activation/step/about-desk.mp4" />
-
-</StepTab>
-<StepTab label="Care">
-
-Care is the longest list in the flow, and families filter search by it.
-It follows the care taxonomy Spencer wrote, which groups services by axis
-using the ADL and IADL vocabularies families meet in insurance and discharge
-paperwork, so owners describe care in words families already use. I gave
-each axis its own plot in one yard, with one object per service, and a
-camera that stays close and pans to the axis being edited.
-
-<BrowserShot src="/case-studies/home-activation/step/care-camera.mp4" />
-
-</StepTab>
-<StepTab label="Rooms and price">
-
-Shared rooms ask who shares them, one row per room. The price step shows
-what similar homes nearby charge, so owners can check their number before
-families filter by it.
-
-<BrowserShot src="/case-studies/home-activation/step/price.mp4" />
-
-</StepTab>
-<StepTab label="Review">
-
-The last screen shows the home as families will see it in search, beside a
-summary of every step with an Edit link back. Anything missing is flagged in
-place. Submitting sends it to the Modern Care team, and the owner lands on a
-success screen that says what happens next and offers one next action.
-
-<BrowserCycle
-  srcs="/case-studies/home-activation/step/review-missing.webp, /case-studies/home-activation/step/review.webp, /case-studies/home-activation/step/submitted.webp"
-  width="2400"
-  height="1500"
-  interval="2800"
-  alt="The review screen with a missing starting price flagged, then complete, then the submitted screen with an envelope and a green check"
-  caption="Missing price flagged, then complete, then submitted for review."
-/>
-
-</StepTab>
-</StepTabs>
-
 ## An illustration system
 
 I wanted setting up a listing to feel
 <AnnotatedText variant="circle" animate>delightful</AnnotatedText>, not like
 paperwork. The
 illustrations carry that: each one moves as the owner answers, so every
-checkbox and every room gets a small reward on screen.
+checkbox and every room gets a <AnnotatedText variant="wavy" tone="info" animate>small reward</AnnotatedText> on screen.
 
 The figures are one isometric system, drawn as SVG components in the
 codebase and animated in CSS, so each one reads the form's state directly.
@@ -288,9 +234,9 @@ an owner can pick.
 ### Every care attribute
 
 The yard draws 48 care services, each with its own object, chosen so it
-reads at a glance: a <AnnotatedTextChip icon="🦆">rubber duck</AnnotatedTextChip> for
-bathing, a <AnnotatedTextChip icon="💊">pill organizer</AnnotatedTextChip> for
-medication, a <AnnotatedTextChip icon="🐷">piggy bank</AnnotatedTextChip> for
+reads at a glance: a <CareChip figure="bathing">rubber duck</CareChip> for
+bathing, a <CareChip figure="medication">pill organizer</CareChip> for
+medication, a <CareChip figure="money">piggy bank</CareChip> for
 money management.
 
 <Video
