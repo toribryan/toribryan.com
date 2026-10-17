@@ -40,6 +40,7 @@ import { ActivationFlow } from "./activation-flow"
 import { ActivationMockups } from "./activation-mockups"
 import { BrowserCycle } from "./browser-cycle"
 import { BrowserShot, PhoneShot } from "./browser-frame"
+import { CareChip } from "./care-chip"
 import { CompareWipe } from "./compare-wipe"
 import { DOC_COVERS } from "./doc-covers"
 import { DOC_HEROES } from "./doc-heroes"
@@ -72,6 +73,7 @@ const DOC_COMPONENTS = {
   AnnotatedTextChip,
   BrowserCycle,
   BrowserShot,
+  CareChip,
   CompareWipe,
   ComponentCards,
   Item,
