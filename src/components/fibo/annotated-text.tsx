@@ -122,13 +122,16 @@ function markPaths(
     case "wavy": {
       const wave = h * 0.32
       const amp = h * 0.06
+      // The wave swings above its line as much as below, so it sits a little
+      // lower than a straight underline to keep its crests off the letters.
+      const y = base + h * 0.16
       const count = Math.max(2, Math.round(w / wave))
       const step = w / count
-      let d = `M0 ${fmt(base)}`
+      let d = `M0 ${fmt(y)}`
       for (let i = 0; i < count; i++) {
         const x = i * step
         const up = i % 2 ? amp : -amp
-        d += ` Q${fmt(x + step / 2)} ${fmt(base + up * 2)} ${fmt(x + step)} ${fmt(base)}`
+        d += ` Q${fmt(x + step / 2)} ${fmt(y + up * 2)} ${fmt(x + step)} ${fmt(y)}`
       }
       return [d]
     }
