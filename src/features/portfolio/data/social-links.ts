@@ -10,6 +10,13 @@ import type { SocialProfile } from "@/features/portfolio/types/social-links"
  * `social-link-icons.tsx`.
  */
 export const SOCIAL = {
+  // First, as it leads the header's icon row. A page, not a profile, so it
+  // stays out of JSON-LD `sameAs`.
+  notion: {
+    title: "Career Index",
+    handle: "Notion",
+    href: "https://app.notion.com/p/tbds/Tori-Bryan-Career-Index-3fba0b2a488381e18e60f0c53b36b9fe",
+  },
   linkedin: {
     title: "LinkedIn",
     handle: "victorialbryan",
