@@ -12,15 +12,16 @@ problem: "Designers were spending too much time producing handoff documentation,
 outcome: "Spec production dropped from 3 days–2 weeks to under 30 minutes, up to 80 hours per handoff cycle returned to design work, with 100% adoption across the design team, validated with 4 designers across 3 products plus 3 engineers and 1 PM."
 pinned: true
 leadFirst: true
+leadMark: "end to end"
 ---
 
 <PipelineHero />
 
 ## A workflow problem, not a document problem
 
-Handoff was where the trouble showed, but it started earlier. Every designer ran each phase of the work their own way: how they synthesized research, wrote interface copy and documented a design. Specs came out inconsistent because everything before them did.
+Handoff was where the trouble showed, but it started earlier. Every designer ran each phase of the work <AnnotatedText variant="wavy" animate>their own way</AnnotatedText>: how they synthesized research, wrote interface copy and documented a design. Specs came out inconsistent because everything before them did.
 
-So instead of a better spec template, I gave the team one shared way to do each phase: a Claude Code skill per phase, grounded in our brand goals and product context, so the output stays on brand and consistent no matter who runs it. The skills live in one repository that every designer clones and links into Claude Code, with a documented protocol around them, so the process doesn't depend on any one designer.
+So instead of a better spec template, I gave the team <AnnotatedText variant="box" animate>one shared way</AnnotatedText> to do each phase: a Claude Code skill per phase, grounded in our brand goals and product context, so the output stays on brand and consistent no matter who runs it. The skills live in one repository that every designer clones and links into Claude Code, with a documented protocol around them, so the process doesn't depend on any one designer.
 
 <SkillsRepoTree />
 
@@ -36,18 +37,18 @@ The old handoff was one long, polished document. The handoff skill splits it int
 - **Style guide:** the visual design and the design system elements the feature uses.
 - **Test plan:** how each feature should behave, as a functional spec.
 
-They're plain Markdown on purpose. Plain text reads well for everyone, screen readers included, and designers spend their time on what a spec says instead of how it looks. Visual references are Figma links and the prototype itself, which stays the source of truth: the specs follow it instead of being kept up beside it. I shaped the format through feedback loops with engineers, keeping the references that actually helped them build and dropping the rest.
+They're plain Markdown on purpose. Plain text reads well for everyone, screen readers included, and designers spend their time on what a spec says instead of how it looks. Visual references are Figma links and the prototype itself, which stays the <AnnotatedText variant="highlight" animate>source of truth</AnnotatedText>: the specs follow it instead of being kept up beside it. I shaped the format through feedback loops with engineers, keeping the references that <AnnotatedText variant="underline" animate>actually helped them build</AnnotatedText> and dropping the rest.
 
 ## Connected to the design system
 
-All of this builds on the RDS v2 design system I [overhauled](/work/design-system-overhaul): 37 components, 94% fewer card variants, and a card that dropped from two weeks to 1.5 days to build. Figma MCP and Code Connect tie prototypes to its real components. From there, an agentic pipeline ingests a PRD, aligns it to our coding standards and the design system, and outputs production-ready code.
+All of this builds on the RDS v2 design system I [overhauled](/work/design-system-overhaul): 37 components, 94% fewer card variants, and a card that dropped from two weeks to <AnnotatedText variant="circle" animate>1.5 days</AnnotatedText> to build. Figma MCP and Code Connect tie prototypes to its real components. From there, an agentic pipeline ingests a PRD, aligns it to our coding standards and the design system, and outputs <AnnotatedText variant="double" animate>production-ready code</AnnotatedText>.
 
 ## Impact
 
 <TimeSavedChart />
 
-- Up to 80 hours per handoff cycle returned to design work.
-- 100% adoption across the design team, validated with 4 designers across 3 products, plus 3 engineers and 1 PM.
+- Up to <AnnotatedText variant="double" tone="success" animate>80 hours</AnnotatedText> per handoff cycle returned to design work.
+- <AnnotatedText variant="circle" tone="success" animate>100% adoption</AnnotatedText> across the design team, validated with 4 designers across 3 products, plus 3 engineers and 1 PM.
 - Less friction for engineers reading specs: one consistent structure, and release notes that keep themselves up to date.
 
 I presented the finished process to the organization on July 26, 2026.
@@ -57,7 +58,7 @@ I presented the finished process to the organization on July 26, 2026.
 I carried the same approach into [fibo](/fibo), my own design system. Its skills live in the repo next to the code, so anyone working on fibo, or an agent working for them, follows the same steps:
 
 - **`add-component`** adds a component end to end: the source file, stories, the Storybook docs page, catalog metadata and the registry entry. A component isn't done until all of them exist.
-- **`figma-drift`** checks the Figma library against the code for drift in color variables, radii and variant properties, and reports where Figma and code disagree. It never fixes either side on its own.
+- **`figma-drift`** checks the Figma library against the code for drift in color variables, radii and variant properties, and reports where Figma and code disagree. It <AnnotatedText variant="bracket" animate>never</AnnotatedText> fixes either side on its own.
 - **`retire-component`** deprecates a component and later removes it: the docs banner and migration notes, a codemod with its tests, the changelogs and the removal release.
 
 <FiboSkillsTree />
