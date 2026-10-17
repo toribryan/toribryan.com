@@ -51,6 +51,7 @@ export function SafariFrame({
 }) {
   return (
     <div
+      data-slot="safari-frame"
       className={cn("overflow-hidden rounded-[0.35em] bg-white", className)}
       style={{
         fontSize: size,
@@ -59,7 +60,10 @@ export function SafariFrame({
         ...style,
       }}
     >
-      <div className="relative flex h-[1em] items-center gap-[0.4em] border-b border-[#e2e4e9] bg-[linear-gradient(#f8f8fa,#efeff2)] px-[0.45em] text-[#8a8f98]">
+      <div
+        data-slot="safari-toolbar"
+        className="relative flex h-[1em] items-center gap-[0.4em] border-b border-[#e2e4e9] bg-[linear-gradient(#f8f8fa,#efeff2)] px-[0.45em] text-[#8a8f98]"
+      >
         <span className="flex gap-[0.22em]">
           <i className="block size-[0.34em] rounded-full bg-[#ff5f57] ring-1 ring-black/10" />
           <i className="block size-[0.34em] rounded-full bg-[#febc2e] ring-1 ring-black/10" />
@@ -246,30 +250,46 @@ export function BrowserShot({
   )
 }
 
-/** A phone screen recording or still in mobile Safari, for MDX. */
+/**
+ * A phone screen recording or still, for MDX: in mobile Safari by default,
+ * or with `frame="screen"` as the bare screen, rounded like the glass, with
+ * no device or browser around it.
+ */
 export function PhoneShot({
   src,
   alt = "",
   width = 240,
+  frame = "phone",
 }: {
   src: string
   alt?: string
-  width?: number
+  width?: number | string
+  frame?: "phone" | "screen"
 }) {
-  return (
-    <SafariPhone width={width}>
-      {src.endsWith(".mp4") ? (
-        <video
-          className="block w-full"
-          src={src}
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
-      ) : (
-        <img className="block w-full" src={src} alt={alt} loading="lazy" />
-      )}
-    </SafariPhone>
+  const media = src.endsWith(".mp4") ? (
+    <video
+      className="block w-full"
+      src={src}
+      aria-label={alt || undefined}
+      autoPlay
+      loop
+      muted
+      playsInline
+    />
+  ) : (
+    <img className="block w-full" src={src} alt={alt} loading="lazy" />
   )
+
+  if (frame === "screen") {
+    return (
+      <div
+        className="mx-auto max-w-full overflow-hidden rounded-[1.4rem] bg-white shadow-[0_18px_40px_-18px_rgb(15_30_80/0.3)] ring-1 ring-black/10 dark:ring-white/15"
+        style={{ width: Number(width) }}
+      >
+        {media}
+      </div>
+    )
+  }
+
+  return <SafariPhone width={Number(width)}>{media}</SafariPhone>
 }
