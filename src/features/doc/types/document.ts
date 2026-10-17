@@ -1,3 +1,5 @@
+import type { AnnotatedTextVariant } from "@/components/fibo/annotated-text"
+
 export type DocMetadata = {
   title: string
   description: string
@@ -118,8 +120,23 @@ export type DocMetadata = {
    * `value` carries the figure ("94%", "60 days", "40"). Keep it short enough
    * to hold one line. Entries without a figure can carry a short noun phrase
    * instead ("In pilot"), which renders at body size rather than display size.
+   *
+   * `mark` draws a hand-drawn annotation on the figure once it has counted
+   * up ("circle", "underline", "highlight"…). `was` shows the figure it
+   * replaced, struck through beside it ("23" before "60fps").
    */
-  results?: { value: string; label: string }[]
+  results?: {
+    value: string
+    label: string
+    mark?: AnnotatedTextVariant
+    was?: string
+  }[]
+  /**
+   * A phrase from `description` to mark in the lead, and how. The phrase must
+   * appear in the description exactly; the mark defaults to a highlight.
+   */
+  leadMark?: string
+  leadMarkVariant?: AnnotatedTextVariant
   /** Additional images shown below the body. */
   gallery?: string[]
 

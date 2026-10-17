@@ -16,6 +16,11 @@ import {
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
 import { Prose } from "@/components/base/ui/typography"
+import {
+  AnnotatedText,
+  AnnotatedTextChip,
+  type AnnotatedTextVariant,
+} from "@/components/fibo/annotated-text"
 import { MDX } from "@/components/mdx"
 import { LinkButton } from "@/components/mdx-link-button"
 import { TOCInline } from "@/components/toc-inline"
@@ -35,6 +40,7 @@ import { ActivationFlow } from "./activation-flow"
 import { ActivationMockups } from "./activation-mockups"
 import { BrowserCycle } from "./browser-cycle"
 import { BrowserShot, PhoneShot } from "./browser-frame"
+import { CompareWipe } from "./compare-wipe"
 import { DOC_COVERS } from "./doc-covers"
 import { DOC_HEROES } from "./doc-heroes"
 import {
@@ -62,8 +68,11 @@ const DOC_COMPONENTS = {
   ActivationCareGrid,
   ActivationFlow,
   ActivationMockups,
+  AnnotatedText,
+  AnnotatedTextChip,
   BrowserCycle,
   BrowserShot,
+  CompareWipe,
   ComponentCards,
   Item,
   Numbered,
@@ -162,6 +171,9 @@ export async function DocPage({
   // brings every value down a step rather than sitting small beside its
   // neighbors.
   const resultsAreFigures = results.every(({ value }) => value.length <= 10)
+  const resultsEnclosed = results.some(
+    ({ mark }) => mark === "circle" || mark === "box" || mark === "bracket"
+  )
 
   // The results strip, or the outcome when there are no figures.
   const summary =
@@ -173,17 +185,45 @@ export async function DocPage({
           results.length >= 4 && "sm:grid-cols-4"
         )}
       >
-        {results.map(({ value, label }) => (
+        {results.map(({ value, label, mark, was }, index) => (
           <div key={label} className="flex flex-col gap-1">
             <dt
               className={cn(
                 "font-heading font-medium tabular-nums",
                 resultsAreFigures
                   ? "text-3xl leading-none"
-                  : "text-2xl leading-tight text-balance"
+                  : "text-2xl leading-tight text-balance",
+                // A ring or box reaches below its figure, so every label in
+                // the row steps down together.
+                resultsEnclosed && "pb-2.5"
               )}
             >
-              <ResultFigure value={value} />
+              {/* The old figure strikes through first, then each new one
+                  takes its mark as its count lands, left to right. */}
+              {was && (
+                <span className="mr-2 align-[0.15em] text-xl text-muted-foreground">
+                  <span className="sr-only">Up from </span>
+                  <AnnotatedText
+                    variant="strike"
+                    tone="muted"
+                    animate
+                    delay={600 + index * 250}
+                  >
+                    {was}
+                  </AnnotatedText>
+                </span>
+              )}
+              {mark ? (
+                <AnnotatedText
+                  variant={mark}
+                  animate
+                  delay={1300 + index * 250}
+                >
+                  <ResultFigure value={value} />
+                </AnnotatedText>
+              ) : (
+                <ResultFigure value={value} />
+              )}
             </dt>
             <dd className="font-mono text-xs leading-relaxed tracking-wide text-pretty text-muted-foreground">
               {label}
@@ -357,7 +397,9 @@ export async function DocPage({
 
         {!m.leadFirst && summary}
 
-        {!m.hideLead && <p>{m.description}</p>}
+        {!m.hideLead && (
+          <p>{lead(m.description, m.leadMark, m.leadMarkVariant)}</p>
+        )}
 
         {brief.length > 0 && (
           <div className="not-prose my-6 flex flex-col gap-4 border-l-2 border-line pl-4">
@@ -446,5 +488,24 @@ function NeighborLink({
         <p className="text-background/70">{doc.metadata.title}</p>
       </TooltipContent>
     </Tooltip>
+  )
+}
+
+/** The lead with its one marked phrase, if the doc names one that's in it. */
+function lead(
+  text: string,
+  phrase?: string,
+  variant: AnnotatedTextVariant = "highlight"
+) {
+  const at = phrase ? text.indexOf(phrase) : -1
+  if (!phrase || at < 0) return text
+  return (
+    <>
+      {text.slice(0, at)}
+      <AnnotatedText variant={variant} animate delay={300}>
+        {phrase}
+      </AnnotatedText>
+      {text.slice(at + phrase.length)}
+    </>
   )
 }

@@ -10,30 +10,33 @@ new: true
 company: "Modern Care Homes"
 role: "Design Engineer"
 team: "With Spencer Grzincich, Software Engineer"
-type: "Product design + front end"
 period: "Q4 2026"
-status: "Behind a feature flag, in review"
+status: "Shipped"
 problem: "A new owner only got in when an admin invited them from their license. They landed in the full listing editor with a checklist, couldn't save a draft without three gallery photos, and publishing put the home straight in front of families with nobody checking it first."
 task: "Give owners a way to claim their own home and get it to a listing worth publishing, without starting in the full editor, and give the Modern Care team a look at every home before families do."
 process: "Designed and built in code, one step at a time, with each step in Storybook at desktop and phone widths. Spencer's care taxonomy set the structure of the care step, and the flow ships behind a feature flag."
 # QUESTION: outcome. Has it reached owners yet? Any owners onboarded, time to submit, drop-off by step, or a reaction from the team? Leave this out rather than guess.
+leadMark: "one short step at a time"
 results:
   - value: "7"
     label: "Short steps from a license to a submitted listing"
+    mark: "circle"
   - value: "8"
     label: "Care axes, each with its own illustrated plot"
+    mark: "underline"
   - value: "60fps"
-    label: "Care camera while it pans, up from 23"
+    was: "23"
+    label: "Care camera while it pans"
+    mark: "highlight"
 skills:
   - "Product Design"
   - "Design Engineering"
   - "Illustration"
   - "Motion"
-  - "UX Writing"
   - "React"
   - "TypeScript"
   - "SVG"
-  - "Storybook"
+  - "Activation Flow"
 ---
 
 ## The problem
@@ -45,8 +48,8 @@ on record before the owner ever visits the site.
 The first version used that, but only from the admin side. An admin invited
 the owner from their license, and the owner landed in the full Manage Home
 editor with a checklist of everything a listing needs. Nothing would save
-without three gallery photos, and the publish button put the home live right
-away.
+without three gallery photos, and the publish button put the home live
+<AnnotatedText variant="highlight" animate>right away</AnnotatedText>.
 
 {/* QUESTION: what did you see or hear that made this a priority? Owner feedback, stalled drafts, the team's own time spent onboarding? One concrete sentence here makes the problem real. */}
 
@@ -73,7 +76,8 @@ away.
   </Item>
   <Item title="Review before families see it.">
     The last step submits the home to the Modern Care team instead of publishing
-    it, and emails them a link to check it. That step is friction on purpose,
+    it, and emails them a link to check it. That step is
+    <AnnotatedText variant="underline" animate>friction on purpose</AnnotatedText>,
     the one place a slower path protects families.
   </Item>
   <Item title="Readable for everyone.">
@@ -95,26 +99,21 @@ changed a lot once I could click through them.
 
 The first amenities stage was a blank grid of plots waiting to be filled.
 The next version filled them, but in black outlines with flat color, and the
-objects floated with no sense of a place. The shipped yard drops the heavy
-outlines, gives each object its own detail and an animation when it lands,
-and arranges them like a real backyard.
+objects floated with no sense of a place. The shipped yard keeps the line
+work but lightens it, brings in Modern Care's palette, gives each object its
+own detail and an animation when it lands, and arranges them like a real
+backyard.
 
-<BrowserShot
-  src="/case-studies/home-activation/early/amenities-v1.webp"
-  alt="Early amenities step: an empty isometric grid of dashed plots beside the checklist"
-  caption="First pass: an empty lot."
-/>
-
-<BrowserShot
-  src="/case-studies/home-activation/early/amenities-v2.webp"
-  alt="Second amenities version: outlined isometric objects, a house, router, washer, TV and car, scattered on a gray slab"
-  caption="Second pass: outlined objects."
-/>
-
-<BrowserShot
-  src="/case-studies/home-activation/desk-amenities.webp"
-  alt="Shipped amenities step: a detailed yard with a garden, patio umbrella, walking path and wifi router"
-  caption="Shipped: a yard that fills up."
+<CompareWipe
+  width="1920"
+  height="1200"
+  before="/case-studies/home-activation/early/amenities-v1.webp | /case-studies/home-activation/early/amenities-v2.webp"
+  beforeLabel="First pass | Second pass"
+  beforeAlt="Early amenities step: an empty isometric grid of dashed plots beside the checklist | Second amenities version: outlined isometric objects, a house, router, washer, TV and car, scattered on a gray slab"
+  after="/case-studies/home-activation/desk-amenities.webp"
+  afterLabel="Shipped"
+  afterAlt="Shipped amenities step: a detailed yard with a garden, patio umbrella, walking path and wifi router"
+  caption="Drag to compare. Pick a pass on the left: the empty lot, then the outlined objects, against the yard that shipped."
 />
 
 ### The book became a desk
@@ -125,16 +124,16 @@ letter on it fills in as the owner types, and the tips moved into the draft
 itself as bracketed prompts, so the owner edits instead of starting from
 nothing.
 
-<BrowserShot
-  src="/case-studies/home-activation/early/about-v1.webp"
-  alt="Early About step: tips listed above a rich text editor, beside an open book with a pen"
-  caption="First pass: tips above a blank editor, and a book."
-/>
-
-<BrowserShot
-  src="/case-studies/home-activation/early/about-final.webp"
-  alt="Shipped About step: a pre-written draft with bracketed prompts, beside a writing desk with a letter, lamp and mug"
-  caption="Shipped: a draft to edit, and the writing desk."
+<CompareWipe
+  width="1920"
+  height="1200"
+  before="/case-studies/home-activation/early/about-v1.webp"
+  beforeLabel="First pass"
+  beforeAlt="Early About step: tips listed above a rich text editor, beside an open book with a pen"
+  after="/case-studies/home-activation/early/about-final.webp"
+  afterLabel="Shipped"
+  afterAlt="Shipped About step: a pre-written draft with bracketed prompts, beside a writing desk with a letter, lamp and mug"
+  caption="Drag to compare. Tips above a blank editor and a book, against a draft to edit and the writing desk."
 />
 
 ### The care yard got a camera
@@ -145,11 +144,14 @@ moves in close to the axis being edited, made every tap visible.
 
 <Plate
   background="none"
-  caption="Left, the first pass on a phone: the whole yard at once. Right, shipped: the camera follows the axis."
+  caption="Left, the first pass on a phone: the whole yard at once. Right, shipped: the camera close on the axis being edited."
 >
   <div className="flex justify-center gap-6 py-2">
     <PhoneShot src="/case-studies/home-activation/early/care-v1-phone.mp4" />
-    <PhoneShot src="/case-studies/home-activation/phone-care.mp4" />
+    <PhoneShot
+      src="/case-studies/home-activation/phone-care.webp"
+      alt="The shipped care step on a phone: the camera close on the bathing plot, above the ADL Support checklist with Bathing and Dressing checked"
+    />
   </div>
 </Plate>
 
@@ -194,7 +196,8 @@ putting green, a router with its wifi rings.
 
 A blank text box is the hardest field in any form, so this one starts as a
 draft written from what the owner has already entered, with bracketed gaps
-to fill. It's a setup default the owner edits, never a blank page. Next
+to fill. It's a setup default the owner edits, never a
+<AnnotatedText variant="strike" animate>blank page</AnnotatedText>. Next
 waits until the brackets are gone, and the letter on the desk fills in as
 they type.
 
@@ -243,7 +246,9 @@ success screen that says what happens next and offers one next action.
 
 ## An illustration system
 
-I wanted setting up a listing to feel delightful, not like paperwork. The
+I wanted setting up a listing to feel
+<AnnotatedText variant="circle" animate>delightful</AnnotatedText>, not like
+paperwork. The
 illustrations carry that: each one moves as the owner answers, so every
 checkbox and every room gets a small reward on screen.
 
@@ -261,22 +266,18 @@ on top of it in Figma to make it friendly and on brand: fuller color from
 Modern Care's palette, softer shapes, and a yard with room for every amenity
 an owner can pick.
 
-<Sides>
-  <Side label="Starting point" title="Drawn by the skill">
-    <img
-      src="/case-studies/home-activation/iso-amenities-start.webp"
-      alt="A sparse isometric amenities scene in thin line art: a house, a router, a tree, a washer, a TV, a bed, a table and a car on a gray plate"
-      className="block w-full"
-    />
-  </Side>
-  <Side label="Final" title="Designed in Figma, shipped as SVG">
-    <img
-      src="/case-studies/home-activation/iso-amenities-yard-hairline.webp"
-      alt="The shipped amenities yard with every amenity on: a patio umbrella, a putting green, a hot tub with a rubber duck, a sofa, a library shelf, a gym, a washer, a router and screens, in bold outlines and brand colors"
-      className="block w-full"
-    />
-  </Side>
-</Sides>
+<CompareWipe
+  frame="plain"
+  width="1280"
+  height="851"
+  before="/case-studies/home-activation/iso-amenities-start.webp"
+  beforeLabel="Drawn by the skill"
+  beforeAlt="A sparse isometric amenities scene in thin line art: a house, a router, a tree, a washer, a TV, a bed, a table and a car on a gray plate"
+  after="/case-studies/home-activation/iso-amenities-yard-hairline.webp"
+  afterLabel="Designed in Figma, shipped as SVG"
+  afterAlt="The shipped amenities yard with every amenity on: a patio umbrella, a putting green, a hot tub with a rubber duck, a sofa, a library shelf, a gym, a washer, a router and screens, in clean outlines and brand colors"
+  caption="Drag to compare the skill's starting point with the yard I designed on top of it."
+/>
 
 <Video
   src="/case-studies/home-activation/care-yard-tour.mp4"
@@ -286,9 +287,11 @@ an owner can pick.
 
 ### Every care attribute
 
-The yard draws 48 of the 49 care services an owner can pick, each with its own object, chosen so
-it reads at a glance: a rubber duck for bathing, a pill organizer for
-medication, a piggy bank for money management.
+The yard draws 48 care services, each with its own object, chosen so it
+reads at a glance: a <AnnotatedTextChip icon="🦆">rubber duck</AnnotatedTextChip> for
+bathing, a <AnnotatedTextChip icon="💊">pill organizer</AnnotatedTextChip> for
+medication, a <AnnotatedTextChip icon="🐷">piggy bank</AnnotatedTextChip> for
+money management.
 
 <Video
   src="/case-studies/home-activation/care-yard-build.mp4"
@@ -386,10 +389,6 @@ camera pans and how a step feels on a phone, only had answers once they moved.
 - **Tested where it counts.** Submitting is covered for an incomplete draft, a non-owner and a home that's already been submitted.
 
 {/* QUESTION: anything to add about working with Spencer? Who decided on submit-for-review, and how was the claim flow agreed? */}
-
-## Up close
-
-<ActivationMockups />
 
 ## Where it stands
 
