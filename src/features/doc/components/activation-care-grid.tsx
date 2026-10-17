@@ -1,3 +1,11 @@
+"use client"
+
+import { useState } from "react"
+import { ChevronDownIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/base/ui/button"
+
 const DIR = "/case-studies/home-activation/care"
 
 type Item = {
@@ -15,8 +23,8 @@ type Axis = { name: string; items: Item[] }
  * overflow shrink to fit.
  */
 const SCALE = 880
-const MAX_W = 0.86
-const MAX_H = 0.5
+const MAX_W = 0.8
+const MAX_H = 0.62
 
 function figureSize({ w, h }: Item) {
   const fit = Math.min(1, (MAX_W * SCALE) / w, (MAX_H * SCALE) / h)
@@ -139,41 +147,100 @@ const TAGS: Record<string, string> = {
   Supervision: "Supervision",
 }
 
+const ITEMS = AXES.flatMap((axis) =>
+  axis.items.map((item) => ({ ...item, axis: axis.name }))
+)
+/** Two rows at four across, enough to show the range before the full set. */
+const PREVIEW = 8
+
 /**
  * Every care attribute's figure from the care yard, on its own, with the
  * attribute it stands for, in one grid tagged by axis in the order the care
- * step asks them.
+ * step asks them. It opens on the first two rows, and the rest fade in on
+ * request.
  */
 export function ActivationCareGrid() {
+  const [open, setOpen] = useState(false)
+  const shown = open ? ITEMS : ITEMS.slice(0, PREVIEW)
+
   return (
-    <ul className="not-prose my-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
-      {AXES.flatMap((axis) =>
-        axis.items.map((item) => (
-          <li
-            key={item.src}
-            className="group relative aspect-[4/5] bg-white transition-colors duration-300 hover:bg-[#f5f7fd] dark:bg-[#0f1320] dark:hover:bg-[#151b2c]"
-          >
-            <span
-              className="absolute top-3 left-3 font-mono text-[10px] tracking-[0.08em] text-muted-foreground/80 uppercase"
-              title={axis.name}
+    // Ruled like the site's other grids: out to the column's edges, a pair
+    // of hairlines in every gutter, and each row's lines run across the
+    // screen.
+    <div className="not-prose -mx-4 my-8">
+      <div className="screen-line-top screen-line-bottom relative py-4">
+        <div
+          className="pointer-events-none absolute inset-0 -z-1 grid grid-cols-2 gap-4 sm:grid-cols-4"
+          aria-hidden
+        >
+          <div className="border-r border-line" />
+          <div className="border-l border-line sm:border-r" />
+          <div className="border-x border-line max-sm:hidden" />
+          <div className="border-l border-line max-sm:hidden" />
+        </div>
+        <ul id="care-grid" className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {shown.map((item, index) => (
+            <li
+              key={item.src}
+              className={cn(
+                "group flex flex-col gap-2 p-2 transition-[background-color] ease-out hover:bg-accent-muted",
+                "max-sm:nth-[2n+1]:screen-line-top max-sm:nth-[2n+1]:screen-line-bottom",
+                "sm:nth-[4n+1]:screen-line-top sm:nth-[4n+1]:screen-line-bottom",
+                index >= PREVIEW &&
+                  "animate-in duration-500 fill-mode-both fade-in slide-in-from-bottom-1 motion-reduce:animate-none"
+              )}
+              style={
+                index >= PREVIEW
+                  ? {
+                      animationDelay: `${Math.min(index - PREVIEW, 20) * 25}ms`,
+                    }
+                  : undefined
+              }
             >
-              {TAGS[axis.name]}
-            </span>
-            <span className="absolute bottom-[23%] left-1/2 h-[5%] w-[52%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(23,40,100,.12),transparent)]" />
-            <img
-              src={`${DIR}/${item.src}.webp`}
-              alt=""
-              loading="lazy"
-              draggable={false}
-              className="absolute bottom-[25%] left-1/2 -translate-x-1/2 object-contain object-bottom transition-transform duration-300 ease-out group-hover:-translate-y-1 motion-reduce:transition-none"
-              style={figureSize(item)}
-            />
-            <p className="absolute inset-x-3 bottom-3 text-[13px] leading-snug text-pretty">
-              {item.label}
-            </p>
-          </li>
-        ))
-      )}
-    </ul>
+              {/* The figures are drawn in dark line on white, as in the yard,
+                  so each sits on its own light plate in either theme. */}
+              <div className="relative aspect-square overflow-hidden rounded-xl bg-[#fdfdfd] inset-ring-1 inset-ring-black/10 dark:inset-ring-white/15">
+                <span
+                  className="absolute top-2.5 left-3 font-mono text-[10px] tracking-[0.08em] text-[#8a8f9c] uppercase"
+                  title={item.axis}
+                >
+                  {TAGS[item.axis]}
+                </span>
+                <span className="absolute bottom-[14%] left-1/2 h-[6%] w-[52%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(23,40,100,.12),transparent)]" />
+                <img
+                  src={`${DIR}/${item.src}.webp`}
+                  alt=""
+                  loading="lazy"
+                  draggable={false}
+                  className="absolute bottom-[16%] left-1/2 -translate-x-1/2 object-contain object-bottom transition-transform duration-300 ease-out group-hover:-translate-y-1 motion-reduce:transition-none"
+                  style={figureSize(item)}
+                />
+              </div>
+              <p className="px-2 pb-1 text-[13px] leading-snug text-pretty">
+                {item.label}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="screen-line-bottom flex justify-center py-3">
+        <Button
+          variant="outline"
+          size="sm"
+          className="gap-1.5"
+          aria-expanded={open}
+          aria-controls="care-grid"
+          onClick={() => setOpen((value) => !value)}
+        >
+          {open ? "Show fewer" : `Show all ${ITEMS.length}`}
+          <ChevronDownIcon
+            className={cn(
+              "transition-transform duration-300 ease-out",
+              open && "rotate-180"
+            )}
+          />
+        </Button>
+      </div>
+    </div>
   )
 }
