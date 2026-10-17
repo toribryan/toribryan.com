@@ -97,6 +97,8 @@ export type DocMetadata = {
   type?: string
   /** The framing problem. Rendered as the case study's summary block. */
   problem?: string
+  /** The bet the work tested: what we believed, and how we'd know. */
+  hypothesis?: string
   /** What you were asked to do. */
   task?: string
   /** How you got there — forks taken, constraints that shaped it. */

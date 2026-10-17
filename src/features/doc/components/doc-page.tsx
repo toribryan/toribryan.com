@@ -158,6 +158,7 @@ export async function DocPage({
   const outcomeInBrief = m.leadFirst && !m.results?.length
   const brief = [
     ["Problem", m.problem],
+    ["Hypothesis", m.hypothesis],
     ["Solution", m.solution],
     ["Task", m.task],
     ["Process", m.process],
