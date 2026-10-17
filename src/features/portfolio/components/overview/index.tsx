@@ -1,6 +1,6 @@
 import { BriefcaseBusinessIcon, MapPinIcon } from "lucide-react"
 
-import { LinkedInIcon } from "@/components/icons"
+import { GitHubIcon, LinkedInIcon } from "@/components/icons"
 import { SOCIAL } from "@/features/portfolio/data/social-links"
 import { USER } from "@/features/portfolio/data/user"
 
@@ -14,10 +14,11 @@ import {
   IntroItemLink,
 } from "./intro-item"
 
-// Shown like the email address, as the profile path without the scheme.
-const linkedInHandle = SOCIAL.linkedin.href
-  .replace(/^https?:\/\/(www\.)?/, "")
-  .replace(/\/$/, "")
+// Shown like the email address, as the profile paths without the scheme.
+const handle = (href: string) =>
+  href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")
+const linkedInHandle = handle(SOCIAL.linkedin.href)
+const gitHubHandle = handle(SOCIAL.github.href)
 
 /**
  * The facts under the header in two columns: what I do, where I am and how to
@@ -74,6 +75,20 @@ export function Overview() {
               aria-label={`LinkedIn: ${linkedInHandle}`}
             >
               {linkedInHandle}
+            </IntroItemLink>
+          </IntroItemContent>
+        </IntroItem>
+
+        <IntroItem>
+          <IntroItemIcon>
+            <GitHubIcon className="size-3.5" />
+          </IntroItemIcon>
+          <IntroItemContent>
+            <IntroItemLink
+              href={SOCIAL.github.href}
+              aria-label={`GitHub: ${gitHubHandle}`}
+            >
+              {gitHubHandle}
             </IntroItemLink>
           </IntroItemContent>
         </IntroItem>
