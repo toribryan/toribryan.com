@@ -95,9 +95,7 @@
   --font-serif: var(--font-serif);
   --font-handwritten: var(--font-handwritten);
   --font-display: var(--font-display);
-  /* Hello Scratchy: handwritten asides, its hollow cut, and its dingbats. */
-  --font-accent: var(--font-accent);
-  --font-accent-outline: var(--font-accent-outline);
+  /* Hello Scratchy Doodles: hand-drawn arrows, stars and smileys. */
   --font-doodle: var(--font-doodle);
   /* Headings use Nohemi, matching the Astro site's font-display role. */
   --font-heading: var(--font-display);

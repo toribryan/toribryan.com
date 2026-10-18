@@ -15,7 +15,8 @@ type ThoughtPoint = keyof typeof ARROWS
 
 /**
  * A handwritten aside in a case study: what I was thinking at that point,
- * scrawled in Hello Scratchy beside the figure or passage it's about. `point`
+ * jotted in lowercase Caveat beside the figure or passage it's about, with a
+ * Hello Scratchy doodle for the arrow. Write it lowercase. `point`
  * aims the arrow at it, `down` for what comes next and `up` for what came
  * before; `align="end"` hangs the note from the right.
  *
@@ -50,7 +51,7 @@ export function Thought({
     <p
       data-slot="thought"
       className={cn(
-        "not-prose my-6 flex w-fit max-w-[85%] items-center gap-2 font-accent text-xl/tight text-pretty text-info",
+        "not-prose my-6 flex w-fit max-w-[85%] items-center gap-2 font-handwritten text-[1.75rem]/tight font-medium text-pretty text-info",
         align === "end" ? "ml-auto rotate-2" : "-rotate-2",
         className
       )}
