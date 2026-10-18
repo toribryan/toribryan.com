@@ -35,15 +35,6 @@ export function ProfileHeader() {
               {USER.displayName}
             </h1>
             <VerifiedIcon className="size-5 select-none" aria-hidden />
-            {/* A scrawled aside in Hello Scratchy's hollow cut: the doodle "I" is its
-                left arrow, pointing back at the name. */}
-            <span
-              className="ml-2 hidden translate-y-1 -rotate-4 items-center gap-1 font-accent-outline text-2xl/none text-muted-foreground select-none sm:inline-flex"
-              aria-hidden
-            >
-              <span className="font-doodle text-4xl/none">I</span>
-              Hi there!
-            </span>
           </div>
 
           <div className="flex flex-col gap-0.5 border-t border-line py-1.5 pl-4 font-sans text-sm font-normal text-balance text-muted-foreground sm:text-[0.9375rem]">

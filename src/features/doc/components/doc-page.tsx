@@ -60,6 +60,7 @@ import { RepoViewer } from "./repo-viewer"
 import { ResultFigure } from "./result-figure"
 import { StatusColors } from "./status-colors"
 import { StepTab, StepTabs } from "./step-tabs"
+import { Thought } from "./thought"
 import { TokenCoins } from "./token-coins"
 import { TokenVisualizer } from "./token-visualizer"
 
@@ -92,6 +93,7 @@ const DOC_COMPONENTS = {
   StepTab,
   StepTabs,
   SwitchSprawl,
+  Thought,
   TokenCoins,
   TokenVisualizer,
   VariantWall,
