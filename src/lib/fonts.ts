@@ -38,6 +38,31 @@ const fontHandwritten = Caveat({
   variable: "--font-handwritten",
 })
 
+// Hello Scratchy (Studio Funshop) is the accent face: a marker scrawl, caps
+// only, for small handwritten asides. Doodles is its dingbat set (smileys,
+// arrows, stars, squiggles); Outlines is the hollow cut, loaded on first use.
+const fontAccent = localFont({
+  src: "../assets/fonts/Hello-Scratchy-Solid.woff2",
+  display: "swap",
+  fallback: ["cursive"],
+  variable: "--font-accent",
+})
+
+const fontAccentOutline = localFont({
+  src: "../assets/fonts/Hello-Scratchy-Outlines.woff2",
+  display: "swap",
+  preload: false,
+  fallback: ["cursive"],
+  variable: "--font-accent-outline",
+})
+
+const fontDoodle = localFont({
+  src: "../assets/fonts/Hello-Scratchy-Doodles.woff2",
+  display: "block",
+  preload: false,
+  variable: "--font-doodle",
+})
+
 export const fontVariables = cn(
   fontSans.variable,
   fontMono.variable,
@@ -45,6 +70,9 @@ export const fontVariables = cn(
   fontDisplay.variable,
   fontSerif.variable,
   fontHandwritten.variable,
+  fontAccent.variable,
+  fontAccentOutline.variable,
+  fontDoodle.variable,
   "[--font-sans:var(--font-geist-sans)]",
   "[--font-mono:var(--font-geist-pixel-square)]"
 )
