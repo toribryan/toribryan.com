@@ -1,3 +1,5 @@
+import posthog from "posthog-js"
+
 import { op } from "./openpanel"
 
 /** The closed set of analytics events; add a name here before tracking it. */
@@ -17,4 +19,5 @@ export type Event = {
 
 export function trackEvent(event: Event) {
   op.track(event.name, event.properties)
+  posthog.capture(event.name, event.properties ?? undefined)
 }
