@@ -111,6 +111,7 @@ export function DocCard({
           <Link
             href={(href ?? `${basePath}/${doc.slug}`) as Route}
             {...(external && { target: "_blank", rel: "noopener" })}
+            data-project-card={basePath === "/work" ? doc.slug : undefined}
           >
             <span className="absolute inset-0" aria-hidden />
             {title}

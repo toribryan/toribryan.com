@@ -41,6 +41,7 @@ import { ActivationMockups } from "./activation-mockups"
 import { BrowserCycle } from "./browser-cycle"
 import { BrowserShot, PhoneShot } from "./browser-frame"
 import { CareChip } from "./care-chip"
+import { CaseStudyRead } from "./case-study-read"
 import { CompareWipe } from "./compare-wipe"
 import { DOC_COVERS } from "./doc-covers"
 import { DOC_HEROES } from "./doc-heroes"
@@ -443,6 +444,8 @@ export async function DocPage({
         {/* Closing CTA for docs that send the reader to shipped work. Pages
             without a `liveUrl` can place their own <LinkButton> in the body. */}
         {m.liveUrl && <LinkButton href={m.liveUrl}>{liveLabel}</LinkButton>}
+
+        {category === WORK_CATEGORY && <CaseStudyRead slug={doc.slug} />}
       </Prose>
     </AnimationsPauseExempt>
   )

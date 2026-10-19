@@ -11,6 +11,7 @@ import { JSON_LD_ID, personJsonLd } from "@/config/json-ld"
 import { META_THEME_COLORS, SITE_INFO } from "@/config/site"
 import { fontVariables } from "@/lib/fonts"
 import { JsonLdScript } from "@/lib/json-ld"
+import { AnalyticsClicks } from "@/components/analytics-clicks"
 import { Providers } from "@/components/providers"
 import { USER } from "@/features/portfolio/data/user"
 
@@ -152,6 +153,7 @@ export default function RootLayout({
           <NuqsAdapter>{children}</NuqsAdapter>
         </Providers>
         <SpeedInsights />
+        <AnalyticsClicks />
       </body>
     </html>
   )
