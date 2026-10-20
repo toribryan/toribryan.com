@@ -85,8 +85,18 @@ const nextConfig: NextConfig = {
         source: "/components/:slug.md",
         destination: "/components/:slug/markdown",
       },
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
     ]
   },
+  // PostHog's API paths end in a slash; Next's redirect would break them.
+  skipTrailingSlashRedirect: true,
 }
 
 export default nextConfig
