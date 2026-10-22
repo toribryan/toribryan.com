@@ -20,6 +20,7 @@ const fontDisplay = localFont({
   ],
   display: "swap",
   fallback: ["Inter", "sans-serif"],
+  adjustFontFallback: false,
   variable: "--font-display",
 })
 
