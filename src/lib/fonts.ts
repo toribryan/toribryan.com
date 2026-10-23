@@ -38,6 +38,15 @@ const fontHandwritten = Caveat({
   variable: "--font-handwritten",
 })
 
+// Hello Scratchy Doodles (Studio Funshop) is a dingbat font: smileys, arrows,
+// stars and squiggles drawn as letters, for hand-drawn marks.
+const fontDoodle = localFont({
+  src: "../assets/fonts/Hello-Scratchy-Doodles.woff2",
+  display: "block",
+  preload: false,
+  variable: "--font-doodle",
+})
+
 export const fontVariables = cn(
   fontSans.variable,
   fontMono.variable,
@@ -45,6 +54,7 @@ export const fontVariables = cn(
   fontDisplay.variable,
   fontSerif.variable,
   fontHandwritten.variable,
+  fontDoodle.variable,
   "[--font-sans:var(--font-geist-sans)]",
   "[--font-mono:var(--font-geist-pixel-square)]"
 )

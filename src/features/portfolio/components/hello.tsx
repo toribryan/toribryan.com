@@ -26,7 +26,8 @@ const COMPONENTS: Components = {
       string,
       string | undefined
     >
-    if (icon) return <AnnotatedTextChip icon={icon}>{children}</AnnotatedTextChip>
+    if (icon)
+      return <AnnotatedTextChip icon={icon}>{children}</AnnotatedTextChip>
     return (
       <AnnotatedText
         variant={(variant as AnnotatedTextVariant) ?? "underline"}
@@ -42,7 +43,16 @@ export function Hello() {
   return (
     <Panel id={ID}>
       <PanelHeader>
-        <PanelTitle>About</PanelTitle>
+        <PanelTitle>
+          About
+          {/* Doodle "A" is a hand-drawn smiley. */}
+          <span
+            className="ml-1 inline-block -rotate-6 align-middle font-doodle text-4xl/none text-muted-foreground select-none"
+            aria-hidden
+          >
+            A
+          </span>
+        </PanelTitle>
       </PanelHeader>
 
       <PanelContent>
