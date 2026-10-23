@@ -66,7 +66,7 @@ export type IsoArt = keyof typeof ART
 type Field = { w: number; h: number }
 
 // Every card in a row draws into the same field, so dots keep one pitch.
-function fieldFor(arts: IsoArt[]): Field {
+export function fieldFor(arts: IsoArt[]): Field {
   const grids: IsoGrid[] = arts.map((a) => ART[a])
   return {
     w: Math.max(...grids.map((g) => g.width)) + 2,
@@ -90,7 +90,7 @@ function rng(seed: number) {
   }
 }
 
-function IsoCanvas({
+export function IsoCanvas({
   art,
   seed,
   field,
