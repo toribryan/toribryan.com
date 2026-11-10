@@ -36,7 +36,7 @@ export const SLIDES: Slide[] = [
     title: "my pillars of inspiration",
     notes: [
       "Creative technologist: I prototype in code and ship the front end, so what I hand engineering is something that already runs.",
-      "Bonzo is the pug. Chronic learner is why every project opens with a teardown of whoever already solved the problem.",
+      "Bonzo is the pug. Forever student is why every project opens with a teardown of whoever already solved the problem.",
     ],
   },
   {

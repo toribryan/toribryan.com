@@ -46,7 +46,7 @@ const PILLARS = [
     alt: "Bonzo the pug lying on a green sofa wearing headphones, beside a Miffy figure",
   },
   {
-    title: "Chronic learner",
+    title: "Forever student",
     src: "/images/review/chronic-learner.mp4",
     /* Landscape footage in a tall card: keep her face in frame. */
     position: "70% 50%",
