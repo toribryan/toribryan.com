@@ -7,6 +7,7 @@ import { AI_CONTENT } from "./ai"
 import { AUTHOR_PROOF_CONTENT } from "./author-proof"
 import { BACKGROUND_CONTENT } from "./background"
 import { DESIGN_SYSTEM_CONTENT } from "./design-system"
+import { HANDOFF_CONTENT } from "./handoff"
 import { OBSERVATIONS_CONTENT } from "./observations"
 
 const CONTENT: Record<
@@ -15,6 +16,8 @@ const CONTENT: Record<
 > = {
   background: BACKGROUND_CONTENT,
   product: AUTHOR_PROOF_CONTENT,
+  handoff: HANDOFF_CONTENT,
+  outcome: AUTHOR_PROOF_CONTENT,
   "design-system": DESIGN_SYSTEM_CONTENT,
   ai: AI_CONTENT,
   observations: OBSERVATIONS_CONTENT,

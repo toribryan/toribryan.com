@@ -26,4 +26,15 @@ export const REVIEW_LINKS = {
   homeListingOnboarding: "/work/home-listing-onboarding",
   designSkills: "/latest/design-skills-infrastructure",
   fibo: "/fibo",
+  /** The AuthorProof handoff: the prototype and its three documents. */
+  handoff: {
+    repo: "https://github.com/toribryan/ap-handoff-example",
+    handoff:
+      "https://github.com/toribryan/ap-handoff-example/blob/main/docs/01-handoff.md",
+    styleGuide:
+      "https://github.com/toribryan/ap-handoff-example/blob/main/docs/02-style-guide.md",
+    testPlan:
+      "https://github.com/toribryan/ap-handoff-example/blob/main/docs/03-test-plan.md",
+  },
+  figma: "https://www.figma.com/design/CX6Lxfl52NCGfI3CvvGoHO",
 } as const

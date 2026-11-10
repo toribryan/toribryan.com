@@ -23,7 +23,7 @@ import {
 function Workflow() {
   return (
     <Slide>
-      <Kicker>02 · AI in my workflow / where it sits</Kicker>
+      <Kicker>03 · AI in my workflow / where it sits</Kicker>
       <Title>AI sits in every phase of my work, not only the last one.</Title>
       <Lede>
         At Proctorio I gave the design team one shared way to run each phase: a
@@ -74,9 +74,9 @@ function Workflow() {
       </StatRow>
       <HairlineGrid>
         <Card label="What engineering gets">
-          Three plain Markdown specs, each with one job: the handoff overview,
-          the style guide, and the test plan. I shaped the format through
-          feedback loops with engineers, keeping what helped them build.
+          The three documents you just saw: the handoff, the style guide, and
+          the test plan. I shaped the format through feedback loops with
+          engineers, keeping what helped them build.
         </Card>
         <Card label="What stays mine">
           The prototype, and the judgment in it. The specs follow the prototype
@@ -95,7 +95,7 @@ function Workflow() {
 function Tools() {
   return (
     <Slide>
-      <Kicker>02 · AI in my workflow / tools I built</Kicker>
+      <Kicker>03 · AI in my workflow / tools I built</Kicker>
       <Title>I build my own tools, and checks an agent has to pass.</Title>
       <HairlineGrid>
         <Card label="Research" title="What a model does left alone">

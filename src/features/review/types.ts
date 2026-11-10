@@ -1,7 +1,13 @@
 import type { Tweet } from "react-tweet/api"
 
 export type SectionSlug =
-  "background" | "product" | "design-system" | "ai" | "observations"
+  | "background"
+  | "product"
+  | "handoff"
+  | "outcome"
+  | "design-system"
+  | "ai"
+  | "observations"
 
 export type Section = {
   slug: SectionSlug

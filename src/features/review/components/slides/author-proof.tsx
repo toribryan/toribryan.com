@@ -364,13 +364,11 @@ function Shipped() {
     <Slide>
       <Kicker>AuthorProof / shipped</Kicker>
       <Stack>
-        <Title>The prototype was the spec.</Title>
+        <Title>Four to six weeks from brief to MVP.</Title>
         <Lede>
-          Concept to production-ready MVP in four to six weeks. I designed the
-          quiz settings, the report card, the quiz results, and the emails
-          students receive, and built working prototypes of all of it in HTML,
-          CSS, and vanilla JavaScript. Engineering built from the prototypes,
-          not from a document about them.
+          I designed the quiz settings, the report card, the quiz results, and
+          the emails students receive, and handed them off as the prototype and
+          documents you just saw.
         </Lede>
       </Stack>
       <HairlineGrid>

@@ -81,7 +81,8 @@ function Role() {
       <HairlineGrid columns={3}>
         <Card label="01" title="Works alone.">
           AuthorProof went from an assigned brief to a production-ready MVP in
-          four to six weeks, with me as its designer end to end.
+          four to six weeks, with me as its designer end to end, handed off as
+          one repo engineering built from.
         </Card>
         <Card label="02" title="At more than one altitude.">
           At the top, moving where the product lives instead of how a screen
@@ -109,6 +110,7 @@ function Role() {
         <LinkOut href={REVIEW_LINKS.authorProof.caseStudy}>
           AuthorProof case study
         </LinkOut>
+        <LinkOut href={REVIEW_LINKS.handoff.repo}>Handoff repo</LinkOut>
         <LinkOut href={REVIEW_LINKS.designSkills}>
           Design Skills Infrastructure
         </LinkOut>
@@ -130,6 +132,7 @@ function Thanks() {
             ["AuthorProof case study", REVIEW_LINKS.authorProof.caseStudy],
             ["AuthorProof product page", REVIEW_LINKS.authorProof.product],
             ["Agentic Design System", REVIEW_LINKS.agenticDesignSystem],
+            ["AuthorProof handoff repo", REVIEW_LINKS.handoff.repo],
             ["fibo", REVIEW_LINKS.fibo],
             ["Design Skills Infrastructure", REVIEW_LINKS.designSkills],
             ["Résumé", REVIEW_LINKS.resume],

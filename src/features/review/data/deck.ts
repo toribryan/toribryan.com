@@ -5,7 +5,9 @@ export const REVIEW_BASE_PATH = "/review"
 
 export const SECTIONS: Section[] = [
   { slug: "background", title: "Background", endsAt: 4 },
-  { slug: "product", title: "AuthorProof", endsAt: 38 },
+  { slug: "product", title: "AuthorProof", endsAt: 25 },
+  { slug: "handoff", title: "Handoff", endsAt: 36 },
+  { slug: "outcome", title: "Outcome", endsAt: 41 },
   { slug: "ai", title: "AI in my workflow", endsAt: 46 },
   { slug: "observations", title: "Wrap", endsAt: 50 },
 ]
@@ -22,7 +24,7 @@ export const SLIDES: Slide[] = [
     stage: "background-intro",
     title: "bio",
     notes: [
-      "Pacing: four minutes for the background, thirty-four for AuthorProof, eight for AI, four to wrap, and the last ten for their questions. The clock in the header shows the time elapsed and the minute this section should end by.",
+      "Pacing: four minutes for the background, twenty-one for the AuthorProof story, eleven for the handoff, five for the outcome, five for AI, four to wrap, and the last ten for their questions. The clock in the header shows the time elapsed and the minute this section should end by.",
       "Three descriptions of me: my dad’s, my colleagues’, and my own. The one to keep is “question artist.” Interrogating the brief is the first thing I do on every project, and the project in this deck starts there.",
       "The photos are the people and places behind the work. Nothing here needs clicking.",
     ],
@@ -42,7 +44,7 @@ export const SLIDES: Slide[] = [
     section: "product",
     title: "where it sits",
     notes: [
-      "The one piece today: a complex problem that arrived from product with its architecture already chosen, and an AI feature. It runs to about 38 minutes on the clock, with questions along the way.",
+      "The one piece today: a complex problem that arrived from product with its architecture already chosen, and an AI feature. The story runs to about 25 minutes on the clock, then the handoff to 36.",
       "At Proctorio I led cross-product design across three suites, for institutions and for proctoring agencies.",
       "Integrity proctors the exam, Vault protects the exam content, and Origin proves authorship. Hover a tile to see it move. This walkthrough is Origin’s product: AuthorProof.",
     ],
@@ -126,18 +128,59 @@ export const SLIDES: Slide[] = [
     ],
   },
   {
+    slug: "repo",
+    section: "handoff",
+    title: "the repo",
+    notes: [
+      "This is the answer to how my intent reached engineering. Aim to finish the section by 36 minutes.",
+      "One repository: the prototype that shows every screen and state, and three documents beside it, each with one job. Figma mirrors the prototype under the same names, for review and annotation.",
+      "The three rules are the working agreement. The first one matters most: the prototype wins, so the documents never drift into a second, competing spec.",
+      "The original files are under NDA, so this repo is the same structure rebuilt with sample data. It is public, so they can browse it after.",
+    ],
+  },
+  {
+    slug: "decisions",
+    section: "handoff",
+    title: "what and why",
+    notes: [
+      "The handoff opens with the principles that don’t bend. A change that breaks one is a product conversation, not an implementation detail.",
+      "Then one decision in full: the grading view they just clicked through. What I chose, why, what was built instead, and what that costs the instructor. This is the decision at the altitude engineering needs it.",
+      "If they ask why write the cost down: so a well-meant fix doesn’t undo a deliberate choice, and so the open questions have owners.",
+    ],
+  },
+  {
+    slug: "style",
+    section: "handoff",
+    title: "how it looks",
+    notes: [
+      "One name everywhere: the CSS token, the Figma variable and the doc row are the same word. Engineers build with the name, never the hex.",
+      "The third column is the point. The rule lives with the component: the similarity badge is always neutral, the closed email is always neutral. Nobody has to remember it in review.",
+      "Copy that ships word for word is a product decision. Saying so in the guide stops it being edited for space.",
+    ],
+  },
+  {
+    slug: "test-plan",
+    section: "handoff",
+    title: "how to know it’s right",
+    notes: [
+      "Behaviour as given, when, then, with an ID. QA checks a row against the prototype, which already shows the answer.",
+      "The phone line in GV-01 is a real example: on a phone the paper sits below the panel, so selecting a question has to scroll the page, not just the paper. That only surfaced because the row said “on a phone”.",
+      "If there is time, open the repo on screen: a test-plan row, then the prototype state it describes. Otherwise move on to what shipped.",
+    ],
+  },
+  {
     slug: "shipped",
-    section: "product",
+    section: "outcome",
     title: "shipped",
     notes: [
-      "This is how intent reached engineering: working prototypes in HTML, CSS, and vanilla JavaScript on the design system, not a document about them. The quiz settings, the student quiz flow, the results, the report card, and the student emails.",
+      "What shipped, after the handoff you just saw: the briefed idea first, the pivot as the roadmap.",
       "The pivot direction became the official long-term vision for the product; the original briefed idea shipped as the proof of concept.",
       "The strip: a pilot with about five institutions in spring 2026. The 95% and under 5% are the goals set for that first semester, not results. The zero matters most to me: nothing added to the instructor’s grading workflow.",
     ],
   },
   {
     slug: "overruled",
-    section: "product",
+    section: "outcome",
     title: "overruled",
     notes: [
       "The moment I was overruled. I pitched the embedded flow as the MVP; the briefed architecture shipped first because it was the fastest way to get a working product in front of pilot instructors.",
@@ -166,21 +209,12 @@ export const SLIDES: Slide[] = [
     ],
   },
   {
-    slug: "threads",
-    section: "observations",
-    title: "three habits",
-    notes: [
-      "Three habits, each tied to a moment they just saw. Keep it to a minute: they are a summary, not new material.",
-      "The middle one is how a decision survives the handoff: it is built into the thing engineering receives, so it holds without anyone remembering it.",
-    ],
-  },
-  {
     slug: "role",
     section: "observations",
     title: "for this role",
     notes: [
       "The three things in the brief for today, each tied to a moment in the deck: working alone, working at more than one altitude, and AI already in the work.",
-      "The strip is the deck in four numbers. If time is short, skip straight from here to questions.",
+      "The strip is the deck in four numbers, and the handoff repo is linked below if they want to browse it after. If time is short, skip straight from here to questions.",
     ],
   },
   {
