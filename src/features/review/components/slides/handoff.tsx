@@ -116,8 +116,8 @@ function Decisions() {
       <Title>Every decision written down, with what it cost.</Title>
       <Lede>
         The handoff opens with the principles that don’t bend, then records each
-        decision: what was chosen, what was ruled out, and the cost. It is there
-        so a well-meant fix doesn’t undo a deliberate choice.
+        decision: what was chosen, why, and what it cost. It is there so a
+        well-meant fix doesn’t undo a deliberate choice.
       </Lede>
       <Steps
         items={[
@@ -240,7 +240,8 @@ function TestPlan() {
       <Lede>
         The test plan writes every behaviour as given, when, then, with an ID.
         Each row can be checked against the prototype, and a review comment can
-        say “fails GV-01 on a phone” instead of describing a screen.
+        say <span className="whitespace-nowrap">“fails GV-01 on a phone”</span>{" "}
+        instead of describing a screen.
       </Lede>
       <Excerpt label="docs/03-test-plan.md" href={REPO.testPlan}>
         <ul className="divide-y divide-line">
