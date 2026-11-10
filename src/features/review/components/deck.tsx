@@ -255,6 +255,7 @@ export function Deck({
             <div className="flex items-center gap-1.5">
               {started && (
                 <>
+                  <DeckClock endsAt={section.endsAt} />
                   <p className="mr-2 text-xs text-muted-foreground tabular-nums max-sm:hidden">
                     {String(index + 1).padStart(2, "0")}
                     <span className="mx-1 text-border">/</span>
@@ -405,6 +406,49 @@ export function Deck({
         </div>
       </div>
     </MotionConfig>
+  )
+}
+
+function formatClock(seconds: number) {
+  const minutes = Math.floor(seconds / 60)
+  return `${String(minutes).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`
+}
+
+/**
+ * Time since the deck was entered, beside the minute the current section
+ * should end by, so a glance says whether the walkthrough is on pace. It
+ * mounts with the first slide, which is when the count starts; a click
+ * starts it over, for rehearsing.
+ */
+function DeckClock({ endsAt }: { endsAt: number }) {
+  const [startedAt, setStartedAt] = useState(() => Date.now())
+  const [now, setNow] = useState(startedAt)
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 1000)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  const elapsed = Math.max(0, Math.floor((now - startedAt) / 1000))
+
+  return (
+    <button
+      className="mr-2 rounded-sm text-xs text-muted-foreground tabular-nums outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring max-sm:hidden"
+      type="button"
+      onClick={() => {
+        const reset = Date.now()
+        setStartedAt(reset)
+        setNow(reset)
+      }}
+      title="Time elapsed, and when this section should end. Click to restart."
+      aria-label={`${formatClock(elapsed)} elapsed. This section ends by minute ${endsAt}. Restart the clock.`}
+    >
+      <span className={elapsed > endsAt * 60 ? "text-foreground" : undefined}>
+        {formatClock(elapsed)}
+      </span>
+      <span className="mx-1 text-border">/</span>
+      {formatClock(endsAt * 60)}
+    </button>
   )
 }
 

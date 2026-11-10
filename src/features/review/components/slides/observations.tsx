@@ -44,8 +44,8 @@ function Threads({ data }: { data: SlideData }) {
           enforces it.
         </Card>
         <Card label="03" title="Ship what you design.">
-          Prototypes as the spec on AuthorProof. Storybook to pull request to
-          preview to production on Modern Care Homes. Fewer handoffs mean fewer
+          Prototypes engineering built from on AuthorProof. Storybook to pull
+          request to preview on Modern Care Homes. Fewer handoffs mean fewer
           places for a decision to drift.
         </Card>
       </HairlineGrid>
@@ -77,54 +77,40 @@ function Threads({ data }: { data: SlideData }) {
 function Role() {
   return (
     <Slide>
-      <Kicker>Observations / for a design systems role</Kicker>
-      <Title>Wins I’m proud of in my design system work.</Title>
-      <StatRow>
-        <Stat
-          value="94%"
-          label="Fewer card variants in a legacy system, 587 down to 32"
-        />
-        <Stat
-          value="37"
-          label="Components rebuilt on a new token architecture in 60 days"
-        />
-        <Stat
-          value="3"
-          label="Product suites converged on one design language"
-        />
-        <Stat value="8M" label="Test takers the platform serves" />
-      </StatRow>
-      <Reveal className="-mt-4">
-        <p className="text-xs tracking-wide text-muted-foreground">
-          From the Proctorio design system overhaul.
-        </p>
-      </Reveal>
-      <Reveal>
-        <h3 className="font-heading text-2xl/tight font-medium tracking-normal md:text-3xl/tight">
-          What I bring to design systems.
-        </h3>
-      </Reveal>
-      <HairlineGrid>
-        <Card label="Tokens and architecture">
-          Semantic token layers built before any component, so a new theme is a
-          change to token values with no component touched.
+      <Kicker>Observations / for Avantos</Kicker>
+      <Title>What you asked to see, and where it was.</Title>
+      <HairlineGrid columns={3}>
+        <Card label="01" title="Works alone.">
+          AuthorProof went from an assigned brief to a production-ready MVP in
+          four to six weeks, end to end. At Modern Care Homes I own everything a
+          family or an agent sees, with one engineer on data.
         </Card>
-        <Card label="Governance as mentorship">
-          Owning the answer to “does this belong in the system,” given in public
-          to three suites at once, through coaching rather than a review gate.
+        <Card label="02" title="At more than one altitude.">
+          At the top, moving where AuthorProof lives instead of how a screen
+          looks. At the bottom, a care camera that panned at 23fps until it ran
+          at 60.
         </Card>
-        <Card label="Design to code">
-          Code Connect, Figma MCP, and an agentic handoff pipeline that took
-          spec production from days to under thirty minutes.
-        </Card>
-        <Card label="Shipping the front end">
-          React, Tailwind, shadcn, Base UI, Storybook. I can build the component
-          I documented.
+        <Card label="03" title="AI already in the work.">
+          Skills a whole design team adopted, a design system agents have to
+          pass, and prototypes in code that engineering builds from.
         </Card>
       </HairlineGrid>
+      <StatRow>
+        <Stat value="4 to 6 wks" label="AuthorProof, concept to MVP" />
+        <Stat
+          value="<30 min"
+          label="Spec production, down from 3 days to 2 weeks"
+        />
+        <Stat value="100%" label="Design team adoption of the shared skills" />
+        <Stat value="60fps" label="Care camera while it pans, up from 23" />
+      </StatRow>
       <LinkRow>
-        <LinkOut href={REVIEW_LINKS.designSystemOverhaul}>
-          Design System Overhaul
+        <LinkOut href={REVIEW_LINKS.authorProof.caseStudy}>AuthorProof</LinkOut>
+        <LinkOut href={REVIEW_LINKS.homeListingOnboarding}>
+          Home Listing Onboarding
+        </LinkOut>
+        <LinkOut href={REVIEW_LINKS.designSkills}>
+          Design Skills Infrastructure
         </LinkOut>
         <LinkOut href={REVIEW_LINKS.agenticDesignSystem}>
           Agentic Design System
@@ -152,12 +138,14 @@ function Thanks() {
               REVIEW_LINKS.modernCareHomes.caseStudy,
             ],
             [
+              "Home Listing Onboarding case study",
+              REVIEW_LINKS.homeListingOnboarding,
+            ],
+            ["Design Skills Infrastructure", REVIEW_LINKS.designSkills],
+            ["Agentic Design System", REVIEW_LINKS.agenticDesignSystem],
+            [
               "Modern Care Homes Storybook",
               REVIEW_LINKS.modernCareHomes.storybook,
-            ],
-            [
-              "Integrity Console Storybook",
-              REVIEW_LINKS.integrityConsole.storybook,
             ],
             ["Résumé", REVIEW_LINKS.resume],
           ].map(([label, href]) => (

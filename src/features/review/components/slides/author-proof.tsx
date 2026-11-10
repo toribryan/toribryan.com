@@ -112,8 +112,9 @@ function Task() {
           The task that landed on my desk: prove the work is theirs.
         </Title>
         <Lede>
-          A new product in the Origin suite: verify authorship of written work,
-          inside the instructor’s existing Canvas workflow.
+          A new AI product in the Origin suite: verify authorship of written
+          work with a quiz generated from the student’s own submission, inside
+          the instructor’s existing Canvas workflow.
         </Lede>
       </Stack>
       <HairlineGrid columns="1fr 1.4fr">
@@ -335,11 +336,10 @@ function Shipped() {
           <Title>The prototype was the spec.</Title>
           <Lede>
             Concept to production-ready MVP in four to six weeks. I designed the
-            settings model for quiz configuration and built its interface,
-            designed the report card, the quiz results, and the emails students
-            receive, and built the front end for all of it in HTML, CSS, and
-            vanilla JavaScript on our design system. Engineering got working
-            prototypes rather than a document about them.
+            quiz settings, the report card, the quiz results, and the emails
+            students receive, and built working prototypes of all of it in HTML,
+            CSS, and vanilla JavaScript on our design system. Engineering built
+            from the prototypes.
           </Lede>
         </Stack>
         <Reveal>
@@ -377,16 +377,16 @@ function Shipped() {
         className="p-0"
       />
       <StatRow>
-        <Stat
-          value="95%"
-          label="Quiz completion rate among pilot test takers"
-        />
-        <Stat value="<5%" label="False-positive rate in the pilot" />
+        <Stat value="~5" label="Institutions in the spring 2026 pilot" />
+        <Stat value="4 to 6 wks" label="Concept to production-ready MVP" />
         <Stat
           value="0"
           label="Steps added to the instructor’s grading workflow"
         />
-        <Stat value="4 to 6 wks" label="Concept to production-ready MVP" />
+        <Stat
+          value="95% / <5%"
+          label="First-semester goals: quiz completion and false positives"
+        />
       </StatRow>
       <Reveal>
         <p className="max-w-2xl font-heading text-xl/tight font-medium text-balance md:text-2xl/tight">
@@ -405,6 +405,52 @@ function Shipped() {
   )
 }
 
+function Overruled() {
+  return (
+    <Slide>
+      <Kicker>AuthorProof / overruled</Kicker>
+      <Title>I was overruled on what shipped first.</Title>
+      <Lede>
+        I pitched the embedded flow as the MVP. Proctorio shipped the briefed
+        architecture first, as the fastest way to put a working product in front
+        of pilot instructors, and adopted the embedded flow as the product’s
+        long-term direction.
+      </Lede>
+      <HairlineGrid>
+        <Card label="The hole in my pitch" title="Proctoring was still open">
+          How proctoring would work alongside the embedded flow was an open
+          question when the direction was decided. I had flagged it, but I had
+          not answered it.
+        </Card>
+        <Card
+          label="What I would do differently"
+          title="Test it with proctoring sooner"
+        >
+          Prototype the embedded flow beside a proctored session before the
+          direction decision, not after.
+        </Card>
+      </HairlineGrid>
+      <Reveal>
+        <p className="text-xs tracking-wide text-muted-foreground uppercase">
+          What I would design next
+        </p>
+      </Reveal>
+      <Steps
+        items={[
+          {
+            title: "Let instructors review questions.",
+            body: "Before a generated quiz reaches a student.",
+          },
+          {
+            title: "Pick the quiz language.",
+            body: "Beyond the default of the submission’s language.",
+          },
+        ]}
+      />
+    </Slide>
+  )
+}
+
 export const AUTHOR_PROOF_CONTENT: Record<
   string,
   ComponentType<{ slide: SlideType; data: SlideData }>
@@ -417,4 +463,5 @@ export const AUTHOR_PROOF_CONTENT: Record<
   constraints: Constraints,
   pivot: Pivot,
   shipped: Shipped,
+  overruled: Overruled,
 }

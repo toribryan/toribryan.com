@@ -23,4 +23,7 @@ export const REVIEW_LINKS = {
   tokenFlow: "https://21st.dev/@iamtoribryan/components/token-flow",
   designSystemOverhaul: "/work/design-system-overhaul",
   agenticDesignSystem: "/work/agentic-design-system",
+  homeListingOnboarding: "/work/home-listing-onboarding",
+  designSkills: "/latest/design-skills-infrastructure",
+  fibo: "/fibo",
 } as const
