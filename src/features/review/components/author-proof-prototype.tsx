@@ -3,6 +3,7 @@
 import { useEffect, useId, useState } from "react"
 import {
   CheckIcon,
+  ClockIcon,
   FileTextIcon,
   LoaderIcon,
   MinusIcon,
@@ -26,7 +27,7 @@ import {
   PROTOTYPE_SAMPLE_ANSWERS,
 } from "@/features/review/data/author-proof-prototype"
 
-type View = "setup" | "student" | "report"
+type View = "setup" | "student" | "report" | "email"
 
 type Settings = {
   count: number
@@ -503,8 +504,131 @@ function Report({
 }
 
 /**
+ * The email the briefed flow sends once a student's quiz is ready. It is the
+ * step the pitched flow removed, so it is framed as the briefed version and
+ * points back to the embedded flow for the contrast.
+ */
+function Email({
+  settings,
+  onPitched,
+}: {
+  settings: Settings
+  onPitched: () => void
+}) {
+  const [opened, setOpened] = useState(false)
+
+  const details = [
+    ["Course", PROTOTYPE_ASSIGNMENT.course],
+    ["Assignment", PROTOTYPE_ASSIGNMENT.title],
+    [
+      "Quiz",
+      `${settings.count} questions about your essay · ${settings.minutes}-minute limit`,
+    ],
+    ["Open by", "Tomorrow, 11:55 AM, 12 hours after you submitted"],
+  ]
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-xs text-muted-foreground">
+            As briefed · the student’s inbox
+          </p>
+          <p className="font-heading text-lg font-medium">
+            The quiz-ready email
+          </p>
+          <p className="mt-1 max-w-xl text-sm/relaxed text-pretty text-muted-foreground">
+            The briefed flow told students by email, about ten minutes after
+            they submitted, and sent them to find the quiz. I designed it to be
+            read in one glance, then pitched a flow that did not need it.
+          </p>
+        </div>
+        <Button size="sm" variant="outline" onClick={onPitched}>
+          See the pitched flow
+        </Button>
+      </div>
+
+      <article className="overflow-hidden rounded-xl border border-line bg-background">
+        <dl className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-3 gap-y-1 border-b border-line px-4 py-3 text-xs">
+          <dt className="text-muted-foreground">From</dt>
+          <dd>AuthorProof, for {PROTOTYPE_ASSIGNMENT.course}</dd>
+          <dt className="text-muted-foreground">To</dt>
+          <dd>{PROTOTYPE_ASSIGNMENT.student}</dd>
+          <dt className="text-muted-foreground">Subject</dt>
+          <dd className="font-medium">Your comprehension quiz is ready</dd>
+        </dl>
+
+        <div className="mx-auto flex max-w-lg flex-col gap-5 px-4 py-6 md:px-6">
+          <p className="font-heading text-sm font-medium tracking-tight">
+            AuthorProof
+          </p>
+          <div className="flex flex-col gap-2">
+            <h3 className="font-heading text-2xl/tight font-medium text-balance">
+              Your comprehension quiz is ready
+            </h3>
+            <p className="flex items-start gap-2 rounded-lg bg-warning-subtle px-3 py-2 text-sm text-warning">
+              <ClockIcon className="mt-0.5 size-4 shrink-0" aria-hidden />
+              Open it within 12 hours of submitting your essay.
+            </p>
+          </div>
+
+          <dl className="flex flex-col gap-3">
+            {details.map(([label, value]) => (
+              <div key={label} className="flex flex-col gap-0.5">
+                <dt className="text-xs tracking-wide text-muted-foreground uppercase">
+                  {label}
+                </dt>
+                <dd className="text-sm">{value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="flex flex-col gap-2">
+            <Button
+              className="w-full"
+              size="lg"
+              onClick={() => setOpened(true)}
+            >
+              Open the quiz in Canvas
+            </Button>
+            {opened && (
+              <p
+                className="text-xs text-pretty text-muted-foreground"
+                role="status"
+              >
+                In the briefed flow, this is where the student leaves the email
+                and goes to find the quiz in Canvas.
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-line pt-4 text-sm/relaxed text-pretty text-muted-foreground">
+            <p>
+              <span className="font-medium text-foreground">
+                What to expect.{" "}
+              </span>
+              A few short questions about what your essay argues and the sources
+              it uses. Your answers go to your instructor beside your essay.
+            </p>
+            <p>
+              <span className="font-medium text-foreground">
+                Why you’re getting this.{" "}
+              </span>
+              Your instructor turned on AuthorProof for this assignment. It is
+              not a plagiarism check, and it does not pass or fail you. It
+              confirms you can speak to what you wrote.
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
+  )
+}
+
+/**
  * AuthorProof rebuilt as a working prototype: the instructor's settings, the
- * student's upload-to-quiz flow, and the result the instructor reads. It is
+ * student's upload-to-quiz flow, the result the instructor reads, and the
+ * quiz-ready email from the briefed flow. It is
  * drawn fresh on this site's components with sample data, because the
  * original design files are under NDA; what it keeps are the decisions.
  */
@@ -528,10 +652,11 @@ export function AuthorProofPrototype({ className }: { className?: string }) {
       onKeyDown={(event) => event.stopPropagation()}
     >
       <Tabs value={view} onValueChange={(value) => setView(value as View)}>
-        <TabsList className="bg-background px-4">
+        <TabsList className="overflow-x-auto bg-background px-4">
           <TabsTrigger value="setup">1 · Setup</TabsTrigger>
           <TabsTrigger value="student">2 · Student</TabsTrigger>
           <TabsTrigger value="report">3 · Result</TabsTrigger>
+          <TabsTrigger value="email">4 · Email</TabsTrigger>
         </TabsList>
         <div className="p-4 md:p-6">
           <TabsContent value="setup">
@@ -556,6 +681,9 @@ export function AuthorProofPrototype({ className }: { className?: string }) {
           </TabsContent>
           <TabsContent value="report">
             <Report attempt={attempt} settings={settings} />
+          </TabsContent>
+          <TabsContent value="email">
+            <Email settings={settings} onPitched={() => setView("student")} />
           </TabsContent>
         </div>
       </Tabs>
