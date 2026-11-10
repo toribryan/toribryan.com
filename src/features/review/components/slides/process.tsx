@@ -2,6 +2,7 @@
 
 import type { ComponentType } from "react"
 
+import { SkillsExplorer } from "@/features/review/components/skills-explorer"
 import { REVIEW_LINKS } from "@/features/review/data/links"
 import type { SlideData, Slide as SlideType } from "@/features/review/types"
 
@@ -74,26 +75,6 @@ function Grief() {
   )
 }
 
-/** The phases of the design-skills process, with the skills each one loads. */
-const PHASES: [string, string[]][] = [
-  ["Discover", ["design-discovery", "user-research", "reference-research"]],
-  ["Define", ["design-brief", "information-architecture"]],
-  [
-    "Design",
-    ["wireframing", "layout-and-hierarchy", "ux-writing", "interface-polish"],
-  ],
-  [
-    "Validate",
-    ["usability-testing", "design-critique", "accessibility-review"],
-  ],
-  [
-    "Systematize",
-    ["design-tokens", "component-api-design", "design-system-audit"],
-  ],
-  ["Ship", ["design-handoff", "design-to-code", "visual-qa"]],
-  ["Tell", ["design-case-study"]],
-]
-
 function Agentic() {
   return (
     <Slide>
@@ -105,31 +86,7 @@ function Agentic() {
         The reviewers are read-only: they report failures and end in a verdict.
       </Lede>
       <Reveal>
-        <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-          {PHASES.map(([phase, skills], i) => (
-            <li
-              key={phase}
-              className="flex flex-col gap-2 rounded-xl border border-line bg-background p-3"
-            >
-              <span className="text-xs text-muted-foreground tabular-nums">
-                {i + 1}
-              </span>
-              <span className="font-heading text-base font-medium">
-                {phase}
-              </span>
-              <ul className="flex flex-col gap-1">
-                {skills.map((skill) => (
-                  <li
-                    key={skill}
-                    className="font-mono text-xs/snug break-words text-muted-foreground"
-                  >
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ol>
+        <SkillsExplorer repoUrl={REVIEW_LINKS.designSkillsRepo} />
       </Reveal>
       <StatRow>
         <Stat value="32" label="Skills, from discovery through shipped code" />

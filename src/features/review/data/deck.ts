@@ -55,7 +55,7 @@ export const SLIDES: Slide[] = [
     title: "end to end",
     notes: [
       "This is the process today: 32 Claude skills and 7 read-only reviewer agents, from discovery through shipped code, documented in fibo.",
-      "The router is the point: it places work on the phase map, loads the phase’s skill, runs the reviewer that guards it, and keeps a project log of decisions.",
+      "The router is the point: it places work on the phase map, loads the phase’s skill, runs the reviewer that guards it, and keeps a project log of decisions. The explorer opens on its SKILL.md; open a phase folder to show its skills, or an agent to show what it checks.",
       "Reviewers are read-only on purpose. They report failures with their location and end in a verdict: ready, or N blocking issues.",
     ],
   },
