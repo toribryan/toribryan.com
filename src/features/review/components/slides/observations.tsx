@@ -123,7 +123,7 @@ function Role() {
 function Thanks() {
   return (
     <Slide className="gap-6">
-      <Kicker>Wrap / thank you</Kicker>
+      <Kicker>Questions / thank you</Kicker>
       <Title size="xl">Questions?</Title>
       <Lede>Everything from today in one place.</Lede>
       <Reveal>

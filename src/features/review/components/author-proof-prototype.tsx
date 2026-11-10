@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useId, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import {
   CheckIcon,
   ClockIcon,
@@ -84,16 +84,132 @@ function Row({
   )
 }
 
-function Setup({
+/** The three quiz settings, edited as a draft inside the modal. */
+function SettingsFields({
   settings,
   onChange,
-  onNext,
 }: {
   settings: Settings
   onChange: (settings: Settings) => void
-  onNext: () => void
 }) {
   const retakesId = useId()
+
+  return (
+    <div className="divide-y divide-line px-4">
+      <Row
+        label="Number of questions"
+        hint="Each one is generated from the student’s own essay, so no two students get the same quiz."
+      >
+        <div className="flex items-center gap-1.5">
+          <Button
+            variant="outline"
+            size="icon-sm"
+            aria-label="Fewer questions"
+            disabled={settings.count <= MIN_QUESTIONS}
+            onClick={() => onChange({ ...settings, count: settings.count - 1 })}
+          >
+            <MinusIcon />
+          </Button>
+          <output className="w-8 text-center text-sm font-medium tabular-nums">
+            {settings.count}
+          </output>
+          <Button
+            variant="outline"
+            size="icon-sm"
+            aria-label="More questions"
+            disabled={settings.count >= MAX_QUESTIONS}
+            onClick={() => onChange({ ...settings, count: settings.count + 1 })}
+          >
+            <PlusIcon />
+          </Button>
+        </div>
+      </Row>
+      <Row
+        label="Time limit"
+        hint="Short on purpose. The quiz starts right after upload, before there is time to reread the essay."
+      >
+        <div
+          className="flex rounded-lg border border-line p-0.5"
+          role="radiogroup"
+          aria-label="Time limit"
+        >
+          {TIME_LIMITS.map((minutes) => (
+            <button
+              key={minutes}
+              className={cn(
+                "h-7 rounded-md px-2.5 text-xs font-medium text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                settings.minutes === minutes &&
+                  "bg-secondary text-secondary-foreground"
+              )}
+              type="button"
+              role="radio"
+              aria-checked={settings.minutes === minutes}
+              onClick={() => onChange({ ...settings, minutes })}
+            >
+              {minutes} min
+            </button>
+          ))}
+        </div>
+      </Row>
+      <Row
+        label="Allow a second attempt"
+        hint="Lets a student take the quiz once more after submitting."
+      >
+        <label
+          className="flex cursor-pointer items-center gap-2 text-xs text-muted-foreground"
+          htmlFor={retakesId}
+        >
+          <input
+            id={retakesId}
+            className="size-4 accent-foreground"
+            type="checkbox"
+            checked={settings.retakes}
+            onChange={(event) =>
+              onChange({ ...settings, retakes: event.target.checked })
+            }
+          />
+          {settings.retakes ? "On" : "Off"}
+        </label>
+      </Row>
+    </div>
+  )
+}
+
+const summary = (s: Settings) =>
+  `Students get ${s.count} questions and ${s.minutes} minutes, ${s.retakes ? "with one retake" : "with no retake"}.`
+
+/**
+ * The assignment editor's setting, as the instructor meets it: an integrity
+ * tool picked from a dropdown. Choosing AuthorProof reveals the button that
+ * opens its quiz settings in a modal; edits there are a draft until saved.
+ */
+function Setup({
+  enabled,
+  onEnable,
+  settings,
+  onSave,
+  onNext,
+}: {
+  enabled: boolean
+  onEnable: (enabled: boolean) => void
+  settings: Settings
+  onSave: (settings: Settings) => void
+  onNext: () => void
+}) {
+  const selectId = useId()
+  const titleId = useId()
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const [draft, setDraft] = useState(settings)
+  const [saved, setSaved] = useState(false)
+
+  function open() {
+    setDraft(settings)
+    dialogRef.current?.showModal()
+  }
+
+  function close() {
+    dialogRef.current?.close()
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -105,101 +221,95 @@ function Setup({
           {PROTOTYPE_ASSIGNMENT.title}
         </p>
       </div>
-      <div className="rounded-xl border border-line bg-background">
-        <p className="border-b border-line px-4 py-2.5 text-xs tracking-wide text-muted-foreground uppercase">
-          AuthorProof for this assignment
-        </p>
-        <div className="divide-y divide-line px-4">
-          <Row
-            label="Number of questions"
-            hint="Each one is generated from the student’s own essay, so no two students get the same quiz."
+
+      <div className="flex flex-col gap-3 rounded-xl border border-line bg-background p-4">
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-medium" htmlFor={selectId}>
+            Plagiarism detection
+          </label>
+          <p className="text-xs text-pretty text-muted-foreground">
+            Choose the integrity tool that checks submissions to this
+            assignment.
+          </p>
+          <select
+            id={selectId}
+            className="mt-1 h-9 w-full max-w-xs rounded-md border border-border bg-background px-2.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            value={enabled ? "authorproof" : "none"}
+            onChange={(event) => {
+              onEnable(event.target.value === "authorproof")
+              setSaved(false)
+            }}
           >
-            <div className="flex items-center gap-1.5">
-              <Button
-                variant="outline"
-                size="icon-sm"
-                aria-label="Fewer questions"
-                disabled={settings.count <= MIN_QUESTIONS}
-                onClick={() =>
-                  onChange({ ...settings, count: settings.count - 1 })
-                }
-              >
-                <MinusIcon />
-              </Button>
-              <output className="w-8 text-center text-sm font-medium tabular-nums">
-                {settings.count}
-              </output>
-              <Button
-                variant="outline"
-                size="icon-sm"
-                aria-label="More questions"
-                disabled={settings.count >= MAX_QUESTIONS}
-                onClick={() =>
-                  onChange({ ...settings, count: settings.count + 1 })
-                }
-              >
-                <PlusIcon />
-              </Button>
-            </div>
-          </Row>
-          <Row
-            label="Time limit"
-            hint="Short on purpose. The quiz starts right after upload, before there is time to reread the essay."
-          >
-            <div
-              className="flex rounded-lg border border-line p-0.5"
-              role="radiogroup"
-              aria-label="Time limit"
-            >
-              {TIME_LIMITS.map((minutes) => (
-                <button
-                  key={minutes}
-                  className={cn(
-                    "h-7 rounded-md px-2.5 text-xs font-medium text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                    settings.minutes === minutes &&
-                      "bg-secondary text-secondary-foreground"
-                  )}
-                  type="button"
-                  role="radio"
-                  aria-checked={settings.minutes === minutes}
-                  onClick={() => onChange({ ...settings, minutes })}
-                >
-                  {minutes} min
-                </button>
-              ))}
-            </div>
-          </Row>
-          <Row
-            label="Allow a second attempt"
-            hint="Lets a student take the quiz once more after submitting."
-          >
-            <label
-              className="flex cursor-pointer items-center gap-2 text-xs text-muted-foreground"
-              htmlFor={retakesId}
-            >
-              <input
-                id={retakesId}
-                className="size-4 accent-foreground"
-                type="checkbox"
-                checked={settings.retakes}
-                onChange={(event) =>
-                  onChange({ ...settings, retakes: event.target.checked })
-                }
-              />
-              {settings.retakes ? "On" : "Off"}
-            </label>
-          </Row>
+            <option value="none">None</option>
+            <option value="authorproof">AuthorProof</option>
+          </select>
         </div>
+
+        {enabled && (
+          <div className="flex flex-col items-start gap-3 border-t border-line pt-3">
+            <Button size="sm" variant="outline" onClick={open}>
+              Configure quiz settings
+            </Button>
+            {saved && (
+              <div className="flex w-full flex-wrap items-center justify-between gap-3">
+                <p
+                  className="text-xs text-pretty text-muted-foreground"
+                  role="status"
+                >
+                  Saved. {summary(settings)}
+                </p>
+                <Button size="sm" onClick={onNext}>
+                  View as the student
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-xs text-pretty text-muted-foreground">
-          Students get {settings.count} questions and {settings.minutes}{" "}
-          minutes, {settings.retakes ? "with one retake" : "with no retake"}.
-        </p>
-        <Button size="sm" onClick={onNext}>
-          Save and view as the student
-        </Button>
-      </div>
+
+      <dialog
+        ref={dialogRef}
+        aria-labelledby={titleId}
+        className="m-auto w-[min(40rem,calc(100vw-2rem))] rounded-2xl border border-line bg-surface p-0 text-foreground shadow-2xl backdrop:bg-black/40"
+        onClose={() => setDraft(settings)}
+      >
+        <div className="flex items-center justify-between gap-3 border-b border-line bg-background px-4 py-3">
+          <p id={titleId} className="font-heading text-base font-medium">
+            AuthorProof quiz settings
+          </p>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Close"
+            onClick={close}
+          >
+            <XIcon />
+          </Button>
+        </div>
+        <div className="bg-background">
+          <SettingsFields settings={draft} onChange={setDraft} />
+        </div>
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-3">
+          <p className="text-xs text-pretty text-muted-foreground">
+            {summary(draft)}
+          </p>
+          <div className="flex gap-2">
+            <Button size="sm" variant="outline" onClick={close}>
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              onClick={() => {
+                onSave(draft)
+                setSaved(true)
+                close()
+              }}
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </dialog>
     </div>
   )
 }
@@ -839,7 +949,8 @@ function Email({
  * original design files are under NDA; what it keeps are the decisions.
  */
 export function AuthorProofPrototype({ className }: { className?: string }) {
-  const [view, setView] = useState<View>("student")
+  const [view, setView] = useState<View>("setup")
+  const [enabled, setEnabled] = useState(false)
   const [settings, setSettings] = useState<Settings>({
     count: 5,
     minutes: 10,
@@ -861,14 +972,16 @@ export function AuthorProofPrototype({ className }: { className?: string }) {
         <TabsList className="overflow-x-auto bg-background px-4">
           <TabsTrigger value="setup">1 · Setup</TabsTrigger>
           <TabsTrigger value="student">2 · Student</TabsTrigger>
-          <TabsTrigger value="report">3 · Result</TabsTrigger>
-          <TabsTrigger value="email">4 · Email</TabsTrigger>
+          <TabsTrigger value="email">3 · Email</TabsTrigger>
+          <TabsTrigger value="report">4 · Result</TabsTrigger>
         </TabsList>
         <div className="p-4 md:p-6">
           <TabsContent value="setup">
             <Setup
+              enabled={enabled}
+              onEnable={setEnabled}
               settings={settings}
-              onChange={(next) => {
+              onSave={(next) => {
                 setSettings(next)
                 setAttempt(null)
               }}
@@ -878,18 +991,34 @@ export function AuthorProofPrototype({ className }: { className?: string }) {
           {/* Kept mounted so a quiz in progress survives a look at the
               other tabs; the key starts it over when the settings change. */}
           <TabsContent value="student" keepMounted>
-            <Student
-              key={`${settings.count}-${settings.minutes}-${settings.retakes}`}
-              settings={settings}
-              onSubmit={setAttempt}
-              onReport={() => setView("report")}
-            />
-          </TabsContent>
-          <TabsContent value="report">
-            <Report attempt={attempt} settings={settings} />
+            {enabled ? (
+              <Student
+                key={`${settings.count}-${settings.minutes}-${settings.retakes}`}
+                settings={settings}
+                onSubmit={setAttempt}
+                onReport={() => setView("report")}
+              />
+            ) : (
+              <div className="flex flex-col items-start gap-3 rounded-xl border border-dashed border-border px-4 py-8">
+                <p className="max-w-md text-sm text-pretty text-muted-foreground">
+                  AuthorProof is off for this assignment, so students submit as
+                  usual with no quiz. Turn it on in Setup to see the flow.
+                </p>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setView("setup")}
+                >
+                  Go to Setup
+                </Button>
+              </div>
+            )}
           </TabsContent>
           <TabsContent value="email">
             <Email settings={settings} onPitched={() => setView("student")} />
+          </TabsContent>
+          <TabsContent value="report">
+            <Report attempt={attempt} settings={settings} />
           </TabsContent>
         </div>
       </Tabs>
