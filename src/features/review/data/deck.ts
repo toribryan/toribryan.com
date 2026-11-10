@@ -142,8 +142,8 @@ export const SLIDES: Slide[] = [
     title: "the flow, rebuilt",
     notes: [
       "A quick reminder that this is a rebuild in code with sample data, made the way the process section described: built with Claude Code on my own components.",
-      "Drive it live. Start on the student tab: upload, watch the quiz arrive in seconds, answer a couple wrong on purpose, submit, then open the instructor’s view.",
-      "On the result, point at one question: the student’s words, the question made from them, the answer, and the assessment, side by side. That is how an instructor checks the AI’s reasoning. Then show the setup tab if there is time. The email tab is the briefed flow’s emails in every state, from ready to the window closing: use it when the shipped slide comes up, since the briefed flow is what shipped first. The closed state is a good talking point: it stays neutral, because a missed quiz is for the instructor to follow up, not a failure.",
+      "Drive it live, in the order an assignment runs. Setup: pick AuthorProof in the dropdown, open Configure quiz settings, change one setting so they see every control explained, and save. Then View as the student: upload, watch the quiz arrive in seconds, answer a couple wrong on purpose, and submit.",
+      "On the result, point at one question: the student’s words, the question made from them, the answer, and the assessment, side by side. That is how an instructor checks the AI’s reasoning. The email tab, before the result, is the briefed flow’s emails in every state, from ready to the window closing: use it when the shipped slide comes up, since the briefed flow is what shipped first. The closed state is a good talking point: it stays neutral, because a missed quiz is for the instructor to follow up, not a failure.",
       "Keys inside the prototype belong to it, so click outside it or use the arrows in the header to move on.",
     ],
   },
