@@ -28,13 +28,13 @@ export const REVIEW_LINKS = {
   fibo: "/fibo",
   /** The AuthorProof handoff: the prototype and its three documents. */
   handoff: {
-    repo: "https://github.com/toribryan/ap-handoff-example",
+    repo: "https://github.com/toribryan/ap-handoff",
     handoff:
-      "https://github.com/toribryan/ap-handoff-example/blob/main/docs/01-handoff.md",
+      "https://github.com/toribryan/ap-handoff/blob/main/docs/01-handoff.md",
     styleGuide:
-      "https://github.com/toribryan/ap-handoff-example/blob/main/docs/02-style-guide.md",
+      "https://github.com/toribryan/ap-handoff/blob/main/docs/02-style-guide.md",
     testPlan:
-      "https://github.com/toribryan/ap-handoff-example/blob/main/docs/03-test-plan.md",
+      "https://github.com/toribryan/ap-handoff/blob/main/docs/03-test-plan.md",
   },
   figma: "https://www.figma.com/design/CX6Lxfl52NCGfI3CvvGoHO",
 } as const

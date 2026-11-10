@@ -72,7 +72,7 @@ function Repo() {
         Figma file mirrors the prototype under the same names, for review and
         annotation.
       </Lede>
-      <Excerpt label="ap-handoff-example" href={REPO.repo}>
+      <Excerpt label="ap-handoff" href={REPO.repo}>
         <ul className="divide-y divide-line">
           {TREE.map(([path, job]) => (
             <li
