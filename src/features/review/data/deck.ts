@@ -9,7 +9,7 @@ export const SECTIONS: Section[] = [
   { slug: "product", title: "AuthorProof", endsAt: 29 },
   { slug: "handoff", title: "Handoff", endsAt: 39 },
   { slug: "outcome", title: "Outcome", endsAt: 44 },
-  { slug: "observations", title: "Wrap", endsAt: 50 },
+  { slug: "observations", title: "Questions", endsAt: 60 },
 ]
 
 /**
@@ -24,7 +24,7 @@ export const SLIDES: Slide[] = [
     stage: "background-intro",
     title: "bio",
     notes: [
-      "Pacing: four minutes for the background, eight for process, seventeen for the AuthorProof story, ten for the handoff, five for the outcome, six to wrap, and the last ten for their questions. The clock in the header shows the time elapsed and the minute this section should end by.",
+      "Pacing: four minutes for the background, eight for process, seventeen for the AuthorProof story, ten for the handoff, five for the outcome, and the rest of the hour, about sixteen minutes, for their questions. The clock in the header shows the time elapsed and the minute this section should end by.",
       "Three descriptions of me: my dad’s, my colleagues’, and my own. The one to keep is “question artist.” Interrogating the brief is the first thing I do on every project, and the project in this deck starts there.",
       "The photos are the people and places behind the work. Nothing here needs clicking.",
     ],
@@ -219,21 +219,12 @@ export const SLIDES: Slide[] = [
     ],
   },
   {
-    slug: "role",
-    section: "observations",
-    title: "for this role",
-    notes: [
-      "The three things in the brief for today, each tied to a moment in the deck: working alone, working at more than one altitude, and AI already in the work.",
-      "The strip is the deck in four numbers, and the handoff repo is linked below if they want to browse it after. If time is short, skip straight from here to questions.",
-    ],
-  },
-  {
     slug: "thanks",
     section: "observations",
     title: "thank you",
     notes: [
       "Every link from the deck in one place.",
-      "Stop here by 50 minutes so the last ten are theirs.",
+      "Land here by about 44 minutes so the rest of the hour is theirs.",
       "One question back: what does the first ninety days of this role look like from your side?",
     ],
   },
