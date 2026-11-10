@@ -224,6 +224,84 @@ export function Deck({
     return () => stage.removeEventListener("wheel", onWheel)
   }, [go, index, started])
 
+  // A horizontal swipe on a touch screen turns the page: left for the next
+  // slide, right for the one before. Vertical swipes are left to scroll the
+  // slide. A swipe that starts on a form control, or inside something that
+  // scrolls sideways itself, belongs to that element instead.
+  const swipeRef = useRef<{ x: number; y: number; at: number } | null>(null)
+
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return
+
+    function ownsSwipe(target: EventTarget | null) {
+      let node = target instanceof HTMLElement ? target : null
+      if (node?.closest("input, textarea, select, [data-no-swipe]")) {
+        return true
+      }
+      while (node && node !== stage) {
+        const overflow = getComputedStyle(node).overflowX
+        if (
+          (overflow === "auto" || overflow === "scroll") &&
+          node.scrollWidth > node.clientWidth + 1
+        ) {
+          return true
+        }
+        node = node.parentElement
+      }
+      return false
+    }
+
+    function onTouchStart(event: TouchEvent) {
+      if (event.touches.length !== 1 || ownsSwipe(event.target)) {
+        swipeRef.current = null
+        return
+      }
+      const touch = event.touches[0]
+      swipeRef.current = {
+        x: touch.clientX,
+        y: touch.clientY,
+        at: performance.now(),
+      }
+    }
+
+    function onTouchEnd(event: TouchEvent) {
+      const start = swipeRef.current
+      swipeRef.current = null
+      if (!start) return
+
+      const touch = event.changedTouches[0]
+      const dx = touch.clientX - start.x
+      const dy = touch.clientY - start.y
+      const quick = performance.now() - start.at < 800
+
+      // Far enough to be deliberate, and clearly more across than down.
+      if (!quick || Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy) * 1.5) {
+        return
+      }
+
+      const next = dx < 0
+      if (!started) {
+        if (next) setStarted(true)
+        return
+      }
+      go(index + (next ? 1 : -1))
+    }
+
+    function onTouchCancel() {
+      swipeRef.current = null
+    }
+
+    stage.addEventListener("touchstart", onTouchStart, { passive: true })
+    stage.addEventListener("touchend", onTouchEnd, { passive: true })
+    stage.addEventListener("touchcancel", onTouchCancel, { passive: true })
+    return () => {
+      stage.removeEventListener("touchstart", onTouchStart)
+      stage.removeEventListener("touchend", onTouchEnd)
+      stage.removeEventListener("touchcancel", onTouchCancel)
+    }
+  }, [go, index, started])
+
   return (
     <MotionConfig reducedMotion="user">
       <div className="relative h-dvh w-full overflow-hidden bg-background text-foreground">

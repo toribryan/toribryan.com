@@ -89,10 +89,16 @@ export function Greeting({
         transition={{ duration: 0.5, ease: EASE, delay: 0.12 }}
       >
         <p className="text-xs tracking-wide text-muted-foreground uppercase">
-          Hotkeys
+          <span className="pointer-coarse:hidden">Hotkeys</span>
+          <span className="hidden pointer-coarse:inline">Getting around</span>
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
-          <span className="flex items-center gap-1.5">
+          <span className="hidden items-center gap-1.5 pointer-coarse:flex">
+            <ArrowLeftIcon className="size-4" />
+            <ArrowRightIcon className="size-4" />
+            <span className="ml-1">Swipe between slides</span>
+          </span>
+          <span className="flex items-center gap-1.5 pointer-coarse:hidden">
             <Kbd>
               <ArrowLeftIcon />
             </Kbd>
@@ -101,14 +107,19 @@ export function Greeting({
             </Kbd>
             <span className="ml-1">Navigate between slides</span>
           </span>
-          <span className="flex items-center gap-1.5">
+          <span className="flex items-center gap-1.5 pointer-coarse:hidden">
             <Kbd>N</Kbd>
             <FileTextIcon className="size-4" />
             <span>Notes for the slide you are on</span>
           </span>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">
-          Click anywhere, or press Enter, to begin
+          <span className="pointer-coarse:hidden">
+            Click anywhere, or press Enter, to begin
+          </span>
+          <span className="hidden pointer-coarse:inline">
+            Tap anywhere, or swipe left, to begin
+          </span>
         </p>
       </motion.div>
     </motion.div>
