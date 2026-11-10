@@ -133,6 +133,7 @@ function Thanks() {
             ["AuthorProof product page", REVIEW_LINKS.authorProof.product],
             ["Agentic Design System", REVIEW_LINKS.agenticDesignSystem],
             ["AuthorProof handoff repo", REVIEW_LINKS.handoff.repo],
+            ["AuthorProof prototype", REVIEW_LINKS.handoff.prototype],
             ["fibo", REVIEW_LINKS.fibo],
             ["Design Skills Infrastructure", REVIEW_LINKS.designSkills],
             ["Résumé", REVIEW_LINKS.resume],

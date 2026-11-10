@@ -29,6 +29,8 @@ export const REVIEW_LINKS = {
   /** The AuthorProof handoff: the prototype and its three documents. */
   handoff: {
     repo: "https://github.com/toribryan/ap-handoff",
+    /** The prototype on GitHub Pages. */
+    prototype: "https://toribryan.github.io/ap-handoff/",
     handoff:
       "https://github.com/toribryan/ap-handoff/blob/main/docs/01-handoff.md",
     styleGuide:

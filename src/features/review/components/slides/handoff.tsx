@@ -103,6 +103,7 @@ function Repo() {
         <LinkOut href={REPO.repo} variant="default">
           Open the repo
         </LinkOut>
+        <LinkOut href={REPO.prototype}>Open the prototype</LinkOut>
         <LinkOut href={REVIEW_LINKS.figma}>Figma file</LinkOut>
       </LinkRow>
     </Slide>
