@@ -169,14 +169,16 @@ it for navigation. If `shadcn add` stops on pnpm's ignored-build warning
 before writing a file, copy `files[0].content` from the item's JSON into
 `src/components/fibo/` instead.
 
-`src/components/ui/token-flow.tsx`, the site's own copy, still backs the
-archived review deck; `.21st/token-flow.tsx` is generated from it by `npm run
-sync:token-flow` for 21st.dev.
+The portfolio review deck lives at `/review`, unlisted
+(`src/app/(review)/`, slides in `src/features/review/`). It is tailored per
+interview: the audience greeted is `AUDIENCE` in the route's page, the slide
+order and presenter notes are `data/deck.ts`, and each section's `endsAt`
+(minutes) feeds the pacing clock in the deck's header. Case studies also use
+its slides through `components/mdx-review-artifacts.tsx`.
 
-The portfolio review deck is archived: its `/review` route was removed, but
-`src/features/review/` remains, since case studies use its slides through
-`components/mdx-review-artifacts.tsx`, and the deck can be restored by
-reverting that commit.
+`src/components/ui/token-flow.tsx`, the site's own copy, still backs the
+review deck; `.21st/token-flow.tsx` is generated from it by `npm run
+sync:token-flow` for 21st.dev.
 
 The brand design system docs under `components/` are archived: their list
 and detail routes and the nav link were removed, but the MDX and

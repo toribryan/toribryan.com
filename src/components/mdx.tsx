@@ -35,6 +35,7 @@ import { Pipeline, Stage } from "./mdx-pipeline"
 import { PipelineHero } from "./mdx-pipeline-hero"
 import {
   AtomicDesign,
+  AuthorProofPrototype,
   BriefedJourneys,
   ConstraintStats,
   FoundationLayers,
@@ -107,6 +108,7 @@ const components: MDXRemoteProps["components"] = {
   WhoStepDemo,
 
   AtomicDesign,
+  AuthorProofPrototype,
   BriefedJourneys,
   ConstraintStats,
   FoundationLayers,

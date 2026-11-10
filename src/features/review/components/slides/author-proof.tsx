@@ -11,6 +11,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
+import { AuthorProofGrader } from "@/features/review/components/author-proof-grader"
+import { AuthorProofPrototype } from "@/features/review/components/author-proof-prototype"
 import { AuthorProofRadar } from "@/features/review/components/author-proof-radar"
 import { PinnedFlow } from "@/features/review/components/pinned-flow"
 import { ProctorioLogo } from "@/features/review/components/proctorio-logo"
@@ -35,7 +37,6 @@ import {
   LinkOut,
   LinkRow,
   Reveal,
-  Shot,
   Slide,
   Stack,
   Stat,
@@ -47,13 +48,12 @@ import {
 function Suite() {
   return (
     <Slide>
-      <Kicker>01 · Product / where it sits</Kicker>
-      <Title>Defining product design language through one design system.</Title>
+      <Kicker>02 · AuthorProof / where it sits</Kicker>
+      <Title>Three suites, and one new product I took from brief to MVP.</Title>
       <Lede>
         At Proctorio I led cross-product design across three suites, for
-        institutions and for proctoring agencies, and led the implementation of
-        the refactored design system underneath all three. The product I chose
-        to walk through today comes from the Origin suite: AuthorProof.
+        institutions and for proctoring agencies. The product I chose to walk
+        through today comes from the Origin suite: AuthorProof.
       </Lede>
       <Reveal>
         <SuiteReel items={SUITES} />
@@ -67,7 +67,7 @@ function Cover() {
     <Slide className="flex-1 justify-center">
       <div className="grid items-center gap-8 md:grid-cols-[3fr_2fr]">
         <Stack>
-          <Kicker>01 · Product</Kicker>
+          <Kicker>01 · The project</Kicker>
           <Reveal>
             <ProctorioLogo className="h-7 w-auto text-foreground" />
           </Reveal>
@@ -112,8 +112,9 @@ function Task() {
           The task that landed on my desk: prove the work is theirs.
         </Title>
         <Lede>
-          A new product in the Origin suite: verify authorship of written work,
-          inside the instructor’s existing Canvas workflow.
+          A new AI product in the Origin suite: verify authorship of written
+          work with a quiz generated from the student’s own submission, inside
+          the instructor’s existing Canvas workflow.
         </Lede>
       </Stack>
       <HairlineGrid columns="1fr 1.4fr">
@@ -281,45 +282,77 @@ function Pivot() {
         </Tabs>
       </Reveal>
       <HairlineGrid>
-        <Shot
-          src="/images/review/pivot-config-before.png"
-          alt="Quiz configuration as briefed: a Plagiarism Detection dropdown set to AuthorProof, with quiz type, number of questions, time limit, and proctored environment stacked underneath in the assignment form"
-          width={1336}
-          height={798}
-          label="As briefed: settings inline in the assignment form"
-        />
-        <Shot
-          src="/images/review/pivot-config-after.png"
-          alt="Proposed quiz configuration: an AuthorProof dialog with basic controls, each explained, and advanced toggles for multiple attempts and written answers"
-          width={1336}
-          height={798}
-          label="Proposed: one AuthorProof dialog, each control explained"
-        />
-        <Shot
-          src="/images/review/pivot-notify-before.png"
-          alt="An email in the student’s inbox: Your comprehension quiz is ready, with a deadline and an Open Quiz in Canvas button"
-          width={1334}
-          height={750}
-          label="As briefed: the student is told by email, later"
-        />
-        <Shot
-          src="/images/review/pivot-notify-after.png"
-          alt="The assignment page in Canvas with an Upload Documents panel embedded directly under the brief"
-          width={1252}
-          height={751}
-          label="Proposed: the quiz appears inside the assignment, immediately"
-        />
-      </HairlineGrid>
-      <HairlineGrid>
-        <Card label="What the pivot bought">
+        <Card label="What the pivot bought" title="One move, three constraints">
           It collapsed the timing gap, removed the notification dependency, and
           stepped out of the quiz tooling entirely, which left the instructor
           one thing to read.
         </Card>
-        <Card label="What it cost, said out loud">
+        <Card label="What it cost" title="Named before engineering found it">
           Short pieces written directly in the LMS editor were excluded, and how
-          proctoring coexists with the embedded flow stayed an open question. I
-          flagged the hole rather than let engineering find it.
+          proctoring coexists with the embedded flow stayed an open question.
+        </Card>
+      </HairlineGrid>
+    </Slide>
+  )
+}
+
+function Prototype() {
+  return (
+    <Slide>
+      <Kicker>AuthorProof / the flow, rebuilt</Kicker>
+      <Title>Try it: upload an essay, and the quiz is already there.</Title>
+      <Lede>
+        The original design files are under NDA, so I rebuilt the flow in code
+        for this walkthrough. The screens are new. The decisions are the ones I
+        made on the product.
+      </Lede>
+      <Reveal>
+        <AuthorProofPrototype />
+      </Reveal>
+      <HairlineGrid columns={3}>
+        <Card label="Setup" title="Every control explained">
+          Each setting says what it changes for the student, so an instructor
+          never has to guess what a control does.
+        </Card>
+        <Card label="Student" title="No notification to miss">
+          The quiz appears inside the assignment, seconds after upload, with no
+          second place to go and find it.
+        </Card>
+        <Card label="Result" title="A score someone can check">
+          Every question sits beside the student’s own words and the assessment
+          of the answer. Confidence is a word, never a color alone.
+        </Card>
+      </HairlineGrid>
+    </Slide>
+  )
+}
+
+function Review() {
+  return (
+    <Slide>
+      <Kicker>AuthorProof / the reviewing side</Kicker>
+      <Title>Grade the paper and read the quiz in one place.</Title>
+      <Lede>
+        I pitched putting AuthorProof inside SpeedGrader, where instructors
+        already grade: the quiz results on the left, the paper in the middle,
+        and the grading panel they already trust on the right. What was built is
+        the results panel on its own.
+      </Lede>
+      <Reveal>
+        <AuthorProofGrader />
+      </Reveal>
+      <HairlineGrid columns={3}>
+        <Card label="Why the left" title="Results before the grade">
+          The instructor reads what the student could answer before deciding on
+          a grade, not after.
+        </Card>
+        <Card label="Why the middle" title="Every question points home">
+          Selecting a question marks the passage it came from, so the AI’s
+          reasoning is checked against the paper itself.
+        </Card>
+        <Card label="Why the right" title="Nothing they trust removed">
+          The grading panel and the similarity badge stay as they are.
+          AuthorProof answers a second question beside the first.
         </Card>
       </HairlineGrid>
     </Slide>
@@ -330,32 +363,14 @@ function Shipped() {
   return (
     <Slide>
       <Kicker>AuthorProof / shipped</Kicker>
-      <div className="grid items-center gap-8 md:grid-cols-[3fr_2fr]">
-        <Stack>
-          <Title>The prototype was the spec.</Title>
-          <Lede>
-            Concept to production-ready MVP in four to six weeks. I designed the
-            settings model for quiz configuration and built its interface,
-            designed the report card, the quiz results, and the emails students
-            receive, and built the front end for all of it in HTML, CSS, and
-            vanilla JavaScript on our design system. Engineering got working
-            prototypes rather than a document about them.
-          </Lede>
-        </Stack>
-        <Reveal>
-          <Frame>
-            <video
-              className="aspect-square w-full rounded-xl bg-surface object-cover"
-              src="/images/review/authorproof-shipped.webm"
-              autoPlay
-              loop
-              muted
-              playsInline
-              aria-label="AuthorProof, as shipped"
-            />
-          </Frame>
-        </Reveal>
-      </div>
+      <Stack>
+        <Title>Four to six weeks from brief to MVP.</Title>
+        <Lede>
+          I designed the quiz settings, the report card, the quiz results, and
+          the emails students receive, and handed them off as the prototype and
+          documents you just saw.
+        </Lede>
+      </Stack>
       <HairlineGrid>
         <Card label="Proof of concept" title="The briefed idea shipped first">
           The Canvas quiz architecture from the brief became the proof of
@@ -368,25 +383,17 @@ function Shipped() {
           seconds after upload.
         </Card>
       </HairlineGrid>
-      <Shot
-        src="/images/review/authorproof-artifacts.webp"
-        alt="Two AuthorProof screens side by side: the instructor’s report card, with an overview of the student’s score, confidence level, and time used beside a question-by-question breakdown of answers and assessments, and the student’s email saying their comprehension quiz is ready, with its deadline and course"
-        width={1600}
-        height={871}
-        label="The report card instructors read, and the email students receive"
-        className="p-0"
-      />
       <StatRow>
-        <Stat
-          value="95%"
-          label="Quiz completion rate among pilot test takers"
-        />
-        <Stat value="<5%" label="False-positive rate in the pilot" />
+        <Stat value="~5" label="Institutions in the spring 2026 pilot" />
+        <Stat value="4 to 6 wks" label="Concept to production-ready MVP" />
         <Stat
           value="0"
           label="Steps added to the instructor’s grading workflow"
         />
-        <Stat value="4 to 6 wks" label="Concept to production-ready MVP" />
+        <Stat
+          value="95% / <5%"
+          label="First-semester goals: quiz completion and false positives"
+        />
       </StatRow>
       <Reveal>
         <p className="max-w-2xl font-heading text-xl/tight font-medium text-balance md:text-2xl/tight">
@@ -405,6 +412,52 @@ function Shipped() {
   )
 }
 
+function Overruled() {
+  return (
+    <Slide>
+      <Kicker>AuthorProof / overruled</Kicker>
+      <Title>I was overruled on what shipped first.</Title>
+      <Lede>
+        I pitched the embedded flow as the MVP. Proctorio shipped the briefed
+        architecture first, as the fastest way to put a working product in front
+        of pilot instructors, and adopted the embedded flow as the product’s
+        long-term direction.
+      </Lede>
+      <HairlineGrid>
+        <Card label="The hole in my pitch" title="Proctoring was still open">
+          How proctoring would work alongside the embedded flow was an open
+          question when the direction was decided. I had flagged it, but I had
+          not answered it.
+        </Card>
+        <Card
+          label="What I would do differently"
+          title="Test it with proctoring sooner"
+        >
+          Prototype the embedded flow beside a proctored session before the
+          direction decision, not after.
+        </Card>
+      </HairlineGrid>
+      <Reveal>
+        <p className="text-xs tracking-wide text-muted-foreground uppercase">
+          What I would design next
+        </p>
+      </Reveal>
+      <Steps
+        items={[
+          {
+            title: "Let instructors review questions.",
+            body: "Before a generated quiz reaches a student.",
+          },
+          {
+            title: "Pick the quiz language.",
+            body: "Beyond the default of the submission’s language.",
+          },
+        ]}
+      />
+    </Slide>
+  )
+}
+
 export const AUTHOR_PROOF_CONTENT: Record<
   string,
   ComponentType<{ slide: SlideType; data: SlideData }>
@@ -416,5 +469,8 @@ export const AUTHOR_PROOF_CONTENT: Record<
   brief: Brief,
   constraints: Constraints,
   pivot: Pivot,
+  prototype: Prototype,
+  review: Review,
   shipped: Shipped,
+  overruled: Overruled,
 }

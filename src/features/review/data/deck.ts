@@ -4,10 +4,12 @@ import { slidePath } from "@/features/review/types"
 export const REVIEW_BASE_PATH = "/review"
 
 export const SECTIONS: Section[] = [
-  { slug: "background", title: "Background" },
-  { slug: "product", title: "Product" },
-  { slug: "design-system", title: "Design System" },
-  { slug: "observations", title: "Observations" },
+  { slug: "background", title: "Background", endsAt: 4 },
+  { slug: "process", title: "Process", endsAt: 12 },
+  { slug: "product", title: "AuthorProof", endsAt: 29 },
+  { slug: "handoff", title: "Handoff", endsAt: 39 },
+  { slug: "outcome", title: "Outcome", endsAt: 44 },
+  { slug: "observations", title: "Wrap", endsAt: 50 },
 ]
 
 /**
@@ -22,7 +24,8 @@ export const SLIDES: Slide[] = [
     stage: "background-intro",
     title: "bio",
     notes: [
-      "Three descriptions of me: my dad’s, my colleagues’, and my own. The one to keep is “question artist.” Interrogating the brief is the first thing I do on every project, and both projects in this deck start there.",
+      "Pacing: four minutes for the background, eight for process, seventeen for the AuthorProof story, ten for the handoff, five for the outcome, six to wrap, and the last ten for their questions. The clock in the header shows the time elapsed and the minute this section should end by.",
+      "Three descriptions of me: my dad’s, my colleagues’, and my own. The one to keep is “question artist.” Interrogating the brief is the first thing I do on every project, and the project in this deck starts there.",
       "The photos are the people and places behind the work. Nothing here needs clicking.",
     ],
   },
@@ -32,8 +35,38 @@ export const SLIDES: Slide[] = [
     stage: "background-intro",
     title: "my pillars of inspiration",
     notes: [
-      "Creative technologist: I prototype in code and ship the front end, which is why a design system is where I want to spend my time.",
-      "Bonzo is the pug. Chronic learner is why every project opens with a teardown of whoever already solved the problem: Mobbin for marketplaces, Airbnb for listing creation. Both research beats come up later.",
+      "Creative technologist: I prototype in code and ship the front end, so what I hand engineering is something that already runs.",
+      "Bonzo is the pug. Forever student is why every project opens with a teardown of whoever already solved the problem.",
+    ],
+  },
+  {
+    slug: "agentic",
+    section: "process",
+    title: "end to end",
+    notes: [
+      "Process first, so the rest of the walkthrough makes sense. Aim to finish this section by 12 minutes.",
+      "Say it out loud, briefly and honestly: the last couple of years turned my traditional design process on its head, and I went through all five stages of grief for it. Where I came out is a polished, end-to-end agentic design process.",
+      "This is that process: 32 Claude skills and 7 read-only reviewer agents, from discovery through shipped code, documented in fibo.",
+      "The router is the point: it places work on the phase map, loads the phase’s skill, runs the reviewer that guards it, and keeps a project log of decisions. The explorer opens on its SKILL.md; open a phase folder to show its skills, or an agent to show what it checks.",
+      "Reviewers are read-only on purpose. They report failures with their location and end in a verdict: ready, or N blocking issues.",
+    ],
+  },
+  {
+    slug: "team",
+    section: "process",
+    title: "with a team",
+    notes: [
+      "In my last role I built and maintained the skills my design team used at every stage. The strip is what it did for them.",
+      "Handoffs became prototype-forward, through a GitHub repository. Promise them they’ll see one: the AuthorProof handoff later in the deck.",
+    ],
+  },
+  {
+    slug: "today",
+    section: "process",
+    title: "today’s piece",
+    notes: [
+      "I’m design-system forward, but today is AuthorProof: a project I worked through entirely on my own, at a company that valued high agency.",
+      "Say the NDA line here once, so it doesn’t interrupt later: most of what follows is rebuilt.",
     ],
   },
   {
@@ -41,7 +74,8 @@ export const SLIDES: Slide[] = [
     section: "product",
     title: "where it sits",
     notes: [
-      "At Proctorio I led cross-product design across three suites, for institutions and for proctoring agencies, and led the implementation of the refactored design system underneath all three.",
+      "The one piece today: a complex problem that arrived from product with its architecture already chosen, and an AI feature. The story runs to about 29 minutes on the clock, then the handoff to 39.",
+      "At Proctorio I led cross-product design across three suites, for institutions and for proctoring agencies.",
       "Integrity proctors the exam, Vault protects the exam content, and Origin proves authorship. Hover a tile to see it move. This walkthrough is Origin’s product: AuthorProof.",
     ],
   },
@@ -50,7 +84,7 @@ export const SLIDES: Slide[] = [
     section: "product",
     title: "AuthorProof",
     notes: [
-      "AuthorProof generates a short comprehension quiz from the student’s own writing, so someone who wrote the paper can answer it and someone who did not cannot.",
+      "AuthorProof generates a short comprehension quiz from the student’s own writing, so someone who wrote the paper can answer it and someone who did not cannot. It is an AI feature: the questions and the assessment of each answer are generated.",
       "My role was end to end: from an assigned brief to a shippable MVP inside Canvas. The product page and the full case study are linked on the slide.",
     ],
   },
@@ -61,7 +95,7 @@ export const SLIDES: Slide[] = [
     notes: [
       "The suite has to cover every integrity vector on the right; authorship was the one no existing tool touched.",
       "The reframe on the left is the whole product: existing tools ask “is this original?” Instructors ask “did you write this?”",
-      "The two rules underneath were set before any screen was drawn: no binary pass or fail, and every score traces back to something a person can read. The result is confidence, not a verdict.",
+      "The two rules underneath were set before any screen was drawn: no binary pass or fail, and every score traces back to something a person can read, so an instructor can check the AI’s reasoning for themselves.",
     ],
   },
   {
@@ -99,105 +133,89 @@ export const SLIDES: Slide[] = [
     notes: [
       "Rather than report blockers, I pitched an alternative and split it into an MVP and a longer vision: embed AuthorProof in the assignment itself, so the quiz appears seconds after upload and the result writes back beside the submission.",
       "The cost is stated out loud on the slide: short pieces written in the LMS editor were excluded, and proctoring alongside the embedded flow stayed an open question. I would rather name the hole than have engineering find it.",
-      "The screenshots pair each briefed screen with the proposed one.",
+      "The tabs compare the student’s path as briefed and as pitched. The next slide is the pitched flow, working.",
+    ],
+  },
+  {
+    slug: "prototype",
+    section: "product",
+    title: "the flow, rebuilt",
+    notes: [
+      "A quick reminder that this is a rebuild in code with sample data, made the way the process section described: built with Claude Code on my own components.",
+      "Drive it live. Start on the student tab: upload, watch the quiz arrive in seconds, answer a couple wrong on purpose, submit, then open the instructor’s view.",
+      "On the result, point at one question: the student’s words, the question made from them, the answer, and the assessment, side by side. That is how an instructor checks the AI’s reasoning. Then show the setup tab if there is time. The email tab is the briefed flow’s emails in every state, from ready to the window closing: use it when the shipped slide comes up, since the briefed flow is what shipped first. The closed state is a good talking point: it stays neutral, because a missed quiz is for the instructor to follow up, not a failure.",
+      "Keys inside the prototype belong to it, so click outside it or use the arrows in the header to move on.",
+    ],
+  },
+  {
+    slug: "review",
+    section: "product",
+    title: "the reviewing side",
+    notes: [
+      "The instructor’s side, rebuilt the same way. Open on As pitched: AuthorProof on the left, the student’s paper in the middle, and the grading panel with the similarity badge on the right, all in SpeedGrader.",
+      "Click a question on the left and the paper scrolls to the passage it came from. That is the argument: the instructor checks the AI against the paper without leaving the grading view.",
+      "Then switch to As built: the results panel on its own, with the paper and grade in another tab. Say why it went that way if you know it, and what it costs the instructor: two places to read before one grade.",
+    ],
+  },
+  {
+    slug: "repo",
+    section: "handoff",
+    title: "the repo",
+    notes: [
+      "This is the answer to how my intent reached engineering, and the repo promised in the process section. Aim to finish the section by 39 minutes.",
+      "One repository: the prototype that shows every screen and state, and three documents beside it, each with one job. Figma mirrors the prototype under the same names, for review and annotation.",
+      "The three rules are the working agreement. The first one matters most: the prototype wins, so the documents never drift into a second, competing spec.",
+      "The original files are under NDA, so this repo is the same structure rebuilt with sample data. It is public, so they can browse it after.",
+    ],
+  },
+  {
+    slug: "decisions",
+    section: "handoff",
+    title: "what and why",
+    notes: [
+      "The handoff document was a feature breakdown, not a description of screens. Each feature had its user journey, its business logic, how to walk the prototype to see it, and links to every related file: code, Figma frames and test-plan rows.",
+      "It opens on F2, the student’s submit and quiz. Click through to F5, the grading view they just saw, to show the same four parts.",
+      "Under the breakdown sat the principles that don’t bend and the decisions, each with what it cost, so a well-meant fix doesn’t undo a deliberate choice.",
+    ],
+  },
+  {
+    slug: "style",
+    section: "handoff",
+    title: "how it looks",
+    notes: [
+      "One name everywhere: the CSS token, the Figma variable and the doc row are the same word. Engineers build with the name, never the hex.",
+      "The third column is the point. The rule lives with the component: the similarity badge is always neutral, the closed email is always neutral. Nobody has to remember it in review.",
+      "Copy that ships word for word is a product decision. Saying so in the guide stops it being edited for space.",
+    ],
+  },
+  {
+    slug: "test-plan",
+    section: "handoff",
+    title: "how to know it’s right",
+    notes: [
+      "Behaviour as given, when, then, with an ID. QA checks a row against the prototype, which already shows the answer.",
+      "The phone line in GV-01 is a real example: on a phone the paper sits below the panel, so selecting a question has to scroll the page, not just the paper. That only surfaced because the row said “on a phone”.",
+      "If there is time, open the repo on screen: a test-plan row, then the prototype state it describes. Otherwise move on to what shipped.",
     ],
   },
   {
     slug: "shipped",
-    section: "product",
+    section: "outcome",
     title: "shipped",
     notes: [
-      "Everything engineering built from was a working prototype in HTML, CSS, and vanilla JavaScript on the design system, not a document about one: the settings model and its interface, the student quiz flow, the results, the report card, and the student emails.",
+      "What shipped, after the handoff you just saw: the briefed idea first, the pivot as the roadmap.",
       "The pivot direction became the official long-term vision for the product; the original briefed idea shipped as the proof of concept.",
-      "Pilot results are on the strip. The zero matters most to me: nothing added to the instructor’s grading workflow.",
+      "The strip: a pilot with about five institutions in spring 2026. The 95% and under 5% are the goals set for that first semester, not results. The zero matters most to me: nothing added to the instructor’s grading workflow.",
     ],
   },
   {
-    slug: "cover",
-    section: "design-system",
-    title: "Senior Living Marketplace",
+    slug: "overruled",
+    section: "outcome",
+    title: "overruled",
     notes: [
-      "Modern Care Homes is a senior living marketplace for the Phoenix metro, plus the agent platform that runs it. I own everything a family or an agent sees.",
-      "Two jobs on the slide. Hover the 01 to see the design system being built, and the 02 to see it in use across the live site.",
-      "A change to a button is a change in two products. The system is what makes a decision hold. The live site and the Storybook are linked below.",
-    ],
-  },
-  {
-    slug: "foundations",
-    section: "design-system",
-    title: "foundations",
-    notes: [
-      "The strip: 18px base type, 48 by 48 targets, AA contrast, and tokens mapped one to one between Figma variables and CSS custom properties. Because the floor is in the component, page eleven cannot undo it.",
-      "The tiers under the diagram: primitives are named for what they are, and nothing on a page uses them directly; semantics are named for the job, so a theme is a change of values. Flip the theme toggle in the panels to see that happen.",
-      "Under the video, the home card is annotated with the tokens each part of it reads. The token diagram itself is published on 21st.dev if you want the code.",
-    ],
-  },
-  {
-    slug: "components",
-    section: "design-system",
-    title: "atomic design",
-    notes: [
-      "Top to bottom: atoms carry the floor, molecules are atoms that only make sense together, organisms are the home card and the agent platform’s sidebar, the template is the filter form, and the page is the live marketplace.",
-      "Every frame except the home card is a live story: click into one to change its state, or use Open to see it in the Storybook. The home card is a still because its story needs a Clerk provider before the published Storybook can render it.",
-      "Why atomic: it gives a contribution a home. A new piece has to say which level it lives at, which is most of the governance conversation.",
-    ],
-  },
-  {
-    slug: "coming",
-    section: "design-system",
-    title: "what is coming",
-    notes: [
-      "The library is moving up the atomic ladder: the complex components are in progress now, starting with the map.",
-      "Two variants of it are being built: one for a home’s profile page and one for map search. The clip shows the map search in progress.",
-    ],
-  },
-  {
-    slug: "storybook",
-    section: "design-system",
-    title: "Storybook",
-    notes: [
-      "This is the live library, opened on the button. Click into any component and walk its states: hover, focus, disabled, empty, loading, error.",
-      "A component is ready when it reads correctly outside both the marketplace and the agent platform; Storybook is how I look at it outside either one.",
-      "If the frame is slow, open it full screen. The Integrity Console Storybook linked below is a second, complete example: 40 components, 149 stories.",
-    ],
-  },
-  {
-    slug: "home-card",
-    section: "design-system",
-    title: "the home card",
-    notes: [
-      "Research paid for this: marketplaces that had already solved search and comparison. Families are mostly trying to rule homes out, so the card leads with what differs.",
-      "The lists under each card say exactly what was wrong before and what the reworked card fixes.",
-      "The design-system angle: decided once, it holds on every listing, search result, and saved comparison.",
-    ],
-  },
-  {
-    slug: "dashboard",
-    section: "design-system",
-    title: "the agent dashboard",
-    notes: [
-      "The agent side. The old shell was two nav items and one long scroll. The new one makes the sidebar the listing, with every section carrying its own state.",
-      "It came straight from the Airbnb and Zillow listing-creation teardown: show the state of every stage so nobody loses their place.",
-      "The same rail, shell, and section components ship on the marketplace, which is the two-products point again.",
-    ],
-  },
-  {
-    slug: "shipping",
-    section: "design-system",
-    title: "shipping",
-    notes: [
-      "The pipeline: research, Figma, Storybook, pull request, Vercel preview on a real phone, shipped.",
-      "The handoff exists for data-layer work. Everything else ships as code from me, and what I learn shipping goes back into the system. The PR thread underneath is what that looks like day to day.",
-      "Spencer owns data and infrastructure. The live site, the Storybook, and the case study are linked at the top.",
-    ],
-  },
-  {
-    slug: "threads",
-    section: "observations",
-    title: "across both",
-    notes: [
-      "Three habits both projects share, each tied to a moment you just saw.",
-      "The middle one is the design-systems thesis: the rule lives in the component, so it holds without anyone remembering it.",
+      "The moment I was overruled. I pitched the embedded flow as the MVP; the briefed architecture shipped first because it was the fastest way to get a working product in front of pilot instructors.",
+      "What I would do differently: prototype the embedded flow beside a proctored session before the direction decision. I had named that hole on the pivot slide, but naming it is not answering it.",
+      "The two steps underneath are what I would design next. Good place to pause for questions before the second piece.",
     ],
   },
   {
@@ -205,8 +223,8 @@ export const SLIDES: Slide[] = [
     section: "observations",
     title: "for this role",
     notes: [
-      "The figures are from the Proctorio design system overhaul: 587 card variants down to 32, 37 components in 60 days, three suites on one language. The case study linked below has the variant math and the token architecture as live Storybook embeds.",
-      "The four cards underneath are what I bring to a design systems team: tokens and architecture, governance as mentorship, design to code, and shipping the front end.",
+      "The three things in the brief for today, each tied to a moment in the deck: working alone, working at more than one altitude, and AI already in the work.",
+      "The strip is the deck in four numbers, and the handoff repo is linked below if they want to browse it after. If time is short, skip straight from here to questions.",
     ],
   },
   {
@@ -215,6 +233,7 @@ export const SLIDES: Slide[] = [
     title: "thank you",
     notes: [
       "Every link from the deck in one place.",
+      "Stop here by 50 minutes so the last ten are theirs.",
       "One question back: what does the first ninety days of this role look like from your side?",
     ],
   },

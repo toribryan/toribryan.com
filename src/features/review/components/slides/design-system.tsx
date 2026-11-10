@@ -9,7 +9,6 @@ import { PrThread } from "@/features/review/components/pr-thread"
 import { ShippingPipeline } from "@/features/review/components/shipping-pipeline"
 import { TokenCallouts } from "@/features/review/components/token-callouts"
 import { TokenTiers } from "@/features/review/components/token-tiers"
-import { TwoJobs } from "@/features/review/components/two-jobs"
 import { REVIEW_LINKS } from "@/features/review/data/links"
 import type { SlideData, Slide as SlideType } from "@/features/review/types"
 
@@ -31,22 +30,10 @@ import {
   Title,
 } from "../slide-primitives"
 
-function StorybookLink({
-  variant = "outline",
-}: {
-  variant?: "outline" | "default"
-}) {
-  return (
-    <LinkOut href={REVIEW_LINKS.modernCareHomes.storybook} variant={variant}>
-      Open Storybook
-    </LinkOut>
-  )
-}
-
 function Cover() {
   return (
     <Slide>
-      <Kicker>02 · Design system</Kicker>
+      <Kicker>02 · Craft</Kicker>
       <Reveal>
         <Image
           className="h-7 w-auto"
@@ -58,12 +45,22 @@ function Cover() {
         />
       </Reveal>
       <Title size="xl">Senior Living Marketplace</Title>
-      <TwoJobs />
+      <Lede>
+        A marketplace where families find a care home in the Phoenix metro, and
+        the platform owners and agents run those homes from. I design the
+        interfaces and ship the front end for both sides of it.
+      </Lede>
+      <Clip
+        src="/case-studies/home-grid-mch.mp4"
+        label="The marketplace families search"
+      />
       <LinkRow>
         <LinkOut href={REVIEW_LINKS.modernCareHomes.live}>
           Visit Modern Care Homes
         </LinkOut>
-        <StorybookLink />
+        <LinkOut href={REVIEW_LINKS.modernCareHomes.caseStudy}>
+          Full case study
+        </LinkOut>
       </LinkRow>
     </Slide>
   )
@@ -73,7 +70,7 @@ function Foundations() {
   return (
     <Slide>
       <div className="flex items-center justify-between gap-4">
-        <Kicker>Design system / foundations</Kicker>
+        <Kicker>Modern Care Homes / foundations</Kicker>
         <LinkRow>
           <LinkOut href={REVIEW_LINKS.tokenFlow} className="h-7 text-xs">
             Token diagram on 21st.dev
@@ -101,7 +98,7 @@ function Foundations() {
 function Components() {
   return (
     <Slide>
-      <Kicker>Design system / components</Kicker>
+      <Kicker>Modern Care Homes / components</Kicker>
       <Title>I’ve always been inspired by the atomic design methodology.</Title>
       <Lede>
         The library is organized the atomic way, so a rule set at the bottom
@@ -115,7 +112,7 @@ function Components() {
 function Coming() {
   return (
     <Slide>
-      <Kicker>Design system / what is coming</Kicker>
+      <Kicker>Modern Care Homes / what is coming</Kicker>
       <Title>What is coming…</Title>
       <Lede>
         The complex components are in progress now, starting with the map: one
@@ -132,11 +129,11 @@ function Coming() {
 function Storybook() {
   return (
     <Slide>
-      <Kicker>Design system / Storybook</Kicker>
+      <Kicker>Modern Care Homes / Storybook</Kicker>
       <Title>Check out the library for yourself.</Title>
       <Lede>
-        Seven PRs are waiting to merge, carrying the foundations into more
-        complex components like the map.
+        Click into any component and walk its states: hover, focus, disabled,
+        empty, loading, error.
       </Lede>
       <Reveal className="flex flex-col gap-2">
         <div className="overflow-hidden rounded-xl border border-line bg-background">
@@ -174,12 +171,12 @@ function Storybook() {
 function HomeCard() {
   return (
     <Slide>
-      <Kicker>Design system / a component in practice</Kicker>
+      <Kicker>Modern Care Homes / the marketplace</Kicker>
       <Title>The home card should spend its space on what differs.</Title>
       <Lede>
-        A family is mostly trying to rule homes out. Once the card is a system
-        component, that decision is made once and holds on every listing, search
-        result, and saved comparison.
+        A family is mostly trying to rule homes out, so the card leads with what
+        tells one home from the next: whether it is available now, what it
+        costs, and more than one photo.
       </Lede>
       <HairlineGrid>
         <Stack className="gap-2">
@@ -227,14 +224,13 @@ function HomeCard() {
 function Dashboard() {
   return (
     <Slide>
-      <Kicker>Design system / the other product</Kicker>
+      <Kicker>Modern Care Homes / the other product</Kicker>
       <Title>The agent dashboard should be the listing.</Title>
       <Lede>
         I went deep on how other real estate platforms, Airbnb and Zillow among
         them, get people listing a home to complete every detail. The patterns
         those leaders established are what get their hosts to finish, so they
-        shaped this shell. The same shell, rail, and section components ship on
-        the marketplace side.
+        shaped this shell.
       </Lede>
       <HairlineGrid>
         <Stack className="gap-2">
@@ -277,10 +273,121 @@ function Dashboard() {
   )
 }
 
+function Onboarding() {
+  return (
+    <Slide>
+      <Kicker>Modern Care Homes / a complex workflow</Kicker>
+      <Title>
+        Seven short steps from a state license to a listing ready for review.
+      </Title>
+      <Lede>
+        A new owner only got in when an admin invited them. They landed in the
+        full listing editor with a checklist, could not save a draft without
+        three gallery photos, and publishing put the home straight in front of
+        families with nobody checking it first.
+      </Lede>
+      <Clip
+        src="/cover-home-activation.mp4"
+        label="The flow, drawing the home as the owner describes it"
+      />
+      <HairlineGrid columns={3}>
+        <Card label="Chose" title="Start from the license">
+          Every home already holds a state license. Picking it fills in the
+          name, address, care type and capacity, so the first question is just
+          “is this you?”
+        </Card>
+        <Card label="Ruled out" title="Everything required up front">
+          One topic per screen, each saved on its own. Photos and care are no
+          longer required for a draft, so an owner can stop and pick up later.
+        </Card>
+        <Card label="Friction on purpose" title="Review before families see it">
+          The last step submits the home to the Modern Care team instead of
+          publishing it. It is the one place a slower path protects families.
+        </Card>
+      </HairlineGrid>
+      <StatRow>
+        <Stat value="7" label="Short steps, in three phases" />
+        <Stat value="8" label="Care axes, each with its own illustrated plot" />
+        <Stat value="48" label="Care services, each drawn as its own object" />
+        <Stat value="60fps" label="Care camera while it pans, up from 23" />
+      </StatRow>
+      <LinkRow>
+        <LinkOut href={REVIEW_LINKS.homeListingOnboarding}>
+          Full case study
+        </LinkOut>
+      </LinkRow>
+    </Slide>
+  )
+}
+
+function Early() {
+  return (
+    <Slide>
+      <Kicker>Modern Care Homes / how it got here</Kicker>
+      <Title>The first passes, and what replaced them.</Title>
+      <Lede>
+        I designed this in code rather than in Figma. How a yard fills up, how a
+        camera pans and how a step feels on a phone only had answers once they
+        moved.
+      </Lede>
+      <HairlineGrid columns={3}>
+        <Shot
+          src="/case-studies/home-activation/early/amenities-v1.webp"
+          alt="Early amenities step: an empty isometric grid of dashed plots beside the checklist"
+          width={1920}
+          height={1167}
+          label="First pass: an empty lot of plots"
+        />
+        <Shot
+          src="/case-studies/home-activation/early/amenities-v2.webp"
+          alt="Second amenities version: outlined isometric objects scattered on a gray slab"
+          width={1920}
+          height={1200}
+          label="Second pass: objects with no sense of a place"
+        />
+        <Shot
+          src="/case-studies/home-activation/desk-amenities.webp"
+          alt="Shipped amenities step: a detailed yard with a garden, patio umbrella, walking path and wifi router"
+          width={1920}
+          height={1200}
+          label="Shipped: arranged like a real backyard"
+        />
+      </HairlineGrid>
+      <HairlineGrid>
+        <Shot
+          src="/case-studies/home-activation/early/about-v1.webp"
+          alt="Early About step: tips listed above a rich text editor, beside an open book with a pen"
+          width={1920}
+          height={1200}
+          label="First pass: tips above a blank editor"
+        />
+        <Shot
+          src="/case-studies/home-activation/early/about-final.webp"
+          alt="Shipped About step: a pre-written draft with bracketed prompts, beside a writing desk with a letter, lamp and mug"
+          width={1920}
+          height={1200}
+          label="Shipped: a draft to edit, with the tips inside it"
+        />
+      </HairlineGrid>
+      <HairlineGrid>
+        <Card label="How it reached engineering" title="Every state, in code">
+          Every step runs in Storybook at desktop and phone widths, including
+          the awkward states: an empty price, a shared room with no gender set,
+          a review with something missing.
+        </Card>
+        <Card label="What is tested" title="Where it counts">
+          Submitting is covered for an incomplete draft, a non-owner and a home
+          that has already been submitted. The flow sits behind a feature flag.
+        </Card>
+      </HairlineGrid>
+    </Slide>
+  )
+}
+
 function Shipping() {
   return (
     <Slide>
-      <Kicker>Design system / shipping</Kicker>
+      <Kicker>Modern Care Homes / shipping</Kicker>
       <Title>I build what I design.</Title>
       <LinkRow>
         <LinkOut href={REVIEW_LINKS.modernCareHomes.live} variant="default">
@@ -300,13 +407,12 @@ function Shipping() {
         <div className="flex flex-col">
           <Card label="What the handoff is for">
             The handoff between design and engineering exists for complex
-            contributions that touch the data layer. Components, layout,
-            responsive behavior, and motion ship as code from me.
+            contributions that touch the data layer. Screens, layout, responsive
+            behavior, and motion ship as code from me.
           </Card>
           <Card label="What that removes">
             Nothing gets defended in a handoff meeting. If something needs to
-            change, I change it. Whatever I learn shipping goes back into the
-            system, so the next screen starts further along.
+            change, I change it, and the next screen starts further along.
           </Card>
         </div>
       </HairlineGrid>
@@ -348,5 +454,7 @@ export const DESIGN_SYSTEM_CONTENT: Record<
   storybook: Storybook,
   "home-card": HomeCard,
   dashboard: Dashboard,
+  onboarding: Onboarding,
+  early: Early,
   shipping: Shipping,
 }

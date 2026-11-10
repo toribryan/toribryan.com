@@ -23,4 +23,24 @@ export const REVIEW_LINKS = {
   tokenFlow: "https://21st.dev/@iamtoribryan/components/token-flow",
   designSystemOverhaul: "/work/design-system-overhaul",
   agenticDesignSystem: "/work/agentic-design-system",
+  homeListingOnboarding: "/work/home-listing-onboarding",
+  designSkills: "/latest/design-skills-infrastructure",
+  /** The design-skills collection: its docs in fibo, and its repo. */
+  designSkillsDocs:
+    "https://fibo.toribryan.com/?path=/docs/design-skills--docs",
+  designSkillsRepo: "https://github.com/toribryan/design-skills",
+  fibo: "/fibo",
+  /** The AuthorProof handoff: the prototype and its three documents. */
+  handoff: {
+    repo: "https://github.com/toribryan/ap-handoff",
+    /** The prototype on GitHub Pages. */
+    prototype: "https://toribryan.github.io/ap-handoff/",
+    handoff:
+      "https://github.com/toribryan/ap-handoff/blob/main/docs/01-handoff.md",
+    styleGuide:
+      "https://github.com/toribryan/ap-handoff/blob/main/docs/02-style-guide.md",
+    testPlan:
+      "https://github.com/toribryan/ap-handoff/blob/main/docs/03-test-plan.md",
+  },
+  figma: "https://www.figma.com/design/CX6Lxfl52NCGfI3CvvGoHO",
 } as const

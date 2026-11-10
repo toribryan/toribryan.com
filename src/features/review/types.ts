@@ -1,12 +1,25 @@
 import type { Tweet } from "react-tweet/api"
 
 export type SectionSlug =
-  "background" | "product" | "design-system" | "observations"
+  | "background"
+  | "process"
+  | "product"
+  | "handoff"
+  | "outcome"
+  | "design-system"
+  | "ai"
+  | "observations"
 
 export type Section = {
   slug: SectionSlug
   /** Rail and breadcrumb label. */
   title: string
+  /**
+   * Minutes into the hour this section should be finished by. The deck's
+   * clock shows it beside the time elapsed, so one glance says whether the
+   * walkthrough is on pace.
+   */
+  endsAt: number
 }
 
 export type Slide = {

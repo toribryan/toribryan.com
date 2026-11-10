@@ -185,6 +185,30 @@ export function Deck({
       const now = performance.now()
       const state = wheelRef.current
       const down = event.deltaY > 0
+
+      // A panel inside the slide that scrolls on its own, like a paper in a
+      // grader, takes the wheel first. While it can still move, the gesture
+      // is its, and it counts as movement so the page does not turn the
+      // moment it reaches its end.
+      let node = event.target instanceof HTMLElement ? event.target : null
+      while (node && node !== scroller) {
+        const overflow = getComputedStyle(node).overflowY
+        if (
+          (overflow === "auto" || overflow === "scroll") &&
+          node.scrollHeight > node.clientHeight + 1
+        ) {
+          const canMove = down
+            ? node.scrollTop + node.clientHeight < node.scrollHeight - 1
+            : node.scrollTop > 0
+          if (canMove) {
+            state.sum = 0
+            state.lastMoving = now
+            return
+          }
+        }
+        node = node.parentElement
+      }
+
       const atEnd = down
         ? scroller.scrollTop + scroller.clientHeight >=
           scroller.scrollHeight - 1
@@ -224,6 +248,84 @@ export function Deck({
     return () => stage.removeEventListener("wheel", onWheel)
   }, [go, index, started])
 
+  // A horizontal swipe on a touch screen turns the page: left for the next
+  // slide, right for the one before. Vertical swipes are left to scroll the
+  // slide. A swipe that starts on a form control, or inside something that
+  // scrolls sideways itself, belongs to that element instead.
+  const swipeRef = useRef<{ x: number; y: number; at: number } | null>(null)
+
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return
+
+    function ownsSwipe(target: EventTarget | null) {
+      let node = target instanceof HTMLElement ? target : null
+      if (node?.closest("input, textarea, select, [data-no-swipe]")) {
+        return true
+      }
+      while (node && node !== stage) {
+        const overflow = getComputedStyle(node).overflowX
+        if (
+          (overflow === "auto" || overflow === "scroll") &&
+          node.scrollWidth > node.clientWidth + 1
+        ) {
+          return true
+        }
+        node = node.parentElement
+      }
+      return false
+    }
+
+    function onTouchStart(event: TouchEvent) {
+      if (event.touches.length !== 1 || ownsSwipe(event.target)) {
+        swipeRef.current = null
+        return
+      }
+      const touch = event.touches[0]
+      swipeRef.current = {
+        x: touch.clientX,
+        y: touch.clientY,
+        at: performance.now(),
+      }
+    }
+
+    function onTouchEnd(event: TouchEvent) {
+      const start = swipeRef.current
+      swipeRef.current = null
+      if (!start) return
+
+      const touch = event.changedTouches[0]
+      const dx = touch.clientX - start.x
+      const dy = touch.clientY - start.y
+      const quick = performance.now() - start.at < 800
+
+      // Far enough to be deliberate, and clearly more across than down.
+      if (!quick || Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy) * 1.5) {
+        return
+      }
+
+      const next = dx < 0
+      if (!started) {
+        if (next) setStarted(true)
+        return
+      }
+      go(index + (next ? 1 : -1))
+    }
+
+    function onTouchCancel() {
+      swipeRef.current = null
+    }
+
+    stage.addEventListener("touchstart", onTouchStart, { passive: true })
+    stage.addEventListener("touchend", onTouchEnd, { passive: true })
+    stage.addEventListener("touchcancel", onTouchCancel, { passive: true })
+    return () => {
+      stage.removeEventListener("touchstart", onTouchStart)
+      stage.removeEventListener("touchend", onTouchEnd)
+      stage.removeEventListener("touchcancel", onTouchCancel)
+    }
+  }, [go, index, started])
+
   return (
     <MotionConfig reducedMotion="user">
       <div className="relative h-dvh w-full overflow-hidden bg-background text-foreground">
@@ -237,7 +339,7 @@ export function Deck({
         {/* --stage-top is where a slide's first line sits: below the header
             and the stripe, past the slide's own top padding. The chapter nav
             hangs from it so it starts on the same line as the content. */}
-        <div className="relative isolate mx-auto flex h-full max-w-4xl flex-col border-x border-line [--stage-top:calc(var(--header-height)+4rem)]">
+        <div className="relative isolate mx-auto flex h-full max-w-4xl flex-col border-x border-line [--stage-top:calc(var(--header-height)+4rem)] min-[1640px]:max-w-6xl">
           <header className="screen-line-bottom z-20 flex h-(--header-height) shrink-0 items-center justify-between gap-4 px-4">
             <Button
               className="h-7 gap-2 border-none px-0 text-foreground/70 hover:text-foreground hover:no-underline"
@@ -255,6 +357,7 @@ export function Deck({
             <div className="flex items-center gap-1.5">
               {started && (
                 <>
+                  <DeckClock endsAt={section.endsAt} />
                   <p className="mr-2 text-xs text-muted-foreground tabular-nums max-sm:hidden">
                     {String(index + 1).padStart(2, "0")}
                     <span className="mx-1 text-border">/</span>
@@ -322,7 +425,7 @@ export function Deck({
                     exit="exit"
                     aria-label={`${section.title}: ${slide.title}`}
                   >
-                    <div className="mx-auto flex min-h-full w-full max-w-4xl flex-col px-4 md:px-8">
+                    <div className="mx-auto flex min-h-full w-full max-w-4xl flex-col px-4 min-[1640px]:max-w-6xl md:px-8">
                       {renderSlide(slide, data)}
                     </div>
                   </motion.section>
@@ -342,7 +445,7 @@ export function Deck({
           {started && (
             <>
               <nav
-                className="absolute top-(--stage-top) right-full mr-6 hidden w-48 rounded-xl border border-line bg-background px-3 xl:block"
+                className="absolute top-(--stage-top) right-full mr-6 hidden w-48 rounded-xl border border-line bg-background px-3 min-[1360px]:block"
                 aria-label="Chapters"
               >
                 <LineNav
@@ -408,6 +511,49 @@ export function Deck({
   )
 }
 
+function formatClock(seconds: number) {
+  const minutes = Math.floor(seconds / 60)
+  return `${String(minutes).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`
+}
+
+/**
+ * Time since the deck was entered, beside the minute the current section
+ * should end by, so a glance says whether the walkthrough is on pace. It
+ * mounts with the first slide, which is when the count starts; a click
+ * starts it over, for rehearsing.
+ */
+function DeckClock({ endsAt }: { endsAt: number }) {
+  const [startedAt, setStartedAt] = useState(() => Date.now())
+  const [now, setNow] = useState(startedAt)
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 1000)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  const elapsed = Math.max(0, Math.floor((now - startedAt) / 1000))
+
+  return (
+    <button
+      className="mr-2 rounded-sm text-xs text-muted-foreground tabular-nums outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring max-sm:hidden"
+      type="button"
+      onClick={() => {
+        const reset = Date.now()
+        setStartedAt(reset)
+        setNow(reset)
+      }}
+      title="Time elapsed, and when this section should end. Click to restart."
+      aria-label={`${formatClock(elapsed)} elapsed. This section ends by minute ${endsAt}. Restart the clock.`}
+    >
+      <span className={elapsed > endsAt * 60 ? "text-foreground" : undefined}>
+        {formatClock(elapsed)}
+      </span>
+      <span className="mx-1 text-border">/</span>
+      {formatClock(endsAt * 60)}
+    </button>
+  )
+}
+
 /**
  * Every slide of the deck as a tick in the right gutter, the current one
  * marked. Hovering magnifies the rail and previews the slide under the
@@ -429,7 +575,7 @@ function DeckScrubber({
   }))
 
   return (
-    <div className="absolute top-1/2 left-full ml-6 hidden -translate-y-1/2 rounded-xl border border-line bg-background px-3 py-2 xl:block">
+    <div className="absolute top-1/2 left-full ml-6 hidden -translate-y-1/2 rounded-xl border border-line bg-background px-3 py-2 min-[1360px]:block">
       <ChapterScrubber
         chapters={chapters}
         side="right"
