@@ -173,9 +173,9 @@ export const SLIDES: Slide[] = [
     section: "handoff",
     title: "what and why",
     notes: [
-      "The handoff opens with the principles that don’t bend. A change that breaks one is a product conversation, not an implementation detail.",
-      "Then one decision in full: the grading view they just clicked through. What I chose, why, what was built instead, and what that costs the instructor. This is the decision at the altitude engineering needs it.",
-      "If they ask why write the cost down: so a well-meant fix doesn’t undo a deliberate choice, and so the open questions have owners.",
+      "The handoff document was a feature breakdown, not a description of screens. Each feature had its user journey, its business logic, how to walk the prototype to see it, and links to every related file: code, Figma frames and test-plan rows.",
+      "It opens on F2, the student’s submit and quiz. Click through to F5, the grading view they just saw, to show the same four parts.",
+      "Under the breakdown sat the principles that don’t bend and the decisions, each with what it cost, so a well-meant fix doesn’t undo a deliberate choice.",
     ],
   },
   {

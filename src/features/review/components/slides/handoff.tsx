@@ -2,6 +2,13 @@
 
 import type { ComponentType } from "react"
 
+import { cn } from "@/lib/utils"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/base/ui/tabs"
 import { REVIEW_LINKS } from "@/features/review/data/links"
 import type { SlideData, Slide as SlideType } from "@/features/review/types"
 
@@ -14,7 +21,6 @@ import {
   LinkRow,
   Reveal,
   Slide,
-  Steps,
   Title,
 } from "../slide-primitives"
 
@@ -110,60 +116,211 @@ function Repo() {
   )
 }
 
+/** The handoff's feature breakdown, condensed from docs/01-handoff.md. */
+const FEATURES: {
+  id: string
+  name: string
+  who: string
+  journey: string[]
+  logic: string[]
+  navigate: string[]
+  files: string[]
+}[] = [
+  {
+    id: "F1",
+    name: "Setup",
+    who: "Instructor",
+    journey: [
+      "Opens the assignment in the editor",
+      "Turns on AuthorProof and picks the questions, time and retakes",
+      "Saves; every submission now gets a quiz",
+    ],
+    logic: [
+      "3 to 5 questions, default 5, each from the student’s essay",
+      "5, 10 or 15 minutes, starting when the quiz appears",
+      "Second attempt off by default; a retake draws new questions",
+      "Changing a setting starts the quiz over",
+    ],
+    navigate: [
+      "flow.html → 1 · Setup",
+      "Change a setting; the summary updates",
+      "Save and view as the student",
+    ],
+    files: [
+      "prototype/js/flow.js · renderSetup",
+      "Figma · Student flow 01",
+      "Test plan · SF-02, SF-03, RS-03",
+    ],
+  },
+  {
+    id: "F2",
+    name: "Submit and quiz",
+    who: "Student",
+    journey: [
+      "Opens the assignment and uploads the essay",
+      "Sees the quiz appear on the same page, seconds later",
+      "Answers within the limit and submits",
+      "Reads that it is not a grade; retakes if allowed",
+    ],
+    logic: [
+      "No notification and no second place to go",
+      "As many questions as the setup asks for",
+      "Submit disabled until one answer; blanks submit as “No answer”",
+      "A retake is offered only when the setup allows one",
+    ],
+    navigate: ["flow.html → 2 · Student → Upload", "Answer, then Submit quiz"],
+    files: [
+      "prototype/js/flow.js · startUpload, renderStudent",
+      "Figma · Student flow 02 to 05",
+      "Test plan · SF-01, SF-04 to SF-06",
+    ],
+  },
+  {
+    id: "F3",
+    name: "Result",
+    who: "Instructor",
+    journey: [
+      "Opens the submission to grade, as they already do",
+      "Reads the result beside the essay",
+      "Checks a question against its passage",
+      "Decides what to do, including talking to the student",
+    ],
+    logic: [
+      "Confidence is a word: High at 80% matched, Medium at 50%",
+      "Each question sits beside the passage it came from",
+      "Badges are words with an icon, never pass or fail",
+    ],
+    navigate: [
+      "Take the quiz, then View as the instructor",
+      "Or open 3 · Result for the sample",
+    ],
+    files: [
+      "prototype/js/flow.js · renderResult",
+      "prototype/js/ui.js · confidence",
+      "Test plan · RS-01 to RS-03",
+    ],
+  },
+  {
+    id: "F4",
+    name: "Emails",
+    who: "Student, briefed flow",
+    journey: [
+      "Submits the essay",
+      "Gets the ready email ten minutes later and goes to find the quiz",
+      "Gets a reminder, then a receipt or a closed notice",
+    ],
+    logic: [
+      "Reminder only if the quiz has not been started",
+      "Second-attempt email only when retakes are on",
+      "Window closed is neutral, never a failure",
+    ],
+    navigate: ["emails.html", "Pick a state above the email"],
+    files: [
+      "prototype/js/emails.js",
+      "Figma · Emails",
+      "Test plan · EM-01 to EM-05",
+    ],
+  },
+  {
+    id: "F5",
+    name: "Grading view",
+    who: "Instructor",
+    journey: [
+      "Opens SpeedGrader on a submission",
+      "Reads AuthorProof’s results before grading",
+      "Selects a question to see its passage in the paper",
+      "Grades on the right without leaving the view",
+    ],
+    logic: [
+      "Selecting a question marks and scrolls to its passage",
+      "Selecting it again clears the mark",
+      "The similarity score is a neutral badge, never a pass",
+    ],
+    navigate: ["grading.html → As pitched → Question 4", "Then As built"],
+    files: [
+      "prototype/js/grading.js",
+      "Figma · Grading view",
+      "Test plan · GV-01 to GV-05",
+    ],
+  },
+]
+
+function Column({
+  label,
+  items,
+  ordered,
+  mono,
+}: {
+  label: string
+  items: string[]
+  ordered?: boolean
+  mono?: boolean
+}) {
+  const List = ordered ? "ol" : "ul"
+  return (
+    <div className="flex flex-col gap-2 px-4 py-3">
+      <p className="text-xs tracking-wide text-muted-foreground uppercase">
+        {label}
+      </p>
+      <List
+        className={cn(
+          "flex flex-col gap-1.5 text-sm/relaxed text-pretty",
+          ordered ? "list-decimal pl-4" : "list-disc pl-4",
+          mono && "list-none pl-0 font-mono text-xs/relaxed"
+        )}
+      >
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </List>
+    </div>
+  )
+}
+
 function Decisions() {
   return (
     <Slide>
       <Kicker>Handoff / 01 · what and why</Kicker>
-      <Title>Every decision written down, with what it cost.</Title>
+      <Title>The handoff was a feature breakdown.</Title>
       <Lede>
-        The handoff opens with the principles that don’t bend, then records each
-        decision: what was chosen, why, and what it cost. It is there so a
-        well-meant fix doesn’t undo a deliberate choice.
+        For every feature: the user journey through it, the business logic it
+        has to follow, how to walk the prototype to see it, and links to every
+        related file. The principles and decisions sat underneath.
       </Lede>
-      <Steps
-        items={[
-          {
-            title: "No pass or fail.",
-            body: "A result ships with a confidence level; the instructor decides what to do with it.",
-          },
-          {
-            title: "Every score traces back to the student’s own words.",
-            body: "Each question sits beside the passage it came from, so the AI’s reasoning can be checked.",
-          },
-          {
-            title: "Never color alone.",
-            body: "The host colors its badge the opposite way from the score, so results always read as words.",
-          },
-          {
-            title: "Nothing added to the instructor’s grading workflow.",
-          },
-        ]}
-      />
-      <Excerpt label="docs/01-handoff.md · D2" href={REPO.handoff}>
-        <dl className="grid divide-y divide-line">
-          {[
-            [
-              "Chose",
-              "AuthorProof’s results on the left of SpeedGrader, the paper in the middle, the grading panel on the right, unchanged.",
-            ],
-            [
-              "Why",
-              "The instructor checks the AI against the paper without leaving the grading view, and nothing they already trust moves.",
-            ],
-            ["Built instead", "The results panel on its own."],
-            ["Cost of that", "Two places to read before one grade."],
-          ].map(([term, text]) => (
-            <div
-              key={term}
-              className="grid gap-1 px-4 py-3 sm:grid-cols-[8rem_1fr] sm:gap-4"
-            >
-              <dt className="text-xs tracking-wide text-muted-foreground uppercase">
-                {term}
-              </dt>
-              <dd className="text-sm/relaxed text-pretty">{text}</dd>
-            </div>
-          ))}
-        </dl>
+      <Excerpt
+        label="docs/01-handoff.md · Feature breakdown"
+        href={`${REPO.handoff}#feature-breakdown`}
+      >
+        {/* Arrow keys move between the tabs here, not the slides. */}
+        <div onKeyDown={(event) => event.stopPropagation()}>
+          <Tabs defaultValue="F2">
+            <TabsList className="overflow-x-auto px-4">
+              {FEATURES.map((f) => (
+                <TabsTrigger key={f.id} value={f.id}>
+                  {f.id} · {f.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            {FEATURES.map((f) => (
+              <TabsContent key={f.id} value={f.id}>
+                <div className="grid divide-line max-md:divide-y md:grid-cols-2 md:[&>*]:border-line md:[&>*:nth-child(-n+2)]:border-b md:[&>*:nth-child(odd)]:border-r">
+                  <Column
+                    label={`User journey · ${f.who}`}
+                    items={f.journey}
+                    ordered
+                  />
+                  <Column label="Business logic" items={f.logic} />
+                  <Column
+                    label="Navigate the prototype"
+                    items={f.navigate}
+                    ordered
+                  />
+                  <Column label="Related files" items={f.files} mono />
+                </div>
+              </TabsContent>
+            ))}
+          </Tabs>
+        </div>
       </Excerpt>
     </Slide>
   )
