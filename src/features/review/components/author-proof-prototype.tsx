@@ -503,10 +503,184 @@ function Report({
   )
 }
 
+type EmailState = "ready" | "reminder" | "received" | "retake" | "closed"
+
+type EmailTone = "info" | "warning" | "success" | "neutral"
+
+type EmailVariant = {
+  id: EmailState
+  /** The switcher's label. */
+  label: string
+  /** When the email is sent, shown above it. */
+  when: string
+  subject: string
+  title: string
+  tone: EmailTone
+  Icon: typeof ClockIcon
+  notice: string
+  /** Rows under the notice, after the course and assignment. */
+  rows: (settings: Settings) => [string, string][]
+  /** The main button, or none when there is nothing left to do. */
+  cta?: string
+  /** What the button does in the briefed flow, shown once it is pressed. */
+  ctaNote?: string
+  body: { lead: string; text: string }[]
+}
+
 /**
- * The email the briefed flow sends once a student's quiz is ready. It is the
- * step the pitched flow removed, so it is framed as the briefed version and
- * points back to the embedded flow for the contrast.
+ * The notice reads as words with an icon, never color alone, and the closed
+ * state stays neutral: missing the window is something the instructor
+ * follows up on, not a failure the email declares.
+ */
+const TONE: Record<EmailTone, string> = {
+  info: "bg-info-subtle text-info",
+  warning: "bg-warning-subtle text-warning",
+  success: "bg-success-subtle text-success",
+  neutral: "border border-border bg-surface text-foreground",
+}
+
+const NOT_A_GRADE = {
+  lead: "Why you’re getting this.",
+  text: "Your instructor turned on AuthorProof for this assignment. It is not a plagiarism check, and it does not pass or fail you. It confirms you can speak to what you wrote.",
+}
+
+const EMAIL_VARIANTS: EmailVariant[] = [
+  {
+    id: "ready",
+    label: "Ready",
+    when: "Sent about ten minutes after the essay is submitted.",
+    subject: "Your comprehension quiz is ready",
+    title: "Your comprehension quiz is ready",
+    tone: "info",
+    Icon: ClockIcon,
+    notice: "Open it within 12 hours of submitting your essay.",
+    rows: (settings) => [
+      [
+        "Quiz",
+        `${settings.count} questions about your essay · ${settings.minutes}-minute limit`,
+      ],
+      ["Open by", "Tomorrow, 11:55 AM"],
+    ],
+    cta: "Open the quiz in Canvas",
+    ctaNote:
+      "In the briefed flow, this is where the student leaves the email and goes to find the quiz in Canvas.",
+    body: [
+      {
+        lead: "What to expect.",
+        text: "A few short questions about what your essay argues and the sources it uses. Your answers go to your instructor beside your essay.",
+      },
+      NOT_A_GRADE,
+    ],
+  },
+  {
+    id: "reminder",
+    label: "Reminder",
+    when: "Sent two hours before the window closes, only if the quiz has not been started.",
+    subject: "Reminder: your quiz closes in 2 hours",
+    title: "Two hours left to take your quiz",
+    tone: "warning",
+    Icon: ClockIcon,
+    notice: "Your quiz closes today at 11:55 AM.",
+    rows: (settings) => [
+      [
+        "Quiz",
+        `${settings.count} questions about your essay · ${settings.minutes}-minute limit`,
+      ],
+      ["Closes", "Today, 11:55 AM"],
+    ],
+    cta: "Open the quiz in Canvas",
+    ctaNote:
+      "Same destination as the first email. The reminder only changes the time left.",
+    body: [
+      {
+        lead: "Short on purpose.",
+        text: "No studying needed. The questions are about your own essay, so you only need to remember what you wrote.",
+      },
+      NOT_A_GRADE,
+    ],
+  },
+  {
+    id: "received",
+    label: "Received",
+    when: "Sent as soon as the quiz is submitted.",
+    subject: "We received your quiz answers",
+    title: "Your answers are in",
+    tone: "success",
+    Icon: CheckIcon,
+    notice: "Nothing else to do for this assignment.",
+    rows: (settings) => [
+      ["Answered", `${settings.count} of ${settings.count} questions`],
+      ["Submitted", "Today, 12:07 AM"],
+    ],
+    body: [
+      {
+        lead: "What happens next.",
+        text: "Your instructor sees your answers beside your essay, along with the passages each question came from.",
+      },
+      {
+        lead: "Not a grade.",
+        text: "AuthorProof does not pass or fail you. If your instructor has questions, they will talk to you about your essay.",
+      },
+    ],
+  },
+  {
+    id: "retake",
+    label: "Second attempt",
+    when: "Sent when the instructor allows a second attempt, after the first is submitted.",
+    subject: "A second attempt is open",
+    title: "You can take the quiz once more",
+    tone: "info",
+    Icon: ClockIcon,
+    notice: "Your instructor allowed a second attempt. It is optional.",
+    rows: (settings) => [
+      [
+        "Quiz",
+        `${settings.count} new questions from the same essay · ${settings.minutes}-minute limit`,
+      ],
+      ["Open by", "Tomorrow, 11:55 AM"],
+    ],
+    cta: "Start the second attempt",
+    ctaNote:
+      "In the briefed flow this opens a new quiz in Canvas. Both attempts appear in the instructor’s report.",
+    body: [
+      {
+        lead: "New questions.",
+        text: "The second attempt asks about different parts of your essay, so it is not a repeat of the first.",
+      },
+      NOT_A_GRADE,
+    ],
+  },
+  {
+    id: "closed",
+    label: "Window closed",
+    when: "Sent once, when the window ends without a submitted quiz.",
+    subject: "Your quiz window has closed",
+    title: "Your quiz window has closed",
+    tone: "neutral",
+    Icon: XIcon,
+    notice: "The quiz was not taken. Your essay is still submitted.",
+    rows: () => [
+      ["Closed", "Today, 11:55 AM"],
+      ["Your essay", "Submitted and with your instructor"],
+    ],
+    cta: "View the assignment in Canvas",
+    ctaNote:
+      "The student lands on the assignment. Only the instructor can reopen the quiz.",
+    body: [
+      {
+        lead: "What happens now.",
+        text: "Your instructor can see the quiz was not taken and can reopen it. If something got in the way, let them know.",
+      },
+      NOT_A_GRADE,
+    ],
+  },
+]
+
+/**
+ * The emails the briefed flow sends a student, one state at a time. Each is
+ * rebuilt with sample data and reads the instructor's settings. They are the
+ * steps the pitched flow removed, so the view points back to the embedded
+ * flow for the contrast.
  */
 function Email({
   settings,
@@ -515,17 +689,16 @@ function Email({
   settings: Settings
   onPitched: () => void
 }) {
+  const [state, setState] = useState<EmailState>("ready")
   const [opened, setOpened] = useState(false)
 
-  const details = [
+  const variant = EMAIL_VARIANTS.find((item) => item.id === state)!
+  const details: [string, string][] = [
     ["Course", PROTOTYPE_ASSIGNMENT.course],
     ["Assignment", PROTOTYPE_ASSIGNMENT.title],
-    [
-      "Quiz",
-      `${settings.count} questions about your essay · ${settings.minutes}-minute limit`,
-    ],
-    ["Open by", "Tomorrow, 11:55 AM, 12 hours after you submitted"],
+    ...variant.rows(settings),
   ]
+  const { Icon } = variant
 
   return (
     <div className="flex flex-col gap-4">
@@ -535,17 +708,50 @@ function Email({
             As briefed · the student’s inbox
           </p>
           <p className="font-heading text-lg font-medium">
-            The quiz-ready email
+            The quiz emails, in every state
           </p>
           <p className="mt-1 max-w-xl text-sm/relaxed text-pretty text-muted-foreground">
-            The briefed flow told students by email, about ten minutes after
-            they submitted, and sent them to find the quiz. I designed it to be
-            read in one glance, then pitched a flow that did not need it.
+            The briefed flow reached students by email and sent them to find the
+            quiz. Each state below is one email, from the quiz being ready to
+            the window closing. The pitched flow needed none of them.
           </p>
         </div>
         <Button size="sm" variant="outline" onClick={onPitched}>
           See the pitched flow
         </Button>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <div
+          className="flex flex-wrap gap-1 rounded-lg border border-line bg-background p-0.5"
+          role="radiogroup"
+          aria-label="Email state"
+        >
+          {EMAIL_VARIANTS.map((item) => (
+            <button
+              key={item.id}
+              className={cn(
+                "h-7 flex-1 rounded-md px-2.5 text-xs font-medium whitespace-nowrap text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring",
+                state === item.id && "bg-secondary text-secondary-foreground"
+              )}
+              type="button"
+              role="radio"
+              aria-checked={state === item.id}
+              onClick={() => {
+                setState(item.id)
+                setOpened(false)
+              }}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+        <p className="text-xs text-pretty text-muted-foreground">
+          {variant.when}
+          {variant.id === "retake" && !settings.retakes && (
+            <> Second attempts are off in Setup, so this one would not send.</>
+          )}
+        </p>
       </div>
 
       <article className="overflow-hidden rounded-xl border border-line bg-background">
@@ -555,7 +761,7 @@ function Email({
           <dt className="text-muted-foreground">To</dt>
           <dd>{PROTOTYPE_ASSIGNMENT.student}</dd>
           <dt className="text-muted-foreground">Subject</dt>
-          <dd className="font-medium">Your comprehension quiz is ready</dd>
+          <dd className="font-medium">{variant.subject}</dd>
         </dl>
 
         <div className="mx-auto flex max-w-lg flex-col gap-5 px-4 py-6 md:px-6">
@@ -564,11 +770,16 @@ function Email({
           </p>
           <div className="flex flex-col gap-2">
             <h3 className="font-heading text-2xl/tight font-medium text-balance">
-              Your comprehension quiz is ready
+              {variant.title}
             </h3>
-            <p className="flex items-start gap-2 rounded-lg bg-warning-subtle px-3 py-2 text-sm text-warning">
-              <ClockIcon className="mt-0.5 size-4 shrink-0" aria-hidden />
-              Open it within 12 hours of submitting your essay.
+            <p
+              className={cn(
+                "flex items-start gap-2 rounded-lg px-3 py-2 text-sm",
+                TONE[variant.tone]
+              )}
+            >
+              <Icon className="mt-0.5 size-4 shrink-0" aria-hidden />
+              {variant.notice}
             </p>
           </div>
 
@@ -583,41 +794,36 @@ function Email({
             ))}
           </dl>
 
-          <div className="flex flex-col gap-2">
-            <Button
-              className="w-full"
-              size="lg"
-              onClick={() => setOpened(true)}
-            >
-              Open the quiz in Canvas
-            </Button>
-            {opened && (
-              <p
-                className="text-xs text-pretty text-muted-foreground"
-                role="status"
+          {variant.cta && (
+            <div className="flex flex-col gap-2">
+              <Button
+                className="w-full"
+                size="lg"
+                variant={variant.id === "closed" ? "outline" : "default"}
+                onClick={() => setOpened(true)}
               >
-                In the briefed flow, this is where the student leaves the email
-                and goes to find the quiz in Canvas.
-              </p>
-            )}
-          </div>
+                {variant.cta}
+              </Button>
+              {opened && variant.ctaNote && (
+                <p
+                  className="text-xs text-pretty text-muted-foreground"
+                  role="status"
+                >
+                  {variant.ctaNote}
+                </p>
+              )}
+            </div>
+          )}
 
           <div className="flex flex-col gap-3 border-t border-line pt-4 text-sm/relaxed text-pretty text-muted-foreground">
-            <p>
-              <span className="font-medium text-foreground">
-                What to expect.{" "}
-              </span>
-              A few short questions about what your essay argues and the sources
-              it uses. Your answers go to your instructor beside your essay.
-            </p>
-            <p>
-              <span className="font-medium text-foreground">
-                Why you’re getting this.{" "}
-              </span>
-              Your instructor turned on AuthorProof for this assignment. It is
-              not a plagiarism check, and it does not pass or fail you. It
-              confirms you can speak to what you wrote.
-            </p>
+            {variant.body.map((part) => (
+              <p key={part.lead}>
+                <span className="font-medium text-foreground">
+                  {part.lead}{" "}
+                </span>
+                {part.text}
+              </p>
+            ))}
           </div>
         </div>
       </article>

@@ -111,7 +111,7 @@ export const SLIDES: Slide[] = [
     notes: [
       "Say the NDA line first: the original files cannot be shown, so this is a rebuild in code with sample data. It is also the first AI-in-my-workflow example: built with Claude Code on my own components.",
       "Drive it live. Start on the student tab: upload, watch the quiz arrive in seconds, answer a couple wrong on purpose, submit, then open the instructor’s view.",
-      "On the result, point at one question: the student’s words, the question made from them, the answer, and the assessment, side by side. That is how an instructor checks the AI’s reasoning. Then show the setup tab if there is time. The email tab is the briefed flow’s notification: use it when the shipped slide comes up, since the briefed flow is what shipped first.",
+      "On the result, point at one question: the student’s words, the question made from them, the answer, and the assessment, side by side. That is how an instructor checks the AI’s reasoning. Then show the setup tab if there is time. The email tab is the briefed flow’s emails in every state, from ready to the window closing: use it when the shipped slide comes up, since the briefed flow is what shipped first. The closed state is a good talking point: it stays neutral, because a missed quiz is for the instructor to follow up, not a failure.",
       "Keys inside the prototype belong to it, so click outside it or use the arrows in the header to move on.",
     ],
   },
