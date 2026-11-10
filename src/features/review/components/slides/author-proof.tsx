@@ -11,6 +11,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
+import { AuthorProofPrototype } from "@/features/review/components/author-proof-prototype"
 import { AuthorProofRadar } from "@/features/review/components/author-proof-radar"
 import { PinnedFlow } from "@/features/review/components/pinned-flow"
 import { ProctorioLogo } from "@/features/review/components/proctorio-logo"
@@ -35,7 +36,6 @@ import {
   LinkOut,
   LinkRow,
   Reveal,
-  Shot,
   Slide,
   Stack,
   Stat,
@@ -281,36 +281,6 @@ function Pivot() {
         </Tabs>
       </Reveal>
       <HairlineGrid>
-        <Shot
-          src="/images/review/pivot-config-before.png"
-          alt="Quiz configuration as briefed: a Plagiarism Detection dropdown set to AuthorProof, with quiz type, number of questions, time limit, and proctored environment stacked underneath in the assignment form"
-          width={1336}
-          height={798}
-          label="As briefed: settings inline in the assignment form"
-        />
-        <Shot
-          src="/images/review/pivot-config-after.png"
-          alt="Proposed quiz configuration: an AuthorProof dialog with basic controls, each explained, and advanced toggles for multiple attempts and written answers"
-          width={1336}
-          height={798}
-          label="Proposed: one AuthorProof dialog, each control explained"
-        />
-        <Shot
-          src="/images/review/pivot-notify-before.png"
-          alt="An email in the student’s inbox: Your comprehension quiz is ready, with a deadline and an Open Quiz in Canvas button"
-          width={1334}
-          height={750}
-          label="As briefed: the student is told by email, later"
-        />
-        <Shot
-          src="/images/review/pivot-notify-after.png"
-          alt="The assignment page in Canvas with an Upload Documents panel embedded directly under the brief"
-          width={1252}
-          height={751}
-          label="Proposed: the quiz appears inside the assignment, immediately"
-        />
-      </HairlineGrid>
-      <HairlineGrid>
         <Card label="What the pivot bought">
           It collapsed the timing gap, removed the notification dependency, and
           stepped out of the quiz tooling entirely, which left the instructor
@@ -320,6 +290,37 @@ function Pivot() {
           Short pieces written directly in the LMS editor were excluded, and how
           proctoring coexists with the embedded flow stayed an open question. I
           flagged the hole rather than let engineering find it.
+        </Card>
+      </HairlineGrid>
+    </Slide>
+  )
+}
+
+function Prototype() {
+  return (
+    <Slide>
+      <Kicker>AuthorProof / the flow, rebuilt</Kicker>
+      <Title>Try it: upload an essay, and the quiz is already there.</Title>
+      <Lede>
+        The original design files are under NDA, so I rebuilt the flow in code
+        for this walkthrough. The screens are new. The decisions are the ones I
+        made on the product.
+      </Lede>
+      <Reveal>
+        <AuthorProofPrototype />
+      </Reveal>
+      <HairlineGrid columns={3}>
+        <Card label="Setup" title="Every control explained">
+          Each setting says what it changes for the student, so an instructor
+          never has to guess what a control does.
+        </Card>
+        <Card label="Student" title="No notification to miss">
+          The quiz appears inside the assignment, seconds after upload, with no
+          second place to go and find it.
+        </Card>
+        <Card label="Result" title="A score someone can check">
+          Every question sits beside the student’s own words and the assessment
+          of the answer. Confidence is a word, never a color alone.
         </Card>
       </HairlineGrid>
     </Slide>
@@ -367,14 +368,6 @@ function Shipped() {
           seconds after upload.
         </Card>
       </HairlineGrid>
-      <Shot
-        src="/images/review/authorproof-artifacts.webp"
-        alt="Two AuthorProof screens side by side: the instructor’s report card, with an overview of the student’s score, confidence level, and time used beside a question-by-question breakdown of answers and assessments, and the student’s email saying their comprehension quiz is ready, with its deadline and course"
-        width={1600}
-        height={871}
-        label="The report card instructors read, and the email students receive"
-        className="p-0"
-      />
       <StatRow>
         <Stat value="~5" label="Institutions in the spring 2026 pilot" />
         <Stat value="4 to 6 wks" label="Concept to production-ready MVP" />
@@ -461,6 +454,7 @@ export const AUTHOR_PROOF_CONTENT: Record<
   brief: Brief,
   constraints: Constraints,
   pivot: Pivot,
+  prototype: Prototype,
   shipped: Shipped,
   overruled: Overruled,
 }

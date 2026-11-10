@@ -102,7 +102,18 @@ export const SLIDES: Slide[] = [
     notes: [
       "Rather than report blockers, I pitched an alternative and split it into an MVP and a longer vision: embed AuthorProof in the assignment itself, so the quiz appears seconds after upload and the result writes back beside the submission.",
       "The cost is stated out loud on the slide: short pieces written in the LMS editor were excluded, and proctoring alongside the embedded flow stayed an open question. I would rather name the hole than have engineering find it.",
-      "The screenshots pair each briefed screen with the proposed one.",
+      "The tabs compare the student’s path as briefed and as pitched. The next slide is the pitched flow, working.",
+    ],
+  },
+  {
+    slug: "prototype",
+    section: "product",
+    title: "the flow, rebuilt",
+    notes: [
+      "Say the NDA line first: the original files cannot be shown, so this is a rebuild in code with sample data. It is also the first AI-in-my-workflow example: built with Claude Code on my own components.",
+      "Drive it live. Start on the student tab: upload, watch the quiz arrive in seconds, answer a couple wrong on purpose, submit, then open the instructor’s view.",
+      "On the result, point at one question: the student’s words, the question made from them, the answer, and the assessment, side by side. That is how an instructor checks the AI’s reasoning. Then show the setup tab if there is time.",
+      "Keys inside the prototype belong to it, so click outside it or use the arrows in the header to move on.",
     ],
   },
   {

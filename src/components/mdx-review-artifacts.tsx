@@ -11,6 +11,7 @@ import {
   AtomicDesign as AtomicDesignRows,
   StoryFrame,
 } from "@/features/review/components/atomic-design"
+import { AuthorProofPrototype as AuthorProofPrototypeDemo } from "@/features/review/components/author-proof-prototype"
 import { AuthorProofRadar } from "@/features/review/components/author-proof-radar"
 import { FoundationLayers as FoundationLayerPanels } from "@/features/review/components/foundation-layers"
 import { PinnedFlow } from "@/features/review/components/pinned-flow"
@@ -123,6 +124,15 @@ export function PivotFlows({ caption }: { caption?: string }) {
           <PinnedFlow steps={PITCHED_STEPS} />
         </TabsContent>
       </Tabs>
+    </Artifact>
+  )
+}
+
+/** AuthorProof rebuilt as a working prototype, with sample data. */
+export function AuthorProofPrototype({ caption }: { caption?: string }) {
+  return (
+    <Artifact caption={caption}>
+      <AuthorProofPrototypeDemo />
     </Artifact>
   )
 }
