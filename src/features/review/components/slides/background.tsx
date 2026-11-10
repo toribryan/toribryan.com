@@ -48,6 +48,8 @@ const PILLARS = [
   {
     title: "Chronic learner",
     src: "/images/review/chronic-learner.mp4",
+    /* Landscape footage in a tall card: keep her face in frame. */
+    position: "70% 50%",
     alt: "Tori reading and taking notes",
   },
 ]
@@ -88,11 +90,12 @@ const swap = {
 
 function Bio() {
   return (
-    <HairlineGrid columns="3fr 2fr" className="flex-1">
-      {/* Photos start on the title's line and grow to the stage's floor,
-          cropping as they go. They are positioned out of flow so their own
-          height never pushes the grid past the stage; the quotes sit
-          centered against the photos' height. */}
+    <HairlineGrid columns="3fr 2fr" className="md:h-[min(64vh,46rem)]">
+      {/* The grid takes a fixed share of the screen rather than the whole
+          stage, which on a tall screen stretched the photos into slivers.
+          The photos fill it, cropping as they go; they are positioned out of
+          flow so their own height never pushes the grid taller, and the
+          quotes sit centered against them. */}
       <div className="grid grid-cols-2 grid-rows-2 gap-2 py-2 pr-2 md:pl-6">
         {BIO_PHOTOS.map((photo) => (
           <Frame
@@ -126,7 +129,7 @@ function Bio() {
 
 function Pillars() {
   return (
-    <HairlineGrid columns={3} className="flex-1 md:max-h-[30rem]">
+    <HairlineGrid columns={3} className="md:h-[min(64vh,46rem)]">
       {PILLARS.map((pillar) => (
         <MediaCard
           key={pillar.src}
@@ -136,6 +139,7 @@ function Pillars() {
               {pillar.src.endsWith(".mp4") ? (
                 <video
                   className="absolute inset-0 size-full rounded-xl bg-black object-cover"
+                  style={{ objectPosition: pillar.position }}
                   src={pillar.src}
                   autoPlay
                   loop

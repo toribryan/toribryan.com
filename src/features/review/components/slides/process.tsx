@@ -20,61 +20,6 @@ import {
   Title,
 } from "../slide-primitives"
 
-const STAGES = ["Denial", "Anger", "Bargaining", "Depression", "Acceptance"]
-
-function Grief() {
-  return (
-    <Slide>
-      <Kicker>01 · Process / the last couple of years</Kicker>
-      <Title>My traditional design process was turned on its head.</Title>
-      <Lede>
-        I went through all five stages of grief for it. Where I came out is a
-        polished, end-to-end agentic design process.
-      </Lede>
-      <Reveal>
-        <ol className="grid gap-2 sm:grid-cols-5">
-          {STAGES.map((stage, i) => {
-            const last = i === STAGES.length - 1
-            return (
-              <li
-                key={stage}
-                className={
-                  last
-                    ? "flex flex-col gap-2 rounded-xl border border-foreground bg-background p-4"
-                    : "flex flex-col gap-2 rounded-xl border border-line bg-background p-4 text-muted-foreground"
-                }
-              >
-                <span className="text-xs tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span
-                  className={
-                    last
-                      ? "font-heading text-xl font-medium text-foreground"
-                      : "font-heading text-xl font-medium"
-                  }
-                >
-                  {stage}
-                </span>
-              </li>
-            )
-          })}
-        </ol>
-      </Reveal>
-      <HairlineGrid>
-        <Card label="Before" title="A process built around the file">
-          Research, then Figma, then a spec written about the design, then a
-          handoff meeting. Every step a translation of the one before it.
-        </Card>
-        <Card label="Now" title="A process built around what ships">
-          Each phase has a skill and a reviewer guarding it, and the prototype
-          in code is what engineering builds from.
-        </Card>
-      </HairlineGrid>
-    </Slide>
-  )
-}
-
 function Agentic() {
   return (
     <Slide>
@@ -176,7 +121,6 @@ export const PROCESS_CONTENT: Record<
   string,
   ComponentType<{ slide: SlideType; data: SlideData }>
 > = {
-  grief: Grief,
   agentic: Agentic,
   team: Team,
   today: Today,

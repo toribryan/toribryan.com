@@ -40,21 +40,13 @@ export const SLIDES: Slide[] = [
     ],
   },
   {
-    slug: "grief",
-    section: "process",
-    title: "turned on its head",
-    notes: [
-      "Process first, so the rest of the walkthrough makes sense. Aim to finish this section by 12 minutes.",
-      "Be honest and brief: the last couple of years turned my traditional process on its head, and I went through all five stages of grief for it. Tell one real moment from the middle stages, then land on acceptance.",
-      "The two cards are the before and after: a process built around the file, and one built around what ships.",
-    ],
-  },
-  {
     slug: "agentic",
     section: "process",
     title: "end to end",
     notes: [
-      "This is the process today: 32 Claude skills and 7 read-only reviewer agents, from discovery through shipped code, documented in fibo.",
+      "Process first, so the rest of the walkthrough makes sense. Aim to finish this section by 12 minutes.",
+      "Say it out loud, briefly and honestly: the last couple of years turned my traditional design process on its head, and I went through all five stages of grief for it. Where I came out is a polished, end-to-end agentic design process.",
+      "This is that process: 32 Claude skills and 7 read-only reviewer agents, from discovery through shipped code, documented in fibo.",
       "The router is the point: it places work on the phase map, loads the phase’s skill, runs the reviewer that guards it, and keeps a project log of decisions. The explorer opens on its SKILL.md; open a phase folder to show its skills, or an agent to show what it checks.",
       "Reviewers are read-only on purpose. They report failures with their location and end in a verdict: ready, or N blocking issues.",
     ],

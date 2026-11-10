@@ -339,7 +339,7 @@ export function Deck({
         {/* --stage-top is where a slide's first line sits: below the header
             and the stripe, past the slide's own top padding. The chapter nav
             hangs from it so it starts on the same line as the content. */}
-        <div className="relative isolate mx-auto flex h-full max-w-4xl flex-col border-x border-line [--stage-top:calc(var(--header-height)+4rem)]">
+        <div className="relative isolate mx-auto flex h-full max-w-4xl flex-col border-x border-line [--stage-top:calc(var(--header-height)+4rem)] min-[1640px]:max-w-6xl">
           <header className="screen-line-bottom z-20 flex h-(--header-height) shrink-0 items-center justify-between gap-4 px-4">
             <Button
               className="h-7 gap-2 border-none px-0 text-foreground/70 hover:text-foreground hover:no-underline"
@@ -425,7 +425,7 @@ export function Deck({
                     exit="exit"
                     aria-label={`${section.title}: ${slide.title}`}
                   >
-                    <div className="mx-auto flex min-h-full w-full max-w-4xl flex-col px-4 md:px-8">
+                    <div className="mx-auto flex min-h-full w-full max-w-4xl flex-col px-4 min-[1640px]:max-w-6xl md:px-8">
                       {renderSlide(slide, data)}
                     </div>
                   </motion.section>
@@ -445,7 +445,7 @@ export function Deck({
           {started && (
             <>
               <nav
-                className="absolute top-(--stage-top) right-full mr-6 hidden w-48 rounded-xl border border-line bg-background px-3 xl:block"
+                className="absolute top-(--stage-top) right-full mr-6 hidden w-48 rounded-xl border border-line bg-background px-3 min-[1360px]:block"
                 aria-label="Chapters"
               >
                 <LineNav
@@ -575,7 +575,7 @@ function DeckScrubber({
   }))
 
   return (
-    <div className="absolute top-1/2 left-full ml-6 hidden -translate-y-1/2 rounded-xl border border-line bg-background px-3 py-2 xl:block">
+    <div className="absolute top-1/2 left-full ml-6 hidden -translate-y-1/2 rounded-xl border border-line bg-background px-3 py-2 min-[1360px]:block">
       <ChapterScrubber
         chapters={chapters}
         side="right"
