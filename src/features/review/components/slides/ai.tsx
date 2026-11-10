@@ -97,22 +97,19 @@ function Tools() {
   return (
     <Slide>
       <Kicker>03 · AI in my workflow / tools I built</Kicker>
-      <Title>
-        I started by telling a model how to use our design system. Now I build
-        systems it can’t pass without using correctly.
-      </Title>
+      <Title>I build my own tools, and checks an agent has to pass.</Title>
       <HairlineGrid>
-        <Card label="Research" title="Can a model use a design system?">
+        <Card label="Research" title="What a model does left alone">
           Run with Proctorio’s lead front-end engineer: same design, same
           prompt, changing only how much of the system the model could see. Left
           alone it rebuilt components from scratch and hardcoded the colors it
           could see.
         </Card>
-        <Card label="fibo" title="A design system an agent has to pass">
-          My own system, built solo with Claude Code. Lint, Figma drift, build,
-          types, tests and an accessibility check run on every pull request. An
-          agent added a voice memo component and the pull request came in
-          complete, with 396 passing tests.
+        <Card label="fibo" title="A component kit an agent has to pass">
+          My own open source kit, built solo with Claude Code. Lint, Figma
+          drift, build, types, tests and an accessibility check run on every
+          pull request. An agent added a voice memo component and the pull
+          request came in complete, with 396 passing tests.
         </Card>
         <Card label="Illustration" title="A skill as the first pass">
           The onboarding figures started from a skill that has Claude draw

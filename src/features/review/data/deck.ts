@@ -44,7 +44,7 @@ export const SLIDES: Slide[] = [
     title: "where it sits",
     notes: [
       "Piece one: a complex problem that arrived from product with its architecture already chosen, and an AI feature. Aim to finish it by 24 minutes.",
-      "At Proctorio I led cross-product design across three suites, for institutions and for proctoring agencies, and led the implementation of the refactored design system underneath all three.",
+      "At Proctorio I led cross-product design across three suites, for institutions and for proctoring agencies.",
       "Integrity proctors the exam, Vault protects the exam content, and Origin proves authorship. Hover a tile to see it move. This walkthrough is Origin’s product: AuthorProof.",
     ],
   },
@@ -132,28 +132,8 @@ export const SLIDES: Slide[] = [
     notes: [
       "Piece two: the last-mile craft, and work I shipped as code. Aim to finish it by 40 minutes.",
       "Modern Care Homes is a senior living marketplace for the Phoenix metro, plus the agent platform that runs it. I own everything a family or an agent sees.",
-      "Two jobs on the slide. Hover the 01 to see the design system being built, and the 02 to see it in use across the live site.",
-      "A change to a button is a change in two products. The system is what makes a decision hold. The live site and the Storybook are linked below.",
-    ],
-  },
-  {
-    slug: "home-card",
-    section: "design-system",
-    title: "the home card",
-    notes: [
-      "Research paid for this: marketplaces that had already solved search and comparison. Families are mostly trying to rule homes out, so the card leads with what differs.",
-      "The lists under each card say exactly what was wrong before and what the reworked card fixes.",
-      "The design-system angle: decided once, it holds on every listing, search result, and saved comparison.",
-    ],
-  },
-  {
-    slug: "dashboard",
-    section: "design-system",
-    title: "the agent dashboard",
-    notes: [
-      "The agent side. The old shell was two nav items and one long scroll. The new one makes the sidebar the listing, with every section carrying its own state.",
-      "It came straight from the Airbnb and Zillow listing-creation teardown: show the state of every stage so nobody loses their place.",
-      "The same rail, shell, and section components ship on the marketplace, which is the two-products point again.",
+      "Two products: the site families search, and the platform owners and agents run their homes from. The clip is the live marketplace.",
+      "The next two slides are the newest work on the agent side, the onboarding flow. If the clock is past 35 minutes, skip the dashboard and the home card and go to shipping.",
     ],
   },
   {
@@ -177,34 +157,23 @@ export const SLIDES: Slide[] = [
     ],
   },
   {
-    slug: "foundations",
+    slug: "dashboard",
     section: "design-system",
-    title: "foundations",
+    title: "the agent dashboard",
     notes: [
-      "If the clock is past 35 minutes, skip this slide and the next one and go to shipping.",
-      "The strip: 18px base type, 48 by 48 targets, AA contrast, and tokens mapped one to one between Figma variables and CSS custom properties. Because the floor is in the component, page eleven cannot undo it.",
-      "The tiers under the diagram: primitives are named for what they are, and nothing on a page uses them directly; semantics are named for the job, so a theme is a change of values. Flip the theme toggle in the panels to see that happen.",
-      "Under the video, the home card is annotated with the tokens each part of it reads. The token diagram itself is published on 21st.dev if you want the code.",
+      "The agent side. The old shell was two nav items and one long scroll. The new one makes the sidebar the listing, with every section carrying its own state.",
+      "It came straight from the Airbnb and Zillow listing-creation teardown: show the state of every stage so nobody loses their place.",
+      "This shell is where owners land after the onboarding flow, so the two had to read as one product.",
     ],
   },
   {
-    slug: "components",
+    slug: "home-card",
     section: "design-system",
-    title: "atomic design",
+    title: "the home card",
     notes: [
-      "Top to bottom: atoms carry the floor, molecules are atoms that only make sense together, organisms are the home card and the agent platform’s sidebar, the template is the filter form, and the page is the live marketplace.",
-      "Every frame except the home card is a live story: click into one to change its state, or use Open to see it in the Storybook. The home card is a still because its story needs a Clerk provider before the published Storybook can render it.",
-      "Why atomic: it gives a contribution a home. A new piece has to say which level it lives at, which is most of the governance conversation.",
-    ],
-  },
-  {
-    slug: "storybook",
-    section: "design-system",
-    title: "Storybook",
-    notes: [
-      "This is the live library, opened on the button. Click into any component and walk its states: hover, focus, disabled, empty, loading, error.",
-      "A component is ready when it reads correctly outside both the marketplace and the agent platform; Storybook is how I look at it outside either one.",
-      "If the frame is slow, open it full screen. The Integrity Console Storybook linked below is a second, complete example: 40 components, 149 stories.",
+      "Research paid for this: marketplaces that had already solved search and comparison. Families are mostly trying to rule homes out, so the card leads with what differs.",
+      "The lists under each card say exactly what was wrong before and what the reworked card fixes.",
+      "Small decisions, each one visible to a family in the first second: availability, price under the name, save, more photos.",
     ],
   },
   {
@@ -213,7 +182,7 @@ export const SLIDES: Slide[] = [
     title: "shipping",
     notes: [
       "The pipeline: research, Figma, Storybook, pull request, Vercel preview on a real phone, shipped.",
-      "The handoff exists for data-layer work. Everything else ships as code from me, and what I learn shipping goes back into the system. The PR thread underneath is what that looks like day to day.",
+      "The handoff exists for data-layer work. Everything else ships as code from me. The PR thread underneath is what that looks like day to day.",
       "Spencer owns data and infrastructure. The live site, the Storybook, and the case study are linked at the top.",
     ],
   },
@@ -232,7 +201,7 @@ export const SLIDES: Slide[] = [
     section: "ai",
     title: "tools I built",
     notes: [
-      "The arc: research on whether a model can use a design system, then fibo, where the rules are enforced by checks instead of written down.",
+      "Four real examples of building my own tools. The thread through them: I stopped handing an agent instructions and started giving it checks it has to pass.",
       "The two images are the onboarding yard: what the skill drew, and what I designed on top of it. AI gave me a base where the angles and line weights already agreed; the brand and the detail are mine.",
       "This deck is a real example too. If they ask, open the repository or fibo’s Storybook and show it.",
     ],
@@ -243,7 +212,7 @@ export const SLIDES: Slide[] = [
     title: "across both",
     notes: [
       "Three habits both projects share, each tied to a moment you just saw.",
-      "The middle one is how a decision survives the handoff: the rule lives in the component, so it holds without anyone remembering it.",
+      "The middle one is how a decision survives the handoff: it is built into the thing engineering receives, so it holds without anyone remembering it.",
     ],
   },
   {

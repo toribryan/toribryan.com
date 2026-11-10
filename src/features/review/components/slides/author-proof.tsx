@@ -48,12 +48,11 @@ function Suite() {
   return (
     <Slide>
       <Kicker>01 · Product / where it sits</Kicker>
-      <Title>Defining product design language through one design system.</Title>
+      <Title>Three suites, and one new product I took from brief to MVP.</Title>
       <Lede>
         At Proctorio I led cross-product design across three suites, for
-        institutions and for proctoring agencies, and led the implementation of
-        the refactored design system underneath all three. The product I chose
-        to walk through today comes from the Origin suite: AuthorProof.
+        institutions and for proctoring agencies. The product I chose to walk
+        through today comes from the Origin suite: AuthorProof.
       </Lede>
       <Reveal>
         <SuiteReel items={SUITES} />

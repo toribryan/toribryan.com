@@ -38,10 +38,10 @@ function Threads({ data }: { data: SlideData }) {
           engineering spent a day. Modern Care Homes started with a teardown of
           the marketplaces that had already solved search.
         </Card>
-        <Card label="02" title="Put the rule in the component.">
-          Confidence is carried as text because color cannot be trusted. The
-          accessibility floor is 18px and 48 by 48 because the component
-          enforces it.
+        <Card label="02" title="Build the decision into what ships.">
+          AuthorProof carries confidence as text because color cannot be
+          trusted. The onboarding flow submits for review instead of publishing,
+          so no home reaches families unchecked.
         </Card>
         <Card label="03" title="Ship what you design.">
           Prototypes engineering built from on AuthorProof. Storybook to pull
@@ -91,8 +91,8 @@ function Role() {
           at 60.
         </Card>
         <Card label="03" title="AI already in the work.">
-          Skills a whole design team adopted, a design system agents have to
-          pass, and prototypes in code that engineering builds from.
+          Skills a whole design team adopted, checks an agent has to pass, and
+          prototypes in code that engineering builds from.
         </Card>
       </HairlineGrid>
       <StatRow>
@@ -111,9 +111,6 @@ function Role() {
         </LinkOut>
         <LinkOut href={REVIEW_LINKS.designSkills}>
           Design Skills Infrastructure
-        </LinkOut>
-        <LinkOut href={REVIEW_LINKS.agenticDesignSystem}>
-          Agentic Design System
         </LinkOut>
       </LinkRow>
     </Slide>
@@ -142,11 +139,6 @@ function Thanks() {
               REVIEW_LINKS.homeListingOnboarding,
             ],
             ["Design Skills Infrastructure", REVIEW_LINKS.designSkills],
-            ["Agentic Design System", REVIEW_LINKS.agenticDesignSystem],
-            [
-              "Modern Care Homes Storybook",
-              REVIEW_LINKS.modernCareHomes.storybook,
-            ],
             ["Résumé", REVIEW_LINKS.resume],
           ].map(([label, href]) => (
             <li key={href} className="py-3">

@@ -9,7 +9,6 @@ import { PrThread } from "@/features/review/components/pr-thread"
 import { ShippingPipeline } from "@/features/review/components/shipping-pipeline"
 import { TokenCallouts } from "@/features/review/components/token-callouts"
 import { TokenTiers } from "@/features/review/components/token-tiers"
-import { TwoJobs } from "@/features/review/components/two-jobs"
 import { REVIEW_LINKS } from "@/features/review/data/links"
 import type { SlideData, Slide as SlideType } from "@/features/review/types"
 
@@ -31,18 +30,6 @@ import {
   Title,
 } from "../slide-primitives"
 
-function StorybookLink({
-  variant = "outline",
-}: {
-  variant?: "outline" | "default"
-}) {
-  return (
-    <LinkOut href={REVIEW_LINKS.modernCareHomes.storybook} variant={variant}>
-      Open Storybook
-    </LinkOut>
-  )
-}
-
 function Cover() {
   return (
     <Slide>
@@ -58,12 +45,22 @@ function Cover() {
         />
       </Reveal>
       <Title size="xl">Senior Living Marketplace</Title>
-      <TwoJobs />
+      <Lede>
+        A marketplace where families find a care home in the Phoenix metro, and
+        the platform owners and agents run those homes from. I design the
+        interfaces and ship the front end for both sides of it.
+      </Lede>
+      <Clip
+        src="/case-studies/home-grid-mch.mp4"
+        label="The marketplace families search"
+      />
       <LinkRow>
         <LinkOut href={REVIEW_LINKS.modernCareHomes.live}>
           Visit Modern Care Homes
         </LinkOut>
-        <StorybookLink />
+        <LinkOut href={REVIEW_LINKS.modernCareHomes.caseStudy}>
+          Full case study
+        </LinkOut>
       </LinkRow>
     </Slide>
   )
@@ -174,12 +171,12 @@ function Storybook() {
 function HomeCard() {
   return (
     <Slide>
-      <Kicker>Modern Care Homes / a component in practice</Kicker>
+      <Kicker>Modern Care Homes / the marketplace</Kicker>
       <Title>The home card should spend its space on what differs.</Title>
       <Lede>
-        A family is mostly trying to rule homes out. Once the card is a system
-        component, that decision is made once and holds on every listing, search
-        result, and saved comparison.
+        A family is mostly trying to rule homes out, so the card leads with what
+        tells one home from the next: whether it is available now, what it
+        costs, and more than one photo.
       </Lede>
       <HairlineGrid>
         <Stack className="gap-2">
@@ -233,8 +230,7 @@ function Dashboard() {
         I went deep on how other real estate platforms, Airbnb and Zillow among
         them, get people listing a home to complete every detail. The patterns
         those leaders established are what get their hosts to finish, so they
-        shaped this shell. The same shell, rail, and section components ship on
-        the marketplace side.
+        shaped this shell.
       </Lede>
       <HairlineGrid>
         <Stack className="gap-2">
@@ -374,10 +370,10 @@ function Early() {
         />
       </HairlineGrid>
       <HairlineGrid>
-        <Card label="How it reached engineering" title="Storybook first">
-          Every step has stories at desktop and phone widths, including the
-          awkward states: an empty price, a shared room with no gender set, a
-          review with something missing.
+        <Card label="How it reached engineering" title="Every state, in code">
+          Every step runs in Storybook at desktop and phone widths, including
+          the awkward states: an empty price, a shared room with no gender set,
+          a review with something missing.
         </Card>
         <Card label="What is tested" title="Where it counts">
           Submitting is covered for an incomplete draft, a non-owner and a home
@@ -411,13 +407,12 @@ function Shipping() {
         <div className="flex flex-col">
           <Card label="What the handoff is for">
             The handoff between design and engineering exists for complex
-            contributions that touch the data layer. Components, layout,
-            responsive behavior, and motion ship as code from me.
+            contributions that touch the data layer. Screens, layout, responsive
+            behavior, and motion ship as code from me.
           </Card>
           <Card label="What that removes">
             Nothing gets defended in a handoff meeting. If something needs to
-            change, I change it. Whatever I learn shipping goes back into the
-            system, so the next screen starts further along.
+            change, I change it, and the next screen starts further along.
           </Card>
         </div>
       </HairlineGrid>
