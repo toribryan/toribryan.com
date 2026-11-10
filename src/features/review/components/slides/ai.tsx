@@ -14,7 +14,6 @@ import {
   LinkOut,
   LinkRow,
   Reveal,
-  Shot,
   Slide,
   Stat,
   StatRow,
@@ -24,7 +23,7 @@ import {
 function Workflow() {
   return (
     <Slide>
-      <Kicker>03 · AI in my workflow / where it sits</Kicker>
+      <Kicker>02 · AI in my workflow / where it sits</Kicker>
       <Title>AI sits in every phase of my work, not only the last one.</Title>
       <Lede>
         At Proctorio I gave the design team one shared way to run each phase: a
@@ -96,14 +95,14 @@ function Workflow() {
 function Tools() {
   return (
     <Slide>
-      <Kicker>03 · AI in my workflow / tools I built</Kicker>
+      <Kicker>02 · AI in my workflow / tools I built</Kicker>
       <Title>I build my own tools, and checks an agent has to pass.</Title>
       <HairlineGrid>
         <Card label="Research" title="What a model does left alone">
           Run with Proctorio’s lead front-end engineer: same design, same
-          prompt, changing only how much of the system the model could see. Left
-          alone it rebuilt components from scratch and hardcoded the colors it
-          could see.
+          prompt, changing only how much of our component library the model
+          could see. Left alone it rebuilt components from scratch and hardcoded
+          the colors it could see.
         </Card>
         <Card label="fibo" title="A component kit an agent has to pass">
           My own open source kit, built solo with Claude Code. Lint, Figma
@@ -111,31 +110,15 @@ function Tools() {
           pull request. An agent added a voice memo component and the pull
           request came in complete, with 396 passing tests.
         </Card>
-        <Card label="Illustration" title="A skill as the first pass">
-          The onboarding figures started from a skill that has Claude draw
-          isometric line art as SVG. I designed on top of it in Figma, then
-          shipped the result as SVG components that read the form’s state.
+        <Card label="AuthorProof" title="The rebuild you just used">
+          The original files are under NDA, so I rebuilt the flow in code with
+          Claude Code on my own components: three views, sample data, and the
+          decisions from the product.
         </Card>
         <Card label="This deck" title="Built the same way">
           This deck and the site around it run on fibo’s parts, and I build all
           of it with Claude Code.
         </Card>
-      </HairlineGrid>
-      <HairlineGrid>
-        <Shot
-          src="/case-studies/home-activation/iso-amenities-start.webp"
-          alt="A sparse isometric amenities scene in thin line art: a house, a router, a tree, a washer, a TV, a bed, a table and a car on a gray plate"
-          width={1248}
-          height={847}
-          label="Drawn by the skill"
-        />
-        <Shot
-          src="/case-studies/home-activation/iso-amenities-yard-hairline.webp"
-          alt="The shipped amenities yard with every amenity on, in clean outlines and brand colors"
-          width={1280}
-          height={851}
-          label="Designed in Figma, shipped as SVG"
-        />
       </HairlineGrid>
       <HairlineGrid>
         <Card label="What I learned" title="Checks beat docs.">

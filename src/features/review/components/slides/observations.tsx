@@ -30,23 +30,22 @@ const TWEET_FALLBACK = {
 function Threads({ data }: { data: SlideData }) {
   return (
     <Slide>
-      <Kicker>Observations / across both</Kicker>
-      <Title>Three things both projects have in common.</Title>
+      <Kicker>Wrap / three habits</Kicker>
+      <Title>Three habits you just saw.</Title>
       <HairlineGrid columns={3}>
         <Card label="01" title="Test the brief before building it.">
-          AuthorProof’s architecture was mapped against the platform before
-          engineering spent a day. Modern Care Homes started with a teardown of
-          the marketplaces that had already solved search.
+          The briefed architecture was mapped and timed against the platform
+          before engineering spent a day on it, and the map is what changed the
+          product.
         </Card>
         <Card label="02" title="Build the decision into what ships.">
-          AuthorProof carries confidence as text because color cannot be
-          trusted. The onboarding flow submits for review instead of publishing,
-          so no home reaches families unchecked.
+          Confidence reads as text because the host colors the badge the
+          opposite way from the score. Every question sits beside the words it
+          came from, so the AI’s reasoning can be checked.
         </Card>
         <Card label="03" title="Ship what you design.">
-          Prototypes engineering built from on AuthorProof. Storybook to pull
-          request to preview on Modern Care Homes. Fewer handoffs mean fewer
-          places for a decision to drift.
+          Engineering built AuthorProof from working prototypes, not a document
+          about them. Fewer handoffs mean fewer places for a decision to drift.
         </Card>
       </HairlineGrid>
       <Reveal className="max-w-2xl">
@@ -77,37 +76,38 @@ function Threads({ data }: { data: SlideData }) {
 function Role() {
   return (
     <Slide>
-      <Kicker>Observations / for Avantos</Kicker>
+      <Kicker>Wrap / for Avantos</Kicker>
       <Title>What you asked to see, and where it was.</Title>
       <HairlineGrid columns={3}>
         <Card label="01" title="Works alone.">
           AuthorProof went from an assigned brief to a production-ready MVP in
-          four to six weeks, end to end. At Modern Care Homes I own everything a
-          family or an agent sees, with one engineer on data.
+          four to six weeks, with me as its designer end to end.
         </Card>
         <Card label="02" title="At more than one altitude.">
-          At the top, moving where AuthorProof lives instead of how a screen
-          looks. At the bottom, a care camera that panned at 23fps until it ran
-          at 60.
+          At the top, moving where the product lives instead of how a screen
+          looks. At the bottom, a confidence badge that reads as text because
+          the host colors it the wrong way.
         </Card>
         <Card label="03" title="AI already in the work.">
-          Skills a whole design team adopted, checks an agent has to pass, and
-          prototypes in code that engineering builds from.
+          An AI feature designed so its reasoning can be checked, skills a whole
+          design team adopted, and the rebuild you just used.
         </Card>
       </HairlineGrid>
       <StatRow>
-        <Stat value="4 to 6 wks" label="AuthorProof, concept to MVP" />
+        <Stat value="4 to 6 wks" label="AuthorProof, brief to MVP" />
+        <Stat
+          value="Seconds"
+          label="Upload to quiz in the pitched flow, down from about ten minutes"
+        />
         <Stat
           value="<30 min"
-          label="Spec production, down from 3 days to 2 weeks"
+          label="Spec production with the shared skills, down from days"
         />
-        <Stat value="100%" label="Design team adoption of the shared skills" />
-        <Stat value="60fps" label="Care camera while it pans, up from 23" />
+        <Stat value="100%" label="Design team adoption of the skills" />
       </StatRow>
       <LinkRow>
-        <LinkOut href={REVIEW_LINKS.authorProof.caseStudy}>AuthorProof</LinkOut>
-        <LinkOut href={REVIEW_LINKS.homeListingOnboarding}>
-          Home Listing Onboarding
+        <LinkOut href={REVIEW_LINKS.authorProof.caseStudy}>
+          AuthorProof case study
         </LinkOut>
         <LinkOut href={REVIEW_LINKS.designSkills}>
           Design Skills Infrastructure
@@ -120,24 +120,17 @@ function Role() {
 function Thanks() {
   return (
     <Slide className="gap-6">
-      <Kicker>Observations / thank you</Kicker>
+      <Kicker>Wrap / thank you</Kicker>
       <Title size="xl">Questions?</Title>
-      <Lede>Everything from today in one place. Open whichever is useful.</Lede>
+      <Lede>Everything from today in one place.</Lede>
       <Reveal>
         <ul className="screen-line-top screen-line-bottom grid gap-x-8 divide-y divide-line sm:grid-cols-2">
           {[
             ["Portfolio", REVIEW_LINKS.portfolio],
             ["AuthorProof case study", REVIEW_LINKS.authorProof.caseStudy],
             ["AuthorProof product page", REVIEW_LINKS.authorProof.product],
-            ["Modern Care Homes, live", REVIEW_LINKS.modernCareHomes.live],
-            [
-              "Modern Care Homes case study",
-              REVIEW_LINKS.modernCareHomes.caseStudy,
-            ],
-            [
-              "Home Listing Onboarding case study",
-              REVIEW_LINKS.homeListingOnboarding,
-            ],
+            ["Agentic Design System", REVIEW_LINKS.agenticDesignSystem],
+            ["fibo", REVIEW_LINKS.fibo],
             ["Design Skills Infrastructure", REVIEW_LINKS.designSkills],
             ["Résumé", REVIEW_LINKS.resume],
           ].map(([label, href]) => (

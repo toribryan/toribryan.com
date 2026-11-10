@@ -47,7 +47,7 @@ import {
 function Suite() {
   return (
     <Slide>
-      <Kicker>01 · Product / where it sits</Kicker>
+      <Kicker>01 · AuthorProof / where it sits</Kicker>
       <Title>Three suites, and one new product I took from brief to MVP.</Title>
       <Lede>
         At Proctorio I led cross-product design across three suites, for
@@ -66,7 +66,7 @@ function Cover() {
     <Slide className="flex-1 justify-center">
       <div className="grid items-center gap-8 md:grid-cols-[3fr_2fr]">
         <Stack>
-          <Kicker>01 · Product</Kicker>
+          <Kicker>01 · The project</Kicker>
           <Reveal>
             <ProctorioLogo className="h-7 w-auto text-foreground" />
           </Reveal>
@@ -281,15 +281,14 @@ function Pivot() {
         </Tabs>
       </Reveal>
       <HairlineGrid>
-        <Card label="What the pivot bought">
+        <Card label="What the pivot bought" title="One move, three constraints">
           It collapsed the timing gap, removed the notification dependency, and
           stepped out of the quiz tooling entirely, which left the instructor
           one thing to read.
         </Card>
-        <Card label="What it cost, said out loud">
+        <Card label="What it cost" title="Named before engineering found it">
           Short pieces written directly in the LMS editor were excluded, and how
-          proctoring coexists with the embedded flow stayed an open question. I
-          flagged the hole rather than let engineering find it.
+          proctoring coexists with the embedded flow stayed an open question.
         </Card>
       </HairlineGrid>
     </Slide>
@@ -331,31 +330,16 @@ function Shipped() {
   return (
     <Slide>
       <Kicker>AuthorProof / shipped</Kicker>
-      <div className="grid items-center gap-8 md:grid-cols-[3fr_2fr]">
-        <Stack>
-          <Title>The prototype was the spec.</Title>
-          <Lede>
-            Concept to production-ready MVP in four to six weeks. I designed the
-            quiz settings, the report card, the quiz results, and the emails
-            students receive, and built working prototypes of all of it in HTML,
-            CSS, and vanilla JavaScript on our design system. Engineering built
-            from the prototypes.
-          </Lede>
-        </Stack>
-        <Reveal>
-          <Frame>
-            <video
-              className="aspect-square w-full rounded-xl bg-surface object-cover"
-              src="/images/review/authorproof-shipped.webm"
-              autoPlay
-              loop
-              muted
-              playsInline
-              aria-label="AuthorProof, as shipped"
-            />
-          </Frame>
-        </Reveal>
-      </div>
+      <Stack>
+        <Title>The prototype was the spec.</Title>
+        <Lede>
+          Concept to production-ready MVP in four to six weeks. I designed the
+          quiz settings, the report card, the quiz results, and the emails
+          students receive, and built working prototypes of all of it in HTML,
+          CSS, and vanilla JavaScript. Engineering built from the prototypes,
+          not from a document about them.
+        </Lede>
+      </Stack>
       <HairlineGrid>
         <Card label="Proof of concept" title="The briefed idea shipped first">
           The Canvas quiz architecture from the brief became the proof of

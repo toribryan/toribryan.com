@@ -5,10 +5,9 @@ export const REVIEW_BASE_PATH = "/review"
 
 export const SECTIONS: Section[] = [
   { slug: "background", title: "Background", endsAt: 4 },
-  { slug: "product", title: "Product", endsAt: 24 },
-  { slug: "design-system", title: "Craft", endsAt: 40 },
-  { slug: "ai", title: "AI in my workflow", endsAt: 47 },
-  { slug: "observations", title: "Observations", endsAt: 50 },
+  { slug: "product", title: "AuthorProof", endsAt: 38 },
+  { slug: "ai", title: "AI in my workflow", endsAt: 46 },
+  { slug: "observations", title: "Wrap", endsAt: 50 },
 ]
 
 /**
@@ -23,8 +22,8 @@ export const SLIDES: Slide[] = [
     stage: "background-intro",
     title: "bio",
     notes: [
-      "Pacing: four minutes for the background, twenty for AuthorProof, sixteen for Modern Care Homes, seven for AI, and the last ten for questions. The clock in the header shows the time elapsed and when this section should end.",
-      "Three descriptions of me: my dad’s, my colleagues’, and my own. The one to keep is “question artist.” Interrogating the brief is the first thing I do on every project, and both projects in this deck start there.",
+      "Pacing: four minutes for the background, thirty-four for AuthorProof, eight for AI, four to wrap, and the last ten for their questions. The clock in the header shows the time elapsed and the minute this section should end by.",
+      "Three descriptions of me: my dad’s, my colleagues’, and my own. The one to keep is “question artist.” Interrogating the brief is the first thing I do on every project, and the project in this deck starts there.",
       "The photos are the people and places behind the work. Nothing here needs clicking.",
     ],
   },
@@ -35,7 +34,7 @@ export const SLIDES: Slide[] = [
     title: "my pillars of inspiration",
     notes: [
       "Creative technologist: I prototype in code and ship the front end, so what I hand engineering is something that already runs.",
-      "Bonzo is the pug. Chronic learner is why every project opens with a teardown of whoever already solved the problem: Mobbin for marketplaces, Airbnb for listing creation. Both research beats come up later.",
+      "Bonzo is the pug. Chronic learner is why every project opens with a teardown of whoever already solved the problem.",
     ],
   },
   {
@@ -43,7 +42,7 @@ export const SLIDES: Slide[] = [
     section: "product",
     title: "where it sits",
     notes: [
-      "Piece one: a complex problem that arrived from product with its architecture already chosen, and an AI feature. Aim to finish it by 24 minutes.",
+      "The one piece today: a complex problem that arrived from product with its architecture already chosen, and an AI feature. It runs to about 38 minutes on the clock, with questions along the way.",
       "At Proctorio I led cross-product design across three suites, for institutions and for proctoring agencies.",
       "Integrity proctors the exam, Vault protects the exam content, and Origin proves authorship. Hover a tile to see it move. This walkthrough is Origin’s product: AuthorProof.",
     ],
@@ -137,72 +136,11 @@ export const SLIDES: Slide[] = [
     ],
   },
   {
-    slug: "cover",
-    section: "design-system",
-    title: "Senior Living Marketplace",
-    notes: [
-      "Piece two: the last-mile craft, and work I shipped as code. Aim to finish it by 40 minutes.",
-      "Modern Care Homes is a senior living marketplace for the Phoenix metro, plus the agent platform that runs it. I own everything a family or an agent sees.",
-      "Two products: the site families search, and the platform owners and agents run their homes from. The clip is the live marketplace.",
-      "The next two slides are the newest work on the agent side, the onboarding flow. If the clock is past 35 minutes, skip the dashboard and the home card and go to shipping.",
-    ],
-  },
-  {
-    slug: "onboarding",
-    section: "design-system",
-    title: "home listing onboarding",
-    notes: [
-      "The complex workflow. The problem as it stood: owners only got in by an admin’s invite, landed in the full editor, could not save a draft without three photos, and publishing went straight to families.",
-      "Three decisions on the cards: what I chose, what I ruled out, and the one place I added friction on purpose. Spencer’s care taxonomy set the structure of the care step.",
-      "The clip is the flow itself. Each step draws the home as the owner describes it, which shows progress better than a counter does.",
-    ],
-  },
-  {
-    slug: "early",
-    section: "design-system",
-    title: "how it got here",
-    notes: [
-      "The raw end of the process. The yard started as an empty lot, then outlined objects floating with no sense of a place, then the yard that shipped.",
-      "The About step first opened on a blank editor with tips above it. The tips moved into the draft as bracketed prompts, so the owner edits instead of starting from nothing.",
-      "The bottom row is the handoff: Storybook stories for every step and its awkward states, tests on submitting, and a feature flag. Say where it stands today: the flow is complete behind the flag.",
-    ],
-  },
-  {
-    slug: "dashboard",
-    section: "design-system",
-    title: "the agent dashboard",
-    notes: [
-      "The agent side. The old shell was two nav items and one long scroll. The new one makes the sidebar the listing, with every section carrying its own state.",
-      "It came straight from the Airbnb and Zillow listing-creation teardown: show the state of every stage so nobody loses their place.",
-      "This shell is where owners land after the onboarding flow, so the two had to read as one product.",
-    ],
-  },
-  {
-    slug: "home-card",
-    section: "design-system",
-    title: "the home card",
-    notes: [
-      "Research paid for this: marketplaces that had already solved search and comparison. Families are mostly trying to rule homes out, so the card leads with what differs.",
-      "The lists under each card say exactly what was wrong before and what the reworked card fixes.",
-      "Small decisions, each one visible to a family in the first second: availability, price under the name, save, more photos.",
-    ],
-  },
-  {
-    slug: "shipping",
-    section: "design-system",
-    title: "shipping",
-    notes: [
-      "The pipeline: research, Figma, Storybook, pull request, Vercel preview on a real phone, shipped.",
-      "The handoff exists for data-layer work. Everything else ships as code from me. The PR thread underneath is what that looks like day to day.",
-      "Spencer owns data and infrastructure. The live site, the Storybook, and the case study are linked at the top.",
-    ],
-  },
-  {
     slug: "workflow",
     section: "ai",
     title: "where it sits",
     notes: [
-      "Aim to finish this section by 47 minutes, which leaves three for the wrap and ten for their questions.",
+      "Aim to finish this section by 46 minutes, which leaves four for the wrap and ten for their questions.",
       "The flow is one feature moving through the skills in order. The prototype is built in Claude Code and stays the source of truth; the specs follow it.",
       "The strip is from the Proctorio design team: spec production from three days to two weeks down to under thirty minutes, with every designer using it. I presented the process to the organization in July 2026.",
     ],
@@ -213,16 +151,16 @@ export const SLIDES: Slide[] = [
     title: "tools I built",
     notes: [
       "Four real examples of building my own tools. The thread through them: I stopped handing an agent instructions and started giving it checks it has to pass.",
-      "The two images are the onboarding yard: what the skill drew, and what I designed on top of it. AI gave me a base where the angles and line weights already agreed; the brand and the detail are mine.",
+      "The AuthorProof rebuild they just clicked through is the freshest example: built in code with Claude Code on my own components, because the original files are under NDA.",
       "This deck is a real example too. If they ask, open the repository or fibo’s Storybook and show it.",
     ],
   },
   {
     slug: "threads",
     section: "observations",
-    title: "across both",
+    title: "three habits",
     notes: [
-      "Three habits both projects share, each tied to a moment you just saw.",
+      "Three habits, each tied to a moment they just saw. Keep it to a minute: they are a summary, not new material.",
       "The middle one is how a decision survives the handoff: it is built into the thing engineering receives, so it holds without anyone remembering it.",
     ],
   },
@@ -232,7 +170,7 @@ export const SLIDES: Slide[] = [
     title: "for this role",
     notes: [
       "The three things in the brief for today, each tied to a moment in the deck: working alone, working at more than one altitude, and AI already in the work.",
-      "The strip takes one figure from each part: AuthorProof, the shared skills, and the onboarding flow.",
+      "The strip is the deck in four numbers. If time is short, skip straight from here to questions.",
     ],
   },
   {
