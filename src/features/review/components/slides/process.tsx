@@ -96,7 +96,7 @@ function Team() {
 
 function Today() {
   return (
-    <Slide className="flex-1 justify-center">
+    <Slide>
       <Kicker>01 · Process / today’s piece</Kicker>
       <Title>Why AuthorProof, and why it’s rebuilt.</Title>
       <HairlineGrid columns={3}>
