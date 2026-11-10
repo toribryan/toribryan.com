@@ -2,6 +2,7 @@ import type { Tweet } from "react-tweet/api"
 
 export type SectionSlug =
   | "background"
+  | "process"
   | "product"
   | "handoff"
   | "outcome"

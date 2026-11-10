@@ -64,7 +64,7 @@ function Excerpt({
 function Repo() {
   return (
     <Slide>
-      <Kicker>02 · Handoff / the repo</Kicker>
+      <Kicker>03 · Handoff / the repo</Kicker>
       <Title>The prototype was the spec. The repo was the handoff.</Title>
       <Lede>
         Engineering got one repository: the prototype that shows every screen

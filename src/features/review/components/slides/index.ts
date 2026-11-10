@@ -9,12 +9,14 @@ import { BACKGROUND_CONTENT } from "./background"
 import { DESIGN_SYSTEM_CONTENT } from "./design-system"
 import { HANDOFF_CONTENT } from "./handoff"
 import { OBSERVATIONS_CONTENT } from "./observations"
+import { PROCESS_CONTENT } from "./process"
 
 const CONTENT: Record<
   Slide["section"],
   Record<string, ComponentType<{ slide: Slide; data: SlideData }>>
 > = {
   background: BACKGROUND_CONTENT,
+  process: PROCESS_CONTENT,
   product: AUTHOR_PROOF_CONTENT,
   handoff: HANDOFF_CONTENT,
   outcome: AUTHOR_PROOF_CONTENT,

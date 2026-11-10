@@ -48,7 +48,7 @@ import {
 function Suite() {
   return (
     <Slide>
-      <Kicker>01 · AuthorProof / where it sits</Kicker>
+      <Kicker>02 · AuthorProof / where it sits</Kicker>
       <Title>Three suites, and one new product I took from brief to MVP.</Title>
       <Lede>
         At Proctorio I led cross-product design across three suites, for

@@ -90,8 +90,9 @@ function Role() {
           the host colors it the wrong way.
         </Card>
         <Card label="03" title="AI already in the work.">
-          An AI feature designed so its reasoning can be checked, skills a whole
-          design team adopted, and the rebuild you just used.
+          An end-to-end agentic process, skills a whole design team used at
+          every stage, and an AI feature designed so its reasoning can be
+          checked.
         </Card>
       </HairlineGrid>
       <StatRow>
@@ -131,6 +132,7 @@ function Thanks() {
             ["Portfolio", REVIEW_LINKS.portfolio],
             ["AuthorProof case study", REVIEW_LINKS.authorProof.caseStudy],
             ["AuthorProof product page", REVIEW_LINKS.authorProof.product],
+            ["Design skills in fibo", REVIEW_LINKS.designSkillsDocs],
             ["Agentic Design System", REVIEW_LINKS.agenticDesignSystem],
             ["AuthorProof handoff repo", REVIEW_LINKS.handoff.repo],
             ["AuthorProof prototype", REVIEW_LINKS.handoff.prototype],

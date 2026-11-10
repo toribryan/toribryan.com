@@ -25,6 +25,10 @@ export const REVIEW_LINKS = {
   agenticDesignSystem: "/work/agentic-design-system",
   homeListingOnboarding: "/work/home-listing-onboarding",
   designSkills: "/latest/design-skills-infrastructure",
+  /** The design-skills collection: its docs in fibo, and its repo. */
+  designSkillsDocs:
+    "https://fibo.toribryan.com/?path=/docs/design-skills--docs",
+  designSkillsRepo: "https://github.com/toribryan/design-skills",
   fibo: "/fibo",
   /** The AuthorProof handoff: the prototype and its three documents. */
   handoff: {

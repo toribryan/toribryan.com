@@ -5,10 +5,10 @@ export const REVIEW_BASE_PATH = "/review"
 
 export const SECTIONS: Section[] = [
   { slug: "background", title: "Background", endsAt: 4 },
-  { slug: "product", title: "AuthorProof", endsAt: 25 },
-  { slug: "handoff", title: "Handoff", endsAt: 36 },
-  { slug: "outcome", title: "Outcome", endsAt: 41 },
-  { slug: "ai", title: "AI in my workflow", endsAt: 46 },
+  { slug: "process", title: "Process", endsAt: 12 },
+  { slug: "product", title: "AuthorProof", endsAt: 29 },
+  { slug: "handoff", title: "Handoff", endsAt: 39 },
+  { slug: "outcome", title: "Outcome", endsAt: 44 },
   { slug: "observations", title: "Wrap", endsAt: 50 },
 ]
 
@@ -24,7 +24,7 @@ export const SLIDES: Slide[] = [
     stage: "background-intro",
     title: "bio",
     notes: [
-      "Pacing: four minutes for the background, twenty-one for the AuthorProof story, eleven for the handoff, five for the outcome, five for AI, four to wrap, and the last ten for their questions. The clock in the header shows the time elapsed and the minute this section should end by.",
+      "Pacing: four minutes for the background, eight for process, seventeen for the AuthorProof story, ten for the handoff, five for the outcome, six to wrap, and the last ten for their questions. The clock in the header shows the time elapsed and the minute this section should end by.",
       "Three descriptions of me: my dad’s, my colleagues’, and my own. The one to keep is “question artist.” Interrogating the brief is the first thing I do on every project, and the project in this deck starts there.",
       "The photos are the people and places behind the work. Nothing here needs clicking.",
     ],
@@ -40,11 +40,49 @@ export const SLIDES: Slide[] = [
     ],
   },
   {
+    slug: "grief",
+    section: "process",
+    title: "turned on its head",
+    notes: [
+      "Process first, so the rest of the walkthrough makes sense. Aim to finish this section by 12 minutes.",
+      "Be honest and brief: the last couple of years turned my traditional process on its head, and I went through all five stages of grief for it. Tell one real moment from the middle stages, then land on acceptance.",
+      "The two cards are the before and after: a process built around the file, and one built around what ships.",
+    ],
+  },
+  {
+    slug: "agentic",
+    section: "process",
+    title: "end to end",
+    notes: [
+      "This is the process today: 32 Claude skills and 7 read-only reviewer agents, from discovery through shipped code, documented in fibo.",
+      "The router is the point: it places work on the phase map, loads the phase’s skill, runs the reviewer that guards it, and keeps a project log of decisions.",
+      "Reviewers are read-only on purpose. They report failures with their location and end in a verdict: ready, or N blocking issues.",
+    ],
+  },
+  {
+    slug: "team",
+    section: "process",
+    title: "with a team",
+    notes: [
+      "In my last role I built and maintained the skills my design team used at every stage. The strip is what it did for them.",
+      "Handoffs became prototype-forward, through a GitHub repository. Promise them they’ll see one: the AuthorProof handoff later in the deck.",
+    ],
+  },
+  {
+    slug: "today",
+    section: "process",
+    title: "today’s piece",
+    notes: [
+      "I’m design-system forward, but today is AuthorProof: a project I worked through entirely on my own, at a company that valued high agency.",
+      "Say the NDA line here once, so it doesn’t interrupt later: most of what follows is rebuilt.",
+    ],
+  },
+  {
     slug: "suite",
     section: "product",
     title: "where it sits",
     notes: [
-      "The one piece today: a complex problem that arrived from product with its architecture already chosen, and an AI feature. The story runs to about 25 minutes on the clock, then the handoff to 36.",
+      "The one piece today: a complex problem that arrived from product with its architecture already chosen, and an AI feature. The story runs to about 29 minutes on the clock, then the handoff to 39.",
       "At Proctorio I led cross-product design across three suites, for institutions and for proctoring agencies.",
       "Integrity proctors the exam, Vault protects the exam content, and Origin proves authorship. Hover a tile to see it move. This walkthrough is Origin’s product: AuthorProof.",
     ],
@@ -111,7 +149,7 @@ export const SLIDES: Slide[] = [
     section: "product",
     title: "the flow, rebuilt",
     notes: [
-      "Say the NDA line first: the original files cannot be shown, so this is a rebuild in code with sample data. It is also the first AI-in-my-workflow example: built with Claude Code on my own components.",
+      "A quick reminder that this is a rebuild in code with sample data, made the way the process section described: built with Claude Code on my own components.",
       "Drive it live. Start on the student tab: upload, watch the quiz arrive in seconds, answer a couple wrong on purpose, submit, then open the instructor’s view.",
       "On the result, point at one question: the student’s words, the question made from them, the answer, and the assessment, side by side. That is how an instructor checks the AI’s reasoning. Then show the setup tab if there is time. The email tab is the briefed flow’s emails in every state, from ready to the window closing: use it when the shipped slide comes up, since the briefed flow is what shipped first. The closed state is a good talking point: it stays neutral, because a missed quiz is for the instructor to follow up, not a failure.",
       "Keys inside the prototype belong to it, so click outside it or use the arrows in the header to move on.",
@@ -132,7 +170,7 @@ export const SLIDES: Slide[] = [
     section: "handoff",
     title: "the repo",
     notes: [
-      "This is the answer to how my intent reached engineering. Aim to finish the section by 36 minutes.",
+      "This is the answer to how my intent reached engineering, and the repo promised in the process section. Aim to finish the section by 39 minutes.",
       "One repository: the prototype that shows every screen and state, and three documents beside it, each with one job. Figma mirrors the prototype under the same names, for review and annotation.",
       "The three rules are the working agreement. The first one matters most: the prototype wins, so the documents never drift into a second, competing spec.",
       "The original files are under NDA, so this repo is the same structure rebuilt with sample data. It is public, so they can browse it after.",
@@ -186,26 +224,6 @@ export const SLIDES: Slide[] = [
       "The moment I was overruled. I pitched the embedded flow as the MVP; the briefed architecture shipped first because it was the fastest way to get a working product in front of pilot instructors.",
       "What I would do differently: prototype the embedded flow beside a proctored session before the direction decision. I had named that hole on the pivot slide, but naming it is not answering it.",
       "The two steps underneath are what I would design next. Good place to pause for questions before the second piece.",
-    ],
-  },
-  {
-    slug: "workflow",
-    section: "ai",
-    title: "where it sits",
-    notes: [
-      "Aim to finish this section by 46 minutes, which leaves four for the wrap and ten for their questions.",
-      "The flow is one feature moving through the skills in order. The prototype is built in Claude Code and stays the source of truth; the specs follow it.",
-      "The strip is from the Proctorio design team: spec production from three days to two weeks down to under thirty minutes, with every designer using it. I presented the process to the organization in July 2026.",
-    ],
-  },
-  {
-    slug: "tools",
-    section: "ai",
-    title: "tools I built",
-    notes: [
-      "Four real examples of building my own tools. The thread through them: I stopped handing an agent instructions and started giving it checks it has to pass.",
-      "The AuthorProof rebuild they just clicked through is the freshest example: built in code with Claude Code on my own components, because the original files are under NDA.",
-      "This deck is a real example too. If they ask, open the repository or fibo’s Storybook and show it.",
     ],
   },
   {
