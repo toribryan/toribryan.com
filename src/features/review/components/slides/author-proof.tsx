@@ -11,6 +11,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
+import { AuthorProofGrader } from "@/features/review/components/author-proof-grader"
 import { AuthorProofPrototype } from "@/features/review/components/author-proof-prototype"
 import { AuthorProofRadar } from "@/features/review/components/author-proof-radar"
 import { PinnedFlow } from "@/features/review/components/pinned-flow"
@@ -326,6 +327,38 @@ function Prototype() {
   )
 }
 
+function Review() {
+  return (
+    <Slide>
+      <Kicker>AuthorProof / the reviewing side</Kicker>
+      <Title>Grade the paper and read the quiz in one place.</Title>
+      <Lede>
+        I pitched putting AuthorProof inside SpeedGrader, where instructors
+        already grade: the quiz results on the left, the paper in the middle,
+        and the grading panel they already trust on the right. What was built is
+        the results panel on its own.
+      </Lede>
+      <Reveal>
+        <AuthorProofGrader />
+      </Reveal>
+      <HairlineGrid columns={3}>
+        <Card label="Why the left" title="Results before the grade">
+          The instructor reads what the student could answer before deciding on
+          a grade, not after.
+        </Card>
+        <Card label="Why the middle" title="Every question points home">
+          Selecting a question marks the passage it came from, so the AI’s
+          reasoning is checked against the paper itself.
+        </Card>
+        <Card label="Why the right" title="Nothing they trust removed">
+          The grading panel and the similarity badge stay as they are.
+          AuthorProof answers a second question beside the first.
+        </Card>
+      </HairlineGrid>
+    </Slide>
+  )
+}
+
 function Shipped() {
   return (
     <Slide>
@@ -439,6 +472,7 @@ export const AUTHOR_PROOF_CONTENT: Record<
   constraints: Constraints,
   pivot: Pivot,
   prototype: Prototype,
+  review: Review,
   shipped: Shipped,
   overruled: Overruled,
 }

@@ -96,3 +96,20 @@ export const PROTOTYPE_QUESTIONS: PrototypeQuestion[] = [
 
 /** The attempt the report shows before anyone has taken the quiz. */
 export const PROTOTYPE_SAMPLE_ANSWERS = [0, 1, 2, 1, 1]
+
+/**
+ * The sample essay the reviewing side shows, written to contain every
+ * excerpt the questions were generated from, word for word, so a question
+ * can point at its passage.
+ */
+export const PROTOTYPE_ESSAY: string[] = [
+  "Every summer the hottest blocks in a city are the ones with the least shade, and they are rarely the ones where people choose to be. Cooling a city is usually framed as a question of air conditioning and reflective roofs. I want to argue for something slower and cheaper.",
+  "Street trees are the cheapest cooling a city can buy, because they work on the pavement rather than on the air. A shaded sidewalk can sit many degrees below a sunlit one, and that difference is what a person waiting on it actually feels.",
+  "I wanted to see the difference myself before relying on anyone else’s numbers. I walked the same six blocks at noon and at dusk with a handheld thermometer, and the shaded side was cooler both times. The gap was widest at noon, when it mattered most.",
+  "Planting is not free of problems. The strongest objection is water: a tree planted in July in a dry city is a tree the city has agreed to water for years. Any plan that ignores the first three summers is a plan to buy dead trees.",
+  "So the question is where to start. Bus stops should come first, because that is where people stand still in the sun without choosing to. A park visitor can move to the shade; a rider waiting for the 41 cannot.",
+  "Finally, cities should change what they measure. A shade map tells a council which blocks to fund; a tree count only tells it how many trees it has. Measured by shade, the next tree goes where it does the most good.",
+]
+
+/** The grading side's similarity check, as a typical third-party report. */
+export const PROTOTYPE_SIMILARITY = { score: 12, band: "Low" }

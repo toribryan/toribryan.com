@@ -116,6 +116,16 @@ export const SLIDES: Slide[] = [
     ],
   },
   {
+    slug: "review",
+    section: "product",
+    title: "the reviewing side",
+    notes: [
+      "The instructor’s side, rebuilt the same way. Open on As pitched: AuthorProof on the left, the student’s paper in the middle, and the grading panel with the similarity badge on the right, all in SpeedGrader.",
+      "Click a question on the left and the paper scrolls to the passage it came from. That is the argument: the instructor checks the AI against the paper without leaving the grading view.",
+      "Then switch to As built: the results panel on its own, with the paper and grade in another tab. Say why it went that way if you know it, and what it costs the instructor: two places to read before one grade.",
+    ],
+  },
+  {
     slug: "shipped",
     section: "product",
     title: "shipped",

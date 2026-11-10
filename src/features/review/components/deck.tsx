@@ -185,6 +185,30 @@ export function Deck({
       const now = performance.now()
       const state = wheelRef.current
       const down = event.deltaY > 0
+
+      // A panel inside the slide that scrolls on its own, like a paper in a
+      // grader, takes the wheel first. While it can still move, the gesture
+      // is its, and it counts as movement so the page does not turn the
+      // moment it reaches its end.
+      let node = event.target instanceof HTMLElement ? event.target : null
+      while (node && node !== scroller) {
+        const overflow = getComputedStyle(node).overflowY
+        if (
+          (overflow === "auto" || overflow === "scroll") &&
+          node.scrollHeight > node.clientHeight + 1
+        ) {
+          const canMove = down
+            ? node.scrollTop + node.clientHeight < node.scrollHeight - 1
+            : node.scrollTop > 0
+          if (canMove) {
+            state.sum = 0
+            state.lastMoving = now
+            return
+          }
+        }
+        node = node.parentElement
+      }
+
       const atEnd = down
         ? scroller.scrollTop + scroller.clientHeight >=
           scroller.scrollHeight - 1
